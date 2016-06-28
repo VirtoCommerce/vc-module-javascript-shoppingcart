@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<module>
+	<id>VirtoCommerce.JavaScriptShoppingCart</id>
+	<version>2.11.0</version>
+	<platformVersion>2.11.0</platformVersion>
+	<dependencies>
+		<dependency id="VirtoCommerce.Core" version="2.11.0" />
+	</dependencies>
+
+	<title>JavaScriptShoppingCart module</title>
+	<description>JavaScriptShoppingCart</description>
+	<authors>
+		<author>Virto Commerce</author>
+	</authors>
+	<owners>
+		<owner>Virto Commerce</owner>
+	</owners>
+	<projectUrl>http://virtocommerce.com/</projectUrl>
+	<iconUrl>Modules/$(VirtoCommerce.Catalog)/Content/logo.png</iconUrl>
+	<releaseNotes>First version.</releaseNotes>
+	<copyright>Copyright © 2011-2016 Virto Commerce. All rights reserved</copyright>
+	<tags>catalog</tags>
+
+	<assemblyFile>VirtoCommerce.JavaScriptShoppingCart.Web.dll</assemblyFile>
+	<moduleType>VirtoCommerce.JavaScriptShoppingCart.Web.Module, VirtoCommerce.JavaScriptShoppingCart.Web</moduleType>
+
+</module>
