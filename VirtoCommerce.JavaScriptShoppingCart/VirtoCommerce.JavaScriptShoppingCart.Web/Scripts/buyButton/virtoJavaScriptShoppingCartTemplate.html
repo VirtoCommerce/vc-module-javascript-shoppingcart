@@ -1,0 +1,38 @@
+﻿<div class="modal-header">
+	<h3 class="modal-title">My Cart</h3>
+</div>
+<div class="modal-body">
+	<uib-tabset active="active" style="min-height:300px">
+		<uib-tab index="0" heading="My Cart's content">
+
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Product name</th>
+						<th>Sku</th>
+						<th>Price</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="lineItem in cart.items track by $index">
+						<th scope="row">{{$index + 1}}</th>
+						<td>{{lineItem.name}}</td>
+						<td>{{lineItem.sku}}</td>
+						<td>{{lineItem.price.sale}} {{lineItem.price.currency}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</uib-tab>
+		<uib-tab index="1" heading="Shippment method"></uib-tab>
+		<uib-tab index="2" heading="Billing address"></uib-tab>
+		<uib-tab index="3" heading="Payment method"></uib-tab>
+		<uib-tab index="4" heading="Confirm order">
+			<button type="button" class="btn btn-default" ng-click="createOrder()">Place order</button>
+			<h1>Order number: {{settings.orderNumber}}</h1>
+		</uib-tab>
+	</uib-tabset>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-warning" type="button" ng-click="cancel()">Continue shopping</button>
+</div>
