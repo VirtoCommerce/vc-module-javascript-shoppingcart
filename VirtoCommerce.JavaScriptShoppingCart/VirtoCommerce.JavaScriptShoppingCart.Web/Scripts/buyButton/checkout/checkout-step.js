@@ -17,7 +17,7 @@ storefrontApp.component('vcCheckoutStep', {
 			ctrl.checkout.addStep(this);
 		};
 
-		ctrl.addComponent = function (component) {		
+		ctrl.addComponent = function (component) {
 			ctrl.components.push(component);
 		};
 		ctrl.removeComponent = function (component) {

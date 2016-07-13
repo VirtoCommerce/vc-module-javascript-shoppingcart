@@ -182,6 +182,10 @@
     <Content Include="module.manifest" />
     <Content Include="Scripts\buyButton\checkout\checkout-cart.js" />
     <Content Include="Scripts\buyButton\checkout\checkout-cart.tpl.html" />
+    <Content Include="Scripts\buyButton\checkout\checkout-creditCard.js" />
+    <Content Include="Scripts\buyButton\checkout\checkout-creditCard.tpl.html" />
+    <Content Include="Scripts\buyButton\checkout\checkout-paymentMethods.js" />
+    <Content Include="Scripts\buyButton\checkout\checkout-paymentMethods.tpl.html" />
     <Content Include="Scripts\buyButton\virtoJavaScriptShoppingCartTemplate.tpl.html" />
     <Content Include="Scripts\buyButton\checkout\checkout-shippingMethods.tpl.html" />
     <None Include="Web.Debug.config">

@@ -91,6 +91,10 @@
 							"taxTotal": 0.0,
 							"itemSubtotal": 0.0,
 							"subtotal": 0.0,
+							"deliveryAddress": {
+								"name": "USA, New York, Address",
+								"addressType": "shipping"
+							},
 							"deliveryAddress1": {
 								"name": "USA, New York, Address",
 								"addressType": "shipping",
@@ -210,6 +214,10 @@
 								"taxTotal": 0.0,
 								"itemSubtotal": 0.0,
 								"subtotal": 0.0,
+								"deliveryAddress": {
+									"name": "USA, New York, Address",
+									"addressType": "shipping"
+								},
 								"deliveryAddress1": {
 									"addressType": "shipping",
 									"countryCode": "USA",

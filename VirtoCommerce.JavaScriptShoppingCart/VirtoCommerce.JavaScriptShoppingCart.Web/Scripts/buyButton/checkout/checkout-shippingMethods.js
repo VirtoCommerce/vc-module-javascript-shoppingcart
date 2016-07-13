@@ -6,44 +6,45 @@ storefrontApp.component('vcCheckoutShippingMethods', {
 		checkoutStep: '^vcCheckoutStep'
 	},
 	bindings: {
-		shipment: '='
+		shipment: '=',
+		getAvailShippingMethods: '&'
 	},
-	controller: ['cartService', function (cartService) {
+	controller: [function () {
+
 		var ctrl = this;
 		ctrl.availShippingMethods = [];
 		ctrl.selectedOption = {};
 		this.$onInit = function () {
 			ctrl.checkoutStep.addComponent(this);
-			getAvailableShippingMethods().then(function (availMethods) {
+
+			innerGetAvailShippingMethods().then(function (availMethods) {
 				ctrl.availShippingMethods = availMethods;
 			});
-		};		
-		
+		};
+
 		this.$onDestroy = function () {
 			ctrl.checkoutStep.removeComponent(this);
 		};
 
-		function getAvailableShippingMethods() {
-			return cartService.getAvailableShippingMethods(ctrl.shipment.id).then(function (response) {
+		function innerGetAvailShippingMethods() {
+			return ctrl.getAvailShippingMethods(ctrl.shipment).then(function (response) {
 				var availMethods = [];
 				_.each(response.data, function (method) {
 					var existMethod = _.find(availMethods, function (x) {
 						return x.shipmentMethodCode = method.shipmentMethodCode;
 					});
-					if(!existMethod)
-					{
+					if (!existMethod) {
 						existMethod = {
-							name : method.name,
-							options : []
+							name: method.name,
+							options: []
 						};
 						availMethods.push(existMethod);
 					}
 					method.id = getMethodId(method.shipmentMethodCode, method.optionName);
 					method.name = method.optionName ? method.optionName : method.name;
 					existMethod.options.push(method);
-					
-					if (ctrl.shipment.shipmentMethodCode == method.shipmentMethodCode && ctrl.shipment.shipmentMethodOption == method.optionName)
-					{
+
+					if (ctrl.shipment.shipmentMethodCode == method.shipmentMethodCode && ctrl.shipment.shipmentMethodOption == method.optionName) {
 						ctrl.selectedOption = method;
 					}
 				});
@@ -59,11 +60,11 @@ storefrontApp.component('vcCheckoutShippingMethods', {
 			return retVal;
 		}
 
-		ctrl.selectMethodOption = function(option){
+		ctrl.selectMethodOption = function (option) {
 			ctrl.shipment.shipmentMethodCode = option.shipmentMethodCode;
 			ctrl.shipment.shipmentMethodOption = option.optionName;
 		};
-	
+
 		ctrl.validate = function () {
 			ctrl.form.$setSubmitted();
 			return !ctrl.form.$invalid;
