@@ -6,10 +6,10 @@ using VirtoCommerce.Domain.Cart.Model;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Web.Models
 {
-	public class AddItemToCartResponse
+	public class GetCartTemplateResponse
 	{
-		public ShoppingCart Cart { get; set; }
+		public string Template { get; set; }
 
-		public string CartTemplate { get; set; }
+		public ShoppingCart Cart { get; set; }
 	}
 }

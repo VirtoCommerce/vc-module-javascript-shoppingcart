@@ -6,6 +6,7 @@
 	<dependencies>
 		<dependency id="VirtoCommerce.Core" version="2.11.0" />
 		<dependency id="VirtoCommerce.Store" version="2.11.0" />
+		<dependency id="VirtoCommerce.Content" version="2.11.0" />
 	</dependencies>
 
 	<title>JavaScriptShoppingCart module</title>
@@ -25,9 +26,9 @@
 	<assemblyFile>VirtoCommerce.JavaScriptShoppingCart.Web.dll</assemblyFile>
 	<moduleType>VirtoCommerce.JavaScriptShoppingCart.Web.Module, VirtoCommerce.JavaScriptShoppingCart.Web</moduleType>
 
-	<scripts>
+	<!--<scripts>
 		<directory virtualPath="$/Scripts" searchPattern="*.js" searchSubdirectories="true" />
-	</scripts>
+	</scripts>-->
 
 	<permissions>
 		<group name="JavaScriptShoppingCart">

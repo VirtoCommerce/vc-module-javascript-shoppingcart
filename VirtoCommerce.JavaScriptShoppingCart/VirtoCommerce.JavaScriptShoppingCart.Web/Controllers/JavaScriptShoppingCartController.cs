@@ -2,13 +2,19 @@
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
+using VirtoCommerce.ContentModule.Data.Services;
 using VirtoCommerce.Domain.Cart.Model;
 using VirtoCommerce.Domain.Cart.Services;
+using VirtoCommerce.Domain.Commerce.Model;
 using VirtoCommerce.Domain.Order.Services;
 using VirtoCommerce.Domain.Pricing.Model;
+using VirtoCommerce.Domain.Store.Model;
+using VirtoCommerce.Domain.Store.Services;
 using VirtoCommerce.JavaScriptShoppingCart.Web.Models;
 using VirtoCommerce.JavaScriptShoppingCart.Web.Security;
+using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Web.Security;
+using SearchCriteria = VirtoCommerce.Domain.Cart.Model.SearchCriteria;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers
 {
@@ -18,12 +24,16 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers
 		private readonly IShoppingCartService _shoppingCartService;
 		private readonly IShoppingCartSearchService _shoppingCartSearchService;
 		private readonly ICustomerOrderService _customerOrderService;
+		private readonly IStoreService _storeService;
+		private readonly Func<string, IContentBlobStorageProvider> _contentStorageProviderFactory;
 
-		public JavaScriptShoppingCartController(IShoppingCartService shoppingCartService, IShoppingCartSearchService shoppingCartSearchService, ICustomerOrderService customerOrderService)
+		public JavaScriptShoppingCartController(IShoppingCartService shoppingCartService, IShoppingCartSearchService shoppingCartSearchService, ICustomerOrderService customerOrderService, IStoreService storeService, Func<string, IContentBlobStorageProvider> contentStorageProviderFactory)
 		{
 			_shoppingCartService = shoppingCartService;
 			_shoppingCartSearchService = shoppingCartSearchService;
 			_customerOrderService = customerOrderService;
+			_storeService = storeService;
+			_contentStorageProviderFactory = contentStorageProviderFactory;
 		}
 
 		[HttpPost]
@@ -63,6 +73,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers
 			{
 				CatalogId = request.CatalogId,
 				ProductId = request.ProductId,
+				ImageUrl = "https://virtocommercedemo2.blob.core.windows.net/catalog/1432753636000_1148740.jpg",
 				Sku = request.ProductSku,
 				Name = request.ProductName,
 				Price = new Price()
@@ -76,6 +87,30 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers
 			});
 
 			_shoppingCartService.Update(new ShoppingCart[] { cart });
+
+			if (cart.Shipments == null || cart.Shipments.Count == 0)
+			{
+				cart.Shipments = new[]
+				{
+					new Shipment()
+					{
+						Id = "1",
+						ShipmentMethodCode = "ShipmentMethodCode",
+						DeliveryAddress = new Address()
+						{
+							AddressType = AddressType.Shipping,
+							City = "New York",
+							CountryCode = "USA",
+							CountryName = "United States",
+							Email = "email@email.com",
+							FirstName = "Name",
+							LastName = "LastName",
+							RegionName = "New York",
+							Line1 = "Address"
+						}
+					}
+				};
+			}
 
 			var result = new AddItemToCartResponse()
 			{
@@ -106,25 +141,43 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers
 			return Ok(result);
 		}
 
-		//[HttpPost]
-		//[ResponseType(typeof (GetCartResponse))]
-		//[Route("cart")]
-		//[CheckPermission(Permission = JavaScriptShoppingCartPredefinedPermissions.AddItemToCart)]
-		//public IHttpActionResult GetCart(GetCartRequest request)
-		//{
-		//	ShoppingCart cart = null;
-		//	if (!string.IsNullOrEmpty(request.CartId))
-		//	{
-		//		cart = _shoppingCartService.GetById(request.CartId);
-		//	}
+		[HttpGet]
+		[ResponseType(typeof(string))]
+		[Route("countries")]
+		[CheckPermission(Permission = JavaScriptShoppingCartPredefinedPermissions.AddItemToCart)]
+		public IHttpActionResult GetCountries()
+		{
+			var countries = new[]
+			{
+				new Country()
+				{
+					Name = "United States",
+					Code2 = "US",
+					Code3 = "USA",
+					RegionType = "State",
+					Regions = new[]
+					{
+						new CountryRegion()
+						{
+							Name = "Alabama",
+							Code = "Al"
+						},
+						new CountryRegion()
+						{
+							Name = "Alaska",
+							Code = "AK"
+						}
+					}
+				},
+				new Country()
+				{
+					Name = "Canada",
+					Code2 = "CA",
+					Code3 = "CAN"
+				}
+			};
 
-		//	var result = new GetCartResponse()
-		//	{
-		//		Template = "<div><h1>Cart</h1><div id=\"virto-javascript-shoppingcart-id\">Id: </div><ul id=\"virto-javascript-shoppingcart\"></ul></div>",
-		//		Cart = cart
-		//	};
-
-		//	return Ok(result);
-		//}
+			return Ok(countries);
+		}
 	}
 }

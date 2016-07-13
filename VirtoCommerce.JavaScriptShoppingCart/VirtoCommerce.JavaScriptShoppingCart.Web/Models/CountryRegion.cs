@@ -5,10 +5,9 @@ using System.Web;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Web.Models
 {
-	public class GetCartRequest
+	public class CountryRegion
 	{
-		public string UserId { get; set; }
-
-		public string CartId { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
 	}
 }

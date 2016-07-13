@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using VirtoCommerce.Domain.Cart.Model;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Web.Models
 {
-	public class GetCartResponse
+	public class GetCartTemplateRequest
 	{
-		public string Template { get; set; }
+		public string UserId { get; set; }
 
-		public ShoppingCart Cart { get; set; }
+		public string StoreId { get; set; }
+
+		public string CartId { get; set; }
 	}
 }

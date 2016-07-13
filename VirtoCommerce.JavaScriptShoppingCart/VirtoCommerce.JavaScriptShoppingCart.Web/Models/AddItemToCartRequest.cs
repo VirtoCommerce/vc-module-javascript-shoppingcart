@@ -22,5 +22,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Models
 		public decimal Price { get; set; }
 
 		public string Currency { get; set; }
+
+		public bool IncludeCartTemplate { get; set; }
 	}
 }

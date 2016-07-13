@@ -1,97 +1,68 @@
-﻿angular.module('virtojavascriptshoppingcart', ['ngAnimate', 'ui.bootstrap', 'ngCookies']);
+﻿var app = angular.module('storefrontApp', ['ngAnimate', 'ui.bootstrap', 'ngCookies']);
 
-angular.module('virtojavascriptshoppingcart').controller('VirtoJavaScriptShoppingCartCtrl', function ($scope, $uibModal, $log, $cookies, $http) {
+angular.module('storefrontApp').controller('javaScriptShoppingCartCtrl', ['$scope', '$uibModal', '$log', '$cookies', '$http', 'cartService', function ($scope, $uibModal, $log, $cookies, $http, cartService) {
 
-	$scope.apiKey = null;
-	$scope.storeId = null;
-	$scope.userId = null;
-	$scope.cart = null;
-	$scope.order = null;
-	$scope.baseUrl = null;
+	$scope.javaScriptShoppingCart = {};
 
-	$scope.settings = {
-		orderNumber: ""
-	};
+	initialize();
+
+	function initialize() {
+		$scope.javaScriptShoppingCart.apiKey = angular.element(document.querySelector('#javaScriptShoppingCart'))[0].attributes['data-api-key'].value;
+		$scope.javaScriptShoppingCart.storeId = angular.element(document.querySelector('#javaScriptShoppingCart'))[0].attributes['data-store-id'].value;
+		$scope.javaScriptShoppingCart.baseUrl = angular.element(document.querySelector('#javaScriptShoppingCart'))[0].attributes['data-base-url'].value;
+
+		$scope.javaScriptShoppingCart.userId = $cookies.get('virto-javascript-shoppingcart-user-id');
+		if (!$scope.javaScriptShoppingCart.userId) {
+			$scope.javaScriptShoppingCart.userId = guid();
+			var expireDate = new Date();
+			expireDate.setDate(expireDate.getDate() + 1);
+			$cookies.put('virto-javascript-shoppingcart-user-id', $scope.javaScriptShoppingCart.userId, { 'expires': expireDate });
+		}
+	}
 
 	$scope.open = function () {
 
-		initialize();
+		var itemId = getAttributeValue(event.target, "data-item-id");
+		var catalogId = getAttributeValue(event.target, "data-item-catalog-id");
+		var itemName = getAttributeValue(event.target, "data-item-name");
+		var itemSku = getAttributeValue(event.target, "data-item-sku");
+		var itemPrice = getAttributeValue(event.target, "data-item-price");
+		var itemCurrency = getAttributeValue(event.target, "data-item-currency");
 
-		var itemId = event.target.attributes["data-item-id"].value;
-		var catalogId = event.target.attributes["data-item-catalog-id"].value;
-		var itemName = event.target.attributes["data-item-name"].value;
-		var itemSku = event.target.attributes["data-item-sku"].value;
-		var itemPrice = event.target.attributes["data-item-price"].value;
-		var itemCurrency = event.target.attributes["data-item-currency"].value;
+		var lineItem = {
+			storeId: $scope.javaScriptShoppingCart.storeId,
+			userId: $scope.javaScriptShoppingCart.userId,
+			productId: itemId || "itemId",
+			catalogId: catalogId || "catalogId",
+			productName: itemName,
+			productSku: itemSku,
+			price: itemPrice,
+			currency: itemCurrency,
+			includeCartTemplate: !$scope.javaScriptShoppingCart.cartTemplate
+		};
 
-		$http({
-			method: 'POST',
-			url: $scope.baseUrl + 'additemtocart?api_key=' + $scope.apiKey,
-			data: {
-				storeId: $scope.storeId,
-				userId: $scope.userId,
-				productId: itemId,
-				catalogId: catalogId,
-				productName: itemName,
-				productSku: itemSku,
-				price: itemPrice,
-				currency: itemCurrency
-			}
-		}).then(function (response) {
-			if (response && response.data && response.data.cart) {
-				$scope.cart = response.data.cart;
-				$uibModal.open({
-					animation: true,
-					templateUrl: '/admin/Modules/JavaScriptShoppingCart/Scripts/buyButton/virtoJavaScriptShoppingCartTemplate.html',
-					controller: 'VirtoJavaScriptShoppingCartInstanceCtrl',
-					size: 'lg',
-					resolve: {
-						cart: function () {
-							return $scope.cart;
-						},
-						createOrder: function () {
-							return $scope.createOrder;
-						},
-						order: function () {
-							return $scope.order;
-						},
-						settings: function () {
-							return $scope.settings;
-						}
+		cartService.addLineItem(lineItem, $scope.javaScriptShoppingCart.baseUrl, $scope.javaScriptShoppingCart.apiKey).then(function (response) {
+			$uibModal.open({
+				animation: true,
+				templateUrl: 'virtoJavaScriptShoppingCartTemplate.tpl.html',
+				controller: 'VirtoJavaScriptShoppingCartInstanceCtrl',
+				size: 'lg',
+				resolve: {
+					javaScriptShoppingCart: function () {
+						return $scope.javaScriptShoppingCart;
 					}
-				});
-			}
+				}
+			});
 		});
 	};
 
-	$scope.createOrder = function () {
-		$http({
-			method: 'POST',
-			url: $scope.baseUrl + 'createorder?api_key=' + $scope.apiKey,
-			data: {
-				cartId: $scope.cart.id
-			}
-		}).then(function (response) {
-			if (response && response.data && response.data.order) {
-				$scope.order = response.data.order;
-				$scope.cart = null;
-				$scope.settings.orderNumber = response.data.order.number;
-				$cookies.put('virto-javascript-shoppingcart-cart-id', null);
-			}
-		});
-	};
-
-	function initialize() {
-		$scope.apiKey = angular.element(document.querySelector('#javaScriptShoppingCart'))[0].attributes['data-api-key'].value;
-		$scope.storeId = angular.element(document.querySelector('#javaScriptShoppingCart'))[0].attributes['data-store-id'].value;
-		$scope.baseUrl = angular.element(document.querySelector('#javaScriptShoppingCart'))[0].attributes['data-base-url'].value;
-		$scope.userId = $cookies.get('virto-javascript-shoppingcart-user-id');
-		if (!$scope.userId) {
-			$scope.userId = guid();
-			var expireDate = new Date();
-			expireDate.setDate(expireDate.getDate() + 1);
-			$cookies.put('virto-javascript-shoppingcart-user-id', $scope.userId, { 'expires': expireDate });
+	function getAttributeValue(value, attributeName) {
+		var result = null;
+		var attribute = value.attributes[attributeName];
+		if (attribute) {
+			result = attribute.value;
 		}
+		return result;
 	}
 
 	function guid() {
@@ -100,14 +71,14 @@ angular.module('virtojavascriptshoppingcart').controller('VirtoJavaScriptShoppin
 		}
 		return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 	}
-});
+}]);
 
-angular.module('virtojavascriptshoppingcart').controller('VirtoJavaScriptShoppingCartInstanceCtrl', function ($scope, $uibModalInstance, cart, createOrder, order, settings) {
-	$scope.cart = cart;
-	$scope.createOrder = createOrder;
-	$scope.order = order;
-	$scope.settings = settings;
+angular.module('storefrontApp').controller('VirtoJavaScriptShoppingCartInstanceCtrl', ['$scope', '$uibModalInstance', 'javaScriptShoppingCart', function ($scope, $uibModalInstance, javaScriptShoppingCart) {
+
+	$scope.javaScriptShoppingCart = javaScriptShoppingCart;
+
 	$scope.cancel = function () {
 		$uibModalInstance.dismiss('cancel');
 	};
-});
+}]);
+
