@@ -127,11 +127,6 @@
 			return $q.resolve(1);
 		},
 		addLineItem: function (item, baseUrl, apiKey) {
-			//return $http({
-			//	method: 'POST',
-			//	url: baseUrl + 'additemtocart?api_key=' + apiKey,
-			//	data: item
-			//});
 			return $q.resolve({
 				"data": {
 					"cart": {
@@ -287,12 +282,10 @@
 		addOrUpdatePayment: function (payment) {
 			return $q.resolve();
 		},
-		createOrder: function (cartId, baseUrl, apiKey) {
-			return $http({
-				method: 'POST',
-				url: baseUrl + 'createorder?api_key=' + apiKey,
-				data: {
-					cartId: cartId
+		createOrder: function (cartId) {
+			return $q.resolve({
+				"data": {
+					order: { number: "#777" }
 				}
 			});
 		}

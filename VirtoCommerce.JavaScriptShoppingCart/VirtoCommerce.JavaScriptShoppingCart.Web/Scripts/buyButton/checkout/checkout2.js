@@ -5,8 +5,9 @@ storefrontApp.controller('checkoutController2', ['$rootScope', '$scope', '$windo
     	$scope.checkout = {
     		paymentMethod: {},
     		shipment: {},
-    		payment: {}
-    	};
+    		payment: {},
+			order: {}
+	    };
     	$scope.reloadCart = function () {
 
     		cartService.getCart().then(function (response) {
@@ -64,34 +65,35 @@ storefrontApp.controller('checkoutController2', ['$rootScope', '$scope', '$windo
     	$scope.createOrder = function () {
     		cartService.createOrder($scope.checkout.bankCardInfo).then(function (response) {
     			var order = response.data.order;
-    			var orderProcessingResult = response.data.orderProcessingResult;
-    			handlePostPaymentResult(order, orderProcessingResult);
+    			$scope.checkout.order = order;
+    			//var orderProcessingResult = response.data.orderProcessingResult;
+    			//handlePostPaymentResult(order, orderProcessingResult);
     		});
     	}
 
-    	function handlePostPaymentResult(order, orderProcessingResult) {
-    		if (!orderProcessingResult.isSuccess) {
-    			$rootScope.$broadcast('storefrontError', {
-    				type: 'error',
-    				title: ['Error in new order processing: ', orderProcessingResult.error, 'New Payment status: ' + orderProcessingResult.newPaymentStatus].join(' '),
-    				message: orderProcessingResult.error,
-    			});
-    			return;
-    		}
-    		if (orderProcessingResult.paymentMethodType == 'PreparedForm' && orderProcessingResult.htmlForm) {
-    			$scope.outerRedirect($scope.baseUrl + 'cart/checkout/paymentform?orderNumber=' + order.number);
-    		}
-    		if (orderProcessingResult.paymentMethodType == 'Standard' || orderProcessingResult.paymentMethodType == 'Unknown') {
-    			if (!$scope.customer.HasAccount) {
-    				$scope.outerRedirect($scope.baseUrl + 'cart/thanks/' + order.number);
-    			} else {
-    				$scope.outerRedirect($scope.baseUrl + 'account/order/' + order.number);
-    			}
-    		}
-    		if (orderProcessingResult.paymentMethodType == 'Redirection' && orderProcessingResult.redirectUrl) {
-    			$window.location.href = orderProcessingResult.redirectUrl;
-    		}
-    	}
+    	//function handlePostPaymentResult(order, orderProcessingResult) {
+    	//	if (!orderProcessingResult.isSuccess) {
+    	//		$rootScope.$broadcast('storefrontError', {
+    	//			type: 'error',
+    	//			title: ['Error in new order processing: ', orderProcessingResult.error, 'New Payment status: ' + orderProcessingResult.newPaymentStatus].join(' '),
+    	//			message: orderProcessingResult.error,
+    	//		});
+    	//		return;
+    	//	}
+    	//	if (orderProcessingResult.paymentMethodType == 'PreparedForm' && orderProcessingResult.htmlForm) {
+    	//		$scope.outerRedirect($scope.baseUrl + 'cart/checkout/paymentform?orderNumber=' + order.number);
+    	//	}
+    	//	if (orderProcessingResult.paymentMethodType == 'Standard' || orderProcessingResult.paymentMethodType == 'Unknown') {
+    	//		if (!$scope.customer.HasAccount) {
+    	//			$scope.outerRedirect($scope.baseUrl + 'cart/thanks/' + order.number);
+    	//		} else {
+    	//			$scope.outerRedirect($scope.baseUrl + 'account/order/' + order.number);
+    	//		}
+    	//	}
+    	//	if (orderProcessingResult.paymentMethodType == 'Redirection' && orderProcessingResult.redirectUrl) {
+    	//		$window.location.href = orderProcessingResult.redirectUrl;
+    	//	}
+    	//}
 
     	$scope.reloadCart();
     }]);

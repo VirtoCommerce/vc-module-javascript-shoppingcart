@@ -87,7 +87,9 @@
 				</div>
 			</vc-checkout-step>
 			<vc-checkout-step title="Create order">
-				<div ng-init="createOrder()"></div>
+				<div ng-init="createOrder()" class="order-number">
+					Order number: {{checkout.order.number}}
+				</div>
 			</vc-checkout-step>
 		</vc-checkout>
 	</div>
