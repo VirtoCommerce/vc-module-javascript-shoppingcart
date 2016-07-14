@@ -2,7 +2,7 @@
 	<div class="step__sections" ng-transclude>
 	</div>
 	<div class="step__footer">
-		<button class="step__footer__continue-btn btn" ng-if="$ctrl.currentStep.nextStep" name="button" type="button" ng-class="{ 'btn--disabled': false, 'btn--loading': $ctrl.loading }" ng-click="$ctrl.nextStep()" ng-disabled="">
+		<button id="nextButton" class="step__footer__continue-btn btn" ng-if="$ctrl.currentStep.nextStep" name="button" type="button" ng-class="{ 'btn--disabled': false, 'btn--loading': $ctrl.loading }" ng-click="$ctrl.nextStep()" ng-disabled="">
 			<span class="btn__content">Next to {{ $ctrl.currentStep.nextStep.title }}</span>
 			<i class="btn__spinner icon icon--button-spinner"></i>
 		</button>

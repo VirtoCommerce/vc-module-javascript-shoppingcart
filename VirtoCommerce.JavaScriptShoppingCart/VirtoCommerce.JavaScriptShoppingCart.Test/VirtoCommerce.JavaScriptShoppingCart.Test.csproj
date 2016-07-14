@@ -56,6 +56,17 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="e2e\billing\billing.pageObject.js" />
+    <Content Include="e2e\thanks\thanks.pageObject.js" />
+    <Content Include="e2e\userAddress\userAddress.pageObject.js" />
+    <Content Include="e2e\conf.js" />
+    <Content Include="e2e\home\home.pageObject.js" />
+    <Content Include="e2e\home\home.spec.js" />
+    <Content Include="e2e\shippment\shippment.pageObject.js" />
+    <Content Include="e2e\shoppingCart\shoppingCart.pageObject.js" />
+    <Content Include="e2e\helpers\options.helpers.js" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
