@@ -3,7 +3,7 @@
 storefrontApp.component('vcCheckoutEmail', {
 	templateUrl: "checkout-email.tpl.html",
 	require: {
-		checkoutStep: '^vcCheckoutStep'
+		checkoutStep: '^vcCheckoutWizardStep'
 	},
 	bindings: {
 		email: '='
@@ -18,7 +18,7 @@ storefrontApp.component('vcCheckoutEmail', {
 		this.$onDestroy = function () {
 			ctrl.checkoutStep.removeComponent(this);
 		};
-
+	
 		ctrl.validate = function () {
 			ctrl.form.$setSubmitted();
 			return !ctrl.form.$invalid;

@@ -929,7 +929,7 @@ body {
 
 @media (min-width: 1000px) {
 	.sidebar {
-		width: 30%;
+		/*width: 30%;*/
 		padding-left: 4%;
 		background-position: left top;
 		float: right;
@@ -939,7 +939,7 @@ body {
 .sidebar:after {
 	content: "";
 	display: block;
-	width: 300%;
+	/*width: 300%;*/
 	position: absolute;
 	top: 0;
 	left: -100%;
@@ -3872,4 +3872,18 @@ th {
 
 .checkbox__input h1 {
 	display: none;
+}
+
+@media screen and (min-width: 768px) {	
+	.modal-dialog {
+		width:1200px;
+	}
+}
+
+.order-created {
+	width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 30px;
 }

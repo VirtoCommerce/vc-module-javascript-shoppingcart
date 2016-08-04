@@ -4,7 +4,7 @@ var Billing = require('../billing/billing.pageObject.js');
 
 var Shippment = function () {
     this.billing = new Billing();
-    this.shippmentOptions = element.all(by.repeater('option in method.options'));
+    this.shippmentOptions = element.all(by.repeater('method in value'));
     this.nextButton = element(by.id('nextButton'));
 }
 Shippment.prototype.setShippmentByIndex = function(index) {

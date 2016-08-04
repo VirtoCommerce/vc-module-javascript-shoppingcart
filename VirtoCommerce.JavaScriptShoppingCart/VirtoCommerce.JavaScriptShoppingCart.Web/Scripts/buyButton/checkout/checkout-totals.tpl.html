@@ -1,0 +1,49 @@
+﻿<table class="total-line-table">
+    <thead>
+        <tr>
+            <th scope="col">
+                <span class="visually-hidden">Description</span>
+            </th>
+            <th scope="col">
+                <span class="visually-hidden">Price</span>
+            </th>
+        </tr>
+    </thead>
+    <tbody ng-if="!$ctrl.displayOnlyTotal">
+        <tr class="total-line total-line--subtotal">
+            <td class="total-line__name">Subtotal with taxes</td>
+            <td class="total-line__price">
+                <span class="order-summary__emphasis" ng-bind="$ctrl.cart.subTotalWithTax.formatedAmount"></span>
+            </td>
+        </tr>
+        <tr class="total-line total-line--shipping">
+            <td class="total-line__name">Shipping with taxes</td>
+            <td class="total-line__price">
+                <span class="order-summary__emphasis" ng-bind="$ctrl.cart.shippingPriceWithTax.formatedAmount"></span>
+            </td>
+        </tr>
+        <tr class="total-line total-line--subtotal">
+            <td class="total-line__name">Discount</td>
+            <td class="total-line__price">
+               <span class="order-summary__emphasis" ng-bind="$ctrl.cart.discountTotalWithTax.formatedAmount"></span>     
+            </td>
+        </tr>
+        <tr class="total-line total-line--taxes">
+            <td class="total-line__name">Taxes</td>
+            <td class="total-line__price">
+                <span class="order-summary__emphasis" ng-bind="$ctrl.cart.taxTotal.formatedAmount"></span>
+            </td>
+        </tr>
+    </tbody>
+    <tbody ng-if="$ctrl.displayOnlyTotal">
+        <tr class="total-line">
+            <td class="total-line__name payment-due-label">Total</td>
+            <td class="total-line__price payment-due">
+                <span class="payment-due__currency" ng-bind="$ctrl.cart.total.currency.code"></span>
+                <span class="payment-due__price" ng-bind="$ctrl.cart.total.formatedAmount"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+

@@ -1,4 +1,4 @@
-﻿var app = angular.module('storefrontApp', ['ngAnimate', 'ui.bootstrap', 'ngCookies']);
+﻿var app = angular.module('storefrontApp', ['ngAnimate', 'ui.bootstrap', 'ngCookies', 'storefront.checkout']);
 
 angular.module('storefrontApp').controller('javaScriptShoppingCartCtrl', ['$scope', '$uibModal', '$log', '$cookies', '$http', 'cartService', function ($scope, $uibModal, $log, $cookies, $http, cartService) {
 
@@ -46,7 +46,7 @@ angular.module('storefrontApp').controller('javaScriptShoppingCartCtrl', ['$scop
 				animation: true,
 				templateUrl: 'virtoJavaScriptShoppingCartTemplate.tpl.html',
 				controller: 'VirtoJavaScriptShoppingCartInstanceCtrl',
-				size: 'lg',
+				//size: 'lg',
 				resolve: {
 					javaScriptShoppingCart: function () {
 						return $scope.javaScriptShoppingCart;

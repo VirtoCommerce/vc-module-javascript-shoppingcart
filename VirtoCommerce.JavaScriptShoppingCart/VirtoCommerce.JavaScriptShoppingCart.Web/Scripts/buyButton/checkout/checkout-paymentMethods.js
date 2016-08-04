@@ -3,7 +3,7 @@
 storefrontApp.component('vcCheckoutPaymentMethods', {
 	templateUrl: "checkout-paymentMethods.tpl.html",
 	require: {
-		checkoutStep: '^vcCheckoutStep'
+		checkoutStep: '^vcCheckoutWizardStep'
 	},
 	bindings: {
 		getAvailPaymentMethods: '&',
@@ -14,15 +14,13 @@ storefrontApp.component('vcCheckoutPaymentMethods', {
 		var ctrl = this;
 
 		this.$onInit = function () {
-			ctrl.getAvailPaymentMethods().then(function (x) {
-				ctrl.availPaymentMethods = _.sortBy(x.data, function (x) { return x.Priority; });
+			ctrl.getAvailPaymentMethods().then(function (methods) {
+				ctrl.availPaymentMethods = _.sortBy(methods, function (x) { return x.priority; });
 				if (ctrl.paymentMethod) {
 					ctrl.paymentMethod = _.find(ctrl.availPaymentMethods, function (x) { return x.gatewayCode == ctrl.paymentMethod.gatewayCode; })
 				}
-				if (!ctrl.paymentMethod && ctrl.availPaymentMethods.length > 0)
-				{
-					ctrl.paymentMethod = ctrl.availPaymentMethods[0];
-					ctrl.onSelectMethod({ paymentMethod : ctrl.paymentMethod });
+				if (!ctrl.paymentMethod && ctrl.availPaymentMethods.length > 0) {
+					ctrl.selectMethod(ctrl.availPaymentMethods[0]);
 				}
 			})
 			ctrl.checkoutStep.addComponent(this);
@@ -31,9 +29,14 @@ storefrontApp.component('vcCheckoutPaymentMethods', {
 		this.$onDestroy = function () {
 			ctrl.checkoutStep.removeComponent(this);
 		};
-	
+
 		ctrl.validate = function () {
 			return ctrl.paymentMethod;
 		}
+
+		ctrl.selectMethod = function (method) {
+			ctrl.paymentMethod = method;
+			ctrl.onSelectMethod({ paymentMethod: method });
+		};
 	}]
 });

@@ -4,7 +4,6 @@ using System.Web.Optimization;
 using VirtoCommerce.ContentModule.Data.Services;
 using VirtoCommerce.JavaScriptShoppingCart.Web.Budnles;
 using VirtoCommerce.Platform.Core.Modularity;
-using WebGrease.Css;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Web
 {
@@ -28,22 +27,22 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
 
 		public override void PostInitialize()
 		{
-			//#region Demo
-
-			//var bundle = new Bundle("~/javaScriptShoppingCart.js", new JsMinify());
-			//bundle.IncludeDirectory("~/Modules/JavaScriptShoppingCart/Scripts/buyButton/", "*.js", true);
-			//BundleTable.Bundles.Add(bundle);
-
-			var cssBundle = new Bundle("~/checkout.css", new CssMinify());
-			cssBundle.IncludeDirectory("~/Modules/JavaScriptShoppingCart/Scripts/buyButton/", "*.css", true);
+			var cssBundle = new Bundle("~/checkout.css", new CssMinify())
+				.Include("~/Modules/JavaScriptShoppingCart/Scripts/libraries/bootstrap-3.3.6.min.css")
+				.IncludeDirectory("~/Modules/JavaScriptShoppingCart/Scripts/buyButton/", "*.css", true);
 			BundleTable.Bundles.Add(cssBundle);
 
 			var partialBundle = new JavaScriptShoppingCartBundle("storefrontApp", "~/javaScriptShoppingCart.js")
+				.Include("~/Modules/JavaScriptShoppingCart/Scripts/libraries/angularjs-1.5.7.min.js")
+				.Include("~/Modules/JavaScriptShoppingCart/Scripts/libraries/angular-animate-1.5.7.min.js")
+				.Include("~/Modules/JavaScriptShoppingCart/Scripts/libraries/angular-cookies-1.5.7.min.js")
+				.Include("~/Modules/JavaScriptShoppingCart/Scripts/libraries/angular-filter-0.5.8.js")
+				.Include("~/Modules/JavaScriptShoppingCart/Scripts/libraries/ui-bootstrap-tpls-1.3.3.js")
+				.Include("~/Modules/JavaScriptShoppingCart/Scripts/libraries/underscore-min-1.8.3.js")
+				.Include("~/Modules/JavaScriptShoppingCart/Scripts/libraries/angular-credit-cards-3.0.1.js")
 				.IncludeDirectory("~/Modules/JavaScriptShoppingCart/Scripts/buyButton/", "*.js", true)
 				.IncludeDirectory("~/Modules/JavaScriptShoppingCart/Scripts/buyButton/", "*.tpl.html", true);
 			BundleTable.Bundles.Add(partialBundle);
-
-			//#endregion
 
 			var storageProvider = _contentStorageProviderFactory("Themes/");
 
@@ -71,16 +70,21 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
 			var checkoutThemeFolder = themeFolders.Folders.FirstOrDefault(f => f.Name == "checkout");
 			if (checkoutThemeFolder != null)
 			{
-				var cssBundle = new Bundle($"~/{folderName}/checkout.css", new CssMinify());
-				cssBundle.IncludeDirectory($"~/App_Data/cms-content/Themes/{folderName}/checkout/", "*.css", true);
+				var cssBundle = new Bundle($"~/{folderName}/checkout.css", new CssMinify())
+					.Include("~/Modules/JavaScriptShoppingCart/Scripts/libraries/bootstrap-3.3.6.min.css")
+					.IncludeDirectory($"~/App_Data/cms-content/Themes/{folderName}/checkout/", "*.css", true);
 				BundleTable.Bundles.Add(cssBundle);
 
 				var bundle = new JavaScriptShoppingCartBundle("storefrontApp", $"~/{folderName}/javaScriptShoppingCart.js")
-				.IncludeDirectory($"~/App_Data/cms-content/Themes/{folderName}/checkout/", "*.js", true)
-				.IncludeDirectory($"~/App_Data/cms-content/Themes/{folderName}/checkout/", "*.tpl.html", true);
-
-				//var bundle = new Bundle($"~/javaScriptShoppingCart/{folderName}.js", new JsMinify());
-				//bundle.IncludeDirectory($"~/App_Data/cms-content/Themes/{folderName}/checkout/", "*.js", true);
+					.Include("~/Modules/JavaScriptShoppingCart/Scripts/libraries/angularjs-1.5.7.min.js")
+					.Include("~/Modules/JavaScriptShoppingCart/Scripts/libraries/angular-animate-1.5.7.min.js")
+					.Include("~/Modules/JavaScriptShoppingCart/Scripts/libraries/angular-cookies-1.5.7.min.js")
+					.Include("~/Modules/JavaScriptShoppingCart/Scripts/libraries/angular-filter-0.5.8.js")
+					.Include("~/Modules/JavaScriptShoppingCart/Scripts/libraries/ui-bootstrap-tpls-1.3.3.js")
+					.Include("~/Modules/JavaScriptShoppingCart/Scripts/libraries/underscore-min-1.8.3.js")
+					.Include("~/Modules/JavaScriptShoppingCart/Scripts/libraries/angular-credit-cards-3.0.1.js")
+					.IncludeDirectory($"~/App_Data/cms-content/Themes/{folderName}/checkout/", "*.js", true)
+					.IncludeDirectory($"~/App_Data/cms-content/Themes/{folderName}/checkout/", "*.tpl.html", true);
 
 				BundleTable.Bundles.Add(bundle);
 			}

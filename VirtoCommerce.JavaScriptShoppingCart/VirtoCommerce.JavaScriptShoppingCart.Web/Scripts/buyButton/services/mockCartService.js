@@ -7,13 +7,30 @@
 					"isAnonymous": false,
 					"customerId": "ab5e60fa-38e8-a219-cca1-06b13861eda1",
 					"currency": "USD",
-					"total": 0.0000,
-					"subTotal": 0.0000,
+					"total": {
+						"currency": {
+							"code": "USD"
+						},
+						"formatedAmount": "$3,280.60"
+					},
+					"subTotal": 10.0000,
+					"subTotalWithTax": {
+						"formatedAmount": "$3,210.60"
+					},
+					"shippingPriceWithTax": {
+						"formatedAmount": "$50"
+					},
+					"discountTotalWithTax": {
+						"formatedAmount": "$15"
+					},
+					"taxTotal": {
+						"formatedAmount": "$15"
+					},
 					"shippingTotal": 0.0000,
 					"handlingTotal": 0.0000,
 					"discountTotal": 0.0000,
-					"taxTotal": 0.0000,
 					"email": "",
+					"hasPhysicalProducts": true,
 					"addresses": [],
 					"items": [
 						{
@@ -31,6 +48,9 @@
 							"price": {
 								"sale": 250.0000,
 								"currency": "USD"
+							},
+							"placedPriceWithTax": {
+								"formatedAmount": "$1,510.80"
 							},
 							"listPrice": 250.0000,
 							"salePrice": 250.0000,
@@ -64,6 +84,9 @@
 								"sale": 250.0000,
 								"currency": "USD"
 							},
+							"placedPriceWithTax": {
+								"formatedAmount": "$1,510.80"
+							},
 							"listPrice": 250.0000,
 							"salePrice": 250.0000,
 							"placedPrice": 250.0000,
@@ -92,20 +115,17 @@
 							"itemSubtotal": 0.0,
 							"subtotal": 0.0,
 							"deliveryAddress": {
-								"name": "USA, New York, Address",
-								"addressType": "shipping"
-							},
-							"deliveryAddress1": {
-								"name": "USA, New York, Address",
+								"name": "USA, New York, Workshir 54",
 								"addressType": "shipping",
 								"countryCode": "USA",
 								"countryName": "United States",
 								"city": "New York",
-								"line1": "Address",
-								"regionName": "New York",
-								"firstName": "Name",
-								"lastName": "LastName",
-								"email": "email@email.com"
+								"line1": "Workshir 54",
+								"regionName": "Alabama",
+								"firstName": "John",
+								"lastName": "Down",
+								"email": "email@email.com",
+								"postalCode": "45645"
 							},
 							"id": "1",
 							"availShippingMethods": [{ "shipmentMethodCode": "FixedRate", "name": "Fixed rate shipping method", "optionName": "Ground", "optionDescription": "Ground shipping", "logoUrl": "http://somelogo.com/logo.png", "price": { "internalAmount": 50.0, "amount": 50.0, "truncatedAmount": 50.0, "formatedAmount": "$50.00", "currency": { "code": "USD", "cultureName": "en-US", "symbol": "$", "englishName": "US dollar", "exchangeRate": 1.0 }, "decimalDigits": 2 }, "priceWithTax": { "internalAmount": 60.0, "amount": 60.0, "truncatedAmount": 60.0, "formatedAmount": "$60.00", "currency": { "code": "USD", "cultureName": "en-US", "symbol": "$", "englishName": "US dollar", "exchangeRate": 1.0 }, "decimalDigits": 2 }, "total": { "internalAmount": 50.0, "amount": 50.0, "truncatedAmount": 50.0, "formatedAmount": "$50.00", "currency": { "code": "USD", "cultureName": "en-US", "symbol": "$", "englishName": "US dollar", "exchangeRate": 1.0 }, "decimalDigits": 2 }, "totalWithTax": { "internalAmount": 60.0, "amount": 60.0, "truncatedAmount": 60.0, "formatedAmount": "$60.00", "currency": { "code": "USD", "cultureName": "en-US", "symbol": "$", "englishName": "US dollar", "exchangeRate": 1.0 }, "decimalDigits": 2 }, "discountTotal": { "internalAmount": 0.0, "amount": 0.0, "truncatedAmount": 0.0, "formatedAmount": "$0.00", "currency": { "code": "USD", "cultureName": "en-US", "symbol": "$", "englishName": "US dollar", "exchangeRate": 1.0 }, "decimalDigits": 2 }, "discountTotalWithTax": { "internalAmount": 0.0, "amount": 0.0, "truncatedAmount": 0.0, "formatedAmount": "$0.00", "currency": { "code": "USD", "cultureName": "en-US", "symbol": "$", "englishName": "US dollar", "exchangeRate": 1.0 }, "decimalDigits": 2 }, "taxTotal": { "internalAmount": 10.0, "amount": 10.0, "truncatedAmount": 10.0, "formatedAmount": "$10.00", "currency": { "code": "USD", "cultureName": "en-US", "symbol": "$", "englishName": "US dollar", "exchangeRate": 1.0 }, "decimalDigits": 2 }, "discounts": [], "currency": { "code": "USD", "cultureName": "en-US", "symbol": "$", "englishName": "US dollar", "exchangeRate": 1.0 } }, { "shipmentMethodCode": "FixedRate", "name": "Fixed rate shipping method", "optionName": "Air", "optionDescription": "Air shipping", "logoUrl": "http://somelogo.com/logo.png", "price": { "internalAmount": 50.0, "amount": 50.0, "truncatedAmount": 50.0, "formatedAmount": "$50.00", "currency": { "code": "USD", "cultureName": "en-US", "symbol": "$", "englishName": "US dollar", "exchangeRate": 1.0 }, "decimalDigits": 2 }, "priceWithTax": { "internalAmount": 60.0, "amount": 60.0, "truncatedAmount": 60.0, "formatedAmount": "$60.00", "currency": { "code": "USD", "cultureName": "en-US", "symbol": "$", "englishName": "US dollar", "exchangeRate": 1.0 }, "decimalDigits": 2 }, "total": { "internalAmount": 50.0, "amount": 50.0, "truncatedAmount": 50.0, "formatedAmount": "$50.00", "currency": { "code": "USD", "cultureName": "en-US", "symbol": "$", "englishName": "US dollar", "exchangeRate": 1.0 }, "decimalDigits": 2 }, "totalWithTax": { "internalAmount": 60.0, "amount": 60.0, "truncatedAmount": 60.0, "formatedAmount": "$60.00", "currency": { "code": "USD", "cultureName": "en-US", "symbol": "$", "englishName": "US dollar", "exchangeRate": 1.0 }, "decimalDigits": 2 }, "discountTotal": { "internalAmount": 0.0, "amount": 0.0, "truncatedAmount": 0.0, "formatedAmount": "$0.00", "currency": { "code": "USD", "cultureName": "en-US", "symbol": "$", "englishName": "US dollar", "exchangeRate": 1.0 }, "decimalDigits": 2 }, "discountTotalWithTax": { "internalAmount": 0.0, "amount": 0.0, "truncatedAmount": 0.0, "formatedAmount": "$0.00", "currency": { "code": "USD", "cultureName": "en-US", "symbol": "$", "englishName": "US dollar", "exchangeRate": 1.0 }, "decimalDigits": 2 }, "taxTotal": { "internalAmount": 10.0, "amount": 10.0, "truncatedAmount": 10.0, "formatedAmount": "$10.00", "currency": { "code": "USD", "cultureName": "en-US", "symbol": "$", "englishName": "US dollar", "exchangeRate": 1.0 }, "decimalDigits": 2 }, "discounts": [], "currency": { "code": "USD", "cultureName": "en-US", "symbol": "$", "englishName": "US dollar", "exchangeRate": 1.0 } }]
@@ -134,13 +154,30 @@
 						"isAnonymous": false,
 						"customerId": "ab5e60fa-38e8-a219-cca1-06b13861eda1",
 						"currency": "USD",
-						"total": 0.0000,
-						"subTotal": 0.0000,
+						"total": {
+							"currency": {
+								"code": "USD"
+							},
+							"formatedAmount": "$10"
+						},
+						"subTotal": 10.0000,
+						"subTotalWithTax": {
+							"formatedAmount": "$3,210.60"
+						},
+						"shippingPriceWithTax": {
+							"formatedAmount": "$1,510.80"
+						},
+						"discountTotalWithTax": {
+							"formatedAmount": "$15"
+						},
+						"taxTotal": {
+							"formatedAmount": "$15"
+						},
 						"shippingTotal": 0.0000,
 						"handlingTotal": 0.0000,
 						"discountTotal": 0.0000,
-						"taxTotal": 0.0000,
 						"addresses": [],
+						"hasPhysicalProducts": true,
 						"items": [
 							{
 								"productId": "itemId",
@@ -159,6 +196,9 @@
 								"placedPrice": 250.0000,
 								"extendedPrice": 250.0000,
 								"discountTotal": 0.0000,
+								"placedPriceWithTax": {
+									"formatedAmount": "$1,510.80"
+								},
 								"taxTotal": 0.0000,
 								"discounts": [],
 								"taxDetails": [],
@@ -187,6 +227,9 @@
 								"placedPrice": 250.0000,
 								"extendedPrice": 250.0000,
 								"discountTotal": 250.0000,
+								"placedPriceWithTax": {
+									"formatedAmount": "$1,510.80"
+								},
 								"taxTotal": 0.0000,
 								"discounts": [],
 								"taxDetails": [],
@@ -210,19 +253,17 @@
 								"itemSubtotal": 0.0,
 								"subtotal": 0.0,
 								"deliveryAddress": {
-									"name": "USA, New York, Address",
-									"addressType": "shipping"
-								},
-								"deliveryAddress1": {
+									"name": "USA, New York, Workshir 54",
 									"addressType": "shipping",
 									"countryCode": "USA",
 									"countryName": "United States",
 									"city": "New York",
-									"line1": "Address",
-									"regionName": "New York",
-									"firstName": "Name",
-									"lastName": "LastName",
-									"email": "email@email.com"
+									"line1": "Workshir 54",
+									"regionName": "Alabama",
+									"firstName": "John",
+									"lastName": "Down",
+									"email": "email@email.com",
+									"postalCode": "45645"
 								},
 								"id": "1"
 							}

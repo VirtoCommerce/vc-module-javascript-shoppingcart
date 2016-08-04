@@ -23,7 +23,7 @@ describe('Buy button', function () {
         shippment.nextButton.click();
 
         var billing = shippment.billing;
-        billing.useAddress.click();
+        //billing.useAddress.click();
         billing.nextButton.click();
 
         var thanks = billing.thanks;

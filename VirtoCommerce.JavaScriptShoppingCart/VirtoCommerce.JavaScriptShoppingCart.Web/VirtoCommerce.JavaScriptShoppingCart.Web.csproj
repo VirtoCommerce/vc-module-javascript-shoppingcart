@@ -177,17 +177,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="example.html" />
     <Content Include="packages.config" />
     <Content Include="module.manifest" />
-    <Content Include="Scripts\buyButton\checkout\checkout-cart.js" />
-    <Content Include="Scripts\buyButton\checkout\checkout-cart.tpl.html" />
+    <Content Include="Scripts\buyButton\checkout\checkout-address.js" />
+    <Content Include="Scripts\buyButton\checkout\checkout-address.tpl.html" />
+    <Content Include="Scripts\buyButton\checkout\checkout-coupon.js" />
     <Content Include="Scripts\buyButton\checkout\checkout-creditCard.js" />
     <Content Include="Scripts\buyButton\checkout\checkout-creditCard.tpl.html" />
+    <Content Include="Scripts\buyButton\checkout\checkout-email.js" />
+    <Content Include="Scripts\buyButton\checkout\checkout-email.tpl.html" />
+    <Content Include="Scripts\buyButton\checkout\checkout-lineItems.js" />
     <Content Include="Scripts\buyButton\checkout\checkout-paymentMethods.js" />
     <Content Include="Scripts\buyButton\checkout\checkout-paymentMethods.tpl.html" />
+    <Content Include="Scripts\buyButton\checkout\checkout-shippingMethods.js" />
+    <Content Include="Scripts\buyButton\checkout\checkout-totals.js" />
+    <Content Include="Scripts\buyButton\checkout\checkout-wizard-step.js" />
+    <Content Include="Scripts\buyButton\checkout\checkout-wizard-step.tpl.html" />
+    <Content Include="Scripts\buyButton\checkout\checkout-wizard.js" />
+    <Content Include="Scripts\buyButton\checkout\checkout-wizard.tpl.html" />
+    <Content Include="Scripts\buyButton\checkout\checkout.js" />
     <Content Include="Scripts\buyButton\virtoJavaScriptShoppingCartTemplate.tpl.html" />
+    <Content Include="Scripts\buyButton\checkout\checkout-coupon.tpl.html" />
+    <Content Include="Scripts\buyButton\checkout\checkout-lineItems.tpl.html" />
     <Content Include="Scripts\buyButton\checkout\checkout-shippingMethods.tpl.html" />
+    <Content Include="Scripts\buyButton\checkout\checkout-totals.tpl.html" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -196,15 +209,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\buyButton\checkout\checkout-address.js" />
-    <Content Include="Scripts\buyButton\checkout\checkout-address.tpl.html" />
-    <Content Include="Scripts\buyButton\checkout\checkout-email.js" />
-    <Content Include="Scripts\buyButton\checkout\checkout-email.tpl.html" />
-    <Content Include="Scripts\buyButton\checkout\checkout-shippingMethods.js" />
-    <Content Include="Scripts\buyButton\checkout\checkout-step.js" />
-    <Content Include="Scripts\buyButton\checkout\checkout-step.tpl.html" />
-    <Content Include="Scripts\buyButton\checkout\checkout2.js" />
-    <Content Include="Scripts\buyButton\checkout\checkout2.tpl.html" />
     <Content Include="Scripts\example\product-image.jpg" />
     <Content Include="Scripts\buyButton\services\cartService.js" />
     <Content Include="Scripts\example\style.css" />
@@ -212,6 +216,14 @@
     <Content Include="Scripts\example\index.html" />
     <Content Include="Scripts\buyButton\services\mockCartService.js" />
     <Content Include="Scripts\buyButton\javaScriptShoppingCart.js" />
+    <Content Include="Scripts\libraries\angular-animate-1.5.7.min.js" />
+    <Content Include="Scripts\libraries\angular-cookies-1.5.7.min.js" />
+    <Content Include="Scripts\libraries\angular-credit-cards-3.0.1.js" />
+    <Content Include="Scripts\libraries\angular-filter-0.5.8.js" />
+    <Content Include="Scripts\libraries\angularjs-1.5.7.min.js" />
+    <Content Include="Scripts\libraries\bootstrap-3.3.6.min.css" />
+    <Content Include="Scripts\libraries\ui-bootstrap-tpls-1.3.3.js" />
+    <Content Include="Scripts\libraries\underscore-min-1.8.3.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -232,6 +244,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\JavaScriptShoppingCartPredefinedPermissions.cs" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
