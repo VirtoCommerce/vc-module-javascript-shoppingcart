@@ -4,15 +4,15 @@
             There is no shipping method for current shipping address and items available!
         </div>
     </div> 
-    <div class="content-box" ng-repeat="(key, value) in $ctrl.availShippingMethods | groupBy: 'name' ">
+    <div class="content-box" ng-repeat="(key, value) in $ctrl.availShippingMethods | groupBy: 'shippingMethod.description' ">
         <div class="content-box__row" ng-bind="key"></div>
         <div class="content-box__row" ng-repeat="method in value">
             <div class="radio-wrapper">
                 <div class="radio__input">
-                    <input class="input-radio" id="{{ method.id }}" name="ShipmentMethodCode" type="radio" required="required" ng-value="method" ng-model="$ctrl.selectedMethod" ng-change="$ctrl.selectMethod(method)" />
+                    <input class="input-radio" id="{{ method.shippingMethod.id }}" name="ShipmentMethodCode" type="radio" required="required" ng-value="method" ng-model="$ctrl.selectedMethod" ng-change="$ctrl.selectMethod(method)" />
                 </div>
-                <label class="radio__label" for="{{ method.id }}" ng-bind="method.optionName ? method.optionName : method.name"></label>
-                <span class="order-summary__emphasis" ng-bind="method.totalWithTax.formatedAmount"></span>
+                <label class="radio__label" for="{{ method.shippingMethod.id }}" ng-bind="method.optionName ? method.optionName : method.shippingMethod.name"></label>
+                <span class="order-summary__emphasis" ng-bind="method.rate"></span>
                 <span ng-if="option.discountTotalWithTax.amount > 0">
                     <span class="order-summary__small-text strikethrough" ng-bind="method.priceWithTax.formatedAmount"></span>
                 </span>

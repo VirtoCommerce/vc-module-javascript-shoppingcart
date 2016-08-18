@@ -28,7 +28,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
 		public override void PostInitialize()
 		{
 			var cssBundle = new Bundle("~/checkout.css", new CssMinify())
-				.Include("~/Modules/JavaScriptShoppingCart/Scripts/libraries/bootstrap-3.3.6.min.css")
+				//todo: solve the problem with loading of fonts in bootstrap
+				//.Include("~/Modules/JavaScriptShoppingCart/Scripts/libraries/bootstrap-3.3.6.min.css")
 				.IncludeDirectory("~/Modules/JavaScriptShoppingCart/Scripts/buyButton/", "*.css", true);
 			BundleTable.Bundles.Add(cssBundle);
 
@@ -71,7 +72,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
 			if (checkoutThemeFolder != null)
 			{
 				var cssBundle = new Bundle($"~/{folderName}/checkout.css", new CssMinify())
-					.Include("~/Modules/JavaScriptShoppingCart/Scripts/libraries/bootstrap-3.3.6.min.css")
+					//.Include("~/Modules/JavaScriptShoppingCart/Scripts/libraries/bootstrap-3.3.6.min.css")
 					.IncludeDirectory($"~/App_Data/cms-content/Themes/{folderName}/checkout/", "*.css", true);
 				BundleTable.Bundles.Add(cssBundle);
 

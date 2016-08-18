@@ -3,7 +3,7 @@
 	<span class="close-popup glyphicon glyphicon-remove pull-right" ng-click="cancel()"></span>
 </div>
 <div class="modal-body">
-	<div ng-controller="checkoutController">
+	<div ng-controller="checkoutController" ng-init="checkout.cartContext = javaScriptShoppingCart.cartContext;">
 		<div class="wrap" ng-if="!checkout.isFinished">
 			<div class="sidebar">
 				<div class="sidebar__content">

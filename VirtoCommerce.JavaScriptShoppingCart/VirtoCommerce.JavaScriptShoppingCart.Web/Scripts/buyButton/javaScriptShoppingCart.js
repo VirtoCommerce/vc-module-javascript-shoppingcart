@@ -1,6 +1,10 @@
 ﻿var app = angular.module('storefrontApp', ['ngAnimate', 'ui.bootstrap', 'ngCookies', 'storefront.checkout']);
 
-angular.module('storefrontApp').controller('javaScriptShoppingCartCtrl', ['$scope', '$uibModal', '$log', '$cookies', '$http', 'cartService', function ($scope, $uibModal, $log, $cookies, $http, cartService) {
+app.value('config', {
+	apiUrl: ''
+});
+
+angular.module('storefrontApp').controller('javaScriptShoppingCartCtrl', ['$scope', '$uibModal', '$log', '$cookies', '$http', 'config', 'cartService', function ($scope, $uibModal, $log, $cookies, $http, config, cartService) {
 
 	$scope.javaScriptShoppingCart = {};
 
@@ -18,6 +22,8 @@ angular.module('storefrontApp').controller('javaScriptShoppingCartCtrl', ['$scop
 			expireDate.setDate(expireDate.getDate() + 1);
 			$cookies.put('virto-javascript-shoppingcart-user-id', $scope.javaScriptShoppingCart.userId, { 'expires': expireDate });
 		}
+
+		config.apiUrl = $scope.javaScriptShoppingCart.baseUrl;
 	}
 
 	$scope.open = function () {
@@ -28,20 +34,39 @@ angular.module('storefrontApp').controller('javaScriptShoppingCartCtrl', ['$scop
 		var itemSku = getAttributeValue(event.target, "data-item-sku");
 		var itemPrice = getAttributeValue(event.target, "data-item-price");
 		var itemCurrency = getAttributeValue(event.target, "data-item-currency");
+		var imageUrl = getAttributeValue(event.target, "data-item-image-url");
+		var thumbnailImageUrl = getAttributeValue(event.target, "data-item-thumbnail-image-url");
 
-		var lineItem = {
+		var cartContext = {
 			storeId: $scope.javaScriptShoppingCart.storeId,
-			userId: $scope.javaScriptShoppingCart.userId,
-			productId: itemId || "itemId",
-			catalogId: catalogId || "catalogId",
-			productName: itemName,
-			productSku: itemSku,
-			price: itemPrice,
+			cartName: "javaScriptShoppingCart",
+			customerId: $scope.javaScriptShoppingCart.userId,
+			customerName: "Anonymous",
 			currency: itemCurrency,
-			includeCartTemplate: !$scope.javaScriptShoppingCart.cartTemplate
+			languageCode: "ENG"
 		};
 
-		cartService.addLineItem(lineItem, $scope.javaScriptShoppingCart.baseUrl, $scope.javaScriptShoppingCart.apiKey).then(function (response) {
+		var addItemModel = {
+			cartContext: cartContext,
+			productId: itemId || "itemId",
+			CatalogId: catalogId || "catalogId",
+			Sku: itemSku,
+			Name: itemName,
+			ImageUrl: imageUrl,
+			ThumbnailImageUrl: thumbnailImageUrl,
+			Quantity: 1,
+			ListPrice: itemPrice,
+			SalePrice: itemPrice,
+			ExtendedPrice: itemPrice,
+			DiscountTotal: 0,
+			TaxTotal: 0
+		};
+
+		$scope.javaScriptShoppingCart.cartContext = cartContext;
+
+		//$scope.javaScriptShoppingCart.baseUrl, $scope.javaScriptShoppingCart.apiKey
+
+		cartService.addLineItem(addItemModel).then(function (response) {
 			$uibModal.open({
 				animation: true,
 				templateUrl: 'virtoJavaScriptShoppingCartTemplate.tpl.html',
