@@ -1,7 +1,8 @@
 ﻿var app = angular.module('storefrontApp', ['ngAnimate', 'ui.bootstrap', 'ngCookies', 'storefront.checkout']);
 
 app.value('config', {
-	apiUrl: ''
+	apiUrl: '',
+	apiKey: ''
 });
 
 angular.module('storefrontApp').controller('javaScriptShoppingCartCtrl', ['$scope', '$uibModal', '$log', '$cookies', '$http', 'config', 'cartService', function ($scope, $uibModal, $log, $cookies, $http, config, cartService) {
@@ -24,6 +25,7 @@ angular.module('storefrontApp').controller('javaScriptShoppingCartCtrl', ['$scop
 		}
 
 		config.apiUrl = $scope.javaScriptShoppingCart.baseUrl;
+		config.apiKey = $scope.javaScriptShoppingCart.apiKey;
 	}
 
 	$scope.open = function () {
@@ -43,7 +45,7 @@ angular.module('storefrontApp').controller('javaScriptShoppingCartCtrl', ['$scop
 			customerId: $scope.javaScriptShoppingCart.userId,
 			customerName: "Anonymous",
 			currency: itemCurrency,
-			languageCode: "ENG"
+			cultureName: "en-US"
 		};
 
 		var addItemModel = {
@@ -64,9 +66,7 @@ angular.module('storefrontApp').controller('javaScriptShoppingCartCtrl', ['$scop
 
 		$scope.javaScriptShoppingCart.cartContext = cartContext;
 
-		//$scope.javaScriptShoppingCart.baseUrl, $scope.javaScriptShoppingCart.apiKey
-
-		cartService.addLineItem(addItemModel).then(function (response) {
+		cartService.addLineItem(cartContext, addItemModel).then(function (response) {
 			$uibModal.open({
 				animation: true,
 				templateUrl: 'virtoJavaScriptShoppingCartTemplate.tpl.html',

@@ -1,49 +1,54 @@
 ﻿angular.module('storefrontApp').service('cartService', ['$http', 'config', function ($http, config) {
+
+	function getUrl(cartContext) {
+		return config.apiUrl + 'api/checkout2/' + cartContext.storeId + '/' + cartContext.customerId + '/carts/' + cartContext.cartName + '/' + cartContext.currency + '/' + cartContext.cultureName;
+	}
+
 	return {
 		getCart: function (cartContext) {
-			return $http.post(config.apiUrl + 'api/checkout/carts/current', cartContext);
+			return $http.get(getUrl(cartContext) + '/current?api_key=' + config.apiKey + '&t=' + new Date().getTime());
 		},
-		//getCartItemsCount: function () {
-		//	return $http.get('storefrontapi/cart/itemscount?t=' + new Date().getTime());
-		//},
-		addLineItem: function (addItemModel) {
-			return $http.post(config.apiUrl + 'api/checkout/cart/items', addItemModel);
+		getCartItemsCount: function (cartContext) {
+			return $http.get(getUrl(cartContext) + '/itemscount?api_key=' + config.apiKey + '&t=' + new Date().getTime());
 		},
-		//changeLineItemQuantity: function (lineItemId, quantity) {
-		//	return $http.put('storefrontapi/cart/items', { lineItemId: lineItemId, quantity: quantity });
-		//},
-		//removeLineItem: function (lineItemId) {
-		//	return $http.delete('storefrontapi/cart/items?lineItemId=' + lineItemId);
-		//},
-		//clearCart: function () {
-		//	return $http.post('storefrontapi/cart/clear');
-		//},
+		addLineItem: function (cartContext, addItemModel) {
+			return $http.post(getUrl(cartContext) + '/items?api_key=' + config.apiKey, addItemModel);
+		},
+		changeLineItem: function (cartContext, lineItemId, quantity) {
+			return $http.put(getUrl(cartContext) + '/items?api_key=' + config.apiKey, { lineItemId: lineItemId, quantity: quantity });
+		},
+		removeLineItem: function (cartContext, lineItemId) {
+			return $http.delete(getUrl(cartContext) + '/items?api_key=' + config.apiKey + '&lineItemId=' + lineItemId);
+		},
+		clearCart: function (cartContext) {
+			return $http.post(getUrl(cartContext) + '/clear?api_key=' + config.apiKey);
+		},
 		getCountries: function () {
-			return $http.get(config.apiUrl + 'api/checkout/countries?t=' +new Date().getTime());
+			return $http.get(config.apiUrl + 'api/checkout2/countries?api_key=' + config.apiKey + '&t=' + new Date().getTime());
 		},
 		getCountryRegions: function (countryCode) {
-			return $http.get(config.apiUrl + 'api/checkout/countries/' + countryCode + '/regions?t=' +new Date().getTime());
+			return $http.get(config.apiUrl + 'api/checkout2/countries/' + countryCode + '/regions?api_key=' + config.apiKey + 't=' + new Date().getTime());
 		},
-		//addCoupon: function (couponCode) {
-		//	return $http.post('storefrontapi/cart/coupons/' + couponCode);
-		//},
-		//removeCoupon: function () {
-		//	return $http.delete('storefrontapi/cart/coupons');
-		//},
-		addOrUpdateShipment: function (shipment) {
-			return $http.post(config.apiUrl + 'api/checkout/cart/shipments', shipment);
+		addCoupon: function (cartContext, couponCode) {
+			return $http.post(getUrl(cartContext) + '/coupons/' + couponCode + '?api_key=' + config.apiKey);
 		},
-		addOrUpdatePayment: function (payment) {
-			return $http.post(config.apiUrl + 'api/checkout/cart/payments', payment);
+		removeCoupon: function (cartContext) {
+			return $http.delete(getUrl(cartContext) + '/coupons?api_key=' + config.apiKey);
+		},
+		addOrUpdateShipment: function (cartContext, shipment) {
+			return $http.post(getUrl(cartContext) + '/shipments?api_key=' + config.apiKey, shipment);
+		},
+		addOrUpdatePayment: function (cartContext, payment) {
+			return $http.post(getUrl(cartContext) + '/payments?api_key=' + config.apiKey, payment);
 		},
 		getAvailableShippingMethods: function (cartContext, shipmentId) {
-			return $http.post(config.apiUrl + 'api/checkout/cart/shipments/' + shipmentId + '/shippingmethods?t=' +new Date().getTime(), cartContext);
+			return $http.get(getUrl(cartContext) + '/shipments/' + shipmentId + '/shippingmethods?api_key=' + config.apiKey + '&t=' + new Date().getTime());
 		},
 		getAvailablePaymentMethods: function (cartContext) {
-			return $http.post(config.apiUrl + 'api/checkout/cart/paymentmethods', cartContext);
+			return $http.get(getUrl(cartContext) + '/paymentmethods?api_key=' + config.apiKey);
 		},
-		createOrder: function (createOrderModel) {
-			return $http.post(config.apiUrl + 'api/checkout/cart/createorder', createOrderModel);
+		createOrder: function (cartContext, createOrderModel) {
+			return $http.post(getUrl(cartContext) + '/createorder?api_key=' + config.apiKey, createOrderModel);
 		}
 	}
 }]);
