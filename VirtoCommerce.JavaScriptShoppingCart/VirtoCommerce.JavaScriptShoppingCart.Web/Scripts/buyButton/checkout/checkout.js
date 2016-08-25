@@ -64,13 +64,17 @@ angular.module(moduleName, ['credit-cards', 'angular.filter'])
     				}
     			}
     			$scope.validateCheckout($scope.checkout);
+
+    			cart.currencyCode = 'USD';
+    			cart.currencySign = '$';
+
     			return cart;
     		});
     	};
 
     	$scope.applyCoupon = function (coupon) {
     		coupon.processing = true;
-    		cartService.addCoupon(coupon.code).then(function (response) {
+    		cartService.addCoupon($scope.checkout.cartContext, coupon.code).then(function (response) {
     			var coupon = response.data;
     			coupon.processing = false;
     			$scope.checkout.coupon = coupon;
@@ -85,7 +89,7 @@ angular.module(moduleName, ['credit-cards', 'angular.filter'])
 
     	$scope.removeCoupon = function (coupon) {
     		coupon.processing = true;
-    		cartService.removeCoupon().then(function (response) {
+    		cartService.removeCoupon($scope.checkout.cartContext).then(function (response) {
     			coupon.processing = false;
     			$scope.checkout.coupon = null;
     			$scope.reloadCart();
@@ -151,7 +155,7 @@ angular.module(moduleName, ['credit-cards', 'angular.filter'])
     		};
     		return wrapLoading(function () {
 			    shipment.cartContext = $scope.checkout.cartContext;
-    			return cartService.addOrUpdateShipment(shipment).then($scope.reloadCart);
+			    return cartService.addOrUpdateShipment($scope.checkout.cartContext, shipment).then($scope.reloadCart);
     		});
     	};
 
@@ -162,7 +166,7 @@ angular.module(moduleName, ['credit-cards', 'angular.filter'])
 						cartContext: $scope.checkout.cartContext,
 						bancCardInfo: $scope.checkout.bankCardInfo
 					};
-					return cartService.createOrder(createOrderModel);
+		    		return cartService.createOrder($scope.checkout.cartContext, createOrderModel);
     			}).then(function (response) {
     				var order = response.data.order;
     				$scope.checkout.order = order;
@@ -185,7 +189,7 @@ angular.module(moduleName, ['credit-cards', 'angular.filter'])
 
 		    payment.cartContext = $scope.checkout.cartContext;
 
-		    return cartService.addOrUpdatePayment(payment);
+		    return cartService.addOrUpdatePayment($scope.checkout.cartContext, payment);
 	    }
 
     	function handlePostPaymentResult(order, orderProcessingResult) {

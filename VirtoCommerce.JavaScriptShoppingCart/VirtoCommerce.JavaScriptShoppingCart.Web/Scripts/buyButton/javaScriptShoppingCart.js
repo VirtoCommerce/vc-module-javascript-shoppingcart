@@ -34,6 +34,7 @@ angular.module('storefrontApp').controller('javaScriptShoppingCartCtrl', ['$scop
 		var catalogId = getAttributeValue(event.target, "data-item-catalog-id");
 		var itemName = getAttributeValue(event.target, "data-item-name");
 		var itemSku = getAttributeValue(event.target, "data-item-sku");
+		var itemListPrice = getAttributeValue(event.target, "data-item-list-price");
 		var itemPrice = getAttributeValue(event.target, "data-item-price");
 		var itemCurrency = getAttributeValue(event.target, "data-item-currency");
 		var imageUrl = getAttributeValue(event.target, "data-item-image-url");
@@ -45,7 +46,8 @@ angular.module('storefrontApp').controller('javaScriptShoppingCartCtrl', ['$scop
 			customerId: $scope.javaScriptShoppingCart.userId,
 			customerName: "Anonymous",
 			currency: itemCurrency,
-			cultureName: "en-US"
+			cultureName: "en-US",
+			showPricesWithTaxes: false
 		};
 
 		var addItemModel = {
@@ -57,9 +59,10 @@ angular.module('storefrontApp').controller('javaScriptShoppingCartCtrl', ['$scop
 			ImageUrl: imageUrl,
 			ThumbnailImageUrl: thumbnailImageUrl,
 			Quantity: 1,
-			ListPrice: itemPrice,
-			SalePrice: itemPrice,
-			ExtendedPrice: itemPrice,
+			ListPrice: itemListPrice,
+			SalePrice: itemListPrice,
+			ExtendedPrice: itemListPrice,
+			PlacedPrice: itemPrice,
 			DiscountTotal: 0,
 			TaxTotal: 0
 		};

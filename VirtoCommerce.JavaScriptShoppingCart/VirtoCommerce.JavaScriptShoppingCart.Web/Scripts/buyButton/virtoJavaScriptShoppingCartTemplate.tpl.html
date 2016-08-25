@@ -9,16 +9,16 @@
 				<div class="sidebar__content">
 					<div class="order-summary" ng-class="{ 'order-summary--is-expanded': orderSummaryVisible, 'order-summary--is-collapsed': !orderSummaryVisible }">
 						<div class="order-summary__section order-summary__section--product-list">
-							<vc-checkout-line-items items="checkout.cart.items"></vc-checkout-line-items>
+							<vc-checkout-line-items items="checkout.cart.items" show-prices-with-taxes="checkout.cartContext.showPricesWithTaxes"></vc-checkout-line-items>
 						</div>
 						<div class="order-summary__section order-summary__section--discount">
 							<vc-checkout-coupon coupon="checkout.coupon" on-apply-coupon="applyCoupon(coupon)" on-remove-coupon="removeCoupon(coupon)"></vc-checkout-coupon>
 						</div>
 						<div class="order-summary__section order-summary__section--total-lines">
-							<vc-checkout-totals cart="checkout.cart"></vc-checkout-totals>
+							<vc-checkout-totals cart="checkout.cart" show-prices-with-taxes="checkout.cartContext.showPricesWithTaxes"></vc-checkout-totals>
 						</div>
 						<div class="order-summary__section order-summary__section--total">
-							<vc-checkout-totals display-only-total="true" cart="checkout.cart"></vc-checkout-totals>
+							<vc-checkout-totals display-only-total="true" cart="checkout.cart" show-prices-with-taxes="checkout.cartContext.showPricesWithTaxes"></vc-checkout-totals>
 						</div>
 					</div>
 				</div>
