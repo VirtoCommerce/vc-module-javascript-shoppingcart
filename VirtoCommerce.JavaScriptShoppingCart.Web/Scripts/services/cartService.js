@@ -2,7 +2,7 @@
 	.service('virtoCommerce.cartModule.api', ['$http', function ($http) {
 
 	function getUrl(cart) {
-		return cart.apiUrl + 'api/carts/' + cart.storeId + '/' + cart.userId + '/' + cart.name + '/' + cart.currencyCode + '/' + cart.culture;
+		return cart.apiUrl + 'api/carts/' + cart.storeId + '/' + cart.userId + '/' + cart.name + '/' + cart.currency + '/' + cart.culture;
 	}
 
 	return {
@@ -45,8 +45,8 @@
 		getAvailablePaymentMethods: function (cart) {
 			return $http.get(cart.apiUrl + 'api/carts/' + cart.id + '/availpaymentmethods?api_key=' + cart.apiKey);
 		},
-		createOrder: function (cart, createOrderModel) {
-			return $http.post(cart.apiUrl + 'api/carts/' + cart.id + '/createorder?api_key=' + cart.apiKey, createOrderModel);
+		createOrder: function (cart) {
+			return $http.post(cart.apiUrl + 'api/carts/placeorder?api_key=' + cart.apiKey, cart);
 		}
 	}
 }]);

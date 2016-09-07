@@ -4,16 +4,16 @@
 			<div class="checkout-sidebar__content">
 				<div class="order-summary" ng-class="{ 'order-summary--is-expanded': $ctrl.orderSummaryVisible, 'order-summary--is-collapsed': !$ctrl.orderSummaryVisible }" ng-click="$ctrl.orderSummaryVisible = !$ctrl.orderSummaryVisible">
 					<div class="order-summary__section order-summary__section--product-list">
-						<vc-checkout-line-items items="$ctrl.cart.items" show-prices-with-taxes="$ctrl.showPricesWithTaxes" currency="$ctrl.cart.currency"></vc-checkout-line-items>
+						<vc-checkout-line-items items="$ctrl.cart.items" show-prices-with-taxes="$ctrl.showPricesWithTaxes" currencySymbol="$ctrl.cart.currencySymbol"></vc-checkout-line-items>
 					</div>
 					<div class="order-summary__section order-summary__section--discount">
 						<vc-checkout-coupon coupon="$ctrl.cart.coupon" on-apply-coupon="$ctrl.cart.applyCoupon(coupon)" on-remove-coupon="$ctrl.cart.removeCoupon(coupon)"></vc-checkout-coupon>
 					</div>
 					<div class="order-summary__section order-summary__section--total-lines">
-						<vc-checkout-totals cart="$ctrl.cart" show-prices-with-taxes="$ctrl.showPricesWithTaxes" currency="$ctrl.cart.currency"></vc-checkout-totals>
+						<vc-checkout-totals cart="$ctrl.cart" show-prices-with-taxes="$ctrl.showPricesWithTaxes" currencySymbol="$ctrl.cart.currencySymbol"></vc-checkout-totals>
 					</div>
 					<div class="order-summary__section order-summary__section--total">
-						<vc-checkout-totals display-only-total="true" cart="$ctrl.cart" show-prices-with-taxes="$ctrl.showPricesWithTaxes" currency="$ctrl.cart.currency"></vc-checkout-totals>
+						<vc-checkout-totals display-only-total="true" cart="$ctrl.cart" show-prices-with-taxes="$ctrl.showPricesWithTaxes" currencySymbol="$ctrl.cart.currencySymbol"></vc-checkout-totals>
 					</div>
 				</div>
 			</div>
@@ -68,7 +68,7 @@
 									<h2 class="section__title">{{ 'checkout.shipping_method.title' | translate }}</h2>
 								</div>
 								<div class="section__content">
-									<vc-checkout-shipping-methods shipment="$ctrl.checkout.shipment" on-select-shipping-method="$ctrl.selectShippingMethod(shippingMethod)" get-avail-shipping-methods="$ctrl.cart.getAvailShippingMethods($ctrl.checkout.shipment)" currency="$ctrl.cart.currency"></vc-checkout-shipping-methods>
+									<vc-checkout-shipping-methods shipment="$ctrl.checkout.shipment" on-select-shipping-method="$ctrl.selectShippingMethod(shippingMethod)" get-avail-shipping-methods="$ctrl.cart.getAvailShippingMethods($ctrl.checkout.shipment)" currencySymbol="$ctrl.cart.currencySymbol"></vc-checkout-shipping-methods>
 								</div>
 							</div>
 						</div>

@@ -24,7 +24,7 @@ cartModule.component('vcCart', {
 		var ctrl = this;
 		carts[ctrl.name] = this;
 
-		ctrl.currency = { code: ctrl.currencyCode };
+		ctrl.currency = ctrl.currencyCode;
 		ctrl.availCountries = [];
 
 		this.reloadCart = function () {
@@ -34,7 +34,7 @@ cartModule.component('vcCart', {
 					return ctrl;
 				}).then(function (cart) {
 					ctrl.availCountries = countriesService.countries;
-					ctrl.currency = _.find(currenciesService.currencies, function (x) { return x.code === cart.currencyCode; });
+					ctrl.currencySymbol = _.find(currenciesService.currencies, function (x) { return x.code === cart.currencyCode; }).symbol;
 					return cart;
 				});
 			});
@@ -74,18 +74,19 @@ cartModule.component('vcCart', {
 		};
 
 		this.addOrUpdateShipment = function (shipment) {
-			shipment.currency = this.currency.code;
+			shipment.currency = this.currency;
 			return cartApi.addOrUpdateShipment(ctrl, shipment).then(function () {
 				return ctrl.reloadCart();
 			});
 		}
 
 		this.addOrUpdatePayment = function (payment) {
+			payment.currency = this.currency;
 			return cartApi.addOrUpdatePayment(ctrl, payment);
 		}
 
-		this.createOrder = function (createOrderModel) {
-			return cartApi.createOrder(ctrl, createOrderModel);
+		this.createOrder = function () {
+			return cartApi.createOrder(ctrl);
 		}
 
 		this.getAvailPaymentMethods = function () {

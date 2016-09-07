@@ -5,11 +5,12 @@ cartModule.component('vcCheckoutTotals', {
 	bindings: {
 		cart: '=',
 		currency: '<',
+		currencySymbol: '<',
 		showPricesWithTaxes: '<',
 		displayOnlyTotal: '<'
 	},
 	controller: [function () {
 		var ctrl = this;
-	
+
 	}]
 });

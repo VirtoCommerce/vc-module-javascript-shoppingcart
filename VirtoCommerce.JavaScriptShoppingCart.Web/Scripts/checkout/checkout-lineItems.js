@@ -4,7 +4,7 @@ cartModule.component('vcCheckoutLineItems', {
 	templateUrl: "checkout-lineItems.tpl.html",
 	bindings: {
 		items: '=',
-		currency: '<',
+		currencySymbol: '<',
 		showPricesWithTaxes: '='
 	},
 	controller: [function () {

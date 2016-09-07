@@ -7,7 +7,7 @@ cartModule.component('vcCheckoutShippingMethods', {
 	},
 	bindings: {
 		shipment: '=',
-		currency: '<',
+		currencySymbol: '<',
 		getAvailShippingMethods: '&',
 		onSelectShippingMethod: '&'
 	},
