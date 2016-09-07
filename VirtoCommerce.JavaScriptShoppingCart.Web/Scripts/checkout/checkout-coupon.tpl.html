@@ -12,7 +12,7 @@
                         <i class="btn__spinner icon icon--button-spinner"></i>
                     </button>
                 </div>
-                <p class="field__message field__message--error" ng-if="$ctrl.coupon && $ctrl.coupon.code && !$ctrl.coupon.isValid">
+                <p class="field__message field__message--error" ng-if="$ctrl.coupon && $ctrl.coupon.code && $ctrl.coupon.isApplied && !$ctrl.coupon.isValid">
                     {{ 'checkout.invalid_coupon_code' | translate }}
                 </p>
             </div>

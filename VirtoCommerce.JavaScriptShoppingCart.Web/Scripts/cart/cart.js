@@ -31,6 +31,10 @@ cartModule.component('vcCart', {
 			return wrapLoading(function () {
 				return cartApi.getCart(ctrl).then(function (response) {
 					angular.extend(ctrl, response.data);
+					if (response.data.coupon) {
+						ctrl.coupon = response.data.coupon;
+						ctrl.coupon.isApplied = true;
+					}
 					return ctrl;
 				}).then(function (cart) {
 					ctrl.availCountries = countriesService.countries;

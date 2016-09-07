@@ -43,7 +43,7 @@ cartModule.component('vcCheckout', {
 			return ctrl.cart.reloadCart().then(function (cart) {
 				cart.hasPhysicalProducts = true;
 				ctrl.cart = cart;
-				ctrl.checkout.coupon = cart.coupon || ctrl.checkout.coupon;
+				//ctrl.cart.coupon = cart.coupon || ctrl.checkout.coupon;
 				if (cart.payments.length) {
 					ctrl.checkout.payment = cart.payments[0];
 					ctrl.checkout.paymentMethod.code = cart.payments[0].paymentGatewayCode;
