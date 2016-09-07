@@ -2,7 +2,7 @@
 	.service('virtoCommerce.cartModule.api', ['$http', function ($http) {
 
 	function getUrl(cart) {
-		return cart.apiUrl + 'api/cart/' + cart.storeId + '/' + cart.userId + '/carts/' + cart.name + '/' + cart.currencyCode + '/' + cart.culture;
+		return cart.apiUrl + 'api/carts/' + cart.storeId + '/' + cart.userId + '/' + cart.name + '/' + cart.currencyCode + '/' + cart.culture;
 	}
 
 	return {
@@ -10,43 +10,43 @@
 			return $http.get(getUrl(cart) + '/current?api_key=' + cart.apiKey + '&t=' + new Date().getTime());
 		},
 		getCartItemsCount: function (cart) {
-			return $http.get(getUrl(cart) + '/itemscount?api_key=' + cart.apiKey + '&t=' + new Date().getTime());
+			return $http.get(cart.apiUrl + 'api/carts/' + cart.id + '/itemscount?api_key=' + cart.apiKey + '&t=' + new Date().getTime());
 		},
 		addLineItem: function (cart, lineItem) {
-			return $http.post(getUrl(cart) + '/items?api_key=' + cart.apiKey, lineItem);
+			return $http.post(cart.apiUrl + 'api/carts/' + cart.id + '/items?api_key=' + cart.apiKey, lineItem);
 		},
 		addProduct: function (cart, productId, quantity) {
-			return $http.post(getUrl(cart) + '/product?api_key=' + cart.apiKey + '&productId=' + productId + '&quantity=' + quantity, lineItem);
+			return $http.post(cart.apiUrl + 'api/carts/' + cart.id + '/product?api_key=' + cart.apiKey + '&productId=' + productId + '&quantity=' + quantity, lineItem);
 		},
 		changeLineItem: function (cart, lineItemId, quantity) {
-			return $http.put(getUrl(cart) + '/items?api_key=' + cart.apiKey, { lineItemId: lineItemId, quantity: quantity });
+			return $http.put(cart.apiUrl + 'api/carts/' + cart.id + '/items?api_key=' + cart.apiKey, { lineItemId: lineItemId, quantity: quantity });
 		},
 		removeLineItem: function (cart, lineItemId) {
-			return $http.delete(getUrl(cart) + '/items?api_key=' + cart.apiKey + '&lineItemId=' + lineItemId);
+			return $http.delete(cart.apiUrl + 'api/carts/' + cart.id + '/items?api_key=' + cart.apiKey + '&lineItemId=' + lineItemId);
 		},
 		clearCart: function (cart) {
-			return $http.post(getUrl(cart) + '/clear?api_key=' + cart.apiKey);
+			return $http.post(cart.apiUrl + 'api/carts/' + cart.id + '/clear?api_key=' + cart.apiKey);
 		},
 		addCoupon: function (cart, couponCode) {
-			return $http.post(getUrl(cart) + '/coupons/' + couponCode + '?api_key=' + cart.apiKey);
+			return $http.post(cart.apiUrl + 'api/carts/' + cart.id + '/coupons/' + couponCode + '?api_key=' + cart.apiKey);
 		},
 		removeCoupon: function (cart) {
-			return $http.delete(getUrl(cart) + '/coupons?api_key=' + cart.apiKey);
+			return $http.delete(cart.apiUrl + 'api/carts/' + cart.id + '/coupons?api_key=' + cart.apiKey);
 		},
 		addOrUpdateShipment: function (cart, shipment) {
-			return $http.post(getUrl(cart) + '/shipments?api_key=' + cart.apiKey, shipment);
+			return $http.post(cart.apiUrl + 'api/carts/' + cart.id + '/shipments?api_key=' + cart.apiKey, shipment);
 		},
 		addOrUpdatePayment: function (cart, payment) {
-			return $http.post(getUrl(cart) + '/payments?api_key=' + cart.apiKey, payment);
+			return $http.post(cart.apiUrl + 'api/carts/' + cart.id + '/payments?api_key=' + cart.apiKey, payment);
 		},
 		getAvailableShippingMethods: function (cart, shipmentId) {
-			return $http.get(getUrl(cart) + '/shipments/' + shipmentId + '/shippingmethods?api_key=' + cart.apiKey + '&t=' + new Date().getTime());
+			return $http.get(cart.apiUrl + 'api/carts/' + cart.id + '/availshippingrates?api_key=' + cart.apiKey + '&t=' + new Date().getTime());
 		},
 		getAvailablePaymentMethods: function (cart) {
-			return $http.get(getUrl(cart) + '/paymentmethods?api_key=' + cart.apiKey);
+			return $http.get(cart.apiUrl + 'api/carts/' + cart.id + '/availpaymentmethods?api_key=' + cart.apiKey);
 		},
 		createOrder: function (cart, createOrderModel) {
-			return $http.post(getUrl(cart) + '/createorder?api_key=' + cart.apiKey, createOrderModel);
+			return $http.post(cart.apiUrl + 'api/carts/' + cart.id + '/createorder?api_key=' + cart.apiKey, createOrderModel);
 		}
 	}
 }]);
