@@ -74,6 +74,7 @@ cartModule.component('vcCart', {
 		};
 
 		this.addOrUpdateShipment = function (shipment) {
+			shipment.currency = this.currency.code;
 			return cartApi.addOrUpdateShipment(ctrl, shipment).then(function () {
 				return ctrl.reloadCart();
 			});
