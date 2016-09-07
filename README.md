@@ -1,4 +1,4 @@
-# VirtoCommerce.javascript-shoppingcart
+# VirtoCommerce.JavascriptShoppingCart
 VirtoCommerce.JavascriptShoppingCart module represents checkout which can be used on any site.
 
 
