@@ -1,6 +1,7 @@
 ﻿var cartModule = angular.module('virtoCommerce.cartModule', ['ngAnimate', 'ui.bootstrap', 'ngCookies', 'pascalprecht.translate', 'angular.filter']);
 
 cartModule.config(['$translateProvider', 'virtoCommerce.cartModule.translations', function ($translateProvider, translations) {
+	$translateProvider.useSanitizeValueStrategy('sanitizeParameters');
 	$translateProvider.translations('en', translations);
 	$translateProvider.preferredLanguage('en');
 }]);
