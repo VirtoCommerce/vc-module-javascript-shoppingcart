@@ -4,7 +4,7 @@ using System.Text;
 using System.Web;
 using System.Web.Optimization;
 
-namespace VirtoCommerce.JavaScriptShoppingCart.Web.Budnles
+namespace VirtoCommerce.JavaScriptShoppingCart.Web.Bundles
 {
 	public class AngularJavaScriptTemplateCacheBundleTransform : IBundleTransform
 	{

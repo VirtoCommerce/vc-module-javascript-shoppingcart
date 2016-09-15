@@ -248,8 +248,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Budnles\AngularJavaScriptBundle.cs" />
-    <Compile Include="Budnles\AngularJavaScriptTemplateCacheBundleTransform.cs" />
+    <Compile Include="Bundles\AngularJavaScriptBundle.cs" />
+    <Compile Include="Bundles\AngularJavaScriptTemplateCacheBundleTransform.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

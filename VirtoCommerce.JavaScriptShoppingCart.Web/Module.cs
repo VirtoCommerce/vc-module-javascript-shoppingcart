@@ -3,7 +3,7 @@ using System.Linq;
 using System.Web.Hosting;
 using System.Web.Optimization;
 using Microsoft.Practices.Unity;
-using VirtoCommerce.JavaScriptShoppingCart.Web.Budnles;
+using VirtoCommerce.JavaScriptShoppingCart.Web.Bundles;
 using VirtoCommerce.Platform.Core.Modularity;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Web
