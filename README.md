@@ -67,6 +67,32 @@ After cloning the repository, you will have the following files tree:
 
 VirtoCommerce JavaScript Shopping Cart has a component-based application structure. Various components can be adjusted to your needs in Scripts/Checkout folder. In addition, you can adjust Content/checkout.css file that contains all styles.
 
+# Wordpress JavaScript Shopping Cart Setup
+
+Wordpress.org is the most popular CMS. This section aims to demonstrate the simplicity of Virtocommerce JavaScript Shopping Cart that will let you transform your Wordpress.org website into a full-fledged e-commerce platform.
+
+We assume that you already have a WordPress.org site installed and that you know the basics.
+
+First of all, you'll need to add the Virtocommerce JavaScript Shopping Cart JavaScript file and stylesheet to your template.
+
+Add them in the header.php file located in /wp-content/themes/{your_theme}/header.php.
+
+![wordpress](https://cloud.githubusercontent.com/assets/16013311/18549886/857e655a-7b51-11e6-9d5e-f43344d6f9c2.png)
+
+Then you should create a blog post and add buy button.
+
+![worpderss-create-blog-post](https://cloud.githubusercontent.com/assets/16013311/18549914/aaab1eb8-7b51-11e6-9d02-5efb52574a08.png)
+
+Now, if you navigate to this blog post, you should be able to buy it!
+
+You should have something that looks like this:
+
+![wordpress-blog-post](https://cloud.githubusercontent.com/assets/16013311/18549893/938759f4-7b51-11e6-92cd-25a6346beb88.png)
+
+When you click the button you will see a modal which contain standard checkout with all available steps.
+
+![wordpress-checkout](https://cloud.githubusercontent.com/assets/16013311/18549930/c01ecb00-7b51-11e6-8562-f53c0cdbbf02.png)
+
 
 # License
 Copyright (c) Virtosoftware Ltd.  All rights reserved.
