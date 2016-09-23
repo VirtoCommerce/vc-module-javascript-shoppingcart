@@ -94,6 +94,10 @@ cartModule.component('vcCart', {
 			return cartApi.createOrder(ctrl);
 		}
 
+		this.removeCart = function () {
+		    return cartApi.removeCart(ctrl);
+		}
+
 		this.getAvailPaymentMethods = function () {
 			return cartApi.getAvailablePaymentMethods(ctrl).then(function (response) {
 				return response.data;
