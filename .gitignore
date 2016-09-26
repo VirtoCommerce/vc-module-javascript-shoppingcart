@@ -12,10 +12,13 @@
 [Rr]elease/
 bin/x64/
 bin/x86/
-build/*
+build/
 [Bb]in/
 [Bb]in/**/*
 [Oo]bj/
+
+# Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
+!packages/*/build/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
@@ -150,15 +153,6 @@ $RECYCLE.BIN/
 .DS_Store
 
 *.nupkg
+*.zip
 
 .vs/
-
-/VirtoCommerce.Platform.Web/App_Data
-/VirtoCommerce.Platform.Web/client_packages
-/VirtoCommerce.Platform.Web/node_modules
-/VirtoCommerce.Platform.Web/Assets
-/VirtoCommerce.Platform.Web/Modules
-
-# VirtoCommerce.Module/build folder is required for the NuGet package
-!VirtoCommerce.Module/build/
-/artifacts
