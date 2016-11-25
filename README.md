@@ -55,7 +55,7 @@ You have designed an awesome blog with Wordpress or other platform, and now you 
   <button id="buyButton" type="button" class="javascript-shoppingcart-add-item btn" ng-click="carts.default.addLineItem({name: 'Handcrafted lamp', quantity: 1, listPrice: 250.00', currency: 'USD', productId: '1', sku: 'PH1231G2', catalogId: 'Hand-made', imageUrl: https://virtocommercedemo1.blob.core.windows.net/catalog/1435269990000_1163371.jpg'}); openCheckout();">Buy the lamp</button>
   ```
   
-  In parameters you should provide the required product information: name, quantity, salePrice, currency, productId, sku, catalogId, imageUrl.
+  In parameters you should provide the required product information: name, quantity, listPrice, currency, productId, sku, catalogId, imageUrl.
 
 # Customization
 
