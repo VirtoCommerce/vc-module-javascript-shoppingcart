@@ -22,7 +22,7 @@
 	            return $http.put(cart.apiUrl + 'api/carts/' + cart.id + '/items?api_key=' + cart.apiKey, { lineItemId: lineItemId, quantity: quantity });
 	        },
 	        removeLineItem: function (cart, lineItemId) {
-	            return $http.delete(cart.apiUrl + 'api/carts/' + cart.id + '/items?api_key=' + cart.apiKey + '&lineItemId=' + lineItemId);
+	            return $http.delete(cart.apiUrl + 'api/carts/' + cart.id + '/items/' + lineItemId + '?api_key=' + cart.apiKey);
 	        },
 	        clearCart: function (cart) {
 	            return $http.post(cart.apiUrl + 'api/carts/' + cart.id + '/clear?api_key=' + cart.apiKey);
