@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtoCommerce.JavaScriptShoppingCart.Web", "VirtoCommerce.JavaScriptShoppingCart.Web\VirtoCommerce.JavaScriptShoppingCart.Web.csproj", "{490D4B55-6462-4AAA-A27D-3CD76879C2B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtoCommerce.JavaScriptShoppingCart.Test", "VirtoCommerce.JavaScriptShoppingCart.Test\VirtoCommerce.JavaScriptShoppingCart.Test.csproj", "{0A694BAF-D8A5-4271-A23D-54F214EBB7D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtoCommerce.JavaScriptShoppingCart.IntegrationSample", "VirtoCommerce.JavaScriptShoppingCart.IntegrationSample\VirtoCommerce.JavaScriptShoppingCart.IntegrationSample.csproj", "{F694B91D-0B92-477C-9FD4-77D7AAF1E42C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +23,15 @@ Global
 		{0A694BAF-D8A5-4271-A23D-54F214EBB7D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A694BAF-D8A5-4271-A23D-54F214EBB7D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A694BAF-D8A5-4271-A23D-54F214EBB7D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F694B91D-0B92-477C-9FD4-77D7AAF1E42C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F694B91D-0B92-477C-9FD4-77D7AAF1E42C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F694B91D-0B92-477C-9FD4-77D7AAF1E42C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F694B91D-0B92-477C-9FD4-77D7AAF1E42C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5633B2FB-1765-476D-A233-2477B54C65D5}
 	EndGlobalSection
 EndGlobal
