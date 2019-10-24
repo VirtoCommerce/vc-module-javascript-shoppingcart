@@ -143,6 +143,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+      <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Content Include="Scripts\cart\cart.js" />
     <Content Include="Scripts\checkout-modal\checkout-modal.tpl.html" />
     <Content Include="Scripts\checkout\checkout-address.js" />
