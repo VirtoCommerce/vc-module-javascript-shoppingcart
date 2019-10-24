@@ -84,14 +84,15 @@ cartModule.component('vcCheckout', {
 			updatePayment(ctrl.checkout.payment).then(function () {
 				return ctrl.cart.createOrder({ bancCardInfo: ctrl.checkout.bankCardInfo });
 			}).then(function (response) {
-			    var order = response.data;
-			    if (order) {
-			        ctrl.checkout.order = order;
-			        ctrl.cart.removeCart().then(function () {
-			            ctrl.cart.reloadCart();
-			            ctrl.checkout.isFinished = true;
-			        });
-			    }
+				ctrl.checkout.loading = false;
+				var order = response.data;
+				if (order) {
+					ctrl.checkout.order = order;
+					ctrl.cart.removeCart().then(function () {
+						ctrl.cart.reloadCart();
+						ctrl.checkout.isFinished = true;
+					});
+				}
 			});
 		}
 

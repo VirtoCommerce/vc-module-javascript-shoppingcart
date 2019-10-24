@@ -25,7 +25,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Bundles
 				{
 					var absFile = HttpContext.Current.Server.MapPath(file.IncludedVirtualPath);
 					var content = File.ReadAllText(absFile);
-					strBundleResponse.Append(content);
+					strBundleResponse.AppendLine(content);
 				}
 			}
 
