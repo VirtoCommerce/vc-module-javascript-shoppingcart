@@ -10,7 +10,7 @@ cartModule.component('vcCheckoutWizard', {
 	},
 	controller: ['$scope', function ($scope) {
 		var ctrl = this;
-		//ctrl.wizard = ctrl;
+		ctrl.wizard = ctrl;
 		ctrl.wizard.steps = [];	
 		ctrl.wizard.goToStep = function (step) {
 			if (angular.isString(step))
