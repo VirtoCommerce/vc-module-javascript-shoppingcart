@@ -1,9 +1,9 @@
 <div class="modal-header">
-    <h2 class="modal-title pull-left">PRODUCT IS ADDED TO CART</h2>
+    <h2 class="modal-title pull-left modal-h">PRODUCT IS ADDED TO CART</h2>
     <span class="close-popup glyphicon glyphicon-remove pull-right" ng-click="cancel()"></span>
 </div>
 <div class="modal-body">
-    <div class="row">
+    <div class="row cart-r">
         <div class="col-sm-2">
             <span>
                 <img class="cart-image-popup" ng-src="{{ lineItem.imageUrl }}" />
@@ -30,19 +30,3 @@
         </div>
     </div>
 </div>
-
-
-<style>
-    .the-modal .modal-content {
-        height: 250px;
-    }
-
-    .cart-image-popup {
-        height: 78px;
-        width: 78px;
-        margin-bottom: 10px;
-    }
-    .cart-item-column {
-        margin-top: 30px;
-    }
-</style>

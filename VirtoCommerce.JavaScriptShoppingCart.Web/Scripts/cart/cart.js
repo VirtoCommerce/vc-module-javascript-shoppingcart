@@ -185,7 +185,6 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 				animation: true,
 				templateUrl: 'recently-added-cart-item-dialog.tpl.html',
 				controller: 'VirtoJavaScriptShoppingCartInstanceCtrl',
-				windowClass: 'the-modal',
 				resolve: { 
 					cart : function () {
 						return cart;
