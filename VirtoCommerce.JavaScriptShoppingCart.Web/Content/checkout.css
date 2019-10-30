@@ -3914,3 +3914,30 @@ th {
 input.field__input {
     padding: .94em .8em;
 }
+
+.cart-image-popup {
+    height: 78px;
+    width: 78px;
+    margin-bottom: 10px;
+}
+.cart-item-column {
+    margin-top: 30px;
+}
+
+.modal-h {
+    font-weight: 700;
+    color: #585858;
+    margin-left: 20px;
+}
+
+.cart-r a {
+    color: #585858;
+    font-size: 15px;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+.modal-body {
+    min-height: 100px;
+}
+
