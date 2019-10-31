@@ -210,17 +210,11 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 		$uibModal.open({
 			animation: true,
 			templateUrl: 'checkout-modal.tpl.html',
-			controller: 'Virto.Cart.PopUpController',
+			controller: 'virtoCommerce.cartModule.checkoutController',
 			resolve: { 
 				cart : function () {
 					return $scope.cart;
-				  },
-				lineItem: function () {
-					return undefined;
-				},
-				callback: function () {
-					return undefined;
-				}
+				  }
 	    	}
 		});
 	};
@@ -232,11 +226,10 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 		$scope.lineItem.currencySymbol = $scope.cart.currencySymbol;
 
 		$scope.cart.addLineItem($scope.lineItem).then(function (cart) {
-
 			$uibModal.open({
 				animation: true,
 				templateUrl: 'recently-added-cart-item-dialog.tpl.html',
-				controller: 'Virto.Cart.PopUpController',
+				controller: 'virtoCommerce.cartModule.addItemViewController',
 				resolve: { 
 					cart : function () {
 						return cart;
@@ -260,14 +253,11 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 			$uibModal.open({
 				animation: true,
 				templateUrl: 'shoppingCart.tpl.html',
-				controller: 'Virto.CartController',
+				controller: 'virtoCommerce.cartModule.cartViewController',
 				resolve: { 
 					cart : function () {
 						return cart;
-					  },
-					lineItem: function () {
-						return undefined;
-					},					
+					  },					
 					callback: function () {
 						return $scope.openCheckout;
 					}
@@ -275,11 +265,10 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 			}); 
 	
 		});
-
 	};
 }]);
 
-cartModule.controller('Virto.Cart.PopUpController', ['$scope', '$uibModalInstance', 'cart',  'lineItem', 'callback', function ($scope, $uibModalInstance, cart, lineItem, callback) {
+cartModule.controller('virtoCommerce.cartModule.addItemViewController', ['$scope', '$uibModalInstance', 'cart',  'lineItem', 'callback', function ($scope, $uibModalInstance, cart, lineItem, callback) {
 
 	$scope.cart = cart;
 	$scope.lineItem = lineItem;
@@ -295,10 +284,17 @@ cartModule.controller('Virto.Cart.PopUpController', ['$scope', '$uibModalInstanc
 }]);
 
 
-cartModule.controller('Virto.CartController', ['$scope', '$uibModalInstance', 'cart',  'lineItem', 'callback', function ($scope, $uibModalInstance, cart, lineItem, callback) {
+cartModule.controller('virtoCommerce.cartModule.checkoutController', ['$scope', '$uibModalInstance', 'cart' , function ($scope, $uibModalInstance, cart) {
+	$scope.cart = cart;
+	$scope.cancel = function () {
+		$uibModalInstance.dismiss('cancel');
+	};
+}]);
+
+
+cartModule.controller('virtoCommerce.cartModule.cartViewController', ['$scope', '$uibModalInstance', 'cart', 'callback', function ($scope, $uibModalInstance, cart, callback) {
 
 	$scope.cart = cart;
-	$scope.lineItem = lineItem;
 	$scope.callbackFunc = callback;
 
 	$scope.cancel = function () {
