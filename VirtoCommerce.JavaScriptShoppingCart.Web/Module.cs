@@ -1,8 +1,8 @@
-﻿using System.IO;
+﻿using Microsoft.Practices.Unity;
+using System.IO;
 using System.Linq;
 using System.Web.Hosting;
 using System.Web.Optimization;
-using Microsoft.Practices.Unity;
 using VirtoCommerce.JavaScriptShoppingCart.Web.Bundles;
 using VirtoCommerce.Platform.Core.Modularity;
 
@@ -44,6 +44,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
 					.IncludeDirectory(Path.Combine(moduleRelativePath, "Scripts/checkout"), "*.js", true)
 					.IncludeDirectory(Path.Combine(moduleRelativePath, "Scripts/checkout-modal"), "*.tpl.html", true)
 					.IncludeDirectory(Path.Combine(moduleRelativePath, "Scripts/checkout"), "*.tpl.html", true)
+					.IncludeDirectory(Path.Combine(moduleRelativePath, "Scripts/cart"), "*.tpl.html", true)
 					.Include(Path.Combine(moduleRelativePath, "Scripts/services/cartService.js"));
 				BundleTable.Bundles.Add(partialBundle);
 			}
