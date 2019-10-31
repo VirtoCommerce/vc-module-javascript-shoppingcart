@@ -19,13 +19,13 @@
 	            return $http.post(cart.apiUrl + 'api/carts/' + cart.id + '/product?api_key=' + cart.apiKey + '&productId=' + productId + '&quantity=' + quantity, lineItem);
 	        },
 	        changeLineItem: function (cart, lineItemId, quantity) {
-	            return $http.put(cart.apiUrl + 'api/carts/' + cart.id + '/items?api_key=' + cart.apiKey, { lineItemId: lineItemId, quantity: quantity });
+	            return $http.put(cart.apiUrl + 'api/carts/' + cart.id + '/items?lineItemId='+lineItemId+'&quantity='+quantity+'&api_key=' + cart.apiKey);
 	        },
 	        removeLineItem: function (cart, lineItemId) {
 	            return $http.delete(cart.apiUrl + 'api/carts/' + cart.id + '/items/' + lineItemId + '?api_key=' + cart.apiKey);
 	        },
 	        clearCart: function (cart) {
-	            return $http.post(cart.apiUrl + 'api/carts/' + cart.id + '/clear?api_key=' + cart.apiKey);
+	            return $http.delete(cart.apiUrl + 'api/carts/' + cart.id + '/items?api_key=' + cart.apiKey);
 	        },
 	        addCoupon: function (cart, couponCode) {
 	            return $http.post(cart.apiUrl + 'api/carts/' + cart.id + '/coupons/' + couponCode + '?api_key=' + cart.apiKey);
