@@ -21,8 +21,8 @@ cartModule.component('vcCart', {
 		currencyCode: '@',
 		culture: '@'
 	},
-	controller: ['virtoCommerce.cartModule.carts', 'virtoCommerce.cartModule.api', 'virtoCommerce.cartModule.countriesService', 'virtoCommerce.cartModule.currenciesService', '$cookies', '$timeout', 
-	function (carts, cartApi, countriesService, currenciesService, $cookies, $timeout) {
+	controller: ['virtoCommerce.cartModule.carts', 'virtoCommerce.cartModule.api', 'virtoCommerce.cartModule.countriesService', 'virtoCommerce.cartModule.currenciesService', '$cookies', '$timeout', '$rootScope', 
+	function (carts, cartApi, countriesService, currenciesService, $cookies, $timeout, $rootScope) {
 		var timer;
 		var ctrl = this;
 		carts[ctrl.name] = this;
