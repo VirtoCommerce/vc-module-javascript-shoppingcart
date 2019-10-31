@@ -11,7 +11,7 @@ cartModule.factory('virtoCommerce.cartModule.carts', [function () {
 }]);
 
 cartModule.component('vcCart', {
-	templateUrl: "",
+	templateUrl: "cart.tpl.html",
 	bindings: {
 		name: '@',
 		apiKey: '@',
@@ -21,8 +21,8 @@ cartModule.component('vcCart', {
 		currencyCode: '@',
 		culture: '@'
 	},
-	controller: ['virtoCommerce.cartModule.carts', 'virtoCommerce.cartModule.api', 'virtoCommerce.cartModule.countriesService', 'virtoCommerce.cartModule.currenciesService', '$cookies', '$timeout', '$rootScope', 
-	function (carts, cartApi, countriesService, currenciesService, $cookies, $timeout, $rootScope) {
+	controller: ['virtoCommerce.cartModule.carts', 'virtoCommerce.cartModule.api', 'virtoCommerce.cartModule.countriesService', 'virtoCommerce.cartModule.currenciesService', '$cookies', '$timeout', '$rootScope', '$scope',
+		function (carts, cartApi, countriesService, currenciesService, $cookies, $timeout, $rootScope, $scope) {
 		var timer;
 		var ctrl = this;
 		carts[ctrl.name] = this;
@@ -165,6 +165,10 @@ cartModule.component('vcCart', {
 			}
 		};
 
+		this.openCart = function () {
+			$rootScope.$broadcast('needOpenCart');
+		}
+
 		function wrapLoading(func) {
 			ctrl.loading = true;
 			return func().then(function (result) {
@@ -202,6 +206,11 @@ cartModule.component('vcCart', {
 cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$uibModal', 'virtoCommerce.cartModule.carts', function ($scope, $uibModal, carts) {
 
 	$scope.carts = carts;
+
+	$scope.$on('needOpenCart', function (event, data) {
+		$scope.openCart();
+	});
+
 
 	$scope.openCheckout = function (cart) {
 		

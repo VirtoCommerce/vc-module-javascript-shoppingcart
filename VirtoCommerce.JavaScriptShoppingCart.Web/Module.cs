@@ -44,6 +44,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
 					.IncludeDirectory(Path.Combine(moduleRelativePath, "Scripts/checkout"), "*.js", true)
 					.IncludeDirectory(Path.Combine(moduleRelativePath, "Scripts/checkout-modal"), "*.tpl.html", true)
 					.IncludeDirectory(Path.Combine(moduleRelativePath, "Scripts/checkout"), "*.tpl.html", true)
+					.IncludeDirectory(Path.Combine(moduleRelativePath, "Scripts/cart"), "*.tpl.html", true)
 					.Include(Path.Combine(moduleRelativePath, "Scripts/services/cartService.js"));
 				BundleTable.Bundles.Add(partialBundle);
 			}
