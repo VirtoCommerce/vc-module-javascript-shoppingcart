@@ -3,6 +3,7 @@
     <span class="close-popup glyphicon glyphicon-remove pull-right" ng-click="cancel()"></span>
 </div>
 <div class="modal-body"  id="modal-body">
+        <!-- TODO: Show something when cart is empty -->
         <div ng-show="cart.items.length > 0" ng-cloak="">
                 <form name="formCart" novalidate="novalidate">
                     <div class="cart-row" ng-repeat="lineItem in cart.items">
@@ -32,8 +33,7 @@
                                     </div>
                                     <div class="grid-item one-third medium-down--one-third medium-down--text-left text-right">
                                         <span class="h2">
-                                                <small  class="list-price" ng-bind="cart.currencySymbol"></small> 
-                                                <small class="list-price" ng-bind="lineItem.listPrice"> </small>
+                                                <small class="list-price" ng-bind="lineItem.listPrice | currency : cart.currencySymbol"> </small>
                                         </span>
                                     </div>
                                     <div class="grid-item one-sixth medium-down--one-third text-right">
@@ -49,17 +49,22 @@
                         <div class="grid">
                             <div class="grid-item large--one-half">
                                 <label for="cartSpecialInstructions">Special instructions for seller</label>
-                                <textarea class="input-full" ng-model="cart.comment"></textarea>
+                                <textarea class="input-full" ng-model="cart.comment" style="min-height: 80px !important;"></textarea>
                             </div>
                             <div class="grid-item text-right large--one-half">
                                 <div class="cart-subtotal">
                                         Items total
                                     <span class="h1 cart-subtotal--price">
-                                        <small class="list-price" ng-bind="cart.currencySymbol"></small> 
-                                        <small class="list-price" ng-bind="cart.subTotal"></small>
+                                        <small class="list-price" ng-bind="cart.subTotal | currency : cart.currencySymbol"></small>
                                     </span>
                                 </div>
-                                <button type="button" ng-class="{ 'btn': !cartIsUpdating, 'btn-secondary': cartIsUpdating || errorOccured || !cart.isValid }" ng-disabled="cartIsUpdating || cart.hasValidationErrors" ng-click="submitCart()">
+                                <!-- TODO: ui loader when action not finished yet -->
+                                <button type="button" ng-class="{ 'btn': !cartIsUpdating, 'btn-secondary': cartIsUpdating }" ng-disabled="cartIsUpdating " ng-click="clearCart()">
+                                        <span class="icon icon-cart"></span>
+                                        Clear cart
+                                </button>
+                                <!-- TODO: add ui loader when action not finished yet -->
+                                <button type="button" ng-class="{ 'btn': !cartIsUpdating, 'btn-secondary': cartIsUpdating }" ng-disabled="cartIsUpdating " ng-click="ok()">
                                     <span class="icon icon-cart"></span>
                                     Checkout
                                 </button>
