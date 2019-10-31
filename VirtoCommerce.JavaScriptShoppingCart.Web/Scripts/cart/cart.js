@@ -160,7 +160,7 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 		$uibModal.open({
 			animation: true,
 			templateUrl: 'checkout-modal.tpl.html',
-			controller: 'VirtoJavaScriptShoppingCartInstanceCtrl',
+			controller: 'Virto.Cart.PopUpController',
 			resolve: { 
 				cart : function () {
 					return $scope.cart;
@@ -179,12 +179,13 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 
 		$scope.cart =  !cart ? $scope.carts['default'] : cart;
 		$scope.lineItem = lineItem;
+		$scope.lineItem.currencySymbol = $scope.cart.currencySymbol;
 
 		$scope.cart.addLineItem($scope.lineItem).then(function (cart) {
 			$uibModal.open({
 				animation: true,
 				templateUrl: 'recently-added-cart-item-dialog.tpl.html',
-				controller: 'VirtoJavaScriptShoppingCartInstanceCtrl',
+				controller: 'Virto.Cart.PopUpController',
 				resolve: { 
 					cart : function () {
 						return cart;
@@ -207,8 +208,8 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 
 		$uibModal.open({
 			animation: true,
-			templateUrl: 'cart.tpl.html',
-			controller: 'VirtoJavaScriptShoppingCartInstanceCtrl',
+			templateUrl: 'shoppingCart.tpl.html',
+			controller: 'Virto.Cart.PopUpController',
 			resolve: { 
 				cart : function () {
 					return $scope.cart;
@@ -224,7 +225,7 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 	};
 }]);
 
-cartModule.controller('VirtoJavaScriptShoppingCartInstanceCtrl', ['$scope', '$uibModalInstance', 'cart',  'lineItem', 'callback', function ($scope, $uibModalInstance, cart, lineItem, callback) {
+cartModule.controller('Virto.Cart.PopUpController', ['$scope', '$uibModalInstance', 'cart',  'lineItem', 'callback', function ($scope, $uibModalInstance, cart, lineItem, callback) {
 
 	$scope.cart = cart;
 	$scope.lineItem = lineItem;

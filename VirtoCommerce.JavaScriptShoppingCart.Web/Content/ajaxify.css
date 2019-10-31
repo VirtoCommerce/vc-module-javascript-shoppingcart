@@ -1,0 +1,804 @@
+/*============================================================================
+  Ajax Cart
+  Built with Sass - http://sass-lang.com/
+
+  Some things to know about this file:
+    - This file uses the same grid as default.scss.liquid.
+      - If you want to use this separately, please include the following sections from default.scss.liquid:
+        * #Breakpoint and Grid Variables
+        * #Grid Setup
+      - You may need to massage the code so it doesn't reference any non-existent mixins.
+
+  This file includes
+    - Sass helpers
+    - Colour variables to customize
+    - Styles for cart drawer, modal, and the flipped add to cart button
+==============================================================================*/
+/*============================================================================
+  #Breakpoint and Grid Variables (from default.scss.liquid)
+==============================================================================*/
+/*============================================================================
+  Ajaxify Colours
+  Add your theme colors in here, or create new styles.
+    - If creating new styles, you may have to restyle text, headers and links
+==============================================================================*/
+/*============================================================================
+  Dependency-free breakpoint mixin
+// http://blog.grayghostvisuals.com/sass/sass-media-query-mixin/
+==============================================================================*/
+/*============================================================================
+  Sass Helpers
+==============================================================================*/
+/*============================================================================
+  General Styles
+==============================================================================*/
+@media screen and (max-width: 480px) {
+    body.ajaxify-modal--visible {
+        overflow: hidden;
+    }
+}
+
+.ajaxifyCart-loader {
+    display: none;
+    opacity: 0;
+    position: absolute;
+    right: -24px;
+    top: 50%;
+    margin-top: -5px;
+    padding: 0;
+    width: 16px;
+    height: 16px;
+    -webkit-transition: opacity 0.1s;
+    -moz-transition: opacity 0.1s;
+    -ms-transition: opacity 0.1s;
+    -o-transition: opacity 0.1s;
+    transition: opacity 0.1s;
+    background-repeat: no-repeat;
+    background-image: url(data:image/gif;base64,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);
+}
+
+.flip--is-loading .ajaxifyCart-loader {
+    display: block;
+    opacity: 1;
+}
+
+form[action="/cart/add"]:after,
+form[action^="/cart/add"]:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/*============================================================================
+  Ajaxify Cart - General
+==============================================================================*/
+.ajaxifyCart--content {
+    position: relative;
+    background-color: #fff;
+    -webkit-perspective: 1000px;
+    -moz-perspective: 1000px;
+    -ms-perspective: 1000px;
+    -o-perspective: 1000px;
+    perspective: 1000px;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transition: all 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    -moz-transition: all 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    -ms-transition: all 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    -o-transition: all 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    transition: all 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    padding-top: 24px;
+    padding-bottom: 24px;
+    overflow: hidden;
+}
+
+.is-visible .ajaxifyCart--content {
+    -webkit-transition: all 550ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    -moz-transition: all 550ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    -ms-transition: all 550ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    -o-transition: all 550ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    transition: all 550ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+}
+
+.ajaxifyCart--content form {
+    margin-bottom: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .ajaxifyCart--content {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+}
+
+.ajaxifyCart--products {
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.ajaxifyCart--product {
+    position: relative;
+    padding: 10px 0;
+}
+
+    .ajaxifyCart--product:first-child {
+        padding-top: 0;
+    }
+
+.ajaxifyCart--product,
+.cart-row {
+    -webkit-transform-origin: top;
+    -moz-transform-origin: top;
+    -ms-transform-origin: top;
+    -o-transform-origin: top;
+    transform-origin: top;
+    -webkit-transition: all 650ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    -moz-transition: all 650ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    -ms-transition: all 650ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    -o-transition: all 650ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    transition: all 650ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    -webkit-transform: rotateX(0deg);
+    -moz-transform: rotateX(0deg);
+    -ms-transform: rotateX(0deg);
+    -o-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+    max-height: 500px;
+    visibility: visible;
+}
+
+    .ajaxifyCart--product.is-removed,
+    .cart-row.is-removed {
+        overflow: hidden;
+        opacity: 0;
+        padding: 0;
+        margin: -24px 0 0;
+        visibility: hidden;
+        -webkit-transform: rotateX(-92deg);
+        -moz-transform: rotateX(-92deg);
+        -ms-transform: rotateX(-92deg);
+        -o-transform: rotateX(-92deg);
+        transform: rotateX(-92deg);
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+        -o-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-transition: all 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+        -moz-transition: all 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+        -ms-transition: all 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+        -o-transition: all 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+        transition: all 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+        max-height: 0;
+    }
+
+.ajaxifyCart--row {
+    clear: both;
+}
+
+    .ajaxifyCart--row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+.ajaxCart--product-image {
+    display: block;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+    .ajaxCart--product-image img {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+    }
+
+/*============================================================================
+  #Quantity Selectors
+==============================================================================*/
+.js-qty, .ajaxifyCart--qty {
+    position: relative;
+    margin-bottom: 1em;
+    max-width: 100px;
+    min-width: 75px;
+    overflow: visible;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+    .js-qty input[type="text"], .ajaxifyCart--qty input[type="text"], .js-qty input[type="number"], .ajaxifyCart--qty input[type="number"] {
+        display: block;
+        background: none;
+        text-align: center;
+        width: 100%;
+        padding: 5px 25px;
+        margin: 0;
+    }
+
+.js--qty-adjuster, .ajaxifyCart--qty-adjuster {
+    cursor: pointer;
+    position: absolute;
+    display: block;
+    top: 0;
+    bottom: 0;
+    padding: 5px 0;
+    width: 20px;
+    text-align: center;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -ms-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+}
+
+    .js--qty-adjuster:hover, .ajaxifyCart--qty-adjuster:hover {
+        background-color: #ececec;
+    }
+
+    .js--qty-adjuster:active, .ajaxifyCart--qty-adjuster:active {
+        background-color: lightgray;
+    }
+
+.js--add, .ajaxifyCart--add {
+    right: 0;
+    border-left: 1px solid #ececec;
+}
+
+.js--minus, .ajaxifyCart--minus {
+    left: 0;
+    border-right: 1px solid #ececec;
+}
+
+/*============================================================================
+  #Quantity Selectors in the Ajax Cart
+==============================================================================*/
+.ajaxifyCart--qty {
+    margin: 0;
+}
+
+.ajaxifyCart--is-loading .ajaxifyCart--qty {
+    opacity: 0.5;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+
+.ajaxifyCart--num {
+    -webkit-transition: all 0.1s ease-out;
+    -moz-transition: all 0.1s ease-out;
+    -ms-transition: all 0.1s ease-out;
+    -o-transition: all 0.1s ease-out;
+    transition: all 0.1s ease-out;
+}
+
+.supports-no-touch .ajaxifyCart--num {
+    border: 1px solid rgba(0, 0, 0, 0);
+}
+
+.cart-row:hover .ajaxifyCart--num,
+.ajaxifyCart--product:hover .ajaxifyCart--num,
+.supports-touch .ajaxifyCart--num {
+    border-color: #ececec;
+}
+
+.ajaxifyCart--qty-adjuster {
+    opacity: 0;
+}
+
+.cart-row:hover .ajaxifyCart--qty-adjuster,
+.ajaxifyCart--product:hover .ajaxifyCart--qty-adjuster,
+.supports-touch .ajaxifyCart--qty-adjuster {
+    opacity: 1;
+    -webkit-transition: background-color 0.2s ease-out;
+    -moz-transition: background-color 0.2s ease-out;
+    -ms-transition: background-color 0.2s ease-out;
+    -o-transition: background-color 0.2s ease-out;
+    transition: background-color 0.2s ease-out;
+}
+
+    .ajaxifyCart--product:hover .ajaxifyCart--qty-adjuster:hover {
+        -webkit-transition: none;
+        -moz-transition: none;
+        -ms-transition: none;
+        -o-transition: none;
+        transition: none;
+    }
+
+/*============================================================================
+  Ajaxify Flip
+==============================================================================*/
+.flip {
+    display: block;
+    float: left;
+    position: relative;
+    -webkit-perspective: 600px;
+    -moz-perspective: 600px;
+    -ms-perspective: 600px;
+    -o-perspective: 600px;
+    perspective: 600px;
+}
+
+.flip-front,
+.flip-back {
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
+}
+
+    .flip-front:focus,
+    .flip-back:focus {
+        outline: 0 none;
+    }
+
+.flip-front {
+    -webkit-transform-origin: 100% 0;
+    -moz-transform-origin: 100% 0;
+    -ms-transform-origin: 100% 0;
+    -o-transform-origin: 100% 0;
+    transform-origin: 100% 0;
+}
+
+.is-flipped .flip-front {
+    -webkit-transform: rotateX(92deg) translateY(-50%);
+    -moz-transform: rotateX(92deg) translateY(-50%);
+    -ms-transform: rotateX(92deg) translateY(-50%);
+    -o-transform: rotateX(92deg) translateY(-50%);
+    transform: rotateX(92deg) translateY(-50%);
+}
+
+.flip-back {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    text-align: center;
+    background-color: #464646;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transform: rotateX(-90deg) translateY(50%);
+    -moz-transform: rotateX(-90deg) translateY(50%);
+    -ms-transform: rotateX(-90deg) translateY(50%);
+    -o-transform: rotateX(-90deg) translateY(50%);
+    transform: rotateX(-90deg) translateY(50%);
+    -webkit-transform-origin: 0 100%;
+    -moz-transform-origin: 0 100%;
+    -ms-transform-origin: 0 100%;
+    -o-transform-origin: 0 100%;
+    transform-origin: 0 100%;
+}
+
+.is-flipped .flip-back {
+    opacity: 1;
+    -webkit-transform: rotateX(0deg);
+    -moz-transform: rotateX(0deg);
+    -ms-transform: rotateX(0deg);
+    -o-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+}
+
+.flip.no-transforms .flip-back {
+    display: none;
+}
+
+.flip.no-transforms.is-flipped .flip-back {
+    display: block;
+}
+
+.flip-extra {
+    display: inline;
+    position: relative;
+    padding: 2px 10px;
+    opacity: 0;
+    visibility: hidden;
+    overflow: visible;
+    white-space: nowrap;
+    z-index: 5;
+    top: 4px;
+    line-height: 34px;
+    -webkit-transition: opacity 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    -moz-transition: opacity 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    -ms-transition: opacity 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    -o-transition: opacity 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    transition: opacity 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+}
+
+.is-flipped + .flip-extra {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transition: opacity 650ms cubic-bezier(0.57, 0.06, 0.05, 0.95) 750ms;
+    -moz-transition: opacity 650ms cubic-bezier(0.57, 0.06, 0.05, 0.95) 750ms;
+    -ms-transition: opacity 650ms cubic-bezier(0.57, 0.06, 0.05, 0.95) 750ms;
+    -o-transition: opacity 650ms cubic-bezier(0.57, 0.06, 0.05, 0.95) 750ms;
+    transition: opacity 650ms cubic-bezier(0.57, 0.06, 0.05, 0.95) 750ms;
+}
+
+.flip-cart {
+    display: inline-block;
+    padding: 0 8px;
+}
+
+.flip-checkout {
+    margin: 0;
+}
+
+/*============================================================================
+  Ajaxify Modal
+==============================================================================*/
+.ajaxify-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    max-width: 760px;
+    height: auto;
+    z-index: 9000;
+    visibility: hidden;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    -webkit-transition: left 0s linear 700ms, box-shadow 600ms cubic-bezier(0.47, 0.5, 0, 0.95) 400ms, margin-top 200ms ease-in-out;
+    -moz-transition: left 0s linear 700ms, box-shadow 600ms cubic-bezier(0.47, 0.5, 0, 0.95) 400ms, margin-top 200ms ease-in-out;
+    -ms-transition: left 0s linear 700ms, box-shadow 600ms cubic-bezier(0.47, 0.5, 0, 0.95) 400ms, margin-top 200ms ease-in-out;
+    -o-transition: left 0s linear 700ms, box-shadow 600ms cubic-bezier(0.47, 0.5, 0, 0.95) 400ms, margin-top 200ms ease-in-out;
+    transition: left 0s linear 700ms, box-shadow 600ms cubic-bezier(0.47, 0.5, 0, 0.95) 400ms, margin-top 200ms ease-in-out;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+@media screen and (max-width: 768px) {
+    .ajaxify-modal {
+        max-width: 90%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .ajaxify-modal {
+        left: 0;
+        position: fixed;
+        top: 50px;
+        bottom: 0;
+        margin: 0 !important;
+        max-height: none;
+        max-width: none;
+        -webkit-transform: none;
+        -moz-transform: none;
+        -ms-transform: none;
+        -o-transform: none;
+        transform: none;
+    }
+}
+
+.ajaxify-modal .ajaxifyCart--content {
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+@media screen and (max-width: 768px) {
+    .ajaxify-modal .ajaxifyCart--content {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .ajaxify-modal .ajaxifyCart--content {
+        padding-bottom: 60px;
+        min-height: 100%;
+    }
+}
+
+.ajaxify-modal.is-visible {
+    visibility: visible;
+    z-index: 99999;
+    -webkit-transition: left 0s linear, box-shadow 600ms cubic-bezier(0.47, 0.5, 0, 0.95) 400ms, margin-top 200ms ease-in-out;
+    -moz-transition: left 0s linear, box-shadow 600ms cubic-bezier(0.47, 0.5, 0, 0.95) 400ms, margin-top 200ms ease-in-out;
+    -ms-transition: left 0s linear, box-shadow 600ms cubic-bezier(0.47, 0.5, 0, 0.95) 400ms, margin-top 200ms ease-in-out;
+    -o-transition: left 0s linear, box-shadow 600ms cubic-bezier(0.47, 0.5, 0, 0.95) 400ms, margin-top 200ms ease-in-out;
+    transition: left 0s linear, box-shadow 600ms cubic-bezier(0.47, 0.5, 0, 0.95) 400ms, margin-top 200ms ease-in-out;
+}
+
+@media screen and (min-width: 769px) {
+    .ajaxify-modal.is-visible {
+        box-shadow: 0px 10px 80px rgba(0, 0, 0, 0.25);
+    }
+}
+
+.ajaxify-modal .ajaxifyCart--row > div {
+    padding-left: 20px;
+}
+
+    .ajaxify-modal .ajaxifyCart--row > div:first-child {
+        padding-left: 0;
+    }
+
+.ajaxify-modal .ajaxifyCart--product {
+    -webkit-transform: none;
+    -moz-transform: none;
+    -ms-transform: none;
+    -o-transform: none;
+    transform: none;
+}
+
+.ajaxify-modal .update-cart {
+    display: none !important;
+}
+
+.ajaxify-modal.no-transforms {
+    border: 1px solid #ececec;
+}
+
+#ajaxifyCart-overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    top: 0;
+    left: 0;
+    z-index: 99998;
+    opacity: 0;
+    cursor: pointer;
+    -webkit-transition: all 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    -moz-transition: all 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    -ms-transition: all 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    -o-transition: all 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    transition: all 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    background-color: #d3d3d3;
+}
+
+@media screen and (min-width: 481px) {
+    .is-visible ~ #ajaxifyCart-overlay {
+        visibility: visible;
+        -webkit-transition: all 650ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+        -moz-transition: all 650ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+        -ms-transition: all 650ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+        -o-transition: all 650ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+        transition: all 650ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+        opacity: 0.8;
+    }
+
+    .lt-ie9 .is-visible ~ #ajaxifyCart-overlay {
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    }
+}
+
+.ajaxify-modal .ajaxifyCart--content {
+    -webkit-transform: scale(0.9);
+    -moz-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    -o-transform: scale(0.9);
+    transform: scale(0.9);
+    opacity: 0;
+}
+
+.ajaxify-modal.is-visible .ajaxifyCart--content {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+}
+
+@media screen and (max-width: 768px) {
+    .ajaxify-modal input[type="text"] {
+        border-color: #ececec;
+    }
+
+    .ajaxify-modal .ajaxifyCart--qty-adjuster {
+        opacity: 1;
+    }
+}
+
+/*============================================================================
+  Ajaxify Drawer
+==============================================================================*/
+.ajaxify-drawer {
+    height: 0px;
+    overflow: hidden;
+    border-bottom: 0px solid transparent;
+    -webkit-perspective: 1000px;
+    -moz-perspective: 1000px;
+    -ms-perspective: 1000px;
+    -o-perspective: 1000px;
+    perspective: 1000px;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transition: all 600ms cubic-bezier(0.47, 0.5, 0, 0.95);
+    -moz-transition: all 600ms cubic-bezier(0.47, 0.5, 0, 0.95);
+    -ms-transition: all 600ms cubic-bezier(0.47, 0.5, 0, 0.95);
+    -o-transition: all 600ms cubic-bezier(0.47, 0.5, 0, 0.95);
+    transition: all 600ms cubic-bezier(0.47, 0.5, 0, 0.95);
+}
+
+    .ajaxify-drawer.is-visible {
+        -webkit-transition: all 550ms cubic-bezier(0.47, 0, 0, 0.95);
+        -moz-transition: all 550ms cubic-bezier(0.47, 0, 0, 0.95);
+        -ms-transition: all 550ms cubic-bezier(0.47, 0, 0, 0.95);
+        -o-transition: all 550ms cubic-bezier(0.47, 0, 0, 0.95);
+        transition: all 550ms cubic-bezier(0.47, 0, 0, 0.95);
+        border-bottom: 1px solid #ececec;
+    }
+
+    .ajaxify-drawer .update-cart {
+        display: none !important;
+    }
+
+    .ajaxify-drawer .ajaxifyCart--content {
+        margin: 0 auto;
+        opacity: 0;
+        overflow: hidden;
+        padding-top: 24px;
+        padding-bottom: 24px;
+        -webkit-transform-origin: top;
+        -moz-transform-origin: top;
+        -ms-transform-origin: top;
+        -o-transform-origin: top;
+        transform-origin: top;
+        -webkit-transform: rotateX(-90deg);
+        -moz-transform: rotateX(-90deg);
+        -ms-transform: rotateX(-90deg);
+        -o-transform: rotateX(-90deg);
+        transform: rotateX(-90deg);
+    }
+
+    .ajaxify-drawer.is-visible .ajaxifyCart--content {
+        opacity: 1;
+        -webkit-transform: rotateX(0deg);
+        -moz-transform: rotateX(0deg);
+        -ms-transform: rotateX(0deg);
+        -o-transform: rotateX(0deg);
+        transform: rotateX(0deg);
+    }
+
+.ajaxifyDrawer-caret {
+    position: relative;
+    display: block;
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+}
+
+.is-visible + .ajaxifyDrawer-caret {
+    opacity: 1;
+    overflow: visible;
+}
+
+.ajaxifyDrawer-caret > span {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    display: block;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #fff;
+    margin-left: -6px;
+    opacity: 0;
+    -webkit-transform: translate(0, -12px);
+    -moz-transform: translate(0, -12px);
+    -ms-transform: translate(0, -12px);
+    -o-transform: translate(0, -12px);
+    transform: translate(0, -12px);
+    -webkit-transition: all 0.25s ease-in-out 0.2s;
+    -moz-transition: all 0.25s ease-in-out 0.2s;
+    -ms-transition: all 0.25s ease-in-out 0.2s;
+    -o-transition: all 0.25s ease-in-out 0.2s;
+    transition: all 0.25s ease-in-out 0.2s;
+}
+
+.is-visible + .ajaxifyDrawer-caret > span {
+    -webkit-transform: translate(0, 0);
+    -moz-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -o-transform: translate(0, 0);
+    transform: translate(0, 0);
+    opacity: 1;
+}
+
+/*============================================================================
+  Sprites
+//   - using data URIs to prevent any additional http requests
+==============================================================================*/
+.sprite, .ajaxifyCart--add, .ajaxifyCart--minus, .ajaxifyCart--close {
+    display: block;
+    text-indent: -9999px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+}
+
+.ajaxifyCart--add {
+    background-position: center center;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjIxNTJBNEY1NDY1OTExRTM4ODdCODU0OEQ4MDA1MjgwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjIxNTJBNEY2NDY1OTExRTM4ODdCODU0OEQ4MDA1MjgwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QUU4MjYyOEE0NjU3MTFFMzg4N0I4NTQ4RDgwMDUyODAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MjE1MkE0RjQ0NjU5MTFFMzg4N0I4NTQ4RDgwMDUyODAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6VbCy4AAAAWklEQVR42mJsampigAIeIH4GZUsB8RcQg4UBAUACvEhsBpgCkE5GKA0DklBF/0EKXgExJwMqgFn1nYmBAACZIIZkBbojwVbAHPQZSeNzZBOQvfkZiQ3WCBBgALZlEm83dptmAAAAAElFTkSuQmCC);
+}
+
+.ajaxifyCart--minus {
+    background-position: center center;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjIxNTJBNEZENDY1OTExRTM4ODdCODU0OEQ4MDA1MjgwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjIxNTJBNEZFNDY1OTExRTM4ODdCODU0OEQ4MDA1MjgwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjE1MkE0RkI0NjU5MTFFMzg4N0I4NTQ4RDgwMDUyODAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MjE1MkE0RkM0NjU5MTFFMzg4N0I4NTQ4RDgwMDUyODAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6MzbYiAAAALElEQVR42mL6//8/Az7MxEAAEFTA2NTU9A1Ic+KQ/07YBJBDKHIDQQUAAQYAbksecMSS2doAAAAASUVORK5CYII=);
+}
+
+.ajaxifyCart--close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    opacity: 0;
+    visibility: hidden;
+    border: 0 none;
+    width: 30px;
+    height: 25px;
+    cursor: pointer;
+    background-color: transparent;
+    background-position: center center;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkMzRUY2REVBNDY1QjExRTM4ODdCODU0OEQ4MDA1MjgwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkMzRUY2REVCNDY1QjExRTM4ODdCODU0OEQ4MDA1MjgwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QzNFRjZERTg0NjVCMTFFMzg4N0I4NTQ4RDgwMDUyODAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6QzNFRjZERTk0NjVCMTFFMzg4N0I4NTQ4RDgwMDUyODAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7sdZ8fAAAAp0lEQVR42nSPQQ6CMBBFx4ZEj+DSY8BGt9SVwRP1QBDdULeygaN4BFzpn+Q3mZCW5DFk/uvQ2YUQfiIygYuUnzc4O7wW/QCxIEbmi8oNG23mgO03js0reDF4gCNry77mUpkpHvSgo7QHA7gnwW1+q8FKcbViTtbJB/Bl7Uty5BWe4MTa2aWTPJplbuDDmpYe04IzqBn4zbU8J2udHcUpI9oDmtd/AQYAX20mtnhTCxQAAAAASUVORK5CYII=);
+    z-index: 999999999;
+    -webkit-transition: all 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    -moz-transition: all 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    -ms-transition: all 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    -o-transition: all 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+    transition: all 450ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+}
+
+.is-visible .ajaxifyCart--close {
+    opacity: 0.8;
+    visibility: visible;
+    -webkit-transition: opacity 650ms cubic-bezier(0.57, 0.06, 0.05, 0.95) 200ms;
+    -moz-transition: opacity 650ms cubic-bezier(0.57, 0.06, 0.05, 0.95) 200ms;
+    -ms-transition: opacity 650ms cubic-bezier(0.57, 0.06, 0.05, 0.95) 200ms;
+    -o-transition: opacity 650ms cubic-bezier(0.57, 0.06, 0.05, 0.95) 200ms;
+    transition: opacity 650ms cubic-bezier(0.57, 0.06, 0.05, 0.95) 200ms;
+}
+
+.ajaxifyCart--close:hover {
+    opacity: 1;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .ajaxifyCart--add {
+        background-size: 8px;
+        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkFFODI2Mjg4NDY1NzExRTM4ODdCODU0OEQ4MDA1MjgwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkFFODI2Mjg5NDY1NzExRTM4ODdCODU0OEQ4MDA1MjgwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QUU4MjYyODY0NjU3MTFFMzg4N0I4NTQ4RDgwMDUyODAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6QUU4MjYyODc0NjU3MTFFMzg4N0I4NTQ4RDgwMDUyODAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7Q1IXcAAAAL0lEQVR42mJsampiwAH+o/EZsSliYqAQjBrAwMCCJbSJjZXhFAaMoylxgA0ACDAAufIFqTR3duwAAAAASUVORK5CYII=);
+    }
+
+    .ajaxifyCart--minus {
+        background-size: 8px;
+        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjIxNTJBNEY5NDY1OTExRTM4ODdCODU0OEQ4MDA1MjgwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjIxNTJBNEZBNDY1OTExRTM4ODdCODU0OEQ4MDA1MjgwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjE1MkE0Rjc0NjU5MTFFMzg4N0I4NTQ4RDgwMDUyODAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MjE1MkE0Rjg0NjU5MTFFMzg4N0I4NTQ4RDgwMDUyODAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz54TqQaAAAAKElEQVR42mL8//8/AyWAiYFCMGoAAwNLc3Pz/xEeBoyjKXEQGAAQYABVgwijPO94YQAAAABJRU5ErkJggg==);
+    }
+}
+body {
+}
