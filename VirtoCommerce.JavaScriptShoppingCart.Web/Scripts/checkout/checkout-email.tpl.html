@@ -3,7 +3,7 @@
         <div class="field field--required" ng-class="{ 'field--show-floating-label': !$ctrl.form.Email.$error.required, 'field--error': ($ctrl.form.Email.$dirty || $ctrl.form.$submitted) && $ctrl.form.Email.$invalid }">
 
 
-                <vc-labeled-input value="$ctrl.email" name="Email" placeholder="{{ 'checkout.customer_information.email' | translate}}" form="$ctrl.form" required="true"></vc-labeled-input>
+                <vc-labeled-input value="$ctrl.email" name="Email" placeholder="{{ 'checkout.customer_information.email' | translate}}" form="$ctrl.form" required="true" autofocus="true" type="email"></vc-labeled-input>
 
 <!--             <div class="field__input-wrapper">
                 <label class="field__label" for="Email">{{ 'checkout.customer_information.email' | translate}}</label>
