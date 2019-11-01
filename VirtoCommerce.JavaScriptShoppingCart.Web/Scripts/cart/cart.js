@@ -32,6 +32,10 @@ cartModule.component('vcCart', {
 
 		this.cartIsUpdating = false;
 
+		$scope.$on('cartItemsChanged', function (event, data) {
+			ctrl.getCartItemsCount();
+		});
+
 		this.reloadCart = function () {
 			return wrapLoading(function () {
 				return cartApi.getCart(ctrl).then(function (response) {
@@ -41,6 +45,8 @@ cartModule.component('vcCart', {
 						ctrl.coupon = response.data.coupon;
 						ctrl.coupon.isApplied = true;
 					}
+					ctrl.getCartItemsCount();
+
 					return ctrl;
 				}).then(function (cart) {
 					ctrl.availCountries = countriesService.countries;
@@ -110,11 +116,11 @@ cartModule.component('vcCart', {
 			timer = $timeout(function () {
 				this.cartIsUpdating = true;
 				cartApi.changeLineItem(ctrl, lineItemId, quantity).then(function (response) {
-					this.reloadCart()
+					ctrl.reloadCart()
 					$rootScope.$broadcast('cartItemsChanged');
 				}, function (response) {
 					lineItem.quantity = initialQuantity;
-					this.cartIsUpdating = false;
+					ctrl.cartIsUpdating = false;
 				});
 			}, 300);
 		}
@@ -197,9 +203,24 @@ cartModule.component('vcCart', {
 			return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 		}
 
+
+		this.getCartItemsCount = function () {
+			if (ctrl.id && ctrl.items) {
+				var itemsQuantity = 0;
+				for (var index in ctrl.items) {
+					itemsQuantity += ctrl.items[index].quantity;
+				}
+				ctrl.cartItemsCount = itemsQuantity;
+			} else {
+				ctrl.cartItemsCount = 0;
+			}
+		}
+
 		this.initializeUser();
 
 		this.reloadCart();
+
+		this.getCartItemsCount();
 	}]
 });
 
