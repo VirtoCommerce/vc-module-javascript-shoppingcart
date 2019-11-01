@@ -3,7 +3,10 @@
     <span class="close-popup glyphicon glyphicon-remove pull-right" ng-click="cancel()"></span>
 </div>
 <div class="modal-body"  id="modal-body">
-        <!-- TODO: Show something when cart is empty -->
+        <div ng-show="cart.items.length === 0" ng-cloak="">
+            <div class="empty-cart">You shopping cart is empty</div>
+        </div>
+
         <div ng-show="cart.items.length > 0" ng-cloak="">
                 <form name="formCart" novalidate="novalidate">
                     <div class="cart-row" ng-repeat="lineItem in cart.items">
