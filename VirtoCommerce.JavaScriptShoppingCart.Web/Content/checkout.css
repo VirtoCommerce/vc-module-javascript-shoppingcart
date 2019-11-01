@@ -4816,6 +4816,7 @@ a.remove {
 	display: inline-grid;
 	height: 50px;
 	width: 50px;
+	position: relative;
 }
 
 	.cart-btn .icon-cart {
@@ -4836,3 +4837,23 @@ a.remove {
     font-size: 20px;
     font-weight: 700;
 }
+
+.cart-count {
+	display: none;
+	position: absolute;
+	top: 2px;
+	right: -5px;
+	text-align: center;
+	background-color: #ffea00;
+	color: #204a80;
+	font-weight: 700;
+	font-size: 13px;
+	min-width: 20px;
+	height: 20px;
+	line-height: 20px;
+	border-radius: 20px;
+}
+
+	.cart-count.visible-count {
+		display: block;
+	}

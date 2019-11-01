@@ -1,4 +1,4 @@
 ﻿<button class="cart-btn" ng-click="$ctrl.openCart()">
 	<span class="icon icon-cart"></span>
-	<span class="cartCount" ng-bind="$ctrl.items ? $ctrl.items.length : ''" ng-if="angular.isArray($ctrl.items) && $ctrl.items.length > 0"></span>
+	<span class="cart-count" ng-class="{ 'visible-count': $ctrl.cartItemsCount > 0 }" ng-bind="$ctrl.cartItemsCount" ng-cloak></span>
 </button>
