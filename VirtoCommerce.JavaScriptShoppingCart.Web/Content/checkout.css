@@ -2241,8 +2241,8 @@ th {
 
 @media (min-width: 1000px) {
     .order-summary__section:first-child {
-        padding-top: 0;
-        overflow-y: scroll;
+        padding-top: 20px;
+        overflow-y: hidden;
         max-height: 400px;
         padding-right: 15px;
     }
@@ -2980,7 +2980,6 @@ th {
 
 .product__quantity {
     border-radius: 2em;
-    font-size: 0.85714em;
     font-weight: 500;
     padding: 0.15em 0.5em;
     min-width: 0.8em;
@@ -4055,12 +4054,6 @@ select {
 
 textarea {
   min-height: 100px; }
-
-input[type="checkbox"],
-input[type="radio"] {
-  display: inline;
-  margin: 0;
-  padding: 0; }
 
 select {
   -webkit-appearance: none;

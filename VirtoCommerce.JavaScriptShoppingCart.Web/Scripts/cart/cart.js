@@ -281,14 +281,14 @@ cartModule.controller('virtoCommerce.cartModule.addItemViewController', ['$scope
 
 	$scope.cart = cart;
 	$scope.lineItem = lineItem;
-	$scope.callbackFunc = callback;
+	$scope.callback = callback;
 
 	$scope.cancel = function () {
 		$uibModalInstance.dismiss('cancel');
 	};
 
 	$scope.ok = function () {
-		$scope.callbackFunc();
+		$scope.callback();
 		$uibModalInstance.dismiss('cancel');
 	};
 }]);
@@ -305,7 +305,7 @@ cartModule.controller('virtoCommerce.cartModule.checkoutController', ['$scope', 
 cartModule.controller('virtoCommerce.cartModule.cartViewController', ['$scope', '$uibModalInstance', 'cart', 'callback', function ($scope, $uibModalInstance, cart, callback) {
 
 	$scope.cart = cart;
-	$scope.callbackFunc = callback;
+	$scope.callback = callback;
 
 	$scope.cancel = function () {
 		$uibModalInstance.dismiss('cancel');
@@ -327,7 +327,7 @@ cartModule.controller('virtoCommerce.cartModule.cartViewController', ['$scope', 
 	}
 
 	$scope.ok = function(){
-        $scope.callbackFunc();
+        $scope.callback();
 		$uibModalInstance.dismiss('cancel');
 	};
 }]);
