@@ -19,15 +19,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
 
 		#region IModule Members
 
-		public override void SetupDatabase()
-		{
-		}
-
-		public override void Initialize()
-		{
-
-		}
-
 		public override void PostInitialize()
 		{
 			var moduleCatalog = _container.Resolve<IModuleCatalog>();
