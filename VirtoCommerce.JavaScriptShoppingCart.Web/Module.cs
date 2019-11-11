@@ -1,8 +1,8 @@
-﻿using System.IO;
+﻿using Microsoft.Practices.Unity;
+using System.IO;
 using System.Linq;
 using System.Web.Hosting;
 using System.Web.Optimization;
-using Microsoft.Practices.Unity;
 using VirtoCommerce.JavaScriptShoppingCart.Web.Bundles;
 using VirtoCommerce.Platform.Core.Modularity;
 
