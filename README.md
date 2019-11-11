@@ -95,7 +95,7 @@ When you click the button you will see a modal which contain standard checkout w
 
 
 # License
-Copyright (c) Virtosoftware Ltd.  All rights reserved.
+Copyright (c) Virto Solutions LTD.  All rights reserved.
 
 Licensed under the Virto Commerce Open Software License (the "License"); you
 may not use this file except in compliance with the License. You may
