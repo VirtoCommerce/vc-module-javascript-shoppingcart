@@ -149,9 +149,11 @@ cartModule.component('vcCart', {
 		};
 
 		this.clearCart = function () {
-		    return cartApi.clearCart(ctrl).then(function() {
-				ctrl.reloadCart();
-				$rootScope.$broadcast('cartItemsChanged');
+			return wrapLoading(function () {
+		    	return cartApi.clearCart(ctrl).then(function() {
+					ctrl.reloadCart();
+					$rootScope.$broadcast('cartItemsChanged');
+				});
 			});
 		};
 
@@ -241,6 +243,7 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 			animation: true,
 			templateUrl: 'checkout-modal.tpl.html',
 			controller: 'virtoCommerce.cartModule.checkoutController',
+			windowClass: 'cart-modal-window',
 			resolve: { 
 				cart : function () {
 					return $scope.cart;
@@ -260,6 +263,7 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 				animation: true,
 				templateUrl: 'recently-added-cart-item-dialog.tpl.html',
 				controller: 'virtoCommerce.cartModule.addItemViewController',
+				size:'lg',
 				resolve: { 
 					cart : function () {
 						return cart;
@@ -284,6 +288,7 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 				animation: true,
 				templateUrl: 'shoppingCart.tpl.html',
 				controller: 'virtoCommerce.cartModule.cartViewController',
+				size: 'lg',
 				resolve: { 
 					cart : function () {
 						return cart;
@@ -322,8 +327,17 @@ cartModule.controller('virtoCommerce.cartModule.checkoutController', ['$scope', 
 	};
 }]);
 
+cartModule.controller('virtoCommerce.cartModule.clearCartPopUpController', ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+	$scope.ok = function(){
+		$uibModalInstance.close(true);
+	};
 
-cartModule.controller('virtoCommerce.cartModule.cartViewController', ['$scope', '$uibModalInstance', 'cart', 'callback', function ($scope, $uibModalInstance, cart, callback) {
+	$scope.cancel = function () {
+		$uibModalInstance.close(false);
+	};
+}]);
+
+cartModule.controller('virtoCommerce.cartModule.cartViewController', ['$scope', '$uibModalInstance', 'cart', 'callback', '$uibModal', function ($scope, $uibModalInstance, cart, callback, $uibModal) {
 
 	$scope.cart = cart;
 	$scope.callback = callback;
@@ -333,8 +347,18 @@ cartModule.controller('virtoCommerce.cartModule.cartViewController', ['$scope', 
 	};
 
 	$scope.clearCart = function () {
-		$uibModalInstance.dismiss('cancel');
-		cart.clearCart(cart);
+		var modalInstance =  $uibModal.open({
+			animation: true,
+			templateUrl: 'clear-cart-modal.tpl.html',
+			controller: 'virtoCommerce.cartModule.clearCartPopUpController',
+		});
+
+		modalInstance.result.then(function (shouldClear) {
+			if(shouldClear){
+				cart.clearCart(cart);
+			}
+		  });
+
 	};
 
 	//TODO: ui loader when action not finished yet
