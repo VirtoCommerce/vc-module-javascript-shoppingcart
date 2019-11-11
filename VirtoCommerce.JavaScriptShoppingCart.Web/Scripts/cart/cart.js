@@ -149,9 +149,11 @@ cartModule.component('vcCart', {
 		};
 
 		this.clearCart = function () {
-		    return cartApi.clearCart(ctrl).then(function() {
-				ctrl.reloadCart();
-				$rootScope.$broadcast('cartItemsChanged');
+			return wrapLoading(function () {
+		    	return cartApi.clearCart(ctrl).then(function() {
+					ctrl.reloadCart();
+					$rootScope.$broadcast('cartItemsChanged');
+				});
 			});
 		};
 
@@ -159,10 +161,6 @@ cartModule.component('vcCart', {
 			return cartApi.getAvailablePaymentMethods(ctrl).then(function (response) {
 				return response.data;
 			});
-		};
-
-		this.buyOnClick = function (product) {
-			alert(product);
 		};
 
 		this.checkout = function () {
@@ -241,6 +239,7 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 			animation: true,
 			templateUrl: 'checkout-modal.tpl.html',
 			controller: 'virtoCommerce.cartModule.checkoutController',
+			windowClass: 'cart-modal-window',
 			resolve: { 
 				cart : function () {
 					return $scope.cart;
@@ -255,14 +254,15 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 		$scope.lineItem = lineItem;
 		$scope.lineItem.currencySymbol = $scope.cart.currencySymbol;
 
-		$scope.cart.addLineItem($scope.lineItem).then(function (cart) {
+		$scope.cart.addLineItem($scope.lineItem).then(function () {
 			$uibModal.open({
 				animation: true,
 				templateUrl: 'recently-added-cart-item-dialog.tpl.html',
 				controller: 'virtoCommerce.cartModule.addItemViewController',
+				size:'lg',
 				resolve: { 
 					cart : function () {
-						return cart;
+						return $scope.cart;
 					  },
 					lineItem: function () {
 						return $scope.lineItem;
@@ -277,16 +277,16 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 	};
 
 	$scope.openCart = function(cart) {
-
 		$scope.cart =  !cart ? $scope.carts['default'] : cart;
-		$scope.cart.reloadCart().then(function (cart) {
+		$scope.cart.reloadCart().then(function () {
 			$uibModal.open({
 				animation: true,
 				templateUrl: 'shoppingCart.tpl.html',
 				controller: 'virtoCommerce.cartModule.cartViewController',
+				size: 'lg',
 				resolve: { 
 					cart : function () {
-						return cart;
+						return $scope.cart;
 					  },					
 					callback: function () {
 						return $scope.openCheckout;
@@ -322,8 +322,17 @@ cartModule.controller('virtoCommerce.cartModule.checkoutController', ['$scope', 
 	};
 }]);
 
+cartModule.controller('virtoCommerce.cartModule.clearCartPopUpController', ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+	$scope.ok = function(){
+		$uibModalInstance.close(true);
+	};
 
-cartModule.controller('virtoCommerce.cartModule.cartViewController', ['$scope', '$uibModalInstance', 'cart', 'callback', function ($scope, $uibModalInstance, cart, callback) {
+	$scope.cancel = function () {
+		$uibModalInstance.close(false);
+	};
+}]);
+
+cartModule.controller('virtoCommerce.cartModule.cartViewController', ['$scope', '$uibModalInstance', 'cart', 'callback', '$uibModal', function ($scope, $uibModalInstance, cart, callback, $uibModal) {
 
 	$scope.cart = cart;
 	$scope.callback = callback;
@@ -333,8 +342,18 @@ cartModule.controller('virtoCommerce.cartModule.cartViewController', ['$scope', 
 	};
 
 	$scope.clearCart = function () {
-		$uibModalInstance.dismiss('cancel');
-		cart.clearCart(cart);
+		var modalInstance =  $uibModal.open({
+			animation: true,
+			templateUrl: 'clear-cart-modal.tpl.html',
+			controller: 'virtoCommerce.cartModule.clearCartPopUpController',
+		});
+
+		modalInstance.result.then(function (shouldClear) {
+			if(shouldClear){
+				cart.clearCart(cart);
+			}
+		  });
+
 	};
 
 	//TODO: ui loader when action not finished yet
