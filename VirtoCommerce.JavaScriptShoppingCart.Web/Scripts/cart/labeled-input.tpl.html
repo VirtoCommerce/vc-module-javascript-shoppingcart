@@ -1,0 +1,13 @@
+<div class="form-group" ng-class="{'keyuped': $ctrl.form[$ctrl.name].$viewValue.length, 'error': ($ctrl.form[$ctrl.name].$dirty || $ctrl.form.$submitted) && $ctrl.form[$ctrl.name].$invalid }">
+        <label for="{{ $ctrl.name }}" class="form-label" ng-bind="$ctrl.placeholder"></label>
+        <input ng-model="$ctrl.value"
+               name="{{ $ctrl.name }}"
+               id="{{ $ctrl.name }}"
+               placeholder="{{ $ctrl.placeholder }}"
+               autofocus="{{ $ctrl.autofocus }}"
+               type="{{ $ctrl.type }}"
+               ng-required="$ctrl.required" class="form-input"
+               ng-readonly="$ctrl.readonly" />
+        <span class="form-error" ng-if="($ctrl.form[$ctrl.name].$dirty || $ctrl.form.$submitted) && $ctrl.form[$ctrl.name].$error.required" ng-bind="$ctrl.requiredError || 'Required'"></span>
+        <span class="form-error" ng-if="($ctrl.form[$ctrl.name].$dirty || $ctrl.form.$submitted) && !$ctrl.form[$ctrl.name].$error.required && $ctrl.form[$ctrl.name].$invalid">Invalid</span>
+    </div>

@@ -19,15 +19,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
 
 		#region IModule Members
 
-		public override void SetupDatabase()
-		{
-		}
-
-		public override void Initialize()
-		{
-
-		}
-
 		public override void PostInitialize()
 		{
 			var moduleCatalog = _container.Resolve<IModuleCatalog>();
@@ -44,6 +35,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
 					.IncludeDirectory(Path.Combine(moduleRelativePath, "Scripts/checkout"), "*.js", true)
 					.IncludeDirectory(Path.Combine(moduleRelativePath, "Scripts/checkout-modal"), "*.tpl.html", true)
 					.IncludeDirectory(Path.Combine(moduleRelativePath, "Scripts/checkout"), "*.tpl.html", true)
+					.IncludeDirectory(Path.Combine(moduleRelativePath, "Scripts/cart"), "*.tpl.html", true)
 					.Include(Path.Combine(moduleRelativePath, "Scripts/services/cartService.js"));
 				BundleTable.Bundles.Add(partialBundle);
 			}
