@@ -1,0 +1,49 @@
+<div class="modal-header">
+    <h2 class="modal-title pull-left modal-header-popup">PRODUCT IS ADDED TO CART</h2>
+    <span class="close-popup glyphicon glyphicon-remove pull-right" ng-click="cancel()"></span>
+</div>
+<div class="modal-body">
+        <div class="cart-row">
+                <div class="grid">
+                    <div class="grid-item large--seven-twelfths">
+                        <div class="grid">
+                            <div class="grid-item one-third large--one-quarter">
+                                <span class="cart-image">
+                                    <img class="cart-image-popup" ng-src="{{ lineItem.imageUrl }}" style="height:100px; width:100px" />
+                                </span>
+                            </div>
+                            <div class="grid-item two-thirds large--three-quarters">
+                                <a ng-bind="lineItem.name"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-item large--five-twelfths medium--two-thirds push--medium--one-third">
+                        <div class="grid">
+                            <div class="grid-item one-half medium-down--one-third text-right">
+                                <div class="ajaxifyCart--qty" ng-bind="lineItem.quantity"></div>
+                            </div>
+                            <div class="grid-item one-third medium-down--one-third medium-down--text-left text-right">
+                                    <small class="list-price" ng-bind="lineItem.currencySymbol"></small> 
+                                    <small class="list-price" ng-bind="lineItem.listPrice"></small>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cart-row">
+            <div class="grid">
+                <div class="grid-item text-right">
+                    <button class="btn"  ng-click="ok()">
+                        <span>Go to cart</span>
+                        <!-- TODO: ui loader when action not finished yet -->
+<!--                         <span ng-if="dialogData.updated">Go to cart</span>
+                        <span ng-if="!dialogData.updated">Updating cart...</span>
+ -->                    </button>
+                    <button class="btn" ng-click="cancel()">Continue shopping</button>
+                </div>
+            </div>
+        </div>
+        
+</div>
+
