@@ -163,10 +163,6 @@ cartModule.component('vcCart', {
 			});
 		};
 
-		this.buyOnClick = function (product) {
-			alert(product);
-		};
-
 		this.checkout = function () {
 			if (this.checkout) {
 				this.checkout.show();
@@ -258,7 +254,7 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 		$scope.lineItem = lineItem;
 		$scope.lineItem.currencySymbol = $scope.cart.currencySymbol;
 
-		$scope.cart.addLineItem($scope.lineItem).then(function (cart) {
+		$scope.cart.addLineItem($scope.lineItem).then(function () {
 			$uibModal.open({
 				animation: true,
 				templateUrl: 'recently-added-cart-item-dialog.tpl.html',
@@ -266,7 +262,7 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 				size:'lg',
 				resolve: { 
 					cart : function () {
-						return cart;
+						return $scope.cart;
 					  },
 					lineItem: function () {
 						return $scope.lineItem;
@@ -281,9 +277,8 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 	};
 
 	$scope.openCart = function(cart) {
-
 		$scope.cart =  !cart ? $scope.carts['default'] : cart;
-		$scope.cart.reloadCart().then(function (cart) {
+		$scope.cart.reloadCart().then(function () {
 			$uibModal.open({
 				animation: true,
 				templateUrl: 'shoppingCart.tpl.html',
@@ -291,7 +286,7 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 				size: 'lg',
 				resolve: { 
 					cart : function () {
-						return cart;
+						return $scope.cart;
 					  },					
 					callback: function () {
 						return $scope.openCheckout;
