@@ -39,14 +39,13 @@ cartModule.component('vcCart', {
 		this.reloadCart = function () {
 			return wrapLoading(function () {
 				return cartApi.getCart(ctrl).then(function (response) {
-					this.cartIsUpdating = false;
-					angular.extend(ctrl, response.data);
+                    angular.merge(ctrl, response.data);
 					if (response.data.coupon) {
 						ctrl.coupon = response.data.coupon;
 						ctrl.coupon.isApplied = true;
 					}
 					ctrl.getCartItemsCount();
-
+                    ctrl.cartIsUpdating = false;
 					return ctrl;
 				}).then(function (cart) {
 					ctrl.availCountries = countriesService.countries;
@@ -90,40 +89,43 @@ cartModule.component('vcCart', {
 			});
 		};
 
-		this.removeLineItem = function (lineItemId){
-			var lineItem = _.find(this.items, function (i) { return i.id == lineItemId });
-			if (!lineItem || this.cartIsUpdating) {
-				return;
-			}
-			this.cartIsUpdating = true;
-			
-			cartApi.removeLineItem(ctrl, lineItemId).then(function (response) {
-				ctrl.reloadCart();
-				$rootScope.$broadcast('cartItemsChanged');
-			});
+        this.removeLineItem = function(lineItemId) {
+            var lineItem = _.find(this.items, function(i) { return i.id == lineItemId });
+            if (!lineItem || this.cartIsUpdating) {
+                return;
+            }
+            this.cartIsUpdating = true;
 
-			this.cartIsUpdating = false;
-		}
+            cartApi.removeLineItem(ctrl, lineItemId).then(function(response) {
+                ctrl.reloadCart();
+                $rootScope.$broadcast('cartItemsChanged');
+            });
 
-		this.changeLineItemQuantity = function (lineItemId, quantity) {
-			var lineItem = _.find(this.items, function (i) { return i.id == lineItemId });
-			if (!lineItem || quantity < 1 || this.cartIsUpdating) {
-				return;
-			}
-			var initialQuantity = lineItem.quantity;
-			lineItem.quantity = quantity;
-			$timeout.cancel(timer);
-			timer = $timeout(function () {
-				this.cartIsUpdating = true;
-				cartApi.changeLineItem(ctrl, lineItemId, quantity).then(function (response) {
-					ctrl.reloadCart()
-					$rootScope.$broadcast('cartItemsChanged');
-				}, function (response) {
-					lineItem.quantity = initialQuantity;
-					ctrl.cartIsUpdating = false;
-				});
-			}, 300);
-		}
+            this.cartIsUpdating = false;
+        };
+
+        this.changeLineItemQuantity = function(lineItemId, quantity) {
+            var lineItem = _.find(this.items, function(i) { return i.id === lineItemId; });
+            if (!lineItem || quantity < 1 || this.cartIsUpdating) {
+                return;
+            }
+            var initialQuantity = lineItem.quantity;
+            lineItem.quantity = quantity;
+            $timeout.cancel(timer);
+
+            timer = $timeout(function () {
+                    ctrl.cartIsUpdating = true;
+                    cartApi.changeLineItem(ctrl, lineItemId, quantity).then(function(response) {
+                            ctrl.reloadCart();
+                            $rootScope.$broadcast('cartItemsChanged');
+                        },
+                        function(response) {
+                            lineItem.quantity = initialQuantity;
+                            ctrl.cartIsUpdating = false;
+                        });
+                },
+                300);
+        };
 	
 
 		this.addOrUpdateShipment = function (shipment) {
@@ -357,14 +359,14 @@ cartModule.controller('virtoCommerce.cartModule.cartViewController', ['$scope', 
 	};
 
 	//TODO: ui loader when action not finished yet
-	$scope.removeLineItem = function(lineItemId) {
-		cart.removeLineItem(lineItemId);
-	}
+    $scope.removeLineItem = function(lineItemId) {
+        cart.removeLineItem(lineItemId);
+    };
 
 	//TODO: ui loader when action not finished yet
-	$scope.changeLineItemQuantity = function (lineItemId, quantity) {
-		cart.changeLineItemQuantity(lineItemId, quantity);
-	}
+    $scope.changeLineItemQuantity = function(lineItemId, quantity) {
+        cart.changeLineItemQuantity(lineItemId, quantity);
+    };
 
 	$scope.ok = function(){
         $scope.callback();
