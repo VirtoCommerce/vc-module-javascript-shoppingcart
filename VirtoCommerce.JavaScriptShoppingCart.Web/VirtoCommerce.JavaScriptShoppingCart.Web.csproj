@@ -155,8 +155,10 @@
     <Content Include="Scripts\cart\labeled-input.tpl.html" />
     <Content Include="Scripts\checkout-modal\checkout-modal.tpl.html" />
     <Content Include="Scripts\checkout-modal\clear-cart-modal.tpl.html" />
+    <Content Include="Scripts\checkout-modal\login-modal.tpl.html" />
     <Content Include="Scripts\checkout-modal\recently-added-cart-item-dialog.tpl.html" />
     <Content Include="Scripts\checkout-modal\shoppingCart.tpl.html" />
+    <Content Include="Scripts\checkout-modal\sign-up-modal.tpl.html" />
     <Content Include="Scripts\checkout\checkout-address.js" />
     <Content Include="Scripts\checkout\checkout-address.tpl.html" />
     <Content Include="Scripts\checkout\checkout-coupon.js" />
