@@ -372,7 +372,7 @@ cartModule.controller('virtoCommerce.cartModule.cartViewController', ['$scope', 
 	};
 }]);
 
-cartModule.controller('virtoCommerce.cartModule.accountViewController', ['$scope', '$uibModalInstance', 'cart', function ($scope, $uibModalInstance, cart) {
+cartModule.controller('virtoCommerce.cartModule.logInViewController', ['$scope', '$uibModalInstance', '$uibModal', 'cart', function ($scope, $uibModalInstance, $uibModal, cart) {
 
     $scope.cart = cart;
     $scope.customer = {};
@@ -391,11 +391,40 @@ cartModule.controller('virtoCommerce.cartModule.accountViewController', ['$scope
 
     };
 
-    $scope.setSignUpMode = function() {
-        $scope.signUpMode = true;
+    $scope.showSignUpPopUp = function () {
+        $uibModalInstance.dismiss('cancel');
+        $uibModal.open({
+            animation: true,
+            templateUrl: 'sign-up-modal.tpl.html',
+            controller: 'virtoCommerce.cartModule.signUpViewController',
+            size: 's',
+            resolve: {
+                cart: function () {
+                    return $scope.cart;
+                }
+            }
+        });
+
     };
 
     $scope.signUp = function () {
 
     };
 }]);
+
+
+cartModule.controller('virtoCommerce.cartModule.signUpViewController', ['$scope', '$uibModalInstance', 'cart', function ($scope, $uibModalInstance, cart) {
+
+    $scope.cart = cart;
+    $scope.customer = {};
+    $scope.signUpMode = false;
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+
+    $scope.signUp = function () {
+
+    };
+}]);
+

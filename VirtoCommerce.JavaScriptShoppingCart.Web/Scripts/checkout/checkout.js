@@ -123,7 +123,7 @@ cartModule.component('vcCheckout', {
             $uibModal.open({
                 animation: true,
                 templateUrl: 'login-modal.tpl.html',
-                controller: 'virtoCommerce.cartModule.accountViewController',
+                controller: 'virtoCommerce.cartModule.logInViewController',
                 size:'s',
                 resolve: {
                     cart: function () {
@@ -131,7 +131,6 @@ cartModule.component('vcCheckout', {
                     }
                 }
             });
-
         };
 
         ctrl.logout = function () {
