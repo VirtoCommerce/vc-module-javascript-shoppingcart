@@ -316,7 +316,6 @@ cartModule.controller('virtoCommerce.cartModule.addItemViewController', ['$scope
 	};
 }]);
 
-
 cartModule.controller('virtoCommerce.cartModule.checkoutController', ['$scope', '$uibModalInstance', 'cart' , function ($scope, $uibModalInstance, cart) {
 	$scope.cart = cart;
 	$scope.cancel = function () {
@@ -355,7 +354,6 @@ cartModule.controller('virtoCommerce.cartModule.cartViewController', ['$scope', 
 				cart.clearCart(cart);
 			}
 		  });
-
 	};
 
 	//TODO: ui loader when action not finished yet
@@ -372,4 +370,32 @@ cartModule.controller('virtoCommerce.cartModule.cartViewController', ['$scope', 
         $scope.callback();
 		$uibModalInstance.dismiss('cancel');
 	};
+}]);
+
+cartModule.controller('virtoCommerce.cartModule.accountViewController', ['$scope', '$uibModalInstance', 'cart', function ($scope, $uibModalInstance, cart) {
+
+    $scope.cart = cart;
+    $scope.customer = {};
+    $scope.signUpMode = false;
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+
+    $scope.signIn = function () {
+
+    };
+
+
+    $scope.resetPassword = function () {
+
+    };
+
+    $scope.setSignUpMode = function() {
+        $scope.signUpMode = true;
+    };
+
+    $scope.signUp = function () {
+
+    };
 }]);

@@ -8,8 +8,11 @@ cartModule.component('vcCheckout', {
 		cart: '=',
 		showPricesWithTax: '@'
 	},
-	controller: ['$rootScope', '$window', 'virtoCommerce.cartModule.api', function ($rootScope, $window, cartService) {
-		var ctrl = this;
+    controller: ['$rootScope', '$window', 'virtoCommerce.cartModule.api', '$uibModal', function ($rootScope, $window, cartService, $uibModal) {
+        var ctrl = this;
+        ctrl.customer = {};
+        ctrl.customer.email = "test@gmail.com";
+        ctrl.customer.isRegisteredUser = true;
 
 		this.checkout = {
 			wizard: {},
@@ -113,6 +116,27 @@ cartModule.component('vcCheckout', {
 			ctrl.reloadCart().then(function (cart) {
 				ctrl.checkout.wizard.goToStep('shipping-address');
 			});
-		};
-	}]
+        };
+
+
+        ctrl.login = function() {
+            $uibModal.open({
+                animation: true,
+                templateUrl: 'login-modal.tpl.html',
+                controller: 'virtoCommerce.cartModule.accountViewController',
+                size:'s',
+                resolve: {
+                    cart: function () {
+                        return ctrl;
+                    }
+                }
+            });
+
+        };
+
+        ctrl.logout = function () {
+            ctrl.customer.isRegisteredUser = false;
+        };
+    }]
 });
+
