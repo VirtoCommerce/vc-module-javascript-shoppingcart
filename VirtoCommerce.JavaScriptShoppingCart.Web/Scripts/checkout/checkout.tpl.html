@@ -2,7 +2,7 @@
     <div class="wrap" ng-if="!$ctrl.checkout.isFinished">
         <div class="checkout-sidebar">
             <div class="checkout-sidebar__content">
-                <div class="order-summary" ng-class="{ 'order-summary--is-expanded': $ctrl.orderSummaryVisible, 'order-summary--is-collapsed': !$ctrl.orderSummaryVisible }" ng-click="$ctrl.orderSummaryVisible = !$ctrl.orderSummaryVisible">
+                <div class="order-summary" ng-click="$ctrl.orderSummaryVisible = !$ctrl.orderSummaryVisible">
                     <div class="order-summary__section order-summary__section--product-list">
                         <vc-checkout-line-items items="$ctrl.cart.items" show-prices-with-taxes="$ctrl.showPricesWithTaxes" currencySymbol="$ctrl.cart.currencySymbol"></vc-checkout-line-items>
                     </div>
