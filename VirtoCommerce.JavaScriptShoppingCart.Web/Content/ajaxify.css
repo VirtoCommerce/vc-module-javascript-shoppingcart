@@ -264,9 +264,6 @@ form[action^="/cart/add"]:after {
 /*============================================================================
   #Quantity Selectors in the Ajax Cart
 ==============================================================================*/
-.ajaxifyCart--qty {
-    margin: 0;
-}
 
 .ajaxifyCart--is-loading .ajaxifyCart--qty {
     opacity: 0.5;

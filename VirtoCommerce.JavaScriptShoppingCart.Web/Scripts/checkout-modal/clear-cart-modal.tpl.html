@@ -1,20 +1,21 @@
 <div class="modal-header">
     <h5 class="modal-title" id="modal-title">Clear cart confirmation</h5>
 </div>
-
 <div class="modal-body" id="modal-body">
-        <div class="empty-cart">Do you want to clear your cart?</div>
+    <div class="empty-cart">Do you want to clear your cart?</div>
 </div>
 <div class="modal-footer" id='modal-footer'>
-    <button class="btn"
-        ng-disabled="cartIsUpdating " ng-click="ok()">
-        <span class="icon"></span>
-        Clear
-    </button>
+    <div class="modal-actions">
+        <button class="btn"
+            ng-class="{ 'loading': cartIsUpdating }" ng-click="ok()">
+            <span class="icon"></span>
+            Clear
+        </button>
 
-    <button class="btn"
-        ng-disabled="cartIsUpdating " ng-click="cancel()">
-        <span class="icon"></span>
-        Cancel
-    </button>
+        <button class="btn"
+            ng-class="{ 'loading': cartIsUpdating }" ng-click="cancel()">
+            <span class="icon"></span>
+            Cancel
+        </button>
+    </div>
 </div>

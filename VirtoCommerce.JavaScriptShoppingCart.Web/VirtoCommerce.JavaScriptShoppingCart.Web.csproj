@@ -136,6 +136,7 @@
     <Content Include="Content\checkout.css" />
     <Content Include="Content\common-components.css" />
     <Content Include="Content\logo.png" />
+    <Content Include="Content\new.css" />
     <Content Include="packages.config" />
     <Content Include="module.manifest" />
     <None Include="Web.Debug.config">
