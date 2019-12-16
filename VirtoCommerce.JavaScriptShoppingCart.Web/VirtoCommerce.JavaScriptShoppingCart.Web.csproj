@@ -150,6 +150,8 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Services\CartBuilder.cs" />
+    <Compile Include="Services\ICartBuilder.cs" />
     <Content Include="Scripts\cart\cart.js" />
     <Content Include="Scripts\cart\cart.tpl.html" />
     <Content Include="Scripts\cart\labeled-input.js" />
@@ -204,6 +206,7 @@
   <ItemGroup>
     <Compile Include="Bundles\AngularJavaScriptBundle.cs" />
     <Compile Include="Bundles\AngularJavaScriptTemplateCacheBundleTransform.cs" />
+    <Compile Include="Controllers\Api\CartController.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
