@@ -6,6 +6,7 @@ using System.Web.Hosting;
 using System.Web.Optimization;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security;
 using VirtoCommerce.JavaScriptShoppingCart.Web.Bundles;
+using VirtoCommerce.JavaScriptShoppingCart.Web.Services;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
 using Role = VirtoCommerce.Platform.Core.Security.Role;
@@ -22,6 +23,13 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
         }
 
         #region IModule Members
+
+		public override void Initialize()
+		{
+			base.Initialize();
+
+			_container.RegisterType<ICartBuilder, CartBuilder>();
+		}
 
         public override void PostInitialize()
         {
