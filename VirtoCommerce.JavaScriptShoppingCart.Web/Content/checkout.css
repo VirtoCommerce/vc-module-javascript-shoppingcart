@@ -5335,3 +5335,10 @@ sub {
 .text-light {
     color: rgba(88, 88, 88, 0.5); }
 
+.form-error {
+    color: #e51400;
+    font-size: 12px;
+    line-height: 1.4;
+    padding: 5px 0;
+}
+

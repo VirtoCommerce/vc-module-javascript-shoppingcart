@@ -1,10 +1,71 @@
-﻿var cartModule = angular.module('virtoCommerce.cartModule', ['ngAnimate', 'ui.bootstrap', 'ngCookies', 'pascalprecht.translate', 'angular.filter', 'credit-cards']);
+﻿var cartModule = angular.module('virtoCommerce.cartModule', ['ngAnimate', 'ui.bootstrap', 'ngCookies', 'pascalprecht.translate', 'angular.filter', 'credit-cards', 'LocalStorageModule']);
 
-cartModule.config(['$translateProvider', 'virtoCommerce.cartModule.translations', function ($translateProvider, translations) {
+cartModule.config(['$translateProvider', 'virtoCommerce.cartModule.translations', '$httpProvider', function ($translateProvider, translations, $httpProvider) {
 	$translateProvider.useSanitizeValueStrategy('sanitizeParameters');
 	$translateProvider.translations('en', translations);
-	$translateProvider.preferredLanguage('en');
+    $translateProvider.preferredLanguage('en');
+    //Add interceptor
+    $httpProvider.interceptors.push('virtoCommerce.cartModule.httpErrorInterceptor');
+
 }]);
+
+cartModule.factory('virtoCommerce.cartModule.httpErrorInterceptor', ['$q', '$rootScope', '$injector', 'virtoCommerce.cartModule.authDataStorage', function ($q, $rootScope, $injector, authDataStorage) {
+    var httpErrorInterceptor = {};
+
+    httpErrorInterceptor.request = function (config) {
+        // Need to pass localization request despite on the auth state
+        if (config.url == 'api/platform/localization') {
+            return config;
+        }
+
+        config.headers = config.headers || {};
+
+        return extractAuthData()
+            .then(function (authData) {
+                if (authData) {
+                    config.headers.Authorization = 'Bearer ' + authData.token;
+                }
+
+                return config;
+            }).finally(function () {
+                // do something on success
+                if (!config.cache) {
+                    $rootScope.$broadcast('httpRequestSuccess', config);
+                }
+            });
+    };
+
+    function extractAuthData() {
+        var authData = authDataStorage.getStoredData();
+        if (!authData) {
+            return $q.resolve();
+        }
+
+        if (Date.now() < authData.expiresAt) {
+            return $q.resolve(authData);
+        }
+
+        var authService = $injector.get('virtoCommerce.cartModule.authService');
+        return authService.refreshToken();
+    }
+
+    httpErrorInterceptor.responseError = function (rejection) {
+        if (rejection.status === 401) {
+            $rootScope.$broadcast('unauthorized', rejection);
+        } else {
+            $rootScope.$broadcast('httpError', rejection);
+        }
+        return $q.reject(rejection);
+    };
+
+    httpErrorInterceptor.requestError = function (rejection) {
+        $rootScope.$broadcast('httpError', rejection);
+        return $q.reject(rejection);
+    };
+
+    return httpErrorInterceptor;
+}]);
+
 
 cartModule.factory('virtoCommerce.cartModule.carts', [function () {
 	return {};
@@ -21,8 +82,8 @@ cartModule.component('vcCart', {
 		currencyCode: '@',
 		culture: '@'
 	},
-	controller: ['virtoCommerce.cartModule.carts', 'virtoCommerce.cartModule.api', 'virtoCommerce.cartModule.countriesService', 'virtoCommerce.cartModule.currenciesService', '$cookies', '$timeout', '$rootScope', '$scope',
-		function (carts, cartApi, countriesService, currenciesService, $cookies, $timeout, $rootScope, $scope) {
+    controller: ['virtoCommerce.cartModule.carts', 'virtoCommerce.cartModule.api', 'virtoCommerce.cartModule.countriesService', 'virtoCommerce.cartModule.currenciesService', '$cookies', '$timeout', '$rootScope', '$scope', 'virtoCommerce.cartModule.authDataStorage', 'virtoCommerce.cartModule.authService', 
+        function (carts, cartApi, countriesService, currenciesService, $cookies, $timeout, $rootScope, $scope, authDataStorage, authService) {
 		var timer;
 		var ctrl = this;
 		carts[ctrl.name] = this;
@@ -31,6 +92,9 @@ cartModule.component('vcCart', {
 		ctrl.availCountries = [];
 
 		this.cartIsUpdating = false;
+
+        authDataStorage.setPlatformKey(ctrl.apiKey);
+        authDataStorage.setPlatformUrl(ctrl.apiUrl);
 
 		$scope.$on('cartItemsChanged', function (event, data) {
 			ctrl.getCartItemsCount();
@@ -186,15 +250,23 @@ cartModule.component('vcCart', {
 			});
 		}
 
-		this.initializeUser = function () {
-			this.userId = $cookies.get('virto-javascript-shoppingcart-user-id');
-			if (!this.userId) {
-				this.userId = guid();
-				var expireDate = new Date();
-				expireDate.setDate(expireDate.getDate() + 1);
-				$cookies.put('virto-javascript-shoppingcart-user-id', this.userId, { 'expires': expireDate });
-			}
-		}
+        $scope.$on('loginStatusChanged', function (event, authContext) {
+            if (authContext.isAuthenticated) {
+                ctrl.userId = authContext.id;
+            } else {
+                ctrl.userId = guid();
+            }
+        });
+
+        this.initializeUser = function () {
+            authService.fillAuthData().then(function() {
+                ctrl.userId = authService.id;
+                if (!ctrl.userId) {
+                    ctrl.userId = guid();
+                }
+                ctrl.reloadCart();
+            });
+        };
 
 		function guid() {
 			function s4() {
@@ -372,18 +444,45 @@ cartModule.controller('virtoCommerce.cartModule.cartViewController', ['$scope', 
 	};
 }]);
 
-cartModule.controller('virtoCommerce.cartModule.logInViewController', ['$scope', '$uibModalInstance', '$uibModal', 'cart', function ($scope, $uibModalInstance, $uibModal, cart) {
+cartModule.controller('virtoCommerce.cartModule.logInViewController', ['$scope', '$uibModalInstance', '$uibModal', 'virtoCommerce.cartModule.authService', 'cart', function ($scope, $uibModalInstance, $uibModal, authService, cart) {
 
     $scope.cart = cart;
     $scope.customer = {};
-    $scope.signUpMode = false;
+    $scope.authError = null;
+    $scope.authReason = false;
+    $scope.loginProgress = false;
+
 
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
 
-    $scope.signIn = function () {
-
+    $scope.ok = function () {
+        // Clear any previous security errors
+        $scope.authError = null;
+        $scope.loginProgress = true;
+        // Try to login
+        authService.login($scope.customerEmail, $scope.customerPassword, false).then(
+            function (loggedIn) {
+                $scope.loginProgress = false;
+                if (!loggedIn) {
+                    $scope.authError = 'invalidCredentials';
+                } else {
+                    $uibModalInstance.dismiss('cancel');
+                }
+            },
+            function (x) {
+                $scope.loginProgress = false;
+                if (angular.isDefined(x.status)) {
+                    if (x.status == 400 || x.status == 401) {
+                        $scope.authError = 'The login or password is incorrect.';
+                    } else {
+                        $scope.authError = 'Authentication error (code: ' + x.status + ').';
+                    }
+                } else {
+                    $scope.authError = 'Authentication error ' + x;
+                }
+            });
     };
 
 

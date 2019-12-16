@@ -5,26 +5,30 @@
 <div class="modal-body main-content" id="modal-body">
     <div class="grid">
         <div class="grid-item large--one-third push--large--one-third text-center">
-            <form accept-charset="UTF-8" action="" method="post" id="customer_login" name="customer_login">
-
+            <form accept-charset="UTF-8" novalidate ng-submit="ok()" name="loginForm">
                 <h1>{{ 'customer.login.title' | translate }}</h1>
                 
                 <label for="customer_email" class="hidden-label">{{ 'customer.login.email' | translate }}</label>
-                <input type="text" value="" name="customer[email]" id="customer_email" placeholder="{{ 'customer.login.email' | translate }}" autocorrect="off" autocapitalize="off">
+                <input type="text" value="" ng-model="customerEmail" id="customer_email" placeholder="{{ 'customer.login.email' | translate }}" autocorrect="off" autocapitalize="off">
 
                 <label for="customer_password" class="hidden-label">{{ 'customer.login.password' | translate }}</label>
-                <input type="password" value="" name="customer[password]" id="customer_password" placeholder="{{ 'customer.login.password' | translate }}">
+                <input type="password" value="" ng-model="customerPassword" id="customer_password" placeholder="{{ 'customer.login.password' | translate }}">
+                
+                <div class="form-group">
+                    <div class="form-error" ng-if="authError">
+                        {{authError}}
+                    </div>
+                </div>
+
 
                 <p >
                     <a href="#">{{ 'customer.login.forgot_password' | translate }}</a>
                     <a href="#" ng-click="showSignUpPopUp()">{{ 'customer.login.sign_up' | translate }}</a>
                 </p>
                 <p><input type="submit" class="btn" value="{{ 'customer.login.sign_in' | translate }}"></p>
-
             </form>
         </div>
     </div>
-
 </div>
 <div class="modal-footer" id='modal-footer'>
 </div>
