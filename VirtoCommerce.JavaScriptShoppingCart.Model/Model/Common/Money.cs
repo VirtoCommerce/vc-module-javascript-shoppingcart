@@ -33,7 +33,7 @@ using System.Globalization;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 {
-	public class Money : IComparable<Money>, IEquatable<Money>, IComparable, IConvertible<Money>, ICloneable
+	public sealed class Money : IComparable<Money>, IEquatable<Money>, IComparable, IConvertible<Money>, ICloneable
 	{
 		#region Constructors
 
@@ -338,7 +338,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 			return ToString(true, true);
 		}
 
-		public virtual string ToString(bool showDecimalDigits, bool showCurrencySymbol)
+		public string ToString(bool showDecimalDigits, bool showCurrencySymbol)
 		{
 			string result = null;
 
@@ -396,12 +396,12 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 
 		#region IConvertible<Money> Members
 
-		public Money ConvertTo(Currency toCurrency)
+		public Money ConvertTo(Currency currency)
 		{
-			if (Currency == toCurrency)
+			if (Currency == currency)
 				return this;
 
-			return new Money(InternalAmount * Currency.ExchangeRate / toCurrency.ExchangeRate, toCurrency);
+			return new Money(InternalAmount * Currency.ExchangeRate / currency.ExchangeRate, currency);
 		}
 		#endregion
 

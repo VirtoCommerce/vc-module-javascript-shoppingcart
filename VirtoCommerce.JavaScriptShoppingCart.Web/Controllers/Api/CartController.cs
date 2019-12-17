@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VirtoCommerce.Domain.Cart.Services;
@@ -22,7 +21,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
 			_cartBuilder = cartBuilder;
 		}
 
-		// POST: storefrontapi/cart/coupons/{couponCode}
 		[HttpPost]
 		[Route("coupons/{couponCode}")]
 		[ResponseType(typeof(void))]
@@ -58,9 +56,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
 		{
 			using (await AsyncLock.GetLockByKey(GetAsyncLockCartKey(storeId, customerId, cartId, currency)).LockAsync())
 			{
-				var cart = _shoppingCartService.GetByIds(new[] { cartId }).FirstOrDefault();
-
-				// TODO: Need to get cart from DTO, like cart.ToJsCartModel(). Probably need to use automapper
+				// Non functional now: Need to get the cart from platform cart service, then convert to js cart model. Probably need to use automapper for conversation
 				ShoppingCart cartModel = new ShoppingCart(new Core.Model.Common.Currency(new Core.Model.Common.Language("en-US"), "USD"), new Core.Model.Common.Language("en-US"));
 
 				await _cartBuilder.TakeCartAsync(cartModel.Clone() as ShoppingCart);
