@@ -2,10 +2,12 @@
 <module>
 	<id>VirtoCommerce.JavaScriptShoppingCart</id>
 	<version>1.1.3</version>
-	<platformVersion>2.13.24</platformVersion>
+	<platformVersion>2.13.53</platformVersion>
 	<dependencies>
-		<dependency id="VirtoCommerce.Core" version="2.17.0" />
+		<dependency id="VirtoCommerce.Core" version="2.25.32" />
+		<dependency id="VirtoCommerce.Cart" version="2.17.0" />
 		<dependency id="VirtoCommerce.Store" version="2.12.0" />
+		<dependency id="VirtoCommerce.Orders" version="2.17.26" />
 	</dependencies>
 
 	<title>JavaScriptShoppingCart module</title>
@@ -19,8 +21,8 @@
 	<projectUrl>https://virtocommerce.com/apps/extensions/javascriptshoppingcart-module</projectUrl>
 	<iconUrl>Modules/$(VirtoCommerce.JavaScriptShoppingCart)/Content/logo.png</iconUrl>
 	<releaseNotes>First version.</releaseNotes>
-	<copyright>Copyright © 2011-2016 Virto Commerce. All rights reserved</copyright>
-	<tags>catalog</tags>
+	<copyright>Copyright © 2011-2019 Virto Commerce. All rights reserved</copyright>
+	<tags>js-cart</tags>
 
 	<assemblyFile>VirtoCommerce.JavaScriptShoppingCart.Web.dll</assemblyFile>
 	<moduleType>VirtoCommerce.JavaScriptShoppingCart.Web.Module, VirtoCommerce.JavaScriptShoppingCart.Web</moduleType>
@@ -28,11 +30,5 @@
 	<!--<scripts>
 		<directory virtualPath="$/Scripts" searchPattern="*.js" searchSubdirectories="true" />
 	</scripts>-->
-
-	<permissions>
-		<group name="JavaScriptShoppingCart">
-			<permission id="javascriptshoppingcart:additemtocart" name="Add item to cart" description=""/>
-		</group>
-	</permissions>
 
 </module>

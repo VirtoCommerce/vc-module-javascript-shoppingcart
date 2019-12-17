@@ -3,6 +3,8 @@ using System.IO;
 using System.Linq;
 using System.Web.Hosting;
 using System.Web.Optimization;
+using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services;
+using VirtoCommerce.JavaScriptShoppingCart.Data.Services;
 using VirtoCommerce.JavaScriptShoppingCart.Web.Bundles;
 using VirtoCommerce.Platform.Core.Modularity;
 
@@ -18,6 +20,13 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
 		}
 
 		#region IModule Members
+
+		public override void Initialize()
+		{
+			base.Initialize();
+
+			_container.RegisterType<ICartBuilder, CartBuilder>();
+		}
 
 		public override void PostInitialize()
 		{
