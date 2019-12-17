@@ -114,20 +114,20 @@ cartModule.component('vcCart', {
 			});
 		};
 
-		this.addLineItem = function (lineItem) {
-			return wrapLoading(function () {
-				return cartApi.addLineItem(ctrl, lineItem).then(function () {
-					$rootScope.$broadcast('cartItemsChanged');
-					return ctrl.reloadCart();
-				});
-			});
-		}
+        this.addLineItem = function(lineItem) {
+            return wrapLoading(function() {
+                return cartApi.addLineItem(ctrl, lineItem).then(function() {
+                    $rootScope.$broadcast('cartItemsChanged');
+                    return ctrl.reloadCart();
+                });
+            });
+        };
 
-		this.getAvailShippingMethods = function (shipment) {
-			return cartApi.getAvailableShippingMethods(ctrl, shipment.id).then(function (response) {
-				return response.data;
-			});
-		}
+        this.getAvailShippingMethods = function(shipment) {
+            return cartApi.getAvailableShippingMethods(ctrl, shipment.id).then(function(response) {
+                return response.data;
+            });
+        };
 
 		this.getCountryRegions = function (country) {
 			return cartApi.getCountryRegions(ctrl, country.code3).then(function (response) {
@@ -149,7 +149,7 @@ cartModule.component('vcCart', {
 		};
 
         this.removeLineItem = function(lineItemId) {
-            var lineItem = _.find(this.items, function(i) { return i.id == lineItemId });
+            var lineItem = _.find(this.items, function(i) { return i.id === lineItemId; });
             if (!lineItem || this.cartIsUpdating) {
                 return;
             }
@@ -204,14 +204,14 @@ cartModule.component('vcCart', {
 		};
 
 		this.removeCart = function () {
-		    return cartApi.removeCart(ctrl).then(function() {
+          return cartApi.removeCart(ctrl).then(function() {
 				$rootScope.$broadcast('cartItemsChanged');
 			});
 		};
 
 		this.clearCart = function () {
-			return wrapLoading(function () {
-		    	return cartApi.clearCart(ctrl).then(function() {
+            return wrapLoading(function () {
+                return cartApi.clearCart(ctrl).then(function () {
 					ctrl.reloadCart();
 					$rootScope.$broadcast('cartItemsChanged');
 				});
@@ -312,8 +312,8 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 			resolve: { 
 				cart : function () {
 					return $scope.cart;
-				  }
-	    	}
+                }
+            }
 		});
 	};
 
@@ -332,7 +332,7 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 				resolve: { 
 					cart : function () {
 						return $scope.cart;
-					  },
+                    },
 					lineItem: function () {
 						return $scope.lineItem;
 					},
@@ -356,7 +356,7 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 				resolve: { 
 					cart : function () {
 						return $scope.cart;
-					  },					
+                    },					
 					callback: function () {
 						return $scope.openCheckout;
 					}
@@ -420,7 +420,7 @@ cartModule.controller('virtoCommerce.cartModule.cartViewController', ['$scope', 
 			if(shouldClear){
 				cart.clearCart(cart);
 			}
-		  });
+        });
 	};
 
 	//TODO: ui loader when action not finished yet
