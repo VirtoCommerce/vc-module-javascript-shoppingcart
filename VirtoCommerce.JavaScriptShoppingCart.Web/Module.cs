@@ -3,8 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Web.Hosting;
 using System.Web.Optimization;
+using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services;
+using VirtoCommerce.JavaScriptShoppingCart.Data.Services;
 using VirtoCommerce.JavaScriptShoppingCart.Web.Bundles;
-using VirtoCommerce.JavaScriptShoppingCart.Web.Services;
 using VirtoCommerce.Platform.Core.Modularity;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Web
