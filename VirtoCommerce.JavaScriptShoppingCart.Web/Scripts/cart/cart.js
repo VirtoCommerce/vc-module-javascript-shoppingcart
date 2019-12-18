@@ -252,19 +252,17 @@ cartModule.component('vcCart', {
 			});
 		}
 
-		this.getCartItemsCount = function () {
-			if (ctrl.id && ctrl.items) {
-				var itemsQuantity = 0;
-				for (var index in ctrl.items) {
-					itemsQuantity += ctrl.items[index].quantity;
-				}
-				ctrl.cartItemsCount = itemsQuantity;
-			} else {
-				ctrl.cartItemsCount = 0;
-			}
-		}
-
-		//this.initializeUser();
+        this.getCartItemsCount = function() {
+            if (ctrl.id && ctrl.items) {
+                var itemsQuantity = 0;
+                for (var index in ctrl.items) {
+                    itemsQuantity += ctrl.items[index].quantity;
+                }
+                ctrl.cartItemsCount = itemsQuantity;
+            } else {
+                ctrl.cartItemsCount = 0;
+            }
+        };
 
 		this.reloadCart();
 

@@ -162,6 +162,7 @@
             authContext.memberId = user.memberId;
         } else {
             authContext.userLogin = undefined;
+            authContext.memberId = undefined;
             authContext.isAuthenticated = false;
             if (!authContext.userId) {
                 authContext.userId = guid();
