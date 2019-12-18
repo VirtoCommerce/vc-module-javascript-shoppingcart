@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using VirtoCommerce.Domain.Cart.Services;
+using VirtoCommerce.JavaScriptShoppingCart.Core.Extensions;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Model.Marketing;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services;
@@ -10,27 +10,25 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
 {
-	[RoutePrefix("jscart/api/cart")]
+	[RoutePrefix("jscart/api/cart/{currency}/{cultureName}")]
 	[CLSCompliant(false)]
 	public class CartController : ApiController
 	{
-		private readonly IShoppingCartService _shoppingCartService;
 		private readonly ICartBuilder _cartBuilder;
 
-		public CartController(IShoppingCartService shoppingCartService, ICartBuilder cartBuilder)
+		public CartController(ICartBuilder cartBuilder)
 		{
-			_shoppingCartService = shoppingCartService;
 			_cartBuilder = cartBuilder;
 		}
 
 		[HttpGet]
-		[Route("{storeId}/{customerId}/{cartName}/{currency}/{cultureName}/current")]
+		[Route("{storeId}/{customerId}/{cartName}/current")]
 		[ResponseType(typeof(ShoppingCart))]
-		public async Task<IHttpActionResult> GetCart(string storeId, string customerId, string cartName, string currency, string cultureName)
+		public async Task<IHttpActionResult> GetCart(string currency, string cultureName, string storeId, string customerId, string cartName)
 		{
-			using (await AsyncLock.GetLockByKey(GetAsyncLockCartKey(string.Join(":", storeId, customerId, cartName, currency))).LockAsync())
+			using (await AsyncLock.GetLockByKey(CacheKey.With(storeId, customerId, cartName, currency)).LockAsync())
 			{
-				await _cartBuilder.LoadOrCreateNewTransientCartAsync(cartName, storeId, customerId, cultureName, currency);
+				_cartBuilder.LoadOrCreateNewTransientCart(cartName, storeId, customerId, cultureName, currency);
 				return Ok(_cartBuilder.Cart);
 			}
 		}
@@ -38,52 +36,48 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
 		[HttpPost]
 		[Route("{cartId}/coupons/{couponCode}")]
 		[ResponseType(typeof(void))]
-		public async Task<IHttpActionResult> AddCartCoupon([FromUri]string cartId, [FromUri]string couponCode)
+		public async Task<IHttpActionResult> AddCartCoupon([FromUri]string currency, [FromUri]string cultureName, [FromUri]string cartId, [FromUri]string couponCode)
 		{
-			using (await AsyncLock.GetLockByKey(GetAsyncLockCartKey(cartId)).LockAsync())
+			using (await AsyncLock.GetLockByKey(CacheKey.With(typeof(ShoppingCart), cartId)).LockAsync())
 			{
-				await _cartBuilder.LoadCartAsync(cartId);
-				await _cartBuilder.AddCouponAsync(couponCode);
-				await _cartBuilder.SaveAsync();
+				_cartBuilder.LoadCart(cartId, currency, cultureName);
+				_cartBuilder.AddCoupon(couponCode);
+				_cartBuilder.Save();
 
 				return Ok();
 			}
 		}
 
-		// POST: storefrontapi/cart/coupons/validate
 		[HttpPost]
 		[Route("{cartId}/coupons/validate")]
 		[ResponseType(typeof(Coupon))]
-		public async Task<IHttpActionResult> ValidateCoupon([FromUri]string cartId, [FromBody]Coupon coupon)
+		public async Task<IHttpActionResult> ValidateCoupon([FromUri]string currency, [FromUri]string cultureName, [FromUri]string cartId, [FromBody]Coupon coupon)
 		{
-			using (await AsyncLock.GetLockByKey(GetAsyncLockCartKey(cartId)).LockAsync())
+			using (await AsyncLock.GetLockByKey(CacheKey.With(typeof(ShoppingCart), cartId)).LockAsync())
 			{
-				await _cartBuilder.LoadCartAsync(cartId);
-				await _cartBuilder.TakeCartAsync(_cartBuilder.Cart.Clone() as ShoppingCart);
+				_cartBuilder.LoadCart(cartId, currency, cultureName);
+				_cartBuilder.TakeCart(_cartBuilder.Cart.Clone() as ShoppingCart);
 				_cartBuilder.Cart.Coupons = new[] { coupon };
-				await _cartBuilder.EvaluatePromotionsAsync();
+				_cartBuilder.EvaluatePromotions();
 
 				return Ok(coupon);
 			}
 		}
 
 
-		// DELETE: storefrontapi/cart/coupons
 		[HttpDelete]
 		[Route("{cartId}/coupons/{couponCode?}")]
 		[ResponseType(typeof(void))]
-		public async Task<IHttpActionResult> RemoveCartCoupon([FromUri]string cartId, [FromUri]string couponCode = null)
+		public async Task<IHttpActionResult> RemoveCartCoupon([FromUri]string currency, [FromUri]string cultureName, [FromUri]string cartId, [FromUri]string couponCode = null)
 		{
-			using (await AsyncLock.GetLockByKey(GetAsyncLockCartKey(cartId)).LockAsync())
+			using (await AsyncLock.GetLockByKey(CacheKey.With(typeof(ShoppingCart), cartId)).LockAsync())
 			{
-				await _cartBuilder.LoadCartAsync(cartId);
-				await _cartBuilder.RemoveCouponAsync(couponCode);
-				await _cartBuilder.SaveAsync();
+				_cartBuilder.LoadCart(cartId, currency, cultureName);
+				_cartBuilder.RemoveCoupon(couponCode);
+				_cartBuilder.Save();
 			}
 
 			return Ok();
 		}
-
-		private static string GetAsyncLockCartKey(string cartId) => "Cart: " + cartId;
 	}
 }

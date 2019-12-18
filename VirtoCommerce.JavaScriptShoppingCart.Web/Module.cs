@@ -37,7 +37,10 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
 				x.AddProfile(new MappingProfile());
 			});
 
-			configuration.AssertConfigurationIsValid();
+#pragma warning disable S125 // Could be uncommented when debugging mappings
+			//configuration.AssertConfigurationIsValid();
+#pragma warning restore S125
+
 			var mapper = configuration.CreateMapper();
 
 			_container.RegisterInstance(mapper);
