@@ -38,11 +38,11 @@
                                     </div>
                                     <div class="section__content">
                                         <vc-checkout-email email="$ctrl.checkout.shipment.deliveryAddress.email"></vc-checkout-email>
-                                        <p ng-if="$ctrl.customer.isRegisteredUser">
-                                            <span>{{ 'checkout.customer_information.logged-name' | translate }}</span> <span> {{$ctrl.customer.email}}. </span>
+                                        <p ng-if="$ctrl.isAuthenticated">
+                                            <span>{{ 'checkout.customer_information.logged-name' | translate }}</span> <span> {{$ctrl.userName}}. </span>
                                             <a class="pointer" ng-click="$ctrl.logout()">{{ 'checkout.customer_information.log_out' | translate }}</a>
                                         </p>
-                                        <p class="" ng-if="!$ctrl.customer.isRegisteredUser">
+                                        <p class="" ng-if="!$ctrl.isAuthenticated">
                                             <span>{{ 'checkout.customer_information.login-suggestion' | translate }}</span>
                                             <a class="pointer" ng-click="$ctrl.login()">{{ 'checkout.customer_information.log_in' | translate }}</a>
                                         </p>

@@ -1,33 +1,34 @@
 ﻿<div class="modal-header">
-    <span class="close-popup glyphicon glyphicon-remove pull-right" ng-click="cancel()"></span>
+    <h3 class="modal-title pull-left">{{ 'customer.register.title' | translate }}</h3>
+    <span class="close-popup" ng-click="cancel()"></span>
 </div>
-<div class="modal-body main-content" id="modal-body">
-    <div class="grid">
-        <div class="grid-item large--one-third push--large--one-third text-center">
-            <form accept-charset="UTF-8" action="" method="post" id="customer_login" name="customer_login">
-                <h1 >{{ 'customer.register.title' | translate }}</h1>
+<div class="modal-body" id="modal-body">
+    <div class="floating-labels vc-form">
+        <div class="wrap">
+            <div class="grid">
+                <div class="grid-item large--one-third push--large--one-third text-center">
+                    <form accept-charset="UTF-8" action="" ng-submit="signUp()">
 
-                <label for="first_name" class="hidden-label">{{ 'customer.register.first_name' | translate }}</label>
-                <input type="text" value="{{form.first_name}}" name="customer[first_name]" id="first_name" placeholder="{{ 'customer.register.first_name' | translate }}" autocapitalize="words" autofocus>
+                        <label for="customer_email" class="hidden-label">{{ 'customer.login.email' | translate }}</label>
+                        <input type="text" value="" ng-model="customer['email']" id="customer_email" placeholder="{{ 'customer.login.email' | translate }}" autocorrect="off" autocapitalize="off">
 
-                <label for="last_name" class="hidden-label">{{ 'customer.register.last_name' | translate }}</label>
-                <input type="text" value="{{form.last_name}}" name="customer[last_name]" id="last_name" placeholder="{{ 'customer.register.last_name' | translate }}" autocapitalize="words">
+                        <label for="customer_password" class="hidden-label">{{ 'customer.login.password' | translate }}</label>
+                        <input type="password" value="" ng-model="customer['password']" id="customer_password" placeholder="{{ 'customer.login.password' | translate }}">
 
-                <label for="customer_email" class="hidden-label">{{ 'customer.login.email' | translate }}</label>
-                <input type="text" value="" name="customer[email]" id="customer_email" placeholder="{{ 'customer.login.email' | translate }}" autocorrect="off" autocapitalize="off">
-
-                <label for="user_name" class="hidden-label">{{ 'customer.register.user_name' | translate }}</label>
-                <input type="text" value="" name="customer[user_name]" id="user_name" placeholder="{{ 'customer.register.user_name' | translate }}" autocorrect="off" autocapitalize="off">
-
-
-                <label for="customer_password" class="hidden-label">{{ 'customer.login.password' | translate }}</label>
-                <input type="password" value="" name="customer[password]" id="customer_password" placeholder="{{ 'customer.login.password' | translate }}">
-
-                <p><input type="submit" value="{{ 'customer.register.submit' | translate }}" class="btn"></p>
-            </form>
+                        <div class="form-group">
+                            <div class="form-error" ng-if="error">
+                                {{error}}
+                            </div>
+                        </div>
+                        <li ng-repeat="x in errors" class="form-error">
+                            {{ x | translate: passwordValidationResult }}
+                        </li>
+                        <p>
+                            <input type="submit" value="{{ 'customer.register.submit' | translate }}" class="btn">
+                        </p>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-
-</div>
-<div class="modal-footer" id='modal-footer'>
 </div>

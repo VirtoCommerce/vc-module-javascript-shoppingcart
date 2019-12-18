@@ -155,9 +155,11 @@
     <Content Include="Scripts\checkout-modal\checkout-modal.tpl.html" />
     <Content Include="Scripts\checkout-modal\clear-cart-modal.tpl.html" />
     <Content Include="Scripts\checkout-modal\login-modal.tpl.html" />
+    <Content Include="Scripts\checkout-modal\login.js" />
     <Content Include="Scripts\checkout-modal\recently-added-cart-item-dialog.tpl.html" />
     <Content Include="Scripts\checkout-modal\shoppingCart.tpl.html" />
     <Content Include="Scripts\checkout-modal\sign-up-modal.tpl.html" />
+    <Content Include="Scripts\checkout-modal\sign-up.js" />
     <Content Include="Scripts\checkout\checkout-address.js" />
     <Content Include="Scripts\checkout\checkout-address.tpl.html" />
     <Content Include="Scripts\checkout\checkout-coupon.js" />
@@ -190,10 +192,13 @@
     <Content Include="Scripts\libraries\angular-cookies-1.5.7.min.js" />
     <Content Include="Scripts\libraries\angular-credit-cards-3.0.1.js" />
     <Content Include="Scripts\libraries\angular-filter-0.5.8.js" />
+    <Content Include="Scripts\libraries\angular-local-storage.min.js" />
     <Content Include="Scripts\libraries\angularjs-1.5.7.min.js" />
     <Content Include="Scripts\libraries\bootstrap-3.3.6.min.css" />
     <Content Include="Scripts\libraries\ui-bootstrap-tpls-1.3.3.js" />
     <Content Include="Scripts\libraries\underscore-min-1.8.3.js" />
+    <Content Include="Scripts\security\auth.js" />
+    <Content Include="Scripts\security\authDataStorage.js" />
     <Content Include="Scripts\services\cartService.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -203,6 +208,7 @@
     <Compile Include="Bundles\AngularJavaScriptBundle.cs" />
     <Compile Include="Bundles\AngularJavaScriptTemplateCacheBundleTransform.cs" />
     <Compile Include="Controllers\Api\CartController.cs" />
+    <Compile Include="Controllers\Api\JsCartSecurityController.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
