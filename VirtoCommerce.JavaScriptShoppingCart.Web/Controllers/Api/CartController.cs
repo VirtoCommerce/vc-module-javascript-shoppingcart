@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VirtoCommerce.Domain.Cart.Services;
@@ -9,7 +10,8 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
 {
-	[RoutePrefix("jscart/api/cart/{storeId}/{customerId}/{cartName}/{currency}/{cultureName}")]
+	[RoutePrefix("jscart/api/cart")]
+	[CLSCompliant(false)]
 	public class CartController : ApiController
 	{
 		private readonly IShoppingCartService _shoppingCartService;
@@ -21,23 +23,28 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
 			_cartBuilder = cartBuilder;
 		}
 
-		[HttpPost]
-		[Route("coupons/{couponCode}")]
-		[ResponseType(typeof(void))]
-		public async Task<IHttpActionResult> AddCartCoupon([FromUri]string storeId,
-			[FromUri]string customerId,
-			[FromUri]string cartId,
-			[FromUri]string currency,
-			[FromUri]string cultureName,
-			[FromUri]string couponCode)
+		[HttpGet]
+		[Route("{storeId}/{customerId}/{cartName}/{currency}/{cultureName}/current")]
+		[ResponseType(typeof(ShoppingCart))]
+		public async Task<IHttpActionResult> GetCart(string storeId, string customerId, string cartName, string currency, string cultureName)
 		{
-			using (await AsyncLock.GetLockByKey(GetAsyncLockCartKey(storeId, customerId, cartId, currency)).LockAsync())
+			using (await AsyncLock.GetLockByKey(GetAsyncLockCartKey(string.Join(":", storeId, customerId, cartName, currency))).LockAsync())
 			{
-				var cartBuilder = await LoadOrCreateCartAsync(storeId, customerId, cartId, currency, cultureName);
+				await _cartBuilder.LoadOrCreateNewTransientCartAsync(cartName, storeId, customerId, cultureName, currency);
+				return Ok(_cartBuilder.Cart);
+			}
+		}
 
-				await cartBuilder.AddCouponAsync(couponCode);
-
-				await cartBuilder.SaveAsync();
+		[HttpPost]
+		[Route("{cartId}/coupons/{couponCode}")]
+		[ResponseType(typeof(void))]
+		public async Task<IHttpActionResult> AddCartCoupon([FromUri]string cartId, [FromUri]string couponCode)
+		{
+			using (await AsyncLock.GetLockByKey(GetAsyncLockCartKey(cartId)).LockAsync())
+			{
+				await _cartBuilder.LoadCartAsync(cartId);
+				await _cartBuilder.AddCouponAsync(couponCode);
+				await _cartBuilder.SaveAsync();
 
 				return Ok();
 			}
@@ -45,25 +52,15 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
 
 		// POST: storefrontapi/cart/coupons/validate
 		[HttpPost]
-		[Route("coupons/validate")]
-		[ResponseType(typeof(string))]
-		public async Task<IHttpActionResult> ValidateCoupon([FromUri]string storeId,
-			[FromUri]string customerId,
-			[FromUri]string cartId,
-			[FromUri]string currency,
-			[FromUri]string cultureName,
-			[FromUri]string coupon)
+		[Route("{cartId}/coupons/validate")]
+		[ResponseType(typeof(Coupon))]
+		public async Task<IHttpActionResult> ValidateCoupon([FromUri]string cartId, [FromBody]Coupon coupon)
 		{
-			using (await AsyncLock.GetLockByKey(GetAsyncLockCartKey(storeId, customerId, cartId, currency)).LockAsync())
+			using (await AsyncLock.GetLockByKey(GetAsyncLockCartKey(cartId)).LockAsync())
 			{
-				// Non functional now: Need to get the cart from platform cart service, then convert to js cart model. Probably need to use automapper for conversation
-				ShoppingCart cartModel = new ShoppingCart(new Core.Model.Common.Currency(new Core.Model.Common.Language("en-US"), "USD"), new Core.Model.Common.Language("en-US"));
-
-				await _cartBuilder.TakeCartAsync(cartModel.Clone() as ShoppingCart);
-				_cartBuilder.Cart.Coupons = new[]
-				{
-					new Coupon() { Code = coupon }
-				};
+				await _cartBuilder.LoadCartAsync(cartId);
+				await _cartBuilder.TakeCartAsync(_cartBuilder.Cart.Clone() as ShoppingCart);
+				_cartBuilder.Cart.Coupons = new[] { coupon };
 				await _cartBuilder.EvaluatePromotionsAsync();
 
 				return Ok(coupon);
@@ -73,40 +70,20 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
 
 		// DELETE: storefrontapi/cart/coupons
 		[HttpDelete]
-		[Route("coupons")]
+		[Route("{cartId}/coupons/{couponCode?}")]
 		[ResponseType(typeof(void))]
-		public async Task<IHttpActionResult> RemoveCartCoupon([FromUri]string storeId,
-			[FromUri]string customerId,
-			[FromUri]string cartId,
-			[FromUri]string currency,
-			[FromUri]string cultureName,
-			[FromUri]string couponCode = null)
+		public async Task<IHttpActionResult> RemoveCartCoupon([FromUri]string cartId, [FromUri]string couponCode = null)
 		{
-			using (await AsyncLock.GetLockByKey(GetAsyncLockCartKey(storeId, customerId, cartId, currency)).LockAsync())
+			using (await AsyncLock.GetLockByKey(GetAsyncLockCartKey(cartId)).LockAsync())
 			{
-				var cartBuilder = await LoadOrCreateCartAsync(storeId, customerId, cartId, currency, cultureName);
-				await cartBuilder.RemoveCouponAsync(couponCode);
-				await cartBuilder.SaveAsync();
+				await _cartBuilder.LoadCartAsync(cartId);
+				await _cartBuilder.RemoveCouponAsync(couponCode);
+				await _cartBuilder.SaveAsync();
 			}
 
 			return Ok();
 		}
 
-		private async Task<ICartBuilder> LoadOrCreateCartAsync(
-			string storeId,
-			string customerId,
-			string cartId,
-			string currency,
-			string cultureName
-			)
-		{
-			//Need to try load fresh cart from cache or service to prevent parallel update conflict
-			//because WorkContext.CurrentCart may contains old cart
-			await _cartBuilder.LoadOrCreateNewTransientCartAsync(cartId, storeId, customerId, cultureName, currency);
-			return _cartBuilder;
-		}
-
-		private static string GetAsyncLockCartKey(string storeId, string customerId, string cartName, string currency) =>
-			string.Join(":", storeId, customerId, cartName, currency);
+		private static string GetAsyncLockCartKey(string cartId) => "Cart: " + cartId;
 	}
 }

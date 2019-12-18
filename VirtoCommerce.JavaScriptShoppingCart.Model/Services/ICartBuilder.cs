@@ -36,6 +36,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services
 		/// <returns></returns>
 		Task LoadOrCreateNewTransientCartAsync(string cartId, string storeId, string userId, string language, string currency);
 
+		Task LoadCartAsync(string cartId);
+
 		void LoadOrCreateNewTransientCart(string cartId, string storeId, string userId, string language, string currency);
 
 		/// <summary>

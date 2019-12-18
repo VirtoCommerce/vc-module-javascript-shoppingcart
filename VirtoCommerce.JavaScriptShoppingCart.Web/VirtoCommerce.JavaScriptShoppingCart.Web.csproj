@@ -48,6 +48,9 @@
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="CacheManager.Core, Version=0.8.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CacheManager.Core.0.8.0\lib\net45\CacheManager.Core.dll</HintPath>
       <Private>True</Private>
@@ -210,6 +213,7 @@
     <Compile Include="Bundles\AngularJavaScriptBundle.cs" />
     <Compile Include="Bundles\AngularJavaScriptTemplateCacheBundleTransform.cs" />
     <Compile Include="Controllers\Api\CartController.cs" />
+    <Compile Include="Mappings\MappingProfile.cs" />
     <Compile Include="Controllers\Api\JsCartSecurityController.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

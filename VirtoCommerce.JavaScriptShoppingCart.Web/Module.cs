@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Unity;
+﻿using AutoMapper;
+using Microsoft.Practices.Unity;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Web.Hosting;
 using System.Web.Optimization;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security;
 using VirtoCommerce.JavaScriptShoppingCart.Web.Bundles;
+using VirtoCommerce.JavaScriptShoppingCart.Web.Mappings;
 using VirtoCommerce.JavaScriptShoppingCart.Web.Services;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
@@ -29,6 +31,16 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
 			base.Initialize();
 
 			_container.RegisterType<ICartBuilder, CartBuilder>();
+
+			var configuration = new MapperConfiguration(x =>
+			{
+				x.AddProfile(new MappingProfile());
+			});
+
+			configuration.AssertConfigurationIsValid();
+			var mapper = configuration.CreateMapper();
+
+			_container.RegisterInstance(mapper);
 		}
 
         public override void PostInitialize()

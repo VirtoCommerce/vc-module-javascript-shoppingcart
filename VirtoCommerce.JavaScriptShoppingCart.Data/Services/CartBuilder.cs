@@ -80,6 +80,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
 			throw new NotImplementedException();
 		}
 
+		public Task LoadCartAsync(string cartId)
+		{
+			throw new NotImplementedException();
+		}
+
 		public Task MergeWithCartAsync(ShoppingCart cart)
 		{
 			throw new NotImplementedException();
