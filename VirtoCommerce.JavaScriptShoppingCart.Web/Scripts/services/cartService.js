@@ -5,7 +5,11 @@
             let memberId = authService.memberId;
 
 	        return cart.apiUrl + 'api/carts/' + cart.storeId + '/' + (memberId || userId) + '/' + cart.name + '/' + cart.currency + '/' + cart.culture;
-	    }
+		}
+
+		function getJsCartUrl(cart) {
+			return cart.apiUrl + 'jscart/api/carts/' + cart.currency + '/' + cart.culture;
+		}
 
 	    return {
             getCart: function (cart) {
@@ -83,6 +87,21 @@
                 if (authService.isAuthenticated) 
                     return $http.post(cart.apiUrl + 'api/order/customerOrders/' + orderId +'/processPayment/' + paymentId);
                 return $http.post(cart.apiUrl + 'api/order/customerOrders/' + orderId + '/processPayment/' + paymentId + '?api_key=' + cart.apiKey);
-	        }
+			},
+
+			// using jscart API
+			getOrCreateCart: function (cart) {
+				return $http.get(getJsCartUrl(cart) + '/' + cart.storeId + '/' + cart.userId + '/' + cart.name + '/current?t=' + new Date().getTime())
+			},
+			addCouponNew: function (cart, couponCode) {
+				return $http.post(getJsCartUrl(cart) + '/' + cart.id + '/coupons/' + couponCode);
+			},
+			removeCouponNew: function (cart, couponCode) {
+				return $http.delete(getJsCartUrl(cart) + '/' + cart.id + '/coupons' + (angular.isDefined(couponCode) ? '/' + couponCode : ''));
+			},
+			validateCouponNew: function (cart, coupon) {
+				return $http.delete(getJsCartUrl(cart) + '/' + cart.id + '/coupons/validate', coupon);
+			},
+
 	    }
 	}]);

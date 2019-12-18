@@ -102,12 +102,12 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
 
 		public void EvaluatePromotions()
 		{
-			throw new NotImplementedException();
+			// Needs implementation
 		}
 
 		public void EvaluateTaxes()
 		{
-			throw new NotImplementedException();
+			// Needs implementation
 		}
 
 		public IEnumerable<PaymentMethod> GetAvailablePaymentMethods()
@@ -177,14 +177,14 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
 			return result;
 		}
 
-		protected virtual domain.ShoppingCart CreateCart(string cartName, string storeId, string userId, string currency, string language)
+		protected virtual domain.ShoppingCart CreateCart(string cartName, string storeId, string userId, string languageCode, string currencyCode)
 		{
 			var result = AbstractTypeFactory<domain.ShoppingCart>.TryCreateInstance();
 			var customerContact = _memberService.GetByIds(new[] { userId }).OfType<Contact>().FirstOrDefault();
 
 			result.Name = cartName;
-			result.LanguageCode = language;
-			result.Currency = currency;
+			result.LanguageCode = languageCode;
+			result.Currency = currencyCode;
 			result.CustomerId = userId;
 			result.CustomerName = customerContact != null ? customerContact.FullName : "Anonymous";
 			result.IsAnonymous = customerContact == null;

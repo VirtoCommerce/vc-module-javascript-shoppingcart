@@ -10,13 +10,14 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
 {
-	[RoutePrefix("jscart/api/cart/{currency}/{cultureName}")]
+	[AllowAnonymous]
+	[RoutePrefix("jscart/api/carts/{currency}/{cultureName}")]
 	[CLSCompliant(false)]
-	public class CartController : ApiController
+	public class JsCartCartController : ApiController
 	{
 		private readonly ICartBuilder _cartBuilder;
 
-		public CartController(ICartBuilder cartBuilder)
+		public JsCartCartController(ICartBuilder cartBuilder)
 		{
 			_cartBuilder = cartBuilder;
 		}

@@ -212,7 +212,7 @@
   <ItemGroup>
     <Compile Include="Bundles\AngularJavaScriptBundle.cs" />
     <Compile Include="Bundles\AngularJavaScriptTemplateCacheBundleTransform.cs" />
-    <Compile Include="Controllers\Api\CartController.cs" />
+    <Compile Include="Controllers\Api\JsCartCartController.cs" />
     <Compile Include="Mappings\MappingProfile.cs" />
     <Compile Include="Controllers\Api\JsCartSecurityController.cs" />
     <Compile Include="Module.cs" />
