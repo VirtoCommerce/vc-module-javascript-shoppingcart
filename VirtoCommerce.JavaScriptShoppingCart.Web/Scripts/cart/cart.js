@@ -1,10 +1,66 @@
-﻿var cartModule = angular.module('virtoCommerce.cartModule', ['ngAnimate', 'ui.bootstrap', 'ngCookies', 'pascalprecht.translate', 'angular.filter', 'credit-cards']);
+﻿var cartModule = angular.module('virtoCommerce.cartModule', ['ngAnimate', 'ui.bootstrap', 'ngCookies', 'pascalprecht.translate', 'angular.filter', 'credit-cards', 'LocalStorageModule']);
 
-cartModule.config(['$translateProvider', 'virtoCommerce.cartModule.translations', function ($translateProvider, translations) {
+cartModule.config(['$translateProvider', 'virtoCommerce.cartModule.translations', '$httpProvider', function ($translateProvider, translations, $httpProvider) {
 	$translateProvider.useSanitizeValueStrategy('sanitizeParameters');
 	$translateProvider.translations('en', translations);
-	$translateProvider.preferredLanguage('en');
+    $translateProvider.preferredLanguage('en');
+    //Add interceptor
+    $httpProvider.interceptors.push('virtoCommerce.cartModule.httpErrorInterceptor');
+
 }]);
+
+cartModule.factory('virtoCommerce.cartModule.httpErrorInterceptor', ['$q', '$rootScope', '$injector', 'virtoCommerce.cartModule.authDataStorage', function ($q, $rootScope, $injector, authDataStorage) {
+    var httpErrorInterceptor = {};
+
+    httpErrorInterceptor.request = function (config) {
+        config.headers = config.headers || {};
+
+        return extractAuthData()
+            .then(function (authData) {
+                if (authData) {
+                    config.headers.Authorization = 'Bearer ' + authData.token;
+                }
+
+                return config;
+            }).finally(function () {
+                // do something on success
+                if (!config.cache) {
+                    $rootScope.$broadcast('httpRequestSuccess', config);
+                }
+            });
+    };
+
+    function extractAuthData() {
+        var authData = authDataStorage.getStoredData();
+        if (!authData) {
+            return $q.resolve();
+        }
+
+        if (Date.now() < authData.expiresAt) {
+            return $q.resolve(authData);
+        }
+
+        var authService = $injector.get('virtoCommerce.cartModule.authService');
+        return authService.refreshToken();
+    }
+
+    httpErrorInterceptor.responseError = function (rejection) {
+        if (rejection.status === 401) {
+            $rootScope.$broadcast('unauthorized', rejection);
+        } else {
+            $rootScope.$broadcast('httpError', rejection);
+        }
+        return $q.reject(rejection);
+    };
+
+    httpErrorInterceptor.requestError = function (rejection) {
+        $rootScope.$broadcast('httpError', rejection);
+        return $q.reject(rejection);
+    };
+
+    return httpErrorInterceptor;
+}]);
+
 
 cartModule.factory('virtoCommerce.cartModule.carts', [function () {
 	return {};
@@ -21,8 +77,8 @@ cartModule.component('vcCart', {
 		currencyCode: '@',
 		culture: '@'
 	},
-	controller: ['virtoCommerce.cartModule.carts', 'virtoCommerce.cartModule.api', 'virtoCommerce.cartModule.countriesService', 'virtoCommerce.cartModule.currenciesService', '$cookies', '$timeout', '$rootScope', '$scope',
-		function (carts, cartApi, countriesService, currenciesService, $cookies, $timeout, $rootScope, $scope) {
+    controller: ['virtoCommerce.cartModule.carts', 'virtoCommerce.cartModule.api', 'virtoCommerce.cartModule.countriesService', 'virtoCommerce.cartModule.currenciesService', '$cookies', '$timeout', '$rootScope', '$scope', 'virtoCommerce.cartModule.authDataStorage', 'virtoCommerce.cartModule.authService', 
+        function (carts, cartApi, countriesService, currenciesService, $cookies, $timeout, $rootScope, $scope, authDataStorage, authService) {
 		var timer;
 		var ctrl = this;
 		carts[ctrl.name] = this;
@@ -32,43 +88,53 @@ cartModule.component('vcCart', {
 
 		this.cartIsUpdating = false;
 
+        authDataStorage.setPlatformKey(ctrl.apiKey);
+        authDataStorage.setPlatformUrl(ctrl.apiUrl);
+
 		$scope.$on('cartItemsChanged', function (event, data) {
 			ctrl.getCartItemsCount();
 		});
 
 		this.reloadCart = function () {
-			return wrapLoading(function () {
-				return cartApi.getCart(ctrl).then(function (response) {
-                    angular.merge(ctrl, response.data);
-					if (response.data.coupon) {
-						ctrl.coupon = response.data.coupon;
-						ctrl.coupon.isApplied = true;
-					}
-					ctrl.getCartItemsCount();
-                    ctrl.cartIsUpdating = false;
-					return ctrl;
-				}).then(function (cart) {
-					ctrl.availCountries = countriesService.countries;
-					ctrl.currencySymbol = _.find(currenciesService.currencies, function (x) { return x.code === cart.currencyCode; }).symbol;
-					return cart;
-				});
-			});
+            return wrapLoading(function () {
+
+                return authService.fillAuthData().then(function() {
+
+                    return cartApi.getCart(ctrl).then(function(response) {
+                        angular.merge(ctrl, response.data);
+                        if (response.data.coupon) {
+                            ctrl.coupon = response.data.coupon;
+                            ctrl.coupon.isApplied = true;
+                        }
+                        ctrl.getCartItemsCount();
+                        ctrl.cartIsUpdating = false;
+                        return ctrl;
+                    }).then(function(cart) {
+                        ctrl.availCountries = countriesService.countries;
+                        ctrl.currencySymbol = _.find(currenciesService.currencies,
+                            function(x) { return x.code === cart.currencyCode; }).symbol;
+                        return cart;
+                    });
+                });
+
+
+            });
 		};
 
-		this.addLineItem = function (lineItem) {
-			return wrapLoading(function () {
-				return cartApi.addLineItem(ctrl, lineItem).then(function () {
-					$rootScope.$broadcast('cartItemsChanged');
-					return ctrl.reloadCart();
-				});
-			});
-		}
+        this.addLineItem = function(lineItem) {
+            return wrapLoading(function() {
+                return cartApi.addLineItem(ctrl, lineItem).then(function() {
+                    $rootScope.$broadcast('cartItemsChanged');
+                    return ctrl.reloadCart();
+                });
+            });
+        };
 
-		this.getAvailShippingMethods = function (shipment) {
-			return cartApi.getAvailableShippingMethods(ctrl, shipment.id).then(function (response) {
-				return response.data;
-			});
-		}
+        this.getAvailShippingMethods = function(shipment) {
+            return cartApi.getAvailableShippingMethods(ctrl, shipment.id).then(function(response) {
+                return response.data;
+            });
+        };
 
 		this.getCountryRegions = function (country) {
 			return cartApi.getCountryRegions(ctrl, country.code3).then(function (response) {
@@ -90,7 +156,7 @@ cartModule.component('vcCart', {
 		};
 
         this.removeLineItem = function(lineItemId) {
-            var lineItem = _.find(this.items, function(i) { return i.id == lineItemId });
+            var lineItem = _.find(this.items, function(i) { return i.id === lineItemId; });
             if (!lineItem || this.cartIsUpdating) {
                 return;
             }
@@ -145,14 +211,14 @@ cartModule.component('vcCart', {
 		};
 
 		this.removeCart = function () {
-		    return cartApi.removeCart(ctrl).then(function() {
+          return cartApi.removeCart(ctrl).then(function() {
 				$rootScope.$broadcast('cartItemsChanged');
 			});
 		};
 
 		this.clearCart = function () {
-			return wrapLoading(function () {
-		    	return cartApi.clearCart(ctrl).then(function() {
+            return wrapLoading(function () {
+                return cartApi.clearCart(ctrl).then(function () {
 					ctrl.reloadCart();
 					$rootScope.$broadcast('cartItemsChanged');
 				});
@@ -186,37 +252,17 @@ cartModule.component('vcCart', {
 			});
 		}
 
-		this.initializeUser = function () {
-			this.userId = $cookies.get('virto-javascript-shoppingcart-user-id');
-			if (!this.userId) {
-				this.userId = guid();
-				var expireDate = new Date();
-				expireDate.setDate(expireDate.getDate() + 1);
-				$cookies.put('virto-javascript-shoppingcart-user-id', this.userId, { 'expires': expireDate });
-			}
-		}
-
-		function guid() {
-			function s4() {
-				return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-			}
-			return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-		}
-
-
-		this.getCartItemsCount = function () {
-			if (ctrl.id && ctrl.items) {
-				var itemsQuantity = 0;
-				for (var index in ctrl.items) {
-					itemsQuantity += ctrl.items[index].quantity;
-				}
-				ctrl.cartItemsCount = itemsQuantity;
-			} else {
-				ctrl.cartItemsCount = 0;
-			}
-		}
-
-		this.initializeUser();
+        this.getCartItemsCount = function() {
+            if (ctrl.id && ctrl.items) {
+                var itemsQuantity = 0;
+                for (var index in ctrl.items) {
+                    itemsQuantity += ctrl.items[index].quantity;
+                }
+                ctrl.cartItemsCount = itemsQuantity;
+            } else {
+                ctrl.cartItemsCount = 0;
+            }
+        };
 
 		this.reloadCart();
 
@@ -245,8 +291,8 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 			resolve: { 
 				cart : function () {
 					return $scope.cart;
-				  }
-	    	}
+                }
+            }
 		});
 	};
 
@@ -265,7 +311,7 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 				resolve: { 
 					cart : function () {
 						return $scope.cart;
-					  },
+                    },
 					lineItem: function () {
 						return $scope.lineItem;
 					},
@@ -289,7 +335,7 @@ cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$ui
 				resolve: { 
 					cart : function () {
 						return $scope.cart;
-					  },					
+                    },					
 					callback: function () {
 						return $scope.openCheckout;
 					}
@@ -353,7 +399,7 @@ cartModule.controller('virtoCommerce.cartModule.cartViewController', ['$scope', 
 			if(shouldClear){
 				cart.clearCart(cart);
 			}
-		  });
+        });
 	};
 
 	//TODO: ui loader when action not finished yet
@@ -371,60 +417,3 @@ cartModule.controller('virtoCommerce.cartModule.cartViewController', ['$scope', 
 		$uibModalInstance.dismiss('cancel');
 	};
 }]);
-
-cartModule.controller('virtoCommerce.cartModule.logInViewController', ['$scope', '$uibModalInstance', '$uibModal', 'cart', function ($scope, $uibModalInstance, $uibModal, cart) {
-
-    $scope.cart = cart;
-    $scope.customer = {};
-    $scope.signUpMode = false;
-
-    $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
-    };
-
-    $scope.signIn = function () {
-
-    };
-
-
-    $scope.resetPassword = function () {
-
-    };
-
-    $scope.showSignUpPopUp = function () {
-        $uibModalInstance.dismiss('cancel');
-        $uibModal.open({
-            animation: true,
-            templateUrl: 'sign-up-modal.tpl.html',
-            controller: 'virtoCommerce.cartModule.signUpViewController',
-            size: 's',
-            resolve: {
-                cart: function () {
-                    return $scope.cart;
-                }
-            }
-        });
-
-    };
-
-    $scope.signUp = function () {
-
-    };
-}]);
-
-
-cartModule.controller('virtoCommerce.cartModule.signUpViewController', ['$scope', '$uibModalInstance', 'cart', function ($scope, $uibModalInstance, cart) {
-
-    $scope.cart = cart;
-    $scope.customer = {};
-    $scope.signUpMode = false;
-
-    $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
-    };
-
-    $scope.signUp = function () {
-
-    };
-}]);
-

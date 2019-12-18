@@ -8,11 +8,13 @@ cartModule.component('vcCheckout', {
 		cart: '=',
 		showPricesWithTax: '@'
 	},
-    controller: ['$rootScope', '$window', 'virtoCommerce.cartModule.api', '$uibModal', function ($rootScope, $window, cartService, $uibModal) {
+    controller: ['$scope', '$rootScope', '$window', 'virtoCommerce.cartModule.api', '$uibModal', 'virtoCommerce.cartModule.authService', function ($scope, $rootScope, $window, cartService, $uibModal, authService) {
         var ctrl = this;
-        ctrl.customer = {};
-        ctrl.customer.email = "test@gmail.com";
-        ctrl.customer.isRegisteredUser = true;
+
+        $scope.$on('loginStatusChanged', function (event, authContext) {
+            ctrl.isAuthenticated = authContext.isAuthenticated;
+            ctrl.userName = authContext.userLogin;
+        });
 
 		this.checkout = {
 			wizard: {},
@@ -82,22 +84,22 @@ cartModule.component('vcCheckout', {
 			ctrl.cart.addOrUpdateShipment(ctrl.checkout.shipment);
 		};
 
-		ctrl.createOrder = function () {
-			ctrl.checkout.loading = true;
-			updatePayment(ctrl.checkout.payment).then(function () {
-				return ctrl.cart.createOrder({ bancCardInfo: ctrl.checkout.bankCardInfo });
-			}).then(function (response) {
-				ctrl.checkout.loading = false;
-				var order = response.data;
-				if (order) {
-					ctrl.checkout.order = order;
-					ctrl.cart.removeCart().then(function () {
-						ctrl.cart.reloadCart();
-						ctrl.checkout.isFinished = true;
-					});
-				}
-			});
-		}
+        ctrl.createOrder = function() {
+            ctrl.checkout.loading = true;
+            updatePayment(ctrl.checkout.payment).then(function() {
+                return ctrl.cart.createOrder({ bancCardInfo: ctrl.checkout.bankCardInfo });
+            }).then(function(response) {
+                ctrl.checkout.loading = false;
+                var order = response.data;
+                if (order) {
+                    ctrl.checkout.order = order;
+                    ctrl.cart.removeCart().then(function() {
+                        ctrl.cart.reloadCart();
+                        ctrl.checkout.isFinished = true;
+                    });
+                }
+            });
+        };
 
 		function updatePayment(payment) {
 			if (ctrl.checkout.billingAddressEqualsShipping) {
@@ -113,7 +115,9 @@ cartModule.component('vcCheckout', {
 		}
 
 		ctrl.initialize = function () {
-			ctrl.reloadCart().then(function (cart) {
+            ctrl.reloadCart().then(function (cart) {
+                ctrl.isAuthenticated = authService.isAuthenticated;
+                ctrl.userName = authService.userLogin;
 				ctrl.checkout.wizard.goToStep('shipping-address');
 			});
         };
@@ -134,7 +138,7 @@ cartModule.component('vcCheckout', {
         };
 
         ctrl.logout = function () {
-            ctrl.customer.isRegisteredUser = false;
+            authService.logout();
         };
     }]
 });
