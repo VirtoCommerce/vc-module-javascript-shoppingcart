@@ -4,18 +4,26 @@
     var serviceBase = 'api/platform/security/';
     var authContext = {
         userId: null,
+        memberId: null,
         userLogin: null,
         fullName: null,
         permissions: null,
         isAuthenticated: false
     };
 
+    function guid() {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+        }
+
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+    };
+
     authContext.fillAuthData = function() {
-        return $http.get(`${platformEndPoint}api/jsShoppingCart/getcurrentuser`).then(
+        return $http.get(`${platformEndPoint}jscart/api/security/currentuser`).then(
             function (results) {
                 changeAuth(results.data);
-            },
-            function (error) { });
+            });
     };
 
     authContext.login = function (email, password, remember) {
@@ -81,7 +89,17 @@
     };
 
     authContext.signUp = function(data) {
-        return $http.post(platformEndPoint + 'api/jsShoppingCart/registerUser', data, { headers: { 'Content-Type': 'application/json' } }).then(
+        return $http.post(platformEndPoint + 'jscart/api/security/registerUser', data, { headers: { 'Content-Type': 'application/json' } }).then(
+            function (response) {
+                return response;
+            }, function (err) {
+                return $q.reject(err);
+            });
+
+    };
+
+    authContext.validatePassword = function(data) {
+        return $http.post(platformEndPoint + 'jscart/api/security/validatepassword', data, { headers: { 'Content-Type': 'application/json' } }).then(
             function (response) {
                 return response;
             }, function (err) {
@@ -135,18 +153,29 @@
     };
 
     function changeAuth(user) {
-        angular.extend(authContext, user);
-        authContext.userLogin = user.userName;
-        authContext.fullName = user.userLogin;
-        authContext.isAuthenticated = user.userName != null;
+        if (user) {
+            angular.extend(authContext, user);
+            authContext.userLogin = user.userName;
+            authContext.fullName = user.userLogin;
+            authContext.isAuthenticated = user.userName != null;
+            authContext.userId = user.id;
+            authContext.memberId = user.memberId;
+        } else {
+            authContext.userLogin = undefined;
+            authContext.isAuthenticated = false;
+            if (!authContext.userId) {
+                authContext.userId = guid();
+            }
 
+        }
         //Interpolate permissions to replace some template to real value
         if (authContext.permissions) {
             authContext.permissions = _.map(authContext.permissions, function (x) {
                 return $interpolate(x)(authContext);
             });
         }
-        $rootScope.$broadcast('loginStatusChanged', authContext);
+
+            $rootScope.$broadcast('loginStatusChanged', authContext);
     }
     return authContext;
 }]);

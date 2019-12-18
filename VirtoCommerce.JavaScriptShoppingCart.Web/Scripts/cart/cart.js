@@ -96,22 +96,29 @@ cartModule.component('vcCart', {
 		});
 
 		this.reloadCart = function () {
-			return wrapLoading(function () {
-				return cartApi.getCart(ctrl).then(function (response) {
-                    angular.merge(ctrl, response.data);
-					if (response.data.coupon) {
-						ctrl.coupon = response.data.coupon;
-						ctrl.coupon.isApplied = true;
-					}
-					ctrl.getCartItemsCount();
-                    ctrl.cartIsUpdating = false;
-					return ctrl;
-				}).then(function (cart) {
-					ctrl.availCountries = countriesService.countries;
-					ctrl.currencySymbol = _.find(currenciesService.currencies, function (x) { return x.code === cart.currencyCode; }).symbol;
-					return cart;
-				});
-			});
+            return wrapLoading(function () {
+
+                return authService.fillAuthData().then(function() {
+
+                    return cartApi.getCart(ctrl).then(function(response) {
+                        angular.merge(ctrl, response.data);
+                        if (response.data.coupon) {
+                            ctrl.coupon = response.data.coupon;
+                            ctrl.coupon.isApplied = true;
+                        }
+                        ctrl.getCartItemsCount();
+                        ctrl.cartIsUpdating = false;
+                        return ctrl;
+                    }).then(function(cart) {
+                        ctrl.availCountries = countriesService.countries;
+                        ctrl.currencySymbol = _.find(currenciesService.currencies,
+                            function(x) { return x.code === cart.currencyCode; }).symbol;
+                        return cart;
+                    });
+                });
+
+
+            });
 		};
 
         this.addLineItem = function(lineItem) {
@@ -245,32 +252,6 @@ cartModule.component('vcCart', {
 			});
 		}
 
-        $scope.$on('loginStatusChanged', function (event, authContext) {
-            if (authContext.isAuthenticated) {
-                ctrl.userId = authContext.id;
-            } else {
-                ctrl.userId = guid();
-            }
-        });
-
-        this.initializeUser = function () {
-            authService.fillAuthData().then(function() {
-                ctrl.userId = authService.id;
-                if (!ctrl.userId) {
-                    ctrl.userId = guid();
-                }
-                ctrl.reloadCart();
-            });
-        };
-
-		function guid() {
-			function s4() {
-				return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-			}
-			return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-		}
-
-
 		this.getCartItemsCount = function () {
 			if (ctrl.id && ctrl.items) {
 				var itemsQuantity = 0;
@@ -283,7 +264,7 @@ cartModule.component('vcCart', {
 			}
 		}
 
-		this.initializeUser();
+		//this.initializeUser();
 
 		this.reloadCart();
 

@@ -364,7 +364,17 @@ cartModule.constant('virtoCommerce.cartModule.translations', {
 			"password": "Password",
 			"submit": "Create",
 			"or": "or",
-			"cancel": "Return to Store"
+            "cancel": "Return to Store",
+            "validations": {
+                "repeat-password": "New passwords do not match!",
+                "invalid-token": "Reset password token is invalid or expired",
+                "password-too-weak": "New password does not comply one or more password security policies:",
+                "passwordViolatesMinLength": "Passwords must be {{minPasswordLength}} or more characters long",
+                "passwordMustHaveLowerCaseLetters": "Passwords must have at least one lowercase ('a'-'z')",
+                "passwordMustHaveUpperCaseLetters": "Passwords must have at least one uppercase ('A'-'Z')",
+                "passwordMustHaveDigits": "Passwords must have at least one digit ('0'-'9')",
+                "passwordMustHaveSpecialCharacters": "Passwords must have at least one non alphanumeric character"
+            }
 		},
 		"edit_profile": {
 			"title": "Edit Profile",

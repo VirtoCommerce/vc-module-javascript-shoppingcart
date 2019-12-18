@@ -74,6 +74,7 @@
     <Compile Include="Model\Marketing\PromotionReward.cs" />
     <Compile Include="Model\Marketing\PromotionRewardType.cs" />
     <Compile Include="Model\Security\Role.cs" />
+    <Compile Include="Model\Security\SecurityConstants.cs" />
     <Compile Include="Model\Security\User.cs" />
     <Compile Include="Model\Tax\ITaxable.cs" />
     <Compile Include="Model\Tax\TaxDetail.cs" />

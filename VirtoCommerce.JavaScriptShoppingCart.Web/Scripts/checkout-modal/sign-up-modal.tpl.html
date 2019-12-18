@@ -20,6 +20,9 @@
                                 {{error}}
                             </div>
                         </div>
+                        <li ng-repeat="x in errors" class="form-error">
+                            {{ x | translate: passwordValidationResult }}
+                        </li>
                         <p>
                             <input type="submit" value="{{ 'customer.register.submit' | translate }}" class="btn">
                         </p>
