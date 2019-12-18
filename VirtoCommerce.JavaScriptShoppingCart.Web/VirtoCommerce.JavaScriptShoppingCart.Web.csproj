@@ -208,6 +208,7 @@
     <Compile Include="Bundles\AngularJavaScriptBundle.cs" />
     <Compile Include="Bundles\AngularJavaScriptTemplateCacheBundleTransform.cs" />
     <Compile Include="Controllers\Api\CartController.cs" />
+    <Compile Include="Controllers\Api\JsShoppingCartSecurityController.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

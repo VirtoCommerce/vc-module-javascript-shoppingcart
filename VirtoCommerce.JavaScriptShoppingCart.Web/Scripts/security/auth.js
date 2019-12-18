@@ -10,8 +10,8 @@
         isAuthenticated: false
     };
 
-    authContext.fillAuthData = function () {
-        return $http.get(platformEndPoint + serviceBase + 'currentuser').then(
+    authContext.fillAuthData = function() {
+        return $http.get(`${platformEndPoint}api/jsShoppingCart/getcurrentuser`).then(
             function (results) {
                 changeAuth(results.data);
             },
@@ -78,6 +78,16 @@
             function (results) {
                 return results.data;
             });
+    };
+
+    authContext.signUp = function(data) {
+        return $http.post(platformEndPoint + 'api/jsShoppingCart/registerUser', data, { headers: { 'Content-Type': 'application/json' } }).then(
+            function (response) {
+                return response;
+            }, function (err) {
+                return $q.reject(err);
+            });
+
     };
 
     authContext.validatepasswordresettoken = function (data) {

@@ -3,7 +3,6 @@
 cartModule.controller('virtoCommerce.cartModule.logInViewController', ['$scope', '$uibModalInstance', '$uibModal', 'virtoCommerce.cartModule.authService', 'cart', function ($scope, $uibModalInstance, $uibModal, authService, cart) {
 
 	$scope.cart = cart;
-	$scope.customer = {};
 	$scope.authError = null;
 	$scope.authReason = false;
 	$scope.loginProgress = false;
