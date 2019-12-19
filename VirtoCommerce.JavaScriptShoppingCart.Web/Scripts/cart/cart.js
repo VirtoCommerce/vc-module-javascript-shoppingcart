@@ -219,7 +219,9 @@ cartModule.component('vcCart', {
 		this.clearCart = function () {
             return wrapLoading(function () {
                 return cartApi.clearCart(ctrl).then(function () {
-					ctrl.reloadCart();
+                    ctrl.items = [];
+                    ctrl.getCartItemsCount();
+                    ctrl.reloadCart();
 					$rootScope.$broadcast('cartItemsChanged');
 				});
 			});
@@ -397,7 +399,8 @@ cartModule.controller('virtoCommerce.cartModule.cartViewController', ['$scope', 
 
 		modalInstance.result.then(function (shouldClear) {
 			if(shouldClear){
-				cart.clearCart(cart);
+                cart.clearCart(cart);
+                $uibModalInstance.dismiss('cancel');
 			}
         });
 	};
