@@ -1,6 +1,6 @@
 ﻿cartModule.service('virtoCommerce.cartModule.authService', ['$http', '$rootScope', '$cookieStore', '$interpolate', '$q', 'virtoCommerce.cartModule.authDataStorage', function ($http, $rootScope, $cookieStore, $interpolate, $q, authDataStorage) {
-    var platformEndPoint = authDataStorage.getPlatformUrl();
-    var platrofmApiKey = authDataStorage.getPlatformKey();
+    var platformEndPoint;
+    var platrofmApiKey;
     var serviceBase = 'api/platform/security/';
     var authContext = {
         userId: null,
@@ -11,6 +11,20 @@
         isAuthenticated: false
     };
 
+	function getPlatformEndpoint() {
+		if (!platformEndPoint) {
+			platformEndPoint = authDataStorage.getPlatformUrl();
+		}
+		return platformEndPoint;
+	}
+
+	function getPlatformApiKey() {
+		if (!platrofmApiKey) {
+			platrofmApiKey = authDataStorage.getPlatformKey();
+		}
+		return platrofmApiKey;
+	}
+
     function guid() {
         function s4() {
             return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
@@ -20,7 +34,7 @@
     }
 
     authContext.fillAuthData = function() {
-        return $http.get(`${platformEndPoint}jscart/api/security/currentuser`).then(
+        return $http.get(`${getPlatformEndpoint()}jscart/api/security/currentuser`).then(
             function (results) {
                 changeAuth(results.data);
             });
@@ -29,7 +43,7 @@
     authContext.login = function (email, password, remember) {
         var requestData = 'grant_type=password&username=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password);
 
-        return $http.post(platformEndPoint + 'token', requestData, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(
+        return $http.post(getPlatformEndpoint() + 'token', requestData, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(
             function (response) {
                 var authData = {
                     token: response.data.access_token,
@@ -58,7 +72,7 @@
             //       detect expired token and will call this method again, causing the infinite loop.
             authDataStorage.clearStoredData();
 
-            return $http.post(platformEndPoint +'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(
+            return $http.post(getPlatformEndpoint() +'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(
                 function (response) {
                     var newAuthData = {
                         token: response.data.access_token,
@@ -82,14 +96,14 @@
     }
 
     authContext.requestpasswordreset = function (data) {
-        return $http.post(platformEndPoint + serviceBase + 'users/' + data.userName + '/requestpasswordreset/').then(
+        return $http.post(getPlatformEndpoint() + serviceBase + 'users/' + data.userName + '/requestpasswordreset/').then(
             function (results) {
                 return results.data;
             });
     };
 
     authContext.signUp = function(data) {
-        return $http.post(platformEndPoint + 'jscart/api/security/registerUser', data, { headers: { 'Content-Type': 'application/json' } }).then(
+        return $http.post(getPlatformEndpoint() + 'jscart/api/security/registerUser', data, { headers: { 'Content-Type': 'application/json' } }).then(
             function (response) {
                 return response;
             }, function (err) {
@@ -99,7 +113,7 @@
     };
 
     authContext.validatePassword = function(data) {
-        return $http.post(platformEndPoint + 'jscart/api/security/validatepassword', data, { headers: { 'Content-Type': 'application/json' } }).then(
+        return $http.post(getPlatformEndpoint() + 'jscart/api/security/validatepassword', data, { headers: { 'Content-Type': 'application/json' } }).then(
             function (response) {
                 return response;
             }, function (err) {
@@ -109,14 +123,14 @@
     };
 
     authContext.validatepasswordresettoken = function (data) {
-        return $http.post(platformEndPoint + serviceBase + 'users/' + data.userId + '/validatepasswordresettoken?api_key=' + platrofmApiKey, { token: data.code }).then(
+        return $http.post(getPlatformEndpoint() + serviceBase + 'users/' + data.userId + '/validatepasswordresettoken?api_key=' + getPlatformApiKey(), { token: data.code }).then(
             function (results) {
                 return results.data;
             });
     };
 
     authContext.resetpassword = function (data) {
-        return $http.post(platformEndPoint + serviceBase + 'users/' + data.userId + '/resetpasswordconfirm?api_key=' + platrofmApiKey, { token: data.code, newPassword: data.newPassword }).then(
+        return $http.post(getPlatformEndpoint() + serviceBase + 'users/' + data.userId + '/resetpasswordconfirm?api_key=' + getPlatformApiKey(), { token: data.code, newPassword: data.newPassword }).then(
             function (results) {
                 return results.data;
             });
@@ -124,7 +138,7 @@
 
     authContext.logout = function () {
         authDataStorage.clearStoredData();
-        $http.post(platformEndPoint + serviceBase + 'logout?api_key=' + platrofmApiKey);
+        $http.post(getPlatformEndpoint() + serviceBase + 'logout?api_key=' + getPlatformApiKey());
         changeAuth({});
         $rootScope.$broadcast('userLoggedOut');
     };
