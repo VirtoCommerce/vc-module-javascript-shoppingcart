@@ -9,6 +9,7 @@ cartModule.controller("virtoCommerce.cartModule.signUpViewController",
             $scope.customer = {};
             $scope.signUpMode = false;
             $scope.errors = [];
+            $scope.minPasswordLength = 0;
 
             $scope.cancel = () => {
                 $uibModalInstance.dismiss("cancel");
@@ -31,6 +32,8 @@ cartModule.controller("virtoCommerce.cartModule.signUpViewController",
 								showError(error);
                             });
                     } else {
+                        $scope.errors = [];
+                        $scope.minPasswordLength = passwordValidationResult.data.minPasswordLength;
                         var filteredKeys = _.filter(Object.keys(passwordValidationResult.data),
                             function (key) {
                                 return !key.startsWith('$') && passwordValidationResult.data[key] === true;

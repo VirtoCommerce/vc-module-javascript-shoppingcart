@@ -21,7 +21,7 @@
                             </div>
                         </div>
                         <li ng-repeat="x in errors" class="form-error">
-                            {{ x | translate: passwordValidationResult }}
+                            {{ x | translate: { minPasswordLength: minPasswordLength }  }}
                         </li>
                         <p>
                             <input type="submit" value="{{ 'customer.register.submit' | translate }}" class="btn">
