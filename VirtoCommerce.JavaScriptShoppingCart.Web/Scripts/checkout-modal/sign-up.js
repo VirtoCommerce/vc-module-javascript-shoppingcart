@@ -19,17 +19,16 @@ cartModule.controller("virtoCommerce.cartModule.signUpViewController",
                 authService.validatePassword(JSON.stringify($scope.customer.password)).then((passwordValidationResult) => {
 
                     if (passwordValidationResult.data.passwordIsValid) {
-                        authService.signUp($scope.customer).then(() => { $uibModalInstance.dismiss("cancel"); },
+						authService.signUp($scope.customer).then(
+							() => authService.login($scope.customer.userName, $scope.customer.password, false).then(
+								() => {
+									$uibModalInstance.dismiss("cancel")
+								},
+								(error) => {
+									showError(error);
+								}),
                             (error) => {
-                                if (angular.isDefined(error.status)) {
-                                    if (error.status === 400 || error.status === 401 && error.data.errors.length) {
-                                        $scope.error = error.data.errors;
-                                    } else {
-                                        $scope.error = `Registration user error (code: ${error.status}).`;
-                                    }
-                                } else {
-                                    $scope.error = `Registration user error ${error}`;
-                                }
+								showError(error);
                             });
                     } else {
                         var filteredKeys = _.filter(Object.keys(passwordValidationResult.data),
@@ -43,6 +42,21 @@ cartModule.controller("virtoCommerce.cartModule.signUpViewController",
                         });
                     }
                 });
-            };
+			};
+
+
+			function showError(error) {
+				if (angular.isDefined(error.status)) {
+					if (error.status === 400 || error.status === 401 && error.data.errors.length) {
+						$scope.error = error.data.errors;
+					}
+					else {
+						$scope.error = `Registration user error (code: ${error.status}).`;
+					}
+				}
+				else {
+					$scope.error = `Registration user error ${error}`;
+				}
+			}
         }
     ]);
