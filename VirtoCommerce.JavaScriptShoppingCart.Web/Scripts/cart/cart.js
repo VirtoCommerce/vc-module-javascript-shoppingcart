@@ -1,9 +1,11 @@
 ﻿var cartModule = angular.module('virtoCommerce.cartModule', ['ngAnimate', 'ui.bootstrap', 'ngCookies', 'pascalprecht.translate', 'angular.filter', 'credit-cards', 'LocalStorageModule']);
 
-cartModule.config(['$translateProvider', 'virtoCommerce.cartModule.translations', '$httpProvider', function ($translateProvider, translations, $httpProvider) {
+cartModule.config(['$translateProvider', 'virtoCommerce.cartModule.translations', 'virtoCommerce.cartModule.ruTranslations', '$httpProvider',
+	function ($translateProvider, translations, ruTranslations, $httpProvider) {
 	$translateProvider.useSanitizeValueStrategy('sanitizeParameters');
 	$translateProvider.translations('en', translations);
-    $translateProvider.preferredLanguage('en');
+	$translateProvider.translations('ru', ruTranslations);
+	$translateProvider.preferredLanguage('ru');
     //Add interceptor
     $httpProvider.interceptors.push('virtoCommerce.cartModule.httpErrorInterceptor');
 
@@ -77,10 +79,12 @@ cartModule.component('vcCart', {
 		currencyCode: '@',
 		culture: '@'
 	},
-    controller: ['virtoCommerce.cartModule.carts', 'virtoCommerce.cartModule.api', 'virtoCommerce.cartModule.countriesService', 'virtoCommerce.cartModule.currenciesService', '$cookies', '$timeout', '$rootScope', '$scope', 'virtoCommerce.cartModule.authDataStorage', 'virtoCommerce.cartModule.authService', 
-        function (carts, cartApi, countriesService, currenciesService, $cookies, $timeout, $rootScope, $scope, authDataStorage, authService) {
+	controller: ['virtoCommerce.cartModule.carts', 'virtoCommerce.cartModule.api', 'virtoCommerce.cartModule.countriesService', 'virtoCommerce.cartModule.currenciesService', '$cookies', '$timeout', '$rootScope', '$scope', 'virtoCommerce.cartModule.authDataStorage', 'virtoCommerce.cartModule.authService', '$translate',
+		function (carts, cartApi, countriesService, currenciesService, $cookies, $timeout, $rootScope, $scope, authDataStorage, authService, $translate) {
 		var timer;
 		var ctrl = this;
+		var currentLanguageIndex = 0;
+		var languages = ['en', 'ru'];
 		carts[ctrl.name] = this;
 
 		ctrl.currency = ctrl.currencyCode;
@@ -94,6 +98,12 @@ cartModule.component('vcCart', {
 		$scope.$on('cartItemsChanged', function (event, data) {
 			ctrl.getCartItemsCount();
 		});
+
+
+		this.changeLanguage = function () {
+			currentLanguageIndex = (currentLanguageIndex + 1) % languages.length;
+			$translate.use('ru');
+		};
 
 		this.reloadCart = function () {
             return wrapLoading(function () {

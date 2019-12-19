@@ -184,6 +184,7 @@
     <Content Include="Scripts\checkout\checkout.tpl.html" />
     <Content Include="Scripts\checkout\countries.js" />
     <Content Include="Scripts\checkout\currencies.js" />
+    <Content Include="Scripts\checkout\ru.translations.js" />
     <Content Include="Scripts\checkout\translations.js" />
     <Content Include="Scripts\example\product-image.jpg" />
     <Content Include="Scripts\example\style.css" />
