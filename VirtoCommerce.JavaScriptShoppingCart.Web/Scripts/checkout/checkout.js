@@ -88,12 +88,14 @@ cartModule.component('vcCheckout', {
             ctrl.checkout.loading = true;
             updatePayment(ctrl.checkout.payment).then(function() {
                 return ctrl.cart.createOrder({ bancCardInfo: ctrl.checkout.bankCardInfo });
-            }).then(function(response) {
+            }).then(function (response) {
+                $rootScope.$broadcast('orderCreated');
                 ctrl.checkout.loading = false;
                 var order = response.data;
                 if (order) {
                     ctrl.checkout.order = order;
-                    ctrl.cart.removeCart().then(function() {
+                    ctrl.cart.removeCart().then(function () {
+                        ctrl.cart.items = [];
                         ctrl.cart.reloadCart();
                         ctrl.checkout.isFinished = true;
                     });
