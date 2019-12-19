@@ -126,6 +126,7 @@
         authDataStorage.clearStoredData();
         $http.post(platformEndPoint + serviceBase + 'logout?api_key=' + platrofmApiKey);
         changeAuth({});
+        $rootScope.$broadcast('userLoggedOut');
     };
 
     authContext.checkPermission = function (permission, securityScopes) {
@@ -165,9 +166,14 @@
             authContext.memberId = undefined;
             authContext.isAuthenticated = false;
             if (!authContext.userId) {
-                authContext.userId = guid();
+                const existUserId = authDataStorage.getUserId();
+                if (existUserId) {
+                    authContext.userId = existUserId;
+                } else {
+                    authContext.userId = guid();
+                    authDataStorage.storeUserId(authContext.userId);
+                }
             }
-
         }
         //Interpolate permissions to replace some template to real value
         if (authContext.permissions) {

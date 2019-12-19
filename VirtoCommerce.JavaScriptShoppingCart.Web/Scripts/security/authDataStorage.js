@@ -20,6 +20,15 @@
             },
             getPlatformUrl: function() {
                 return localStorageService.get('platformUrl');
+            },
+            storeUserId: function (dataObject) {
+                localStorageService.set('anonymousUserId', dataObject);
+            },
+            getUserId: function () {
+                return localStorageService.get('anonymousUserId');
+            },
+            clearUserId: function () {
+                localStorageService.remove('anonymousUserId');
             }
         };
 
