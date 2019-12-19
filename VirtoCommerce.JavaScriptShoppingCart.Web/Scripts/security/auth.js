@@ -166,9 +166,9 @@
             authContext.memberId = undefined;
             authContext.isAuthenticated = false;
             if (!authContext.userId) {
-                const existUserId = authDataStorage.getUserId();
-                if (existUserId) {
-                    authContext.userId = existUserId;
+                const existentUserId = authDataStorage.getUserId();
+                if (existentUserId) {
+                    authContext.userId = existentUserId;
                 } else {
                     authContext.userId = guid();
                     authDataStorage.storeUserId(authContext.userId);
