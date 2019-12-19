@@ -17,7 +17,7 @@
         }
 
         return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-    };
+    }
 
     authContext.fillAuthData = function() {
         return $http.get(`${platformEndPoint}jscart/api/security/currentuser`).then(
