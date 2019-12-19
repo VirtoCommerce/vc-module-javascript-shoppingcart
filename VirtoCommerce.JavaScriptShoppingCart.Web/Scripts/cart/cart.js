@@ -374,6 +374,11 @@ cartModule.controller('virtoCommerce.cartModule.checkoutController', ['$scope', 
         $scope.cancel();
     });
 
+    $scope.$on('userLoggedOut', function (event, data) {
+        $scope.cart.reloadCart();
+        $scope.cancel();
+    });
+
 }]);
 
 cartModule.controller('virtoCommerce.cartModule.clearCartPopUpController', ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
