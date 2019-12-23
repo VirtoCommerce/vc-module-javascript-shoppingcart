@@ -1,10 +1,10 @@
 <div class="modal-header" id="modal-title">
-    <h1 class="modal-title pull-left">Shopping cart</h1>
+    <h1 class="modal-title pull-left">{{'cart.general.title' | translate}}</h1>
     <span class="close-popup" ng-click="cancel()"></span>
 </div>
 <div class="modal-body"  id="modal-body">
     <div ng-show="cart.items.length === 0" ng-cloak="">
-        <div class="empty-cart">You shopping cart is empty</div>
+        <div class="empty-cart">{{'cart.general.empty' | translate}}</div>
     </div>
 
     <div ng-show="cart.items.length > 0" ng-cloak="">
@@ -34,8 +34,8 @@
                             </div>
                             <div class="row" ng-if="formCart['item' + lineItem.id].$error.number || formCart['item' + lineItem.id].$error.min">
                                 <div class="col-sm-12">
-                                    <div class="alert alert-error" ng-if="formCart['item' + lineItem.id].$error.number">Please enter a number</div>
-                                    <div class="alert alert-error" ng-if="formCart['item' + lineItem.id].$error.min">Quantity should be greater than 0</div>
+                                    <div class="alert alert-error" ng-if="formCart['item' + lineItem.id].$error.number">{{'cart.validation.number' | translate}}</div>
+                                    <div class="alert alert-error" ng-if="formCart['item' + lineItem.id].$error.min">{{'cart.validation.gt0' | translate}}</div>
                                 </div>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                 <div class="list-item-total">
                     <div class="row">
                         <div class="col-sm-6">
-                            <label for="cartSpecialInstructions">Special instructions for seller</label>
+                            <label for="cartSpecialInstructions">{{'cart.general.note' | translate}}</label>
                             <textarea class="input-full" id="cartSpecialInstructions" ng-model="cart.comment"></textarea>
                         </div>
                         <div class="col-sm-6 total">
@@ -57,13 +57,13 @@
                             </div>
                             <div class="modal-actions">
                                 <button class="btn" type="button" ng-class="{ 'loading': cartIsUpdating }" ng-click="clearCart()">
-                                    <span class="btn-text">Clear cart</span>
+                                    <span class="btn-text"> {{'cart.general.clear_cart' | translate}}</span>
                                     <svg class="loader-spinner" viewBox="25 25 50 50">
                                         <circle class="path" cx="50" cy="50" r="20" />
                                     </svg>
                                 </button>
                                 <button class="btn" type="button" ng-class="{ 'loading': cartIsUpdating }" ng-click="ok()">
-                                    <span class="btn-text">Checkout</span>
+                                    <span class="btn-text">{{'cart.general.checkout' | translate}}</span>
                                     <svg class="loader-spinner" viewBox="25 25 50 50">
                                         <circle class="path" cx="50" cy="50" r="20" />
                                     </svg>

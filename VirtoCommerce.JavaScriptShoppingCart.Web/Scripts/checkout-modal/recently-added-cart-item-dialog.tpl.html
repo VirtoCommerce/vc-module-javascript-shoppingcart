@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h2 class="modal-title modal-header-popup">Product is added to cart</h2>
+    <h2 class="modal-title modal-header-popup">{{'cart.dialogs.add_item.title' | translate}}</h2>
     <span class="close-popup" ng-click="cancel()"></span>
 </div>
 <div class="modal-body">
@@ -15,7 +15,7 @@
                 <div class="col-sm-4 list-info">
                     <div class="row">
                         <div class="col-sm-6 list-count">
-                            <span class="count">Count: </span>
+                            <span class="count">{{'cart.dialogs.add_item.count' | translate}}</span>
                             <span class="ajaxifyCart--qty" ng-bind="lineItem.quantity"></span>
                         </div>
                         <div class="col-sm-6 list-price">
@@ -31,11 +31,11 @@
 <div class="modal-footer">
     <div class="modal-actions">
         <button class="btn" ng-click="ok()" ng-class="{ 'loading': dialogData.updated }">
-            <span class="btn-text" ng-if="!dialogData.updated">Go to cart</span>
+            <span class="btn-text" ng-if="!dialogData.updated">{{'cart.dialogs.add_item.go-to-cart' | translate}}</span>
             <svg class="loader-spinner" viewBox="25 25 50 50">
                 <circle class="path" cx="50" cy="50" r="20" />
             </svg>
         </button>
-        <button class="btn" ng-click="cancel()">Continue shopping</button>
+        <button class="btn" ng-click="cancel()">{{'cart.dialogs.add_item.continue-shopping' | translate}}</button>
     </div>
 </div>
