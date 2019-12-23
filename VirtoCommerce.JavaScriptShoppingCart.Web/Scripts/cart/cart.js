@@ -97,9 +97,6 @@ cartModule.component('vcCart', {
 
 		this.reloadCart = function () {
             return wrapLoading(function () {
-
-                return authService.fillAuthData().then(function() {
-
                     return cartApi.getCart(ctrl).then(function(response) {
                         angular.merge(ctrl, response.data);
                         if (response.data.coupon) {
@@ -116,9 +113,6 @@ cartModule.component('vcCart', {
                         return cart;
                     });
                 });
-
-
-            });
 		};
 
         this.addLineItem = function(lineItem) {
@@ -241,7 +235,7 @@ cartModule.component('vcCart', {
 
 		this.openCart = function () {
 			$rootScope.$broadcast('needOpenCart');
-		}
+		};
 
 		function wrapLoading(func) {
 			ctrl.loading = true;
@@ -266,7 +260,13 @@ cartModule.component('vcCart', {
             }
         };
 
-		this.reloadCart();
+		this.initializeUser = function(){
+			authService.fillAuthData().then(function() {
+				ctrl.reloadCart();
+			});
+		};
+
+		this.initializeUser();
 
 		this.getCartItemsCount();
 	}]
