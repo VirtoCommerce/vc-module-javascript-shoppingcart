@@ -43,7 +43,7 @@ cartModule.component('vcCheckoutAddress', {
 					}
 				}
 			}
-		};
+		}
 
 		function setAddressRegion(address, regions)
 		{
@@ -58,6 +58,7 @@ cartModule.component('vcCheckoutAddress', {
 				ctrl.address.regionName = undefined;
 			}
 		}
+		ctrl.setForm = function (frm) { ctrl.form = frm; };
 
 		ctrl.validate = function () {
 			if (ctrl.form) {
@@ -65,7 +66,7 @@ cartModule.component('vcCheckoutAddress', {
 				return !ctrl.form.$invalid;
 			}
 			return true;
-		}
+		};
 
 		function stringifyAddress(address) {
 			var stringifiedAddress = address.firstName + ' ' + address.lastName + ', ';
