@@ -1,6 +1,6 @@
 ﻿var cartModule = angular.module('virtoCommerce.cartModule');
 
-cartModule.controller('virtoCommerce.cartModule.logInViewController', ['$scope', '$uibModalInstance', '$uibModal', 'virtoCommerce.cartModule.authService', 'cart', function ($scope, $uibModalInstance, $uibModal, authService, cart) {
+cartModule.controller('virtoCommerce.cartModule.logInViewController', ['$scope', '$rootScope', '$uibModalInstance', '$uibModal', 'virtoCommerce.cartModule.authService', 'cart', function ($scope, $rootScope, $uibModalInstance, $uibModal, authService, cart) {
 
 	$scope.cart = cart;
 	$scope.authError = null;
@@ -23,6 +23,7 @@ cartModule.controller('virtoCommerce.cartModule.logInViewController', ['$scope',
 				if (!loggedIn) {
 					$scope.authError = 'invalidCredentials';
 				} else {
+					$rootScope.$broadcast('userLoggedIn');
 					$uibModalInstance.dismiss('cancel');
 				}
 			},
@@ -58,10 +59,6 @@ cartModule.controller('virtoCommerce.cartModule.logInViewController', ['$scope',
 				}
 			}
 		});
-
-	};
-
-	$scope.signUp = function () {
 
 	};
 }]);

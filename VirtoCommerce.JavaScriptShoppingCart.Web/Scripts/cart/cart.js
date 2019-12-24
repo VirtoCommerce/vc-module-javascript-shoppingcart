@@ -370,7 +370,8 @@ cartModule.controller('virtoCommerce.cartModule.checkoutController', ['$scope', 
 		$uibModalInstance.dismiss('cancel');
     };
 
-    $scope.$on('orderCreated', function (event, data) {
+    $scope.$on('userLoggedIn', function (event, data) {
+		$scope.cart.reloadCart();
         $scope.cancel();
     });
 
