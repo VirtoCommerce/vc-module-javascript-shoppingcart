@@ -5,7 +5,10 @@ cartModule.controller('virtoCommerce.cartModule.logInViewController', ['$scope',
 	$scope.cart = cart;
 	$scope.authError = null;
 	$scope.authReason = false;
-	$scope.loginProgress = false;
+    $scope.loginProgress = false;
+
+    const badRequest = 400;
+    const unauthorized = 401;
 
 
 	$scope.cancel = function () {
@@ -27,10 +30,10 @@ cartModule.controller('virtoCommerce.cartModule.logInViewController', ['$scope',
 					$uibModalInstance.dismiss('cancel');
 				}
 			},
-			function (x) {
+			function (response) {
 				$scope.loginProgress = false;
-				if (angular.isDefined(x.status)) {
-					if (x.status == 400 || x.status == 401) {
+                if (angular.isDefined(response.status)) {
+                    if (response.status === badRequest || response.status === unauthorized) {
 						$scope.authError = 'The login or password is incorrect.';
 					} else {
 						$scope.authError = 'Authentication error (code: ' + x.status + ').';
