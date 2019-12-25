@@ -416,12 +416,10 @@ cartModule.controller('virtoCommerce.cartModule.cartViewController', ['$scope', 
         });
 	};
 
-	//TODO: ui loader when action not finished yet
     $scope.removeLineItem = function(lineItemId) {
         cart.removeLineItem(lineItemId);
     };
 
-	//TODO: ui loader when action not finished yet
     $scope.changeLineItemQuantity = function(lineItemId, quantity) {
         cart.changeLineItemQuantity(lineItemId, quantity);
     };
