@@ -10,7 +10,6 @@ cartModule.controller('virtoCommerce.cartModule.logInViewController', ['$scope',
     const badRequest = 400;
     const unauthorized = 401;
 
-
 	$scope.cancel = function () {
 		$uibModalInstance.dismiss('cancel');
 	};
