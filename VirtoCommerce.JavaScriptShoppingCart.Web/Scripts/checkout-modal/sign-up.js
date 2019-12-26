@@ -18,37 +18,39 @@ cartModule.controller("virtoCommerce.cartModule.signUpViewController",
                 $uibModalInstance.dismiss("cancel");
             };
 
-            $scope.signUp = () => {
-                $scope.customer.userName = $scope.customer.email;
-                authService.validatePassword(JSON.stringify($scope.customer.password)).then((passwordValidationResult) => {
+            $scope.signUp = (isValid) => {
+                if (isValid) {
+                    $scope.customer.userName = $scope.customer.email;
+                    authService.validatePassword(JSON.stringify($scope.customer.password)).then((passwordValidationResult) => {
+                        if (passwordValidationResult.data.passwordIsValid) {
+                            authService.signUp($scope.customer).then(
+                                () => authService.login($scope.customer.userName, $scope.customer.password, false).then(
+                                    () => {
+                                        $uibModalInstance.dismiss("cancel")
+                                    },
+                                    (error) => {
+                                        showError(error);
+                                    }),
+                                (error) => {
+                                    showError(error);
+                                });
+                        } else {
+                            $scope.errors = [];
+                            $scope.minPasswordLength = passwordValidationResult.data.minPasswordLength;
+                            var filteredKeys = _.filter(Object.keys(passwordValidationResult.data),
+                                function (key) {
+                                    return !key.startsWith('$') && passwordValidationResult.data[key] === true;
+                                });
 
-                    if (passwordValidationResult.data.passwordIsValid) {
-						authService.signUp($scope.customer).then(
-							() => authService.login($scope.customer.userName, $scope.customer.password, false).then(
-								() => {
-									$uibModalInstance.dismiss("cancel")
-								},
-								(error) => {
-									showError(error);
-								}),
-                            (error) => {
-								showError(error);
+                            filteredKeys.forEach(function (key) {
+                                var resourceName = 'customer.register.validations.' + key;
+                                $scope.errors.push(resourceName);
                             });
-                    } else {
-                        $scope.errors = [];
-                        $scope.minPasswordLength = passwordValidationResult.data.minPasswordLength;
-                        var filteredKeys = _.filter(Object.keys(passwordValidationResult.data),
-                            function (key) {
-                                return !key.startsWith('$') && passwordValidationResult.data[key] === true;
-                            });
+                        }
+                    });
+                }
+            };
 
-                        filteredKeys.forEach(function (key) {
-                            var resourceName = 'customer.register.validations.' + key;
-                            $scope.errors.push(resourceName);
-                        });
-                    }
-                });
-			};
 
 
 			function showError(error) {
