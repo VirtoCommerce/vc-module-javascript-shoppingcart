@@ -1,7 +1,7 @@
 ﻿<form accept-charset="UTF8" class="step" name="$ctrl.form" novalidate="novalidate">
     <div ng-if="$ctrl.shipment.validationWarnings.length">
         <div class="alert alert-error" ng-if="$ctrl.shipment.validationWarnings[0].errorCode == 'ShippingUnavailableError'">
-            There is no shipping method for current shipping address and items available!
+            {{ 'checkout.shipping_method.no_shipping_method' | translate }}
         </div>
     </div> 
     <div class="content-box" ng-repeat="(key, value) in $ctrl.availShippingMethods | groupBy: 'shippingMethod.description' ">
@@ -20,6 +20,6 @@
         </div>
     </div>
     <div class="alert alert-error" style="margin-top: 20px;" ng-if="$ctrl.form.$submitted && $ctrl.form.ShipmentMethodCode.$error.required">
-        Please select shipping method
+        {{ 'checkout.shipping_method.select_shipping_method' | translate }}
     </div>
 </form>

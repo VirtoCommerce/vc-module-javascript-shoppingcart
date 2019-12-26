@@ -39,6 +39,9 @@ cartModule.constant('virtoCommerce.cartModule.translations', {
 		"invalid_bank_card_expiration_date_message": "Please enter valid expiration date of your bank card in MM / YY format",
 		"bank_card_cvv_required_message": "Please enter verification code of your bank card",
 		"invalid_bank_card_cvv_message": "Please enter correct verification code of your bank card",
+		"order_created": "The order created successfully!",
+		"order_number" : "Your order number:",
+		"equals":"Equals",
 		"mobile": {
 			"show_order_summary": "Show order summary",
 			"hide_order_summary": "Hide order summary"
@@ -59,7 +62,9 @@ cartModule.constant('virtoCommerce.cartModule.translations', {
 		"shipping_method": {
 			"title": "Shipping method",
 			"continue_text": "Continue to payment method",
-			"return_text": "Return to customer information"
+			"return_text": "Return to customer information",
+			"no_shipping_method": "There is no shipping method for current shipping address and items available!",
+			"select_shipping_method": "Please select shipping method"
 		},
 		"payment_method": {
 			"title": "Payment method",
@@ -89,7 +94,8 @@ cartModule.constant('virtoCommerce.cartModule.translations', {
 			"required_expiration_year_message": "Please enter expiration year",
 			"invalid_expiration_year_message": "The year invalid",
 			"required_cvv_message": "Please enter CVV",
-			"invalid_cvv_message": "Please enter correct CVV"
+			"invalid_cvv_message": "Please enter correct CVV",
+			"secure_field": "Secure field",
 		},
 		"address": {
 			"first_name": "First name",
@@ -187,7 +193,26 @@ cartModule.constant('virtoCommerce.cartModule.translations', {
 			"continue_browsing_html": "Continue browsing <a href=\"collections/all\">here</a>.",
 			"or": "or",
 			"view_cart": "View Cart",
-			"close_cart": "Close Cart"
+			"close_cart": "Close Cart",
+			"clear_cart": "Clear cart",
+		},
+		"validation":{
+			"number":"Please enter a number",
+			"gt0":"Quantity should be greater than 0"
+		},
+		"dialogs":{
+			"clear_cart":{
+				"title":"Clear cart confirmation",
+				"question":"Do you want to clear your cart?",
+				"clear":"Clear",
+				"cancel":"Cancel"
+			},
+ 			"add_item":{
+				"title":"Product is added to cart",
+				"count": "Count:",
+				"go-to-cart": "Go to cart",
+				"continue-shopping": "Continue shopping",
+			}
 		}
 	},
 	"quotes": {
