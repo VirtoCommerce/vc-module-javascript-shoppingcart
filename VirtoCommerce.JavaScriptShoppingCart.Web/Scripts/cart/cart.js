@@ -370,7 +370,8 @@ cartModule.controller('virtoCommerce.cartModule.checkoutController', ['$scope', 
 		$uibModalInstance.dismiss('cancel');
     };
 
-    $scope.$on('orderCreated', function (event, data) {
+    $scope.$on('userLoggedIn', function (event, data) {
+		$scope.cart.reloadCart();
         $scope.cancel();
     });
 
@@ -415,12 +416,10 @@ cartModule.controller('virtoCommerce.cartModule.cartViewController', ['$scope', 
         });
 	};
 
-	//TODO: ui loader when action not finished yet
     $scope.removeLineItem = function(lineItemId) {
         cart.removeLineItem(lineItemId);
     };
 
-	//TODO: ui loader when action not finished yet
     $scope.changeLineItemQuantity = function(lineItemId, quantity) {
         cart.changeLineItemQuantity(lineItemId, quantity);
     };
