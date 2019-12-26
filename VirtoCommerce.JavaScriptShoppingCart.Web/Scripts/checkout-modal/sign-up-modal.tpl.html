@@ -7,13 +7,13 @@
         <div class="wrap">
             <div class="grid">
                 <div class="grid-item large--one-third push--large--one-third text-center">
-                    <form accept-charset="UTF-8" action="" ng-submit="signUp()">
+                    <form accept-charset="UTF-8" action="" ng-submit="signUp(signUp.$valid)" name="signUp">
 
                         <label for="customer_email" class="hidden-label">{{ 'customer.login.email' | translate }}</label>
-                        <input type="text" value="" ng-model="customer['email']" id="customer_email" placeholder="{{ 'customer.login.email' | translate }}" autocorrect="off" autocapitalize="off">
+                        <input type="email" value="" ng-model="customer['email']" id="customer_email" placeholder="{{ 'customer.login.email' | translate }}" autocorrect="off" autocapitalize="off" required>
 
                         <label for="customer_password" class="hidden-label">{{ 'customer.login.password' | translate }}</label>
-                        <input type="password" value="" ng-model="customer['password']" id="customer_password" placeholder="{{ 'customer.login.password' | translate }}">
+                        <input type="password" value="" ng-model="customer['password']" id="customer_password" placeholder="{{ 'customer.login.password' | translate }}" required>
 
                         <div class="form-group">
                             <div class="form-error" ng-if="error">
