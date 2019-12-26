@@ -43,7 +43,7 @@ cartModule.component('vcCheckoutAddress', {
 					}
 				}
 			}
-		};
+		}
 
 		function setAddressRegion(address, regions)
 		{
@@ -58,6 +58,7 @@ cartModule.component('vcCheckoutAddress', {
 				ctrl.address.regionName = undefined;
 			}
 		}
+		ctrl.setForm = function (frm) { ctrl.form = frm; };
 
 		ctrl.validate = function () {
 			if (ctrl.form) {
@@ -65,18 +66,18 @@ cartModule.component('vcCheckoutAddress', {
 				return !ctrl.form.$invalid;
 			}
 			return true;
-		}
+		};
 
 		function stringifyAddress(address) {
-			var stringifiedAddress = address.firstName + ' ' + address.lastName + ', ';
-			stringifiedAddress += address.organization ? address.organization + ', ' : '';
-			stringifiedAddress += address.countryName + ', ';
-			stringifiedAddress += address.regionName ? address.regionName + ', ' : '';
-			stringifiedAddress += address.city + ' ';
-			stringifiedAddress += address.line1 + ', ';
-			stringifiedAddress += address.line2 ? address.line2 : '';
-			stringifiedAddress += address.postalCode;
-			return stringifiedAddress;
+			var result = address.firstName + ' ' + address.lastName + ', ';
+            result += address.organization ? address.organization + ', ' : '';
+            result += address.countryName + ', ';
+            result += address.regionName ? address.regionName + ', ' : '';
+            result += address.city + ' ';
+            result += address.line1 + ', ';
+            result += address.line2 ? address.line2 : '';
+            result += address.postalCode;
+            return result;
 		}
 
 		$scope.$watch('$ctrl.address', function () {		
