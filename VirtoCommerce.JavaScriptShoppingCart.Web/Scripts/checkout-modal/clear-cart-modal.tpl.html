@@ -1,21 +1,19 @@
 <div class="modal-header">
-    <h5 class="modal-title" id="modal-title">Clear cart confirmation</h5>
+    <h5 class="modal-title" id="modal-title">{{'cart.dialogs.clear_cart.title'| translate}}</h5>
 </div>
 <div class="modal-body" id="modal-body">
-    <div class="empty-cart">Do you want to clear your cart?</div>
+    <div class="empty-cart">{{'cart.dialogs.clear_cart.question' | translate}}</div>
 </div>
 <div class="modal-footer" id='modal-footer'>
     <div class="modal-actions">
-        <button class="btn"
-            ng-class="{ 'loading': cartIsUpdating }" ng-click="ok()">
+        <button class="btn" ng-class="{ 'loading': cartIsUpdating }" ng-click="ok()">
             <span class="icon"></span>
-            Clear
+            {{'cart.dialogs.clear_cart.clear' | translate}}
         </button>
 
-        <button class="btn"
-            ng-class="{ 'loading': cartIsUpdating }" ng-click="cancel()">
+        <button class="btn" ng-class="{ 'loading': cartIsUpdating }" ng-click="cancel()">
             <span class="icon"></span>
-            Cancel
+            {{'cart.dialogs.clear_cart.cancel' | translate}}
         </button>
     </div>
 </div>

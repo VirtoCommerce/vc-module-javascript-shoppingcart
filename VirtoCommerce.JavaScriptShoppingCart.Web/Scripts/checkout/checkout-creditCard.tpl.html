@@ -5,7 +5,7 @@
                 <label class="field__label" for="BankCardNumber">{{ 'checkout.payment_method.card_number' | translate }}</label>
                 <input type="text" placeholder="{{ 'checkout.payment_method.card_number' | translate }}" class="field__input" id="BankCardNumber" cc-number cc-eager-type name="BankCardNumber" ng-model="$ctrl.card.bankCardNumber" required="required">
                 <span class="field__icon icon icon--lock">
-                    <span class="visually-hidden">Secure field</span>
+                    <span class="visually-hidden">{{ 'checkout.payment_method.secure_field' | translate }}</span>
                 </span>
                 <span class="field__icon icon payment-icon has-tooltip" style="right: 40px; top: 23%;"
                       ng-class="{ 'American Express': 'payment-icon--american-express', 'Dankort': 'payment-icon--dankort', 'Diners Club' : 'payment-icon--diners-club',
