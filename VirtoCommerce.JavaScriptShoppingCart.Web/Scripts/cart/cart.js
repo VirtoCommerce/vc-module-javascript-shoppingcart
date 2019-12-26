@@ -11,6 +11,7 @@ cartModule.config(['$translateProvider', 'virtoCommerce.cartModule.translations'
 
 cartModule.factory('virtoCommerce.cartModule.httpErrorInterceptor', ['$q', '$rootScope', '$injector', 'virtoCommerce.cartModule.authDataStorage', function ($q, $rootScope, $injector, authDataStorage) {
     var httpErrorInterceptor = {};
+    const unauthorized = 401;
 
     httpErrorInterceptor.request = function (config) {
         config.headers = config.headers || {};
@@ -23,7 +24,6 @@ cartModule.factory('virtoCommerce.cartModule.httpErrorInterceptor', ['$q', '$roo
 
                 return config;
             }).finally(function () {
-                // do something on success
                 if (!config.cache) {
                     $rootScope.$broadcast('httpRequestSuccess', config);
                 }
@@ -45,7 +45,7 @@ cartModule.factory('virtoCommerce.cartModule.httpErrorInterceptor', ['$q', '$roo
     }
 
     httpErrorInterceptor.responseError = function (rejection) {
-        if (rejection.status === 401) {
+        if (rejection.status === unauthorized) {
             $rootScope.$broadcast('unauthorized', rejection);
         } else {
             $rootScope.$broadcast('httpError', rejection);
