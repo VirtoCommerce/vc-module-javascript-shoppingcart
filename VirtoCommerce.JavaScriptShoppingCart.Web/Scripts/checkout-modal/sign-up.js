@@ -11,6 +11,9 @@ cartModule.controller("virtoCommerce.cartModule.signUpViewController",
             $scope.errors = [];
             $scope.minPasswordLength = 0;
 
+            const badRequest = 400;
+            const unauthorized = 401;
+
             $scope.cancel = () => {
                 $uibModalInstance.dismiss("cancel");
             };
@@ -49,16 +52,19 @@ cartModule.controller("virtoCommerce.cartModule.signUpViewController",
             };
 
 
-            function showError(error) {
-                if (angular.isDefined(error.status)) {
-                    if (error.status === 400 || error.status === 401 && error.data.errors.length) {
-                        $scope.error = error.data.errors;
-                    } else {
-                        $scope.error = `Registration user error (code: ${error.status}).`;
-                    }
-                } else {
-                    $scope.error = `Registration user error ${error}`;
-                }
-            }
+
+			function showError(error) {
+				if (angular.isDefined(error.status)) {
+                    if (error.status === badRequest || error.status === unauthorized && error.data.errors.length) {
+						$scope.error = error.data.errors;
+					}
+					else {
+						$scope.error = `Registration user error (code: ${error.status}).`;
+					}
+				}
+				else {
+					$scope.error = `Registration user error ${error}`;
+				}
+			}
         }
     ]);
