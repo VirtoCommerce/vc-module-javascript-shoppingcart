@@ -11,6 +11,7 @@ cartModule.config(['$translateProvider', 'virtoCommerce.cartModule.translations'
 
 cartModule.factory('virtoCommerce.cartModule.httpErrorInterceptor', ['$q', '$rootScope', '$injector', 'virtoCommerce.cartModule.authDataStorage', function ($q, $rootScope, $injector, authDataStorage) {
     var httpErrorInterceptor = {};
+    const unauthorized = 401;
 
     httpErrorInterceptor.request = function (config) {
         config.headers = config.headers || {};
@@ -23,7 +24,6 @@ cartModule.factory('virtoCommerce.cartModule.httpErrorInterceptor', ['$q', '$roo
 
                 return config;
             }).finally(function () {
-                // do something on success
                 if (!config.cache) {
                     $rootScope.$broadcast('httpRequestSuccess', config);
                 }
@@ -45,7 +45,7 @@ cartModule.factory('virtoCommerce.cartModule.httpErrorInterceptor', ['$q', '$roo
     }
 
     httpErrorInterceptor.responseError = function (rejection) {
-        if (rejection.status === 401) {
+        if (rejection.status === unauthorized) {
             $rootScope.$broadcast('unauthorized', rejection);
         } else {
             $rootScope.$broadcast('httpError', rejection);
@@ -97,9 +97,6 @@ cartModule.component('vcCart', {
 
 		this.reloadCart = function () {
             return wrapLoading(function () {
-
-                return authService.fillAuthData().then(function() {
-
                     return cartApi.getCart(ctrl).then(function(response) {
                         angular.merge(ctrl, response.data);
                         if (response.data.coupon) {
@@ -116,9 +113,6 @@ cartModule.component('vcCart', {
                         return cart;
                     });
                 });
-
-
-            });
 		};
 
         this.addLineItem = function(lineItem) {
@@ -241,7 +235,7 @@ cartModule.component('vcCart', {
 
 		this.openCart = function () {
 			$rootScope.$broadcast('needOpenCart');
-		}
+		};
 
 		function wrapLoading(func) {
 			ctrl.loading = true;
@@ -266,7 +260,13 @@ cartModule.component('vcCart', {
             }
         };
 
-		this.reloadCart();
+		this.initializeUser = function(){
+			authService.fillAuthData().then(function() {
+				ctrl.reloadCart();
+			});
+		};
+
+		this.initializeUser();
 
 		this.getCartItemsCount();
 	}]
