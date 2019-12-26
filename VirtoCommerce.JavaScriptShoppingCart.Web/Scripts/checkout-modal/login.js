@@ -1,12 +1,14 @@
 ﻿var cartModule = angular.module('virtoCommerce.cartModule');
 
-cartModule.controller('virtoCommerce.cartModule.logInViewController', ['$scope', '$uibModalInstance', '$uibModal', 'virtoCommerce.cartModule.authService', 'cart', function ($scope, $uibModalInstance, $uibModal, authService, cart) {
+cartModule.controller('virtoCommerce.cartModule.logInViewController', ['$scope', '$rootScope', '$uibModalInstance', '$uibModal', 'virtoCommerce.cartModule.authService', 'cart', function ($scope, $rootScope, $uibModalInstance, $uibModal, authService, cart) {
 
 	$scope.cart = cart;
 	$scope.authError = null;
 	$scope.authReason = false;
-	$scope.loginProgress = false;
+    $scope.loginProgress = false;
 
+    const badRequest = 400;
+    const unauthorized = 401;
 
 	$scope.cancel = function () {
 		$uibModalInstance.dismiss('cancel');
@@ -23,13 +25,14 @@ cartModule.controller('virtoCommerce.cartModule.logInViewController', ['$scope',
 				if (!loggedIn) {
 					$scope.authError = 'invalidCredentials';
 				} else {
+					$rootScope.$broadcast('userLoggedIn');
 					$uibModalInstance.dismiss('cancel');
 				}
 			},
-			function (x) {
+			function (response) {
 				$scope.loginProgress = false;
-				if (angular.isDefined(x.status)) {
-					if (x.status == 400 || x.status == 401) {
+                if (angular.isDefined(response.status)) {
+                    if (response.status === badRequest || response.status === unauthorized) {
 						$scope.authError = 'The login or password is incorrect.';
 					} else {
 						$scope.authError = 'Authentication error (code: ' + x.status + ').';
@@ -58,10 +61,6 @@ cartModule.controller('virtoCommerce.cartModule.logInViewController', ['$scope',
 				}
 			}
 		});
-
-	};
-
-	$scope.signUp = function () {
 
 	};
 }]);
