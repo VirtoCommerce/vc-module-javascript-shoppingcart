@@ -78,6 +78,11 @@
                 if (authService.isAuthenticated) 
                     return $http.post(cart.apiUrl + 'api/order/customerOrders/' + cart.id, cart);
                 return $http.post(cart.apiUrl + 'api/order/customerOrders/' + cart.id + '?api_key=' + cart.apiKey, cart);
+	        },
+            processPayment: function (cart , orderId, paymentId) {
+                if (authService.isAuthenticated) 
+                    return $http.post(cart.apiUrl + 'api/order/customerOrders/' + orderId +'/processPayment/' + paymentId);
+                return $http.post(cart.apiUrl + 'api/order/customerOrders/' + orderId + '/processPayment/' + paymentId + '?api_key=' + cart.apiKey);
 	        }
 	    }
 	}]);
