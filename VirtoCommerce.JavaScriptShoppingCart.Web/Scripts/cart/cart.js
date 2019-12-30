@@ -201,7 +201,14 @@ cartModule.component('vcCart', {
 		};
 
 		this.createOrder = function () {
-			return cartApi.createOrder(ctrl);
+            return cartApi.createOrder(ctrl).then(function(response) {
+                let order = response.data;
+                if (order && order.inPayments.length) {
+                    let paymentId = order.inPayments[0].id;
+                    cartApi.processPayment(ctrl, order.id, paymentId);
+                }
+                return response;
+            });
 		};
 
 		this.removeCart = function () {
