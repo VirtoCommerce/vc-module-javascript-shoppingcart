@@ -47,7 +47,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\CacheKey.cs" />
     <Compile Include="Extensions\DefaultableDictionary.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Model\Cart\CartShipmentItem.cs" />
     <Compile Include="Model\Cart\IValidatable.cs" />
     <Compile Include="Model\Cart\LineItem.cs" />

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services
@@ -16,27 +15,34 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services
 		/// </summary>
 		/// <param name="cart"></param>
 		/// <returns></returns>
-		Task TakeCartAsync(ShoppingCart cart);
+		void TakeCart(ShoppingCart cart);
 
 		/// <summary>
 		/// Update shopping cart comment
 		/// </summary>
 		/// <param name="comment"></param>
 		/// <returns></returns>
-		Task UpdateCartComment(string comment);
+		void UpdateCartComment(string comment);
+
+		/// <summary>
+		/// Loads cart from the repository.
+		/// </summary>
+		/// <param name="cartId"></param>
+		/// <param name="currencyCode"></param>
+		/// <param name="languageCode"></param>
+		/// <returns></returns>
+		void LoadCart(string cartId, string currencyCode, string languageCode);
 
 		/// <summary>
 		/// Load or created new cart for specified parameters and capture it.  All next changes will be implemented on it
 		/// </summary>
-		/// <param name="cartId"></param>
+		/// <param name="cartName"></param>
 		/// <param name="storeId"></param>
 		/// <param name="userId"></param>
 		/// <param name="language"></param>
 		/// <param name="currency"></param>
 		/// <returns></returns>
-		Task LoadOrCreateNewTransientCartAsync(string cartId, string storeId, string userId, string language, string currency);
-
-		void LoadOrCreateNewTransientCart(string cartId, string storeId, string userId, string language, string currency);
+		void LoadOrCreateNewTransientCart(string cartName, string storeId, string userId, string languageCode, string currencyCode);
 
 		/// <summary>
 		/// Add new product to cart
@@ -44,7 +50,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services
 		/// <param name="productId"></param>
 		/// <param name="quantity"></param>
 		/// <returns></returns>
-		Task<bool> AddItemAsync(string productId, int quantity);
+		bool AddItem(string productId, int quantity);
 
 		/// <summary>
 		/// Change cart item qty by product index
@@ -52,7 +58,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services
 		/// <param name="lineItemId"></param>
 		/// <param name="quantity"></param>
 		/// <returns></returns>
-		Task ChangeItemQuantityAsync(string lineItemId, int quantity);
+		void ChangeItemQuantity(string lineItemId, int quantity);
 
 		/// <summary>
 		/// Change cart item qty by item id
@@ -60,97 +66,97 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services
 		/// <param name="lineItemIndex"></param>
 		/// <param name="quantity"></param>
 		/// <returns></returns>
-		Task ChangeItemQuantityAsync(int lineItemIndex, int quantity);
+		void ChangeItemQuantity(int lineItemIndex, int quantity);
 
-		Task ChangeItemsQuantitiesAsync(int[] quantities);
+		void ChangeItemsQuantities(int[] quantities);
 
 		/// <summary>
 		/// Remove item from cart by id
 		/// </summary>
 		/// <param name="lineItemId"></param>
 		/// <returns></returns>
-		Task RemoveItemAsync(string lineItemId);
+		void RemoveItem(string lineItemId);
 
 		/// <summary>
 		/// Apply marketing coupon to captured cart
 		/// </summary>
 		/// <param name="couponCode"></param>
 		/// <returns></returns>
-		Task AddCouponAsync(string couponCode);
+		void AddCoupon(string couponCode);
 
 		/// <summary>
 		/// remove exist coupon from cart
 		/// </summary>
 		/// <param name="couponCode"></param>
 		/// <returns></returns>
-		Task RemoveCouponAsync(string couponCode = null);
+		void RemoveCoupon(string couponCode = null);
 
 		/// <summary>
 		/// Clear cart remove all items and shipments and payments
 		/// </summary>
 		/// <returns></returns>
-		Task ClearAsync();
+		void Clear();
 
 		/// <summary>
 		/// Add or update shipment to cart
 		/// </summary>
 		/// <param name="shipment"></param>
 		/// <returns></returns>
-		Task AddOrUpdateShipmentAsync(Shipment shipment);
+		void AddOrUpdateShipment(Shipment shipment);
 
 		/// <summary>
 		/// Remove exist shipment from cart
 		/// </summary>
 		/// <param name="shipmentId"></param>
 		/// <returns></returns>
-		Task RemoveShipmentAsync(string shipmentId);
+		void RemoveShipment(string shipmentId);
 
 		/// <summary>
 		/// Add or update payment in cart
 		/// </summary>
 		/// <param name="payment"></param>
 		/// <returns></returns>
-		Task AddOrUpdatePaymentAsync(Payment payment);
+		void AddOrUpdatePayment(Payment payment);
 
 		/// <summary>
 		/// Merge other cart with captured
 		/// </summary>
 		/// <param name="cart"></param>
 		/// <returns></returns>
-		Task MergeWithCartAsync(ShoppingCart cart);
+		void MergeWithCart(ShoppingCart cart);
 
 		/// <summary>
 		/// Remove cart from service
 		/// </summary>
 		/// <returns></returns>
-		Task RemoveCartAsync();
+		void RemoveCart();
 
 		/// <summary>
 		/// Returns all available shipment methods for current cart
 		/// </summary>
 		/// <returns></returns>
-		Task<IEnumerable<ShippingMethod>> GetAvailableShippingMethodsAsync();
+		IEnumerable<ShippingMethod> GetAvailableShippingMethods();
 
 		/// <summary>
 		/// Returns all available payment methods for current cart
 		/// </summary>
 		/// <returns></returns>
-		Task<IEnumerable<PaymentMethod>> GetAvailablePaymentMethodsAsync();
+		IEnumerable<PaymentMethod> GetAvailablePaymentMethods();
 
 		/// <summary>
 		/// Evaluate marketing discounts for captured cart
 		/// </summary>
 		/// <returns></returns>
-		Task EvaluatePromotionsAsync();
+		void EvaluatePromotions();
 
 		/// <summary>
 		/// Evaluate taxes  for captured cart
 		/// </summary>
 		/// <returns></returns>
-		Task EvaluateTaxesAsync();
+		void EvaluateTaxes();
 
-		Task ValidateAsync();
+		void Validate();
 
-		Task SaveAsync();
+		void Save();
 	}
 }

@@ -6,10 +6,10 @@
                     <div class="order-summary__section order-summary__section--product-list">
                         <vc-checkout-line-items items="$ctrl.cart.items" show-prices-with-taxes="$ctrl.showPricesWithTaxes" currencySymbol="$ctrl.cart.currencySymbol"></vc-checkout-line-items>
                     </div>
-<!--                     <div class="order-summary__section order-summary__section--discount">
-                        <vc-checkout-coupon coupon="$ctrl.cart.coupon" on-apply-coupon="$ctrl.cart.applyCoupon(coupon)" on-remove-coupon="$ctrl.cart.removeCoupon(coupon)"></vc-checkout-coupon>
+                    <div class="order-summary__section order-summary__section--discount">
+                        <vc-checkout-coupon coupon="$ctrl.cart.coupon" on-apply-coupon="$ctrl.cart.applyCoupon(coupon)" on-remove-coupon="$ctrl.cart.removeCoupon(coupon)" on-validate-coupon="$ctrl.cart.validateCoupon(coupon)"></vc-checkout-coupon>
                     </div>
- -->                    <div class="order-summary__section order-summary__section--total-lines">
+                     <div class="order-summary__section order-summary__section--total-lines">
                         <vc-checkout-totals cart="$ctrl.cart" show-prices-with-taxes="$ctrl.showPricesWithTaxes" currencySymbol="$ctrl.cart.currencySymbol"></vc-checkout-totals>
                     </div>
                     <div class="order-summary__section order-summary__section--total">

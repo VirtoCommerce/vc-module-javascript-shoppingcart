@@ -12,6 +12,9 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 {
 	public partial class ShoppingCart : CloneableEntity, IDiscountable, IValidatable, IHasLanguage, ITaxable, Platform.Core.Common.ICacheKey
 	{
+		public ShoppingCart() : this(new Currency(new Language("en-US"), "USD"), new Language("en-US"))
+		{ }
+
 		public ShoppingCart(Currency currency, Language language)
 		{
 			Currency = currency;
