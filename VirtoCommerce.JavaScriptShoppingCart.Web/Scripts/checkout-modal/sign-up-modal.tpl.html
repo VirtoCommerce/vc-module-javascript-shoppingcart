@@ -7,7 +7,7 @@
         <div class="wrap">
             <div class="grid">
                 <div class="grid-item large--one-third push--large--one-third text-center">
-                    <form accept-charset="UTF-8" action="" ng-submit="signUp(signUp.$valid)" name="signUp">
+                    <form accept-charset="UTF-8" action="" ng-submit="signUp(signUpForm.$valid)" name="signUpForm">
 
                         <label for="customer_email" class="hidden-label">{{ 'customer.login.email' | translate }}</label>
                         <input type="email" value="" ng-model="customer['email']" id="customer_email" placeholder="{{ 'customer.login.email' | translate }}" autocorrect="off" autocapitalize="off" required>
