@@ -137,17 +137,28 @@ cartModule.component('vcCart', {
 		};
 
 		this.applyCoupon = function (coupon) {
-			return cartApi.addCoupon(ctrl, coupon.code).then(function (response) {
+			return cartApi.addCouponNew(ctrl, coupon.code).then(function (response) {
 				ctrl.reloadCart();
 				return response.data;
 			});
 		};
 
 		this.removeCoupon = function (coupon) {
-			return cartApi.removeCoupon(ctrl).then(function () {
+			return cartApi.removeCouponNew(ctrl, coupon ? coupon.code : undefined).then(function () {
 				return ctrl.reloadCart();
 			});
-		};
+			};
+
+
+		this.validateCoupon = function (coupon) {
+			coupon.processing = true;
+			return cartApi.validateCouponNew(ctrl, coupon).then(function (result) {
+				coupon.processing = false;
+				return angular.extend(coupon, result.data);
+			}, function () {
+				coupon.processing = false;
+			});
+		}
 
         this.removeLineItem = function(lineItemId) {
             var lineItem = _.find(this.items, function(i) { return i.id === lineItemId; });
