@@ -294,18 +294,16 @@ cartModule.directive('vcBuyButton', function () {
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
-            element.bind('click', function () {
-                console.log('clicked');
-                console.log(attrs);
+            element.bind('click', function () {                
                 scope.addLineItem({
-                    name: attrs.itemName,
-                    quantity: attrs.quantity,
-                    listPrice: attrs.listPrice,
-                    currency: attrs.currency,
-                    productId: attrs.productId,
-                    sku: attrs.sku,
-                    catalogId: attrs.catalogId,
-                    imageUrl: attrs.imageUrl
+                    name: attrs.vcItemName,
+                    quantity: attrs.vcQuantity,
+                    listPrice: attrs.vcListPrice,
+                    currency: attrs.vcCurrency,
+                    productId: attrs.vcProductId,
+                    sku: attrs.vcSku,
+                    catalogId: attrs.vcCatalogId,
+                    imageUrl: attrs.vcImageUrl
                 });
             });
         }
