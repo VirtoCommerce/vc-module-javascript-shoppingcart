@@ -1,6 +1,7 @@
-﻿namespace VirtoCommerce.JavaScriptShoppingCart.Crawling
+namespace VirtoCommerce.JavaScriptShoppingCart.Crawling
 {
     using System;
+    using System.Collections.Generic;
 
     public class CrawlingResult
     {
@@ -10,19 +11,16 @@
             Exception = exception;
         }
 
-        public CrawlingResult(string productId, string price)
+        public CrawlingResult(bool isSuccess, IList<CrawlingItem> crawlingItems)
         {
-            IsSuccess = true;
-            ProductId = productId;
-            Price = price;
+            IsSuccess = isSuccess;
+            CrawlingItems = crawlingItems;
         }
-
-        public string Price { get; }
-
-        public string ProductId { get; }
 
         public bool IsSuccess { get; }
 
         public Exception Exception { get; }
+
+        public IList<CrawlingItem> CrawlingItems { get; }
     }
 }
