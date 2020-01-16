@@ -38,7 +38,7 @@
                     <div class="col" ng-class="{ 'col-50': !$ctrl.address.country.regions.length, 'col-33': $ctrl.address.country.regions.length }">
                         <div class="form-group form-select" ng-class="{'keyuped': $ctrl.form.Country.$modelValue, 'error': $ctrl.form.$submitted && $ctrl.form.Country.$invalid }">
                             <label for="#" class="form-label">{{ 'checkout.address.country' | translate }}</label>
-                            <select ng-model="$ctrl.address.countryCode" ng-options="x.code3 as x.name for x in $ctrl.countries" name="Country" required="required" class="form-input" size="1">
+                            <select ng-model="$ctrl.address.countryCode" ng-options="x.code3 as x.name for x in $ctrl.countries | orderBy: 'name'" name="Country" required="required" class="form-input" size="1">
                                 <option value="">{{ 'checkout.address.country_select_placeholder' | translate }}</option>
                             </select>
                         </div>
