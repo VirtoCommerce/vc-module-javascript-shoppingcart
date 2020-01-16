@@ -80,16 +80,16 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Crawling
             var imageUrlAttrName = GetCrawlingAttributeName(CrawlingAttributeType.ImageUrl);
             var nameAttrName = GetCrawlingAttributeName(CrawlingAttributeType.Name);
 
-            var query = document.All.Where(t => t.HasAttribute(selectorAttrName)).Select(
-                t => new CrawlingItem(
-                    t.GetAttribute(productIdAttrName),
-                    t.GetAttribute(skuAttrName),
-                    t.GetAttribute(priceAttrName),
-                    t.GetAttribute(currencyAttrName),
-                    t.GetAttribute(quantityAttrName),
-                    t.GetAttribute(catalogIdAttrName),
-                    t.GetAttribute(imageUrlAttrName),
-                    t.GetAttribute(nameAttrName))).ToList();
+            var query = document.All.Where(element => element.HasAttribute(selectorAttrName)).Select(
+                element => new CrawlingItem(
+                    element.GetAttribute(productIdAttrName),
+                    element.GetAttribute(skuAttrName),
+                    element.GetAttribute(priceAttrName),
+                    element.GetAttribute(currencyAttrName),
+                    element.GetAttribute(quantityAttrName),
+                    element.GetAttribute(catalogIdAttrName),
+                    element.GetAttribute(imageUrlAttrName),
+                    element.GetAttribute(nameAttrName))).ToList();
 
             _crawlingResult = new CrawlingResult(isSuccess: true, crawlingItems: query);
         }
