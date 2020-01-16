@@ -217,6 +217,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VirtoCommerce.JavaScriptShoppingCart.Crawling\VirtoCommerce.JavaScriptShoppingCart.Crawling.csproj">
+      <Project>{2de4e44e-61dc-4af8-83a2-68d92ead77ad}</Project>
+      <Name>VirtoCommerce.JavaScriptShoppingCart.Crawling</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VirtoCommerce.JavaScriptShoppingCart.Data\VirtoCommerce.JavaScriptShoppingCart.Data.csproj">
       <Project>{A27D3D81-A31A-4C39-BE9B-3BFAE32BD7EA}</Project>
       <Name>VirtoCommerce.JavaScriptShoppingCart.Data</Name>
