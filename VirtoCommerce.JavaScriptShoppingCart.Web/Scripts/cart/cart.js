@@ -1,4 +1,4 @@
-﻿var cartModule = angular.module('virtoCommerce.cartModule', ['ngAnimate', 'ui.bootstrap', 'ngCookies', 'pascalprecht.translate', 'angular.filter', 'credit-cards', 'LocalStorageModule']);
+var cartModule = angular.module('virtoCommerce.cartModule', ['ngAnimate', 'ui.bootstrap', 'ngCookies', 'pascalprecht.translate', 'angular.filter', 'credit-cards', 'LocalStorageModule']);
 
 cartModule.config(['$translateProvider', 'virtoCommerce.cartModule.translations', '$httpProvider', function ($translateProvider, translations, $httpProvider) {
 	$translateProvider.useSanitizeValueStrategy('sanitizeParameters');
@@ -288,6 +288,26 @@ cartModule.component('vcCart', {
 
 		this.getCartItemsCount();
 	}]
+});
+
+cartModule.directive('vcBuyButton', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            element.bind('click', function () {                
+                scope.addLineItem({
+                    name: attrs.vcItemName,
+                    quantity: attrs.vcQuantity,
+                    listPrice: attrs.vcListPrice,
+                    currency: attrs.vcCurrency,
+                    productId: attrs.vcProductId,
+                    sku: attrs.vcSku,
+                    catalogId: attrs.vcCatalogId,
+                    imageUrl: attrs.vcImageUrl
+                });
+            });
+        }
+    }
 });
 
 cartModule.controller('virtoCommerce.cartModule.cartController', ['$scope', '$uibModal', 'virtoCommerce.cartModule.carts', function ($scope, $uibModal, carts) {
