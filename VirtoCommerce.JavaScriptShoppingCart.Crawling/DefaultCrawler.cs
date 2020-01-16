@@ -1,4 +1,4 @@
-﻿namespace VirtoCommerce.JavaScriptShoppingCart.Crawling
+namespace VirtoCommerce.JavaScriptShoppingCart.Crawling
 {
     using System;
     using System.Linq;
@@ -7,17 +7,16 @@
     using Abot2.Crawler;
     using Abot2.Poco;
 
+    using VirtoCommerce.JavaScriptShoppingCart.Crawling.Exceptions;
+    using VirtoCommerce.JavaScriptShoppingCart.Crawling.Mapping;
+
     public class DefaultCrawler : ICrawler, IDisposable
     {
-        private const string PriceAttributeName = "vc-price";
-
         private readonly PoliteWebCrawler _crawler;
 
         private readonly ICrawlingConfiguration _crawlingConfiguration;
 
         private CrawlingResult _crawlingResult;
-
-        private string _productId;
 
         public DefaultCrawler(ICrawlingConfiguration crawlingConfiguration)
         {
@@ -27,7 +26,7 @@
             {
                 MaxPagesToCrawl = _crawlingConfiguration.MaxPagesToCrawl,
                 MinCrawlDelayPerDomainMilliSeconds = _crawlingConfiguration
-                                                 .MinCrawlDelayPerDomainMilliSeconds
+                                             .MinCrawlDelayPerDomainMilliSeconds
             };
 
             _crawler = new PoliteWebCrawler(crawlConfiguration);
@@ -35,9 +34,8 @@
             _crawler.PageCrawlDisallowed += PageCrawlDisallowed;
         }
 
-        public async Task<CrawlingResult> CrawlAsync(Uri uri, string productId)
+        public async Task<CrawlingResult> CrawlAsync(Uri uri)
         {
-            _productId = productId;
             var crawlResult = await _crawler.CrawlAsync(uri);
 
             if (crawlResult.ErrorOccurred)
@@ -58,15 +56,42 @@
             _crawler?.Dispose();
         }
 
+        private string GetCrawlingAttributeName(CrawlingAttributeType type)
+        {
+            if (!_crawlingConfiguration.Mapping.TryGetValue(type, out var attributeName))
+            {
+                throw new MappingException($"Can't find the \"{type}\".");
+            }
+
+            return attributeName;
+        }
+
         private void PageCrawlCompleted(object sender, PageCrawlCompletedArgs e)
         {
             var document = e.CrawledPage.AngleSharpHtmlDocument;
 
-            var query = document.All.Where(t => t.HasAttribute(_crawlingConfiguration.ProductIdSelector))
-                .Select(t => t.GetAttribute(PriceAttributeName));
-            var price = query.FirstOrDefault();
+            var selectorAttrName = GetCrawlingAttributeName(CrawlingAttributeType.BuyButtonSelector);
+            var productIdAttrName = GetCrawlingAttributeName(CrawlingAttributeType.ProductId);
+            var priceAttrName = GetCrawlingAttributeName(CrawlingAttributeType.Price);
+            var skuAttrName = GetCrawlingAttributeName(CrawlingAttributeType.Sku);
+            var currencyAttrName = GetCrawlingAttributeName(CrawlingAttributeType.Currency);
+            var quantityAttrName = GetCrawlingAttributeName(CrawlingAttributeType.Quantity);
+            var catalogIdAttrName = GetCrawlingAttributeName(CrawlingAttributeType.CatalogId);
+            var imageUrlAttrName = GetCrawlingAttributeName(CrawlingAttributeType.ImageUrl);
+            var nameAttrName = GetCrawlingAttributeName(CrawlingAttributeType.Name);
 
-            _crawlingResult = new CrawlingResult(_productId, price);
+            var query = document.All.Where(t => t.HasAttribute(selectorAttrName)).Select(
+                t => new CrawlingItem(
+                    t.GetAttribute(productIdAttrName),
+                    t.GetAttribute(skuAttrName),
+                    t.GetAttribute(priceAttrName),
+                    t.GetAttribute(currencyAttrName),
+                    t.GetAttribute(quantityAttrName),
+                    t.GetAttribute(catalogIdAttrName),
+                    t.GetAttribute(imageUrlAttrName),
+                    t.GetAttribute(nameAttrName))).ToList();
+
+            _crawlingResult = new CrawlingResult(isSuccess: true, crawlingItems: query);
         }
 
         private void PageCrawlDisallowed(object sender, PageCrawlDisallowedArgs e)
