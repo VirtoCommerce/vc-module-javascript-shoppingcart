@@ -66,18 +66,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CrawlingItem.cs" />
+    <Compile Include="Exceptions\MappingException.cs" />
+    <Compile Include="Mapping\PredefinedMappings.cs" />
+    <Compile Include="Mapping\CrawlingAttributeType.cs" />
     <Compile Include="CrawlingResult.cs" />
     <Compile Include="DefaultCrawler.cs" />
     <Compile Include="DefaultCrawlingConfiguration.cs" />
-    <Compile Include="DisallowedException.cs" />
+    <Compile Include="Exceptions\DisallowedException.cs" />
     <Compile Include="ICrawler.cs" />
     <Compile Include="ICrawlingConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnknownException.cs" />
+    <Compile Include="Exceptions\UnknownException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
