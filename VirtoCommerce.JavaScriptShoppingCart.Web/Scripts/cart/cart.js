@@ -97,7 +97,8 @@ cartModule.component('vcCart', {
 
 		this.reloadCart = function () {
             return wrapLoading(function () {
-                    return cartApi.getCart(ctrl).then(function(response) {
+                return cartApi.getCart(ctrl).then(function (response) {
+                        ctrl.items = [];
                         angular.merge(ctrl, response.data);
                         if (response.data.coupon) {
                             ctrl.coupon = response.data.coupon;
