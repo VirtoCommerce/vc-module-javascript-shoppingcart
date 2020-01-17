@@ -1,4 +1,4 @@
-﻿var cartModule = angular.module('virtoCommerce.cartModule');
+var cartModule = angular.module('virtoCommerce.cartModule');
 cartModule.component('vcCheckoutAddress', {
 	templateUrl: "checkout-address.tpl.html",
 	bindings: {
@@ -34,13 +34,7 @@ cartModule.component('vcCheckoutAddress', {
 				if (address.country) {
 					if (address.country.regions) {
 						setAddressRegion(address, address.country.regions);
-					}
-					else {
-						ctrl.getCountryRegions({ country: address.country }).then(function (regions) {
-							address.country.regions = regions;
-							setAddressRegion(address, regions);
-						});
-					}
+					}					
 				}
 			}
 		}
