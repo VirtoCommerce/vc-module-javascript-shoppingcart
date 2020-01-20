@@ -25,6 +25,46 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
             this._defaultValue = defaultValue;
         }
 
+        public int Count
+        {
+            get { return _dictionary.Count; }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return _dictionary.IsReadOnly; }
+        }
+
+        public ICollection<TKey> Keys
+        {
+            get { return _dictionary.Keys; }
+        }
+
+        public ICollection<TValue> Values
+        {
+            get
+            {
+                var values = new List<TValue>(_dictionary.Values) { _defaultValue };
+                return values;
+            }
+        }
+
+        public TValue this[TKey key]
+        {
+            get
+            {
+                TValue result;
+                if (!_dictionary.TryGetValue(key, out result))
+                {
+                    result = _defaultValue;
+                }
+
+                return result;
+            }
+
+            set { _dictionary[key] = value; }
+        }
+
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
         {
             return _dictionary.GetEnumerator();
@@ -60,16 +100,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
             return _dictionary.Remove(item);
         }
 
-        public int Count
-        {
-            get { return _dictionary.Count; }
-        }
-
-        public bool IsReadOnly
-        {
-            get { return _dictionary.IsReadOnly; }
-        }
-
         public bool ContainsKey(TKey key)
         {
             return _dictionary.ContainsKey(key);
@@ -91,36 +121,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
                 value = _defaultValue;
 
             return true;
-        }
-
-        public TValue this[TKey key]
-        {
-            get
-            {
-                TValue result;
-                if (!_dictionary.TryGetValue(key, out result))
-                {
-                    result = _defaultValue;
-                }
-
-                return result;
-            }
-
-            set { _dictionary[key] = value; }
-        }
-
-        public ICollection<TKey> Keys
-        {
-            get { return _dictionary.Keys; }
-        }
-
-        public ICollection<TValue> Values
-        {
-            get
-            {
-                var values = new List<TValue>(_dictionary.Values) { _defaultValue };
-                return values;
-            }
         }
     }
 }

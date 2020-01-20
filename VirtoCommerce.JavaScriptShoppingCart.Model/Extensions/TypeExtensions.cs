@@ -8,6 +8,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
 {
     public static class TypeExtensions
     {
+        private static readonly ConcurrentDictionary<Type, string> PrettyPrintCache = new ConcurrentDictionary<Type, string>();
+        private static readonly ConcurrentDictionary<Type, string> TypeCacheKeys = new ConcurrentDictionary<Type, string>();
         public static Type[] GetTypeInheritanceChainTo(this Type type, Type toBaseType)
         {
             var retVal = new List<Type> { type };
@@ -22,8 +24,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
 
             return retVal.ToArray();
         }
-
-        private static readonly ConcurrentDictionary<Type, string> PrettyPrintCache = new ConcurrentDictionary<Type, string>();
 
         public static string PrettyPrint(this Type type)
         {
@@ -42,7 +42,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
                 });
         }
 
-        private static readonly ConcurrentDictionary<Type, string> TypeCacheKeys = new ConcurrentDictionary<Type, string>();
         public static string GetCacheKey(this Type type)
         {
             return TypeCacheKeys.GetOrAdd(type, t => $"{t.PrettyPrint()}");
