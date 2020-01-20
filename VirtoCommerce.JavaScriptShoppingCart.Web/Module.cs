@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web.Hosting;
@@ -17,6 +17,7 @@ using Role = VirtoCommerce.Platform.Core.Security.Role;
 namespace VirtoCommerce.JavaScriptShoppingCart.Web
 {
     using VirtoCommerce.JavaScriptShoppingCart.Crawling;
+    using VirtoCommerce.JavaScriptShoppingCart.Crawling.Mapping;
 
     public class Module : ModuleBase
     {
@@ -33,9 +34,9 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
         {
             base.Initialize();
 
+            var crawler = new DefaultCrawler(new DefaultCrawlingConfiguration(PredefinedMappings.DefaultMapping));
+            _container.RegisterInstance<ICrawler>(crawler);
             _container.RegisterType<ICartBuilder, CartBuilder>();
-            _container.RegisterType<ICrawlingConfiguration, DefaultCrawlingConfiguration>();
-            _container.RegisterType<ICrawler, DefaultCrawler>();
 
             var configuration = new MapperConfiguration(x =>
             {
