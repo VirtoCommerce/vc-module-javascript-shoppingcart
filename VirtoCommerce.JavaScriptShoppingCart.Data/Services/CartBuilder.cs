@@ -38,7 +38,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
         public void LoadOrCreateNewTransientCart(string cartName, string storeId, string userId, string languageCode, string currencyCode)
         {
             // TechDebt: Need to add caching
-
             var criteria = CreateCartSearchCriteria(cartName, storeId, userId, currencyCode);
 
             var cartSearchResult = _shoppingCartSearchService.Search(criteria);
