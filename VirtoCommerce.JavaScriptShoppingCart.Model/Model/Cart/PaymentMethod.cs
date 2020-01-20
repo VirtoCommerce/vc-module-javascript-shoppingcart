@@ -80,7 +80,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         {
             get
             {
-                return Price + Price * TaxPercentRate;
+                return Price + (Price * TaxPercentRate);
             }
         }
 
@@ -115,7 +115,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         {
             get
             {
-                return DiscountAmount + DiscountAmount * TaxPercentRate;
+                return DiscountAmount + (DiscountAmount * TaxPercentRate);
             }
         }
 

@@ -389,7 +389,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         {
             var cents = Math.Pow(10, DecimalDigits);
             var lowResult = ((long)Math.Truncate((double)InternalAmount / n * cents)) / cents;
-            var highResult = lowResult + 1.0d / cents;
+            var highResult = lowResult + (1.0d / cents);
             var remainder = (int)(((double)InternalAmount * cents) % n);
 
             var results = new Money[n];
