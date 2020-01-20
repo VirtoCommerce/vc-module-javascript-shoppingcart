@@ -36,7 +36,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Bundles
                 if (!file.IncludedVirtualPath.EndsWith(".js"))
                 {
                     var absFile = HttpContext.Current.Server.MapPath(file.IncludedVirtualPath);
-                    var content = File.ReadAllText(absFile).Replace("\r\n", "").Replace("\n", "").Replace("'", "\\'");
+                    var content = File.ReadAllText(absFile).Replace("\r\n", string.Empty).Replace("\n", string.Empty).Replace("'", "\\'");
                     strBundleResponse.AppendFormat(@"t.put('{0}','{1}');", file.VirtualFile.Name, content);
                 }
             }
