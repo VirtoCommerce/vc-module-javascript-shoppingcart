@@ -14,6 +14,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing
         }
 
         public string Code => PromotionId;
+
         /// <summary>
         /// Gets or sets the value of promotion id.
         /// </summary>

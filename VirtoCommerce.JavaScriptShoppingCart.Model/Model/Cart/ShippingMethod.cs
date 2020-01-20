@@ -40,6 +40,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         public string Title => Name;
 
         public string Handle => ShipmentMethodCode;
+
         /// <summary>
         /// Gets or sets the value of shipping method option name.
         /// </summary>
@@ -107,6 +108,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         }
 
         #region ITaxable Members
+
         /// <summary>
         /// Gets the value of total shipping method tax.
         /// </summary>

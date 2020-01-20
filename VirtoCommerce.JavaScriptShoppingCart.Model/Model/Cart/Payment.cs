@@ -83,12 +83,14 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// Gets the value of total payment service discount amount.
         /// </summary>
         public Money DiscountAmount { get; set; }
+
         /// <summary>
         /// DiscountAmount * TaxPercentRate.
         /// </summary>
         public Money DiscountAmountWithTax { get; set; }
 
         #region ITaxable Members
+
         /// <summary>
         /// Gets or sets the value of total payment service tax amount.
         /// </summary>

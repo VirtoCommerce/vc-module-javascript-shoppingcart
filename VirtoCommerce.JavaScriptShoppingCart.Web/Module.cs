@@ -39,6 +39,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
             });
 
 #pragma warning disable S125 // Could be uncommented when debugging mappings
+
             // configuration.AssertConfigurationIsValid();
 #pragma warning restore S125
 

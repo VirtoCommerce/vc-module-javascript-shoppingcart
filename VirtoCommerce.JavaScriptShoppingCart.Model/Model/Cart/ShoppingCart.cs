@@ -335,6 +335,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
                 {
                     var discount = reward.ToDiscountModel(ExtendedPriceTotal);
                     Discounts.Add(discount);
+
                     // Use rounded amount for whole cart discount
                     DiscountAmount += discount.Amount.Amount;
                 }
@@ -366,6 +367,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         #endregion
 
         #region ITaxable Members
+
         /// <summary>
         /// Gets or sets the value of total shipping tax amount.
         /// </summary>

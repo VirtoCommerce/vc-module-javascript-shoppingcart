@@ -17,12 +17,14 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Tax
         public string Code { get; set; }
 
         public string Name { get; set; }
+
         /// <summary>
         /// Tax line total amount.
         /// </summary>
         public Money Amount { get; set; }
 
         public int Quantity { get; set; }
+
         /// <summary>
         /// Tax line one item price.
         /// </summary>

@@ -65,6 +65,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         #endregion
 
         #region Public Properties
+
         /// <summary>
         /// Accesses the internal representation of the value of the Money.
         /// </summary>

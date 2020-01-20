@@ -117,6 +117,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// Gets the value of total shipping discount amount.
         /// </summary>
         public Money DiscountAmount { get; set; }
+
         /// <summary>
         /// DiscountAmount * TaxPercentRate.
         /// </summary>
@@ -131,6 +132,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         public IList<CartShipmentItem> Items { get; set; }
 
         #region ITaxable Members
+
         /// <summary>
         /// Gets or sets the value of total shipping tax amount.
         /// </summary>

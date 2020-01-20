@@ -12,6 +12,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security
         /// Store id.
         /// </summary>
         public string StoreId { get; set; }
+
         /// <summary>
         /// Security account user name.
         /// </summary>
@@ -30,6 +31,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security
         public string PhoneNumber { get; set; }
 
         public bool PhoneNumberConfirmed { get; set; }
+
         /// <summary>
         /// Returns the email address of the customer.
         /// </summary>
@@ -57,28 +59,34 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security
         ///  Used to record failures for the purposes of lockout.
         /// </summary>
         public virtual int AccessFailedCount { get; set; }
+
         /// <summary>
         /// Is lockout enabled for this user.
         /// </summary>
         public virtual bool LockoutEnabled { get; set; }
+
         /// <summary>
         /// DateTime in UTC when lockout ends, any time in the past is considered not locked out.
         /// </summary>
         public virtual DateTime? LockoutEndDateUtc { get; set; }
+
         /// <summary>
         /// Returns true if user authenticated  returns false if it anonymous.
         /// </summary>
         public bool IsRegisteredUser { get; set; }
+
         /// <summary>
         /// The flag indicates that the user is an administrator.
         /// </summary>
         public bool IsAdministrator { get; set; }
 
         public string UserType { get; set; }
+
         /// <summary>
         /// The user ID of an operator who has loggen in on behalf of a customer.
         /// </summary>
         public string OperatorUserId { get; set; }
+
         /// <summary>
         /// The user name of an operator who has loggen in on behalf of a customer.
         /// </summary>

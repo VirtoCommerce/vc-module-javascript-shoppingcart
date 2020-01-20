@@ -187,6 +187,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// ListPrice * TaxPercentRate;.
         /// </summary>
         public Money ListPriceWithTax { get; set; }
+
         /// <summary>
         /// Gets or sets the value of line item sale price.
         /// </summary>
@@ -203,6 +204,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// ListPrice - DiscountAmount;.
         /// </summary>
         public Money PlacedPrice { get; set; }
+
         /// <summary>
         /// PlacedPrice * TaxPercentRate.
         /// </summary>
@@ -213,6 +215,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// PlacedPrice * Quantity;.
         /// </summary>
         public Money ExtendedPrice { get; set; }
+
         /// <summary>
         /// ExtendedPrice * TaxPercentRate.
         /// </summary>
@@ -249,6 +252,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         #endregion
 
         #region ITaxable Members
+
         /// <summary>
         /// Gets or sets the value of total shipping tax amount.
         /// </summary>
