@@ -8,7 +8,7 @@ using VirtoCommerce.Platform.Core.Common;
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 {
     /// <summary>
-    /// Represent currency information in storefront. Contains some extra informations as exchnage rate, symbol, formating. 
+    /// Represent currency information in storefront. Contains some extra informations as exchnage rate, symbol, formating.
     /// </summary>
     public class Currency : CloneableValueObject
     {

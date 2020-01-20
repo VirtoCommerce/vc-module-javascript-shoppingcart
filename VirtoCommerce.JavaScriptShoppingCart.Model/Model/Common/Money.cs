@@ -8,7 +8,7 @@
  * All lookups happen from a singleton dictionary.
  * Formatting and significant digits are automatically handled.
  * An allocation function also allows even distribution of Money.
- * 
+ *
  * References:
  * Martin Fowler patterns
  * Making Money with C# : http://www.lindelauf.com/?p=17
@@ -16,7 +16,7 @@
  * A few other articles on the web around representing money types
  * http://en.wikipedia.org/wiki/ISO_4217
  * http://www.currency-iso.org/iso_index/iso_tables/iso_tables_a1.htm
- * 
+ *
  * NB!
  * Although the .Amount property wraps the class as Decimal, this Money class uses double to store the Money value internally.
  * Only 15 decimal digits of accuracy are guaranteed! (16 if the first digit is smaller than 9)
@@ -379,7 +379,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         }
 
         /// <summary>
-        /// Evenly distributes the amount over n parts, resolving remainders that occur due to rounding 
+        /// Evenly distributes the amount over n parts, resolving remainders that occur due to rounding
         /// errors, thereby garuanteeing the postcondition: result->sum(r|r.amount) = this.amount and
         /// x elements in result are greater than at least one of the other elements, where x = amount mod n.
         /// </summary>

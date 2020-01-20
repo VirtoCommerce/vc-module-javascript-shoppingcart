@@ -108,7 +108,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
         #region ITaxable Members
         /// <summary>
-        /// Gets the value of total shipping method tax. 
+        /// Gets the value of total shipping method tax.
         /// </summary>
         public Money TaxTotal
         {

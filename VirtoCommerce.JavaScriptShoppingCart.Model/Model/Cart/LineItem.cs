@@ -209,7 +209,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         public Money PlacedPriceWithTax { get; set; }
 
         /// <summary>
-        /// Gets the value of line item extended price 
+        /// Gets the value of line item extended price
         /// PlacedPrice * Quantity;.
         /// </summary>
         public Money ExtendedPrice { get; set; }

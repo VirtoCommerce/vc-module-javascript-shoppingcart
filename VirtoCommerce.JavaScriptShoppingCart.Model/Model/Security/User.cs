@@ -67,11 +67,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security
         /// </summary>
         public virtual DateTime? LockoutEndDateUtc { get; set; }
         /// <summary>
-        /// Returns true if user authenticated  returns false if it anonymous. 
+        /// Returns true if user authenticated  returns false if it anonymous.
         /// </summary>
         public bool IsRegisteredUser { get; set; }
         /// <summary>
-        /// The flag indicates that the user is an administrator. 
+        /// The flag indicates that the user is an administrator.
         /// </summary>
         public bool IsAdministrator { get; set; }
 

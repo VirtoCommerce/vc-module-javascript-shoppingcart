@@ -145,7 +145,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing
             return discount;
         }
 
-        // Similar to vc-module-core/AmountBasedReward.GetRewardAmount 
+        // Similar to vc-module-core/AmountBasedReward.GetRewardAmount
         private Money GetDiscountPerItem(Money price, int quantity)
         {
             var decimalPrice = price.Amount;

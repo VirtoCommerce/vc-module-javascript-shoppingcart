@@ -56,7 +56,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 
         public string NativeName { get; private set; }
         /// <summary>
-        ///  Gets the ISO 639-2 three-letter code for the language. 
+        ///  Gets the ISO 639-2 three-letter code for the language.
         /// </summary>
         public string ThreeLeterLanguageName { get; private set; }
         /// <summary>
