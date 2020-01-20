@@ -118,7 +118,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         public bool IsGift { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of language code.
+        /// Gets the value of language code.
         /// </summary>
         /// <value>
         /// Culture name in ISO 3166-1 alpha-3 format.
