@@ -118,7 +118,9 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
         public bool TryGetValue(TKey key, out TValue value)
         {
             if (!_dictionary.TryGetValue(key, out value))
+            {
                 value = _defaultValue;
+            }
 
             return true;
         }
