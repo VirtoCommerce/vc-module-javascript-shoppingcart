@@ -7,6 +7,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing
         SpecialOfferReward,
         CatalogItemAmountReward,
         GiftReward,
-        PaymentReward
+        PaymentReward,
     }
 }

@@ -139,7 +139,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing
                 Amount = discountPerItem,
                 Description = Promotion.Description,
                 Coupon = Coupon,
-                PromotionId = Promotion.Id
+                PromotionId = Promotion.Id,
             };
 
             return discount;

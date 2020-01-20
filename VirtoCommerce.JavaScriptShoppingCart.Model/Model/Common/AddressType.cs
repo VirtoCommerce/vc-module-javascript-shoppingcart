@@ -7,6 +7,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
     {
         Billing = 1,
         Shipping = 2,
-        BillingAndShipping = Billing | Shipping
+        BillingAndShipping = Billing | Shipping,
     }
 }

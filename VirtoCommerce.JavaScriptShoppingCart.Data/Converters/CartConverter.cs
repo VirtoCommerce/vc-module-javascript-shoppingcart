@@ -30,7 +30,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
                 Status = cartDto.Status,
                 StoreId = cartDto.StoreId,
                 Type = cartDto.Type,
-                HasPhysicalProducts = true
+                HasPhysicalProducts = true,
             };
 
             if (cartDto.Coupons != null)
@@ -90,7 +90,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
                 PaymentGatewayCode = paymentDto.PaymentGatewayCode,
                 TaxType = paymentDto.TaxType,
 
-                Amount = new Money(paymentDto.Amount, cart.Currency)
+                Amount = new Money(paymentDto.Amount, cart.Currency),
             };
 
             if (paymentDto.BillingAddress != null)
@@ -141,7 +141,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
                 TotalWithTax = new Money(shipmentDto.TotalWithTax, cart.Currency),
                 DiscountAmountWithTax = new Money(shipmentDto.DiscountAmountWithTax, cart.Currency),
                 TaxTotal = new Money(shipmentDto.TaxTotal, cart.Currency),
-                TaxPercentRate = (decimal?)shipmentDto.TaxPercentRate ?? 0m
+                TaxPercentRate = (decimal?)shipmentDto.TaxPercentRate ?? 0m,
             };
 
             if (shipmentDto.DeliveryAddress != null)
@@ -199,7 +199,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
                 RegionId = addressDto.RegionId,
                 RegionName = addressDto.RegionName,
                 Zip = addressDto.Zip,
-                Type = (AddressType)Enum.Parse(typeof(AddressType), addressDto.AddressType.ToString(), true)
+                Type = (AddressType)Enum.Parse(typeof(AddressType), addressDto.AddressType.ToString(), true),
             };
             return retVal;
         }
@@ -213,7 +213,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
                 Coupon = discountDto.Coupon,
                 Description = discountDto.Description,
                 PromotionId = discountDto.PromotionId,
-                Amount = new Money(discountDto.DiscountAmount, currency)
+                Amount = new Money(discountDto.DiscountAmount, currency),
             };
 
             return result;
@@ -225,7 +225,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
             {
                 Id = shipmentItemDto.Id,
                 Quantity = shipmentItemDto.Quantity,
-                LineItem = cart.Items.FirstOrDefault(x => x.Id == shipmentItemDto.LineItemId)
+                LineItem = cart.Items.FirstOrDefault(x => x.Id == shipmentItemDto.LineItemId),
             };
 
             return result;

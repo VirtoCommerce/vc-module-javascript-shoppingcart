@@ -41,7 +41,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing
                 PromotionId = PromotionId,
                 Description = Description,
                 Coupon = Coupon,
-                Amount = Amount.ConvertTo(currency)
+                Amount = Amount.ConvertTo(currency),
             };
             return retVal;
         }

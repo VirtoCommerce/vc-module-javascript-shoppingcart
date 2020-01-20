@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -42,7 +42,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             {
                 Name = user.UserName,
                 Emails = new List<string>() { user.Email },
-                FullName = user.UserName
+                FullName = user.UserName,
             };
 
             _memberService.SaveChanges(new Member[] { contact });
