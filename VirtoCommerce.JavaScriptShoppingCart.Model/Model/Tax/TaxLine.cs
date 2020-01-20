@@ -15,6 +15,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Tax
         /// represent  original object code (lineItem, shipment etc)
         /// </summary>
         public string Code { get; set; }
+
         public string Name { get; set; }
         /// <summary>
         /// Tax line total amount
@@ -26,8 +27,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Tax
         /// Tax line one item price
         /// </summary>
         public Money Price { get; set; }
+
         public string TaxType { get; set; }
+
         public string TypeName { get; set; }
+
         public IList<TaxDetail> TaxDetails { get; set; } = new List<TaxDetail>();
     }
 }

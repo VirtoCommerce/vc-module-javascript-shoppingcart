@@ -17,18 +17,25 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security
         /// Security account user name
         /// </summary>
         public string UserName { get; set; }
+
         public string NormalizedUserName { get; set; }
+
         public string Password { get; set; }
+
         [JsonIgnore]
         public string PasswordHash { get; set; }
+
         [JsonIgnore]
         public string SecurityStamp { get; set; }
+
         public string PhoneNumber { get; set; }
+
         public bool PhoneNumberConfirmed { get; set; }
         /// <summary>
         /// Returns the email address of the customer.
         /// </summary>
         public string Email { get; set; }
+
         public string NormalizedEmail { get; set; }
 
         public bool EmailConfirmed { get; set; }
@@ -67,6 +74,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security
         /// The flag indicates that the user is an administrator 
         /// </summary>
         public bool IsAdministrator { get; set; }
+
         public string UserType { get; set; }
         /// <summary>
         /// The user ID of an operator who has loggen in on behalf of a customer

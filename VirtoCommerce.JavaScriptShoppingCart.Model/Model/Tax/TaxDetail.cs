@@ -13,7 +13,9 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Tax
         public Money Rate { get; set; }
 
         public Money Amount { get; set; }
+
         public string Title => Name;
+
         public decimal Price
         {
             get

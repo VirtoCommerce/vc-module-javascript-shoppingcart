@@ -104,6 +104,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// Gets or sets the value of shopping cart text comment
         /// </summary>
         public string Comment { get; set; }
+
         [JsonIgnore]
         public string Note => Comment;
 
@@ -228,6 +229,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// Gets or sets the value of handling total cost
         /// </summary>
         public Money HandlingTotal { get; set; }
+
         public Money HandlingTotalWithTax { get; set; }
 
         public Money DiscountAmount { get; set; }
@@ -308,6 +310,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
         #region IValidatable Members
         public bool IsValid { get; set; }
+
         public IList<ValidationError> ValidationErrors { get; set; }
         #endregion
 

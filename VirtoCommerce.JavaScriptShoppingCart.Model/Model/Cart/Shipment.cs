@@ -183,6 +183,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
         #region IValidatable Members
         public bool IsValid { get; set; }
+
         public IList<ValidationError> ValidationErrors { get; set; }
         #endregion
 

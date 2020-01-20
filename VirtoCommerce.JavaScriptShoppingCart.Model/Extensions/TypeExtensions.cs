@@ -10,6 +10,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
     {
         private static readonly ConcurrentDictionary<Type, string> PrettyPrintCache = new ConcurrentDictionary<Type, string>();
         private static readonly ConcurrentDictionary<Type, string> TypeCacheKeys = new ConcurrentDictionary<Type, string>();
+
         public static Type[] GetTypeInheritanceChainTo(this Type type, Type toBaseType)
         {
             var retVal = new List<Type> { type };

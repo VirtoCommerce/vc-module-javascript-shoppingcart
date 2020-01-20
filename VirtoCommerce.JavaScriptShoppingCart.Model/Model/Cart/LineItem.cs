@@ -73,6 +73,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// Gets or sets the value of line item name
         /// </summary>
         public string Name { get; set; }
+
         [JsonIgnore]
         public string Title => Name;
 
@@ -243,6 +244,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
         #region IValidatable Members
         public bool IsValid { get; set; }
+
         public IList<ValidationError> ValidationErrors { get; set; }
         #endregion
 

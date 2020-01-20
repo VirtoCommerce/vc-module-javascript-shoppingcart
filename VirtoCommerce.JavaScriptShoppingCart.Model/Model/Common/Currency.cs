@@ -15,6 +15,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         private static IDictionary<string, string> _isoCurrencySymbolDict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase).WithDefaultValue(null);
         private Language _language;
         private string _code;
+
         static Currency()
         {
             foreach (var ci in CultureInfo.GetCultures(CultureTypes.SpecificCultures))
@@ -66,6 +67,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         public string Code
         {
             get { return _code; }
+
             set
             {
                 _code = value;
@@ -79,6 +81,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
             {
                 return _language != null ? _language.CultureName : null;
             }
+
             set
             {
                 _language = new Language(value);
@@ -88,7 +91,9 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 
         [JsonIgnore]
         public NumberFormatInfo NumberFormat { get; private set; }
+
         public string Symbol { get; set; }
+
         public string EnglishName { get; set; }
         /// <summary>
         /// Exchnage rate with primary currency

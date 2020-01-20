@@ -36,6 +36,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// Gets or sets the value of shipping method name
         /// </summary>
         public string Name { get; set; }
+
         public string Title => Name;
 
         public string Handle => ShipmentMethodCode;
@@ -96,6 +97,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// Total discount amount without tax
         /// </summary>
         public Money DiscountAmount { get; set; }
+
         public Money DiscountAmountWithTax
         {
             get

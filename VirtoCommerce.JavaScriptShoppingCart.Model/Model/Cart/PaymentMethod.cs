@@ -112,6 +112,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// Gets the value of total shipping discount amount
         /// </summary>
         public Money DiscountAmount { get; set; }
+
         public Money DiscountAmountWithTax
         {
             get

@@ -53,6 +53,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         /// culture name format (e.g. en-US)
         /// </summary>
         public string CultureName { get; private set; }
+
         public string NativeName { get; private set; }
         /// <summary>
         ///  Gets the ISO 639-2 three-letter code for the language 
