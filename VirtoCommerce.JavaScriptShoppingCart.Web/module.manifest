@@ -33,4 +33,15 @@
 		<directory virtualPath="$/Scripts" searchPattern="*.js" searchSubdirectories="true" />
 	</scripts>-->
 
+    <settings>
+        <group name="JavaScriptShoppingCart|General">
+            <setting>
+                <name>JavaScriptShoppingCart.CrawlingTargetUrl</name>
+                <valueType>string</valueType>
+                <defaultValue>http://localhost:44311/Home/Index</defaultValue>
+                <title>Crawling target URL</title>
+                <description>Crawling target URL</description>
+            </setting>
+        </group>
+    </settings>
 </module>
