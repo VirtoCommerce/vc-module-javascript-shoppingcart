@@ -12,7 +12,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
     }
 
     /// <summary>
-    /// Represent dictionary  returning a default value if the key does not exist 
+    /// Represent dictionary  returning a default value if the key does not exist.
     /// </summary>
     public class DefaultableDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     {
