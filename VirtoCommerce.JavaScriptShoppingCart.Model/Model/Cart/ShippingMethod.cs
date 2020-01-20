@@ -23,17 +23,17 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         }
 
         /// <summary>
-        /// Gets or sets the value of shipping method priority.
+        /// Gets or sets the value of shipping method priority
         /// </summary>
         public int Priority { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of shipping method code.
+        /// Gets or sets the value of shipping method code
         /// </summary>
         public string ShipmentMethodCode { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of shipping method name.
+        /// Gets or sets the value of shipping method name
         /// </summary>
         public string Name { get; set; }
 
@@ -41,27 +41,27 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
         public string Handle => ShipmentMethodCode;
         /// <summary>
-        /// Gets or sets the value of shipping method option name.
+        /// Gets or sets the value of shipping method option name
         /// </summary>
         public string OptionName { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of shipping method option description.
+        /// Gets or sets the value of shipping method option description
         /// </summary>
         public string OptionDescription { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of shipping method logo absolute URL.
+        /// Gets or sets the value of shipping method logo absolute URL
         /// </summary>
         public string LogoUrl { get; set; }
 
         /// <summary>
-        /// price without discount and taxes.
+        /// price without discount and taxes
         /// </summary>
         public Money Price { get; set; }
 
         /// <summary>
-        ///  price with tax but without discount.
+        ///  price with tax but without discount
         /// </summary>
         public Money PriceWithTax
         {
@@ -72,7 +72,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         }
 
         /// <summary>
-        /// Resulting price with discount but without tax.
+        /// Resulting price with discount but without tax
         /// </summary>
         public Money Total
         {
@@ -83,7 +83,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         }
 
         /// <summary>
-        /// Resulting price with discount and tax.
+        /// Resulting price with discount and tax
         /// </summary>
         public Money TotalWithTax
         {
@@ -94,7 +94,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         }
 
         /// <summary>
-        /// Total discount amount without tax.
+        /// Total discount amount without tax
         /// </summary>
         public Money DiscountAmount { get; set; }
 
@@ -108,7 +108,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
         #region ITaxable Members
         /// <summary>
-        /// Gets the value of total shipping method tax. 
+        /// Gets the value of total shipping method tax 
         /// </summary>
         public Money TaxTotal
         {
@@ -119,17 +119,17 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         }
 
         /// <summary>
-        /// Gets or sets the value of shipping tax type.
+        /// Gets or sets the value of shipping tax type
         /// </summary>
         public string TaxType { get; set; }
 
         public decimal TaxPercentRate { get; private set; }
 
         /// <summary>
-        /// Gets or sets the collection of line item tax details lines.
+        /// Gets or sets the collection of line item tax details lines
         /// </summary>
         /// <value>
-        /// Collection of TaxDetail objects.
+        /// Collection of TaxDetail objects
         /// </value>
         public IList<TaxDetail> TaxDetails { get; set; }
 

@@ -15,12 +15,12 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing
 
         public string Code => PromotionId;
         /// <summary>
-        /// Gets or sets the value of promotion id.
+        /// Gets or sets the value of promotion id
         /// </summary>
         public string PromotionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of absolute discount amount per one item.
+        /// Gets or sets the value of absolute discount amount per one item
         /// </summary>
         public Money Amount { get; set; }
 
@@ -29,7 +29,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing
         public string Coupon { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of discount description.
+        /// Gets or sets the value of discount description
         /// </summary>
         public string Description { get; set; }
 

@@ -35,7 +35,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         }
 
         /// <summary>
-        /// Gets or sets line item created date.
+        /// Gets or sets line item created date
         /// </summary>
         public DateTime CreatedDate { get; set; }
 
@@ -45,32 +45,32 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         // public Product Product { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of product id.
+        /// Gets or sets the value of product id
         /// </summary>
         public string ProductId { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of product (can be Physical, Digital or Subscription).
+        /// Gets or sets the type of product (can be Physical, Digital or Subscription)
         /// </summary>
         public string ProductType { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of catalog id.
+        /// Gets or sets the value of catalog id
         /// </summary>
         public string CatalogId { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of category id.
+        /// Gets or sets the value of category id
         /// </summary>
         public string CategoryId { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of product SKU.
+        /// Gets or sets the value of product SKU
         /// </summary>
         public string Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of line item name.
+        /// Gets or sets the value of line item name
         /// </summary>
         public string Name { get; set; }
 
@@ -78,168 +78,168 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         public string Title => Name;
 
         /// <summary>
-        /// Gets or sets the value of line item quantity.
+        /// Gets or sets the value of line item quantity
         /// </summary>
         public int Quantity { get; set; }
 
         /// <summary>
-        /// Gets or Sets InStockQuantity.
+        /// Gets or Sets InStockQuantity
         /// </summary>
         public int InStockQuantity { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of line item warehouse location.
+        /// Gets or sets the value of line item warehouse location
         /// </summary>
         public string WarehouseLocation { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of line item shipping method code.
+        /// Gets or sets the value of line item shipping method code
         /// </summary>
         public string ShipmentMethodCode { get; set; }
 
         /// <summary>
-        /// Gets or sets the requirement for line item shipping.
+        /// Gets or sets the requirement for line item shipping
         /// </summary>
         public bool RequiredShipping { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of line item thumbnail image absolute URL.
+        /// Gets or sets the value of line item thumbnail image absolute URL
         /// </summary>
         public string ThumbnailImageUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of line item image absolute URL.
+        /// Gets or sets the value of line item image absolute URL
         /// </summary>
         public string ImageUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the flag of line item is a gift.
+        /// Gets or sets the flag of line item is a gift
         /// </summary>
         public bool IsGift { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of language code.
+        /// Gets or sets the value of language code
         /// </summary>
         /// <value>
-        /// Culture name in ISO 3166-1 alpha-3 format.
+        /// Culture name in ISO 3166-1 alpha-3 format
         /// </value>
         public string LanguageCode { get; private set; }
 
         /// <summary>
-        /// Gets or sets the value of line item comment.
+        /// Gets or sets the value of line item comment
         /// </summary>
         public string Comment { get; set; }
 
         /// <summary>
-        /// Gets or sets the flag of line item is recurring.
+        /// Gets or sets the flag of line item is recurring
         /// </summary>
         public bool IsReccuring { get; set; }
 
         /// <summary>
-        /// Gets or sets flag of line item has tax.
+        /// Gets or sets flag of line item has tax
         /// </summary>
         public bool TaxIncluded { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of line item volumetric weight.
+        /// Gets or sets the value of line item volumetric weight
         /// </summary>
         public decimal? VolumetricWeight { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of line item weight unit.
+        /// Gets or sets the value of line item weight unit
         /// </summary>
         public string WeightUnit { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of line item weight.
+        /// Gets or sets the value of line item weight
         /// </summary>
         public decimal? Weight { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of line item measurement unit.
+        /// Gets or sets the value of line item measurement unit
         /// </summary>
         public string MeasureUnit { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of line item height.
+        /// Gets or sets the value of line item height
         /// </summary>
         public decimal? Height { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of line item length.
+        /// Gets or sets the value of line item length
         /// </summary>
         public decimal? Length { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of line item width.
+        /// Gets or sets the value of line item width
         /// </summary>
         public decimal? Width { get; set; }
 
         public bool IsReadOnly { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of line item original price.
+        /// Gets or sets the value of line item original price
         /// </summary>
         public Money ListPrice { get; set; }
 
         /// <summary>
         /// Gets or sets the value of line item original price including tax
-        /// ListPrice * TaxPercentRate;.
+        /// ListPrice * TaxPercentRate;
         /// </summary>
         public Money ListPriceWithTax { get; set; }
         /// <summary>
-        /// Gets or sets the value of line item sale price.
+        /// Gets or sets the value of line item sale price
         /// </summary>
         public Money SalePrice { get; set; }
 
         /// <summary>
         /// Gets or sets the value of line item sale price with tax
-        /// SalePrice * TaxPercentRate;.
+        /// SalePrice * TaxPercentRate;
         /// </summary>
         public Money SalePriceWithTax { get; set; }
 
         /// <summary>
         /// Gets the value of line item actual price (include all types of discounts)
-        /// ListPrice - DiscountAmount;.
+        /// ListPrice - DiscountAmount;
         /// </summary>
         public Money PlacedPrice { get; set; }
         /// <summary>
-        /// PlacedPrice * TaxPercentRate.
+        /// PlacedPrice * TaxPercentRate
         /// </summary>
         public Money PlacedPriceWithTax { get; set; }
 
         /// <summary>
         /// Gets the value of line item extended price 
-        /// PlacedPrice * Quantity;.
+        /// PlacedPrice * Quantity;
         /// </summary>
         public Money ExtendedPrice { get; set; }
         /// <summary>
-        /// ExtendedPrice * TaxPercentRate.
+        /// ExtendedPrice * TaxPercentRate
         /// </summary>
         public Money ExtendedPriceWithTax { get; set; }
 
         public Money DiscountAmount { get; set; }
 
         /// <summary>
-        /// DiscountAmount  * TaxPercentRate.
+        /// DiscountAmount  * TaxPercentRate
         /// </summary>
         public Money DiscountAmountWithTax { get; set; }
 
         /// <summary>
         /// Gets the value of line item total discount amount
-        /// DiscountAmount * Math.Max(1, Quantity);.
+        /// DiscountAmount * Math.Max(1, Quantity);
         /// </summary>
         public Money DiscountTotal { get; set; }
 
         /// <summary>
-        /// DiscountTotal * TaxPercentRate.
+        /// DiscountTotal * TaxPercentRate
         /// </summary>
         public Money DiscountTotalWithTax { get; set; }
 
         /// <summary>
-        /// Used for dynamic properties management, contains object type string.
+        /// Used for dynamic properties management, contains object type string
         /// </summary>
-        /// <value>Used for dynamic properties management, contains object type string.</value>
+        /// <value>Used for dynamic properties management, contains object type string</value>
         public string ObjectType { get; set; }
 
         #region IValidatable Members
@@ -251,22 +251,22 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
         #region ITaxable Members
         /// <summary>
-        /// Gets or sets the value of total shipping tax amount.
+        /// Gets or sets the value of total shipping tax amount
         /// </summary>
         public virtual Money TaxTotal { get; set; }
 
         public decimal TaxPercentRate { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of shipping tax type.
+        /// Gets or sets the value of shipping tax type
         /// </summary>
         public string TaxType { get; set; }
 
         /// <summary>
-        /// Gets or sets the collection of line item tax details lines.
+        /// Gets or sets the collection of line item tax details lines
         /// </summary>
         /// <value>
-        /// Collection of TaxDetail objects.
+        /// Collection of TaxDetail objects
         /// </value>
         public IList<TaxDetail> TaxDetails { get; set; }
 

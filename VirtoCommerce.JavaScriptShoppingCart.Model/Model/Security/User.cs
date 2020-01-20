@@ -10,11 +10,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security
     {
 
         /// <summary>
-        /// Store id.
+        /// Store id
         /// </summary>
         public string StoreId { get; set; }
         /// <summary>
-        /// Security account user name.
+        /// Security account user name
         /// </summary>
         public string UserName { get; set; }
 
@@ -55,11 +55,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security
         }
 
         /// <summary>
-        ///  Used to record failures for the purposes of lockout.
+        ///  Used to record failures for the purposes of lockout
         /// </summary>
         public virtual int AccessFailedCount { get; set; }
         /// <summary>
-        /// Is lockout enabled for this user.
+        /// Is lockout enabled for this user
         /// </summary>
         public virtual bool LockoutEnabled { get; set; }
         /// <summary>
@@ -71,17 +71,17 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security
         /// </summary>
         public bool IsRegisteredUser { get; set; }
         /// <summary>
-        /// The flag indicates that the user is an administrator. 
+        /// The flag indicates that the user is an administrator 
         /// </summary>
         public bool IsAdministrator { get; set; }
 
         public string UserType { get; set; }
         /// <summary>
-        /// The user ID of an operator who has loggen in on behalf of a customer.
+        /// The user ID of an operator who has loggen in on behalf of a customer
         /// </summary>
         public string OperatorUserId { get; set; }
         /// <summary>
-        /// The user name of an operator who has loggen in on behalf of a customer.
+        /// The user name of an operator who has loggen in on behalf of a customer
         /// </summary>
         public string OperatorUserName { get; set; }
 
@@ -91,12 +91,12 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security
         public string ContactId { get; set; }
 
         /// <summary>
-        /// All user permissions.
+        /// All user permissions
         /// </summary>
         public IEnumerable<string> Permissions { get; set; }
 
         /// <summary>
-        /// Single user role.
+        /// Single user role
         /// </summary>
         public Role Role
         {
@@ -107,7 +107,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security
         }
 
         /// <summary>
-        /// All user roles.
+        /// All user roles
         /// </summary>
         public IEnumerable<Role> Roles { get; set; }
     }
