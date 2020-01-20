@@ -102,23 +102,24 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         public Money PriceWithTax { get; set; }
 
         /// <summary>
-        /// Gets the value of total shipping price without taxes
+        /// Gets or sets the value of total shipping price without taxes
         /// Price + Fee - DiscountAmount;.
         /// </summary>
         public Money Total { get; set; }
 
         /// <summary>
-        /// Gets the value of total shipping price including taxes
+        /// Gets or sets the value of total shipping price including taxes
         /// Total * TaxPercentRate.
         /// </summary>
         public Money TotalWithTax { get; set; }
 
         /// <summary>
-        /// Gets the value of total shipping discount amount.
+        /// Gets or sets the value of total shipping discount amount.
         /// </summary>
         public Money DiscountAmount { get; set; }
 
         /// <summary>
+        /// Gets or sets the value of discount including taxes
         /// DiscountAmount * TaxPercentRate.
         /// </summary>
         public Money DiscountAmountWithTax { get; set; }
