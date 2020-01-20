@@ -81,7 +81,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
             var allPermissions = securityService.GetAllPermissions().Where(x => SecurityConstants.Permissions.AllPermissions.Contains(x.Id));
 
             InitializeRole(roleManagementService, SecurityConstants.JsShoppingCartUser, allPermissions);
-
         }
 
         private void InitializeRole(IRoleManagementService roleManagementService, Role jsShoppingCartRole, IEnumerable<Permission> permissions)

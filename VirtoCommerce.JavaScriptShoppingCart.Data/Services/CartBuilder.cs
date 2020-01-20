@@ -197,6 +197,5 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
 
             return result;
         }
-
     }
 }

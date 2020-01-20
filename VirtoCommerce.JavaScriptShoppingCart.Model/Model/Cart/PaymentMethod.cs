@@ -210,6 +210,5 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
             return result;
         }
-
     }
 }

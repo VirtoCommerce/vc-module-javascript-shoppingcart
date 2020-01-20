@@ -76,6 +76,5 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         {
             yield return CultureName;
         }
-
     }
 }

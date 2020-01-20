@@ -66,6 +66,5 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
                 ? $"{nameParts[0]}<{new string(',', genericArguments.Length - 1)}>"
                 : $"{nameParts[0]}<{string.Join(",", genericArguments.Select(t => PrettyPrintRecursive(t, depth + 1)))}>";
         }
-
     }
 }

@@ -15,6 +15,5 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
             result.LineItem = LineItem?.Clone() as LineItem;
             return result;
         }
-
     }
 }
