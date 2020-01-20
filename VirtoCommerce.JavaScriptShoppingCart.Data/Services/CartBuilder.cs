@@ -21,7 +21,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
         private readonly IStoreService _storeService;
         private readonly IMemberService _memberService;
 
-        public CartBuilder(IShoppingCartService shoppingCartService,
+        public CartBuilder(
+            IShoppingCartService shoppingCartService,
             IShoppingCartSearchService shoppingCartSearchService,
             IStoreService storeService,
             IMemberService memberService)
