@@ -14,7 +14,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
     {
         public ShoppingCart()
             : this(new Currency(new Language("en-US"), "USD"), new Language("en-US"))
-        { }
+        {
+        }
 
         public ShoppingCart(Currency currency, Language language)
         {
