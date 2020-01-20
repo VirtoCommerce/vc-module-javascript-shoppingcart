@@ -9,7 +9,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 {
     public partial class PaymentMethod : CloneableValueObject, ITaxable, IDiscountable
     {
-
         public PaymentMethod(Currency currency)
         {
             Currency = currency;

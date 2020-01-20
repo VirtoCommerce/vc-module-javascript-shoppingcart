@@ -71,7 +71,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
         [ResponseType(typeof(ApplicationUserExtended))]
         public async Task<IHttpActionResult> GetCurrentUser()
         {
-
             var user = await _securityService.FindByNameAsync(User.Identity.Name, UserDetails.Full);
             return Ok(user);
         }

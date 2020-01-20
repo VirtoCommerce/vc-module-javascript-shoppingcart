@@ -8,7 +8,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security
 {
     public partial class User : CloneableEntity
     {
-
         /// <summary>
         /// Store id.
         /// </summary>
