@@ -215,7 +215,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         public bool HasSameMethod(ShippingMethod method)
         {
             // Return true if the fields match:
-            return (ShipmentMethodCode.EqualsInvariant(method.ShipmentMethodCode)) && (ShipmentMethodOption.EqualsInvariant(method.OptionName));
+            return ShipmentMethodCode.EqualsInvariant(method.ShipmentMethodCode) && ShipmentMethodOption.EqualsInvariant(method.OptionName);
         }
 
         public override object Clone()

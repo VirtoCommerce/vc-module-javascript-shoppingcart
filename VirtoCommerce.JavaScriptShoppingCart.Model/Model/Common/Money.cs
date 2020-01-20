@@ -148,7 +148,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
             if (ReferenceEquals(this, other))
                 return true;
 
-            return ((Currency.Equals(other.Currency)) && (InternalAmount == other.InternalAmount));
+            return Currency.Equals(other.Currency) && (InternalAmount == other.InternalAmount);
         }
 
         public static bool operator ==(Money first, Money second)
@@ -236,7 +236,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         {
             if (ReferenceEquals(money, null))
                 return false;
-            return (money.InternalAmount == value);
+            return money.InternalAmount == value;
         }
 
         public static bool operator !=(Money money, long value)
@@ -248,7 +248,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         {
             if (ReferenceEquals(money, null))
                 return false;
-            return (money.InternalAmount == value);
+            return money.InternalAmount == value;
         }
 
         public static bool operator !=(Money money, decimal value)
@@ -260,7 +260,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         {
             if (ReferenceEquals(money, null))
                 return false;
-            return (money.InternalAmount == (decimal)value);
+            return money.InternalAmount == (decimal)value;
         }
 
         public static bool operator !=(Money money, double value)
