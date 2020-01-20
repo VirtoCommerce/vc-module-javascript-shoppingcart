@@ -55,18 +55,22 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         public string CultureName { get; private set; }
 
         public string NativeName { get; private set; }
+
         /// <summary>
         ///  Gets the ISO 639-2 three-letter code for the language.
         /// </summary>
         public string ThreeLeterLanguageName { get; private set; }
+
         /// <summary>
         ///   Gets the ISO 639-1 two-letter code for the language.
         /// </summary>
         public string TwoLetterLanguageName { get; private set; }
+
         /// <summary>
         ///  Gets the two-letter code defined in ISO 3166 for the country/region.
         /// </summary>
         public string TwoLetterRegionName { get; private set; }
+
         /// <summary>
         ///  Gets the three-letter code defined in ISO 3166 for the country/region.
         /// </summary>

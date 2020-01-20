@@ -119,6 +119,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         }
 
         #region ITaxable Members
+
         /// <summary>
         /// Gets or sets the value of total shipping tax amount.
         /// </summary>
