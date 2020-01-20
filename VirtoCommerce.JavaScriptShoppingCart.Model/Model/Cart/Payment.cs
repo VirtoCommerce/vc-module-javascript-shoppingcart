@@ -119,6 +119,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
             {
                 paymentTaxRate = taxRates.FirstOrDefault(x => x.Line.Code.EqualsInvariant(PaymentGatewayCode));
             }
+
             if (paymentTaxRate != null)
             {
                 if (paymentTaxRate.PercentRate > 0)
@@ -181,6 +182,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
             {
                 result.Discounts = new List<Discount>(Discounts.Select(x => x.Clone() as Discount));
             }
+
             if (TaxDetails != null)
             {
                 result.TaxDetails = new List<TaxDetail>(TaxDetails.Select(x => x.Clone() as TaxDetail));

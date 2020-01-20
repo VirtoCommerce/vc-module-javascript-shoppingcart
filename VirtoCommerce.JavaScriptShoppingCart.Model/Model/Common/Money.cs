@@ -105,10 +105,12 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         {
             get { return ToString(false, true); }
         }
+
         public string FormattedAmountWithoutCurrency
         {
             get { return ToString(false, true); }
         }
+
         public string FormattedAmountWithoutPointAndCurrency
         {
             get { return ToString(false, false); }
@@ -237,6 +239,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
                 return false;
             return (money.InternalAmount == value);
         }
+
         public static bool operator !=(Money money, long value)
         {
             return !(money == value);
@@ -248,6 +251,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
                 return false;
             return (money.InternalAmount == value);
         }
+
         public static bool operator !=(Money money, decimal value)
         {
             return !(money == value);
@@ -259,6 +263,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
                 return false;
             return (money.InternalAmount == (decimal)value);
         }
+
         public static bool operator !=(Money money, double value)
         {
             return !(money == value);
@@ -268,10 +273,12 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         {
             return money + (decimal)value;
         }
+
         public static Money operator +(Money money, double value)
         {
             return money + (decimal)value;
         }
+
         public static Money operator +(Money money, decimal value)
         {
             if (money == null)
@@ -284,10 +291,12 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         {
             return money - (decimal)value;
         }
+
         public static Money operator -(Money money, double value)
         {
             return money - (decimal)value;
         }
+
         public static Money operator -(Money money, decimal value)
         {
             if (money == null)
@@ -300,10 +309,12 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         {
             return money * (decimal)value;
         }
+
         public static Money operator *(Money money, double value)
         {
             return money * (decimal)value;
         }
+
         public static Money operator *(Money money, decimal value)
         {
             if (money == null)
@@ -316,6 +327,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         {
             return money / (decimal)value;
         }
+
         public static Money operator /(Money money, double value)
         {
             return money / (decimal)value;

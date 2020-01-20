@@ -45,6 +45,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
             {
                 EnglishName = name;
             }
+
             if (!string.IsNullOrEmpty(symbol))
             {
                 Symbol = symbol;
@@ -138,6 +139,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
             {
                 result = code.EqualsInvariant(Code);
             }
+
             return result;
         }
 

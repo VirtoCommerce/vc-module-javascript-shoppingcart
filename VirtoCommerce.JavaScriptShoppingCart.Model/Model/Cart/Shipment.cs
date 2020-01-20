@@ -160,6 +160,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
             {
                 shipmentTaxRate = taxRates.FirstOrDefault(x => x.Line.Code.EqualsInvariant(ShipmentMethodCode) && x.Line.Name.EqualsInvariant(ShipmentMethodOption));
             }
+
             if (shipmentTaxRate != null && shipmentTaxRate.Rate.Amount > 0)
             {
                 if (shipmentTaxRate.PercentRate > 0)
@@ -234,14 +235,17 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
             {
                 result.Discounts = new List<Discount>(Discounts.Select(x => x.Clone() as Discount));
             }
+
             if (TaxDetails != null)
             {
                 result.TaxDetails = new List<TaxDetail>(TaxDetails.Select(x => x.Clone() as TaxDetail));
             }
+
             if (Items != null)
             {
                 result.Items = new List<CartShipmentItem>(Items.Select(x => x.Clone() as CartShipmentItem));
             }
+
             if (ValidationErrors != null)
             {
                 result.ValidationErrors = new List<ValidationError>(ValidationErrors.Select(x => x.Clone() as ValidationError));

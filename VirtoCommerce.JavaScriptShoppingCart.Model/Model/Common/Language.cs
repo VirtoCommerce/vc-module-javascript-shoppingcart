@@ -48,6 +48,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
                 return CultureName == CultureInfo.InvariantCulture.Name;
             }
         }
+
         /// <summary>
         /// culture name format (e.g. en-US)
         /// </summary>

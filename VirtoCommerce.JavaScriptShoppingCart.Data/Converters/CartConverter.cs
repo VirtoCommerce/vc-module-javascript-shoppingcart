@@ -111,10 +111,12 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
             {
                 result.TaxDetails = paymentDto.TaxDetails.Select(td => ToTaxDetail(td, cart.Currency)).ToList();
             }
+
             if (!paymentDto.Discounts.IsNullOrEmpty())
             {
                 result.Discounts.AddRange(paymentDto.Discounts.Select(x => ToDiscount(x, new[] { cart.Currency }, cart.Language)));
             }
+
             return result;
         }
 
@@ -161,6 +163,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
             {
                 retVal.Discounts.AddRange(shipmentDto.Discounts.Select(x => ToDiscount(x, new[] { cart.Currency }, cart.Language)));
             }
+
             return retVal;
         }
 

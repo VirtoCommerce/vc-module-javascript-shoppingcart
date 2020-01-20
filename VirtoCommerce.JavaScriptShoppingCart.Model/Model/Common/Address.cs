@@ -49,6 +49,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
                 return string.Join(", ", Address1, Address2).Trim(',', ' ');
             }
         }
+
         [JsonIgnore]
         public string ProvinceCode => RegionId;
         [JsonIgnore]

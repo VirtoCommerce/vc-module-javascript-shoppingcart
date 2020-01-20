@@ -7,6 +7,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing
         public Discount()
         {
         }
+
         public Discount(Currency currency)
         {
             Amount = new Money(currency);

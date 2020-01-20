@@ -80,6 +80,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
                 return Price - DiscountAmount;
             }
         }
+
         /// <summary>
         /// Resulting price with discount and tax
         /// </summary>

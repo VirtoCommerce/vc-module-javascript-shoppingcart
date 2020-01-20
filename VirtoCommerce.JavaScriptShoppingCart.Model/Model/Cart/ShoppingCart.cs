@@ -398,12 +398,15 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
                 {
                     TaxPercentRate = lineItem.TaxPercentRate;
                 }
+
                 lineItem.ApplyTaxRates(taxRates);
             }
+
             foreach (var shipment in Shipments)
             {
                 shipment.ApplyTaxRates(taxRates);
             }
+
             foreach (var payment in Payments)
             {
                 payment.ApplyTaxRates(taxRates);
@@ -458,30 +461,37 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
             {
                 result.Discounts = new List<Discount>(Discounts.Select(x => x.Clone() as Discount));
             }
+
             if (TaxDetails != null)
             {
                 result.TaxDetails = new List<TaxDetail>(TaxDetails.Select(x => x.Clone() as TaxDetail));
             }
+
             if (ValidationErrors != null)
             {
                 result.ValidationErrors = new List<ValidationError>(ValidationErrors.Select(x => x.Clone() as ValidationError));
             }
+
             if (Items != null)
             {
                 result.Items = new List<LineItem>(Items.Select(x => x.Clone() as LineItem));
             }
+
             if (Payments != null)
             {
                 result.Payments = new List<Payment>(Payments.Select(x => x.Clone() as Payment));
             }
+
             if (Shipments != null)
             {
                 result.Shipments = new List<Shipment>(Shipments.Select(x => x.Clone() as Shipment));
             }
+
             if (Coupons != null)
             {
                 result.Coupons = new List<Coupon>(Coupons.Select(x => x.Clone() as Coupon));
             }
+
             if (AvailablePaymentMethods != null)
             {
                 result.AvailablePaymentMethods = new List<PaymentMethod>(AvailablePaymentMethods.Select(x => x.Clone() as PaymentMethod));

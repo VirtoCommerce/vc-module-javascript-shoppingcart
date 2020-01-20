@@ -10,6 +10,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Tax
             Amount = new Money(currency);
             Price = new Money(currency);
         }
+
         /// <summary>
         /// represent  original object code (lineItem, shipment etc)
         /// </summary>

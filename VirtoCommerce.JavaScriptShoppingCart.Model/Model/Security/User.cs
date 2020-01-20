@@ -97,6 +97,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security
                 return Roles?.FirstOrDefault();
             }
         }
+
         /// <summary>
         /// All user roles
         /// </summary>

@@ -102,6 +102,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
                 {
                     result = _defaultValue;
                 }
+
                 return result;
             }
 

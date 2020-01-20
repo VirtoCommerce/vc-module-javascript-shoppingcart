@@ -9,6 +9,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Tax
             Rate = new Money(currency);
             Amount = new Money(currency);
         }
+
         public Money Rate { get; set; }
 
         public Money Amount { get; set; }
