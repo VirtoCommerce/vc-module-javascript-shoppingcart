@@ -62,7 +62,10 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
                 return result;
             }
 
-            set { _dictionary[key] = value; }
+            set
+            {
+                _dictionary[key] = value;
+            }
         }
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()

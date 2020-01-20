@@ -67,7 +67,10 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         /// </summary>
         public string Code
         {
-            get { return _code; }
+            get
+            {
+                return _code;
+            }
 
             set
             {
