@@ -85,7 +85,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security
         /// </summary>
         public string OperatorUserName { get; set; }
 
-        //Selected and persisted currency code
+        // Selected and persisted currency code
         public string SelectedCurrencyCode { get; set; }
 
         public string ContactId { get; set; }

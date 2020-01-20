@@ -42,7 +42,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         ///// <summary>
         ///// Gets or sets the product corresponding to line item
         ///// </summary>
-        //public Product Product { get; set; }
+        // public Product Product { get; set; }
 
         /// <summary>
         /// Gets or sets the value of product id

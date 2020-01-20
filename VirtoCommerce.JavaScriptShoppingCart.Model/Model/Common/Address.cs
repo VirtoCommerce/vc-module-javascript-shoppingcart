@@ -41,7 +41,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 
         public string Email { get; set; }
 
-        //TODO: Need to move out how to move from domain model 
+        // TODO: Need to move out how to move from domain model 
         #region Shopify model compatible properties
         public string Id => Key;
 
@@ -82,7 +82,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            //Key and Name properties don't participate in equality
+            // Key and Name properties don't participate in equality
             yield return Type;
             yield return Organization;
             yield return CountryCode;
