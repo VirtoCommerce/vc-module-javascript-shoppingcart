@@ -4,7 +4,7 @@ using System.Globalization;
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 {
     /// <summary>
-    /// Represent language for specified culture
+    /// Represent language for specified culture.
     /// </summary>
     public partial class Language : CloneableValueObject
     {
@@ -50,17 +50,17 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         }
 
         /// <summary>
-        /// culture name format (e.g. en-US)
+        /// culture name format (e.g. en-US).
         /// </summary>
         public string CultureName { get; private set; }
 
         public string NativeName { get; private set; }
         /// <summary>
-        ///  Gets the ISO 639-2 three-letter code for the language 
+        ///  Gets the ISO 639-2 three-letter code for the language. 
         /// </summary>
         public string ThreeLeterLanguageName { get; private set; }
         /// <summary>
-        ///   Gets the ISO 639-1 two-letter code for the language
+        ///   Gets the ISO 639-1 two-letter code for the language.
         /// </summary>
         public string TwoLetterLanguageName { get; private set; }
         /// <summary>

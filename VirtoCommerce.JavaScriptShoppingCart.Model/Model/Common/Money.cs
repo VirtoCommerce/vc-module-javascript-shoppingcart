@@ -64,7 +64,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 
         #region Public Properties
         /// <summary>
-        /// Accesses the internal representation of the value of the Money
+        /// Accesses the internal representation of the value of the Money.
         /// </summary>
         /// <returns>A decimal with the internal amount stored for this Money.</returns>
         public decimal InternalAmount { get; }

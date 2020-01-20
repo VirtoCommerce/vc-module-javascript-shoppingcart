@@ -22,61 +22,61 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
 
         /// <summary>
-        /// Gets or sets the value of payment gateway code
+        /// Gets or sets the value of payment gateway code.
         /// </summary>
         public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of payment method name
+        /// Gets or sets the value of payment method name.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of payment method logo absolute URL
+        /// Gets or sets the value of payment method logo absolute URL.
         /// </summary>
         public string LogoUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of payment method description
+        /// Gets or sets the value of payment method description.
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of payment method type
+        /// Gets or sets the value of payment method type.
         /// </summary>
         /// <value>
-        /// "Unknown", "Standard", "Redirection", "PreparedForm"
+        /// "Unknown", "Standard", "Redirection", "PreparedForm".
         /// </value>
         public string PaymentMethodType { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of payment method group type
+        /// Gets or sets the value of payment method group type.
         /// </summary>
         /// <value>
-        /// "Paypal", "BankCard", "Alternative", "Manual"
+        /// "Paypal", "BankCard", "Alternative", "Manual".
         /// </value>
         public string PaymentMethodGroupType { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of payment method priority
+        /// Gets or sets the value of payment method priority.
         /// </summary>
         public int Priority { get; set; }
 
         /// <summary>
-        /// Is payment method available for partial payments
+        /// Is payment method available for partial payments.
         /// </summary>
         public bool IsAvailableForPartial { get; set; }
 
         public Currency Currency { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of shipping price
+        /// Gets or sets the value of shipping price.
         /// </summary>
         public Money Price { get; set; }
 
 
         /// <summary>
-        /// Gets or sets the value of shipping price including tax
+        /// Gets or sets the value of shipping price including tax.
         /// </summary>
         public Money PriceWithTax
         {
@@ -87,7 +87,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         }
 
         /// <summary>
-        /// Gets the value of total shipping price without taxes
+        /// Gets the value of total shipping price without taxes.
         /// </summary>
         public Money Total
         {
@@ -98,7 +98,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         }
 
         /// <summary>
-        /// Gets the value of total shipping price including taxes
+        /// Gets the value of total shipping price including taxes.
         /// </summary>
         public Money TotalWithTax
         {
@@ -109,7 +109,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         }
 
         /// <summary>
-        /// Gets the value of total shipping discount amount
+        /// Gets the value of total shipping discount amount.
         /// </summary>
         public Money DiscountAmount { get; set; }
 
@@ -123,7 +123,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
         #region ITaxable Members
         /// <summary>
-        /// Gets or sets the value of total shipping tax amount
+        /// Gets or sets the value of total shipping tax amount.
         /// </summary>
         public Money TaxTotal
         {
@@ -136,15 +136,15 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         public decimal TaxPercentRate { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of shipping tax type
+        /// Gets or sets the value of shipping tax type.
         /// </summary>
         public string TaxType { get; set; }
 
         /// <summary>
-        /// Gets or sets the collection of line item tax details lines
+        /// Gets or sets the collection of line item tax details lines.
         /// </summary>
         /// <value>
-        /// Collection of TaxDetail objects
+        /// Collection of TaxDetail objects.
         /// </value>
         public IList<TaxDetail> TaxDetails { get; set; }
 

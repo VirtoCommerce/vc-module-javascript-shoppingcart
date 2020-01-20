@@ -4,7 +4,7 @@ using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Tax
 {
     /// <summary>
-    /// It is an abstraction that represents a taxable entity
+    /// It is an abstraction that represents a taxable entity.
     /// </summary>
     public interface ITaxable
     {

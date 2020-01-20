@@ -26,88 +26,88 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         }
 
         /// <summary>
-        /// Gets or sets the value of payment outer id
+        /// Gets or sets the value of payment outer id.
         /// </summary>
         public string OuterId { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of payment gateway code
+        /// Gets or sets the value of payment gateway code.
         /// </summary>
         public string PaymentGatewayCode { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of payment currency
+        /// Gets or sets the value of payment currency.
         /// </summary>
         /// <value>
-        /// Currency code in ISO 4217 format
+        /// Currency code in ISO 4217 format.
         /// </value>
         public Currency Currency { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of payment amount
+        /// Gets or sets the value of payment amount.
         /// </summary>
         public Money Amount { get; set; }
 
         /// <summary>
-        /// Gets or sets the billing address
+        /// Gets or sets the billing address.
         /// </summary>
         /// <value>
-        /// Address object
+        /// Address object.
         /// </value>
         public Address BillingAddress { get; set; }
 
 
         /// <summary>
-        /// Gets or sets the value of payment service price
+        /// Gets or sets the value of payment service price.
         /// </summary>
         public Money Price { get; set; }
 
 
         /// <summary>
         /// Gets or sets the value of payment service price including tax
-        /// Price * TaxPercentRate
+        /// Price * TaxPercentRate.
         /// </summary>
         public Money PriceWithTax { get; set; }
 
         /// <summary>
         /// Gets the value of total payment service price without taxes
-        /// Price - DiscountAmount;
+        /// Price - DiscountAmount;.
         /// </summary>
         public Money Total { get; set; }
 
         /// <summary>
         /// Gets the value of total payment service price including taxes
-        /// Total * TaxPercentRate
+        /// Total * TaxPercentRate.
         /// </summary>
         public Money TotalWithTax { get; set; }
 
         /// <summary>
-        /// Gets the value of total payment service discount amount
+        /// Gets the value of total payment service discount amount.
         /// </summary>
         public Money DiscountAmount { get; set; }
         /// <summary>
-        /// DiscountAmount * TaxPercentRate
+        /// DiscountAmount * TaxPercentRate.
         /// </summary>
         public Money DiscountAmountWithTax { get; set; }
 
         #region ITaxable Members
         /// <summary>
-        /// Gets or sets the value of total payment service tax amount
+        /// Gets or sets the value of total payment service tax amount.
         /// </summary>
         public Money TaxTotal { get; set; }
 
         public decimal TaxPercentRate { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of payment tax type
+        /// Gets or sets the value of payment tax type.
         /// </summary>
         public string TaxType { get; set; }
 
         /// <summary>
-        /// Gets or sets the collection of line item tax details lines
+        /// Gets or sets the collection of line item tax details lines.
         /// </summary>
         /// <value>
-        /// Collection of TaxDetail objects
+        /// Collection of TaxDetail objects.
         /// </value>
         public IList<TaxDetail> TaxDetails { get; set; }
 

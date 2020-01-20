@@ -33,122 +33,122 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         }
 
         /// <summary>
-        /// Gets or sets the value of shipping method code
+        /// Gets or sets the value of shipping method code.
         /// </summary>
         public string ShipmentMethodCode { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of shipping method option
+        /// Gets or sets the value of shipping method option.
         /// </summary>
         public string ShipmentMethodOption { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of fulfillment center id
+        /// Gets or sets the value of fulfillment center id.
         /// </summary>
         public string FulfillmentCenterId { get; set; }
 
         /// <summary>
-        /// Gets or sets the delivery address
+        /// Gets or sets the delivery address.
         /// </summary>
         /// <value>
-        /// Address object
+        /// Address object.
         /// </value>
         public Address DeliveryAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of volumetric weight
+        /// Gets or sets the value of volumetric weight.
         /// </summary>
         public decimal? VolumetricWeight { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of weight unit
+        /// Gets or sets the value of weight unit.
         /// </summary>
         public string WeightUnit { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of weight
+        /// Gets or sets the value of weight.
         /// </summary>
         public double? Weight { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of measurement units
+        /// Gets or sets the value of measurement units.
         /// </summary>
         public string MeasureUnit { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of height
+        /// Gets or sets the value of height.
         /// </summary>
         public double? Height { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of length
+        /// Gets or sets the value of length.
         /// </summary>
         public double? Length { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of width
+        /// Gets or sets the value of width.
         /// </summary>
         public double? Width { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of shipping price
+        /// Gets or sets the value of shipping price.
         /// </summary>
         public Money Price { get; set; }
 
 
         /// <summary>
         /// Gets or sets the value of shipping price including tax
-        /// Price * TaxPercentRate
+        /// Price * TaxPercentRate.
         /// </summary>
         public Money PriceWithTax { get; set; }
 
         /// <summary>
         /// Gets the value of total shipping price without taxes
-        /// Price + Fee - DiscountAmount;
+        /// Price + Fee - DiscountAmount;.
         /// </summary>
         public Money Total { get; set; }
 
         /// <summary>
         /// Gets the value of total shipping price including taxes
-        /// Total * TaxPercentRate
+        /// Total * TaxPercentRate.
         /// </summary>
         public Money TotalWithTax { get; set; }
 
         /// <summary>
-        /// Gets the value of total shipping discount amount
+        /// Gets the value of total shipping discount amount.
         /// </summary>
         public Money DiscountAmount { get; set; }
         /// <summary>
-        /// DiscountAmount * TaxPercentRate
+        /// DiscountAmount * TaxPercentRate.
         /// </summary>
         public Money DiscountAmountWithTax { get; set; }
 
         /// <summary>
-        /// Gets or sets the collection of shipping items
+        /// Gets or sets the collection of shipping items.
         /// </summary>
         /// <value>
-        /// Collection of CartShipmentItem objects
+        /// Collection of CartShipmentItem objects.
         /// </value>
         public IList<CartShipmentItem> Items { get; set; }
 
         #region ITaxable Members
         /// <summary>
-        /// Gets or sets the value of total shipping tax amount
+        /// Gets or sets the value of total shipping tax amount.
         /// </summary>
         public Money TaxTotal { get; set; }
 
         public decimal TaxPercentRate { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of shipping tax type
+        /// Gets or sets the value of shipping tax type.
         /// </summary>
         public string TaxType { get; set; }
 
         /// <summary>
-        /// Gets or sets the collection of line item tax details lines
+        /// Gets or sets the collection of line item tax details lines.
         /// </summary>
         /// <value>
-        /// Collection of TaxDetail objects
+        /// Collection of TaxDetail objects.
         /// </value>
         public IList<TaxDetail> TaxDetails { get; set; }
 

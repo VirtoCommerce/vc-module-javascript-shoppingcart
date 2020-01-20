@@ -51,7 +51,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         }
 
         /// <summary>
-        /// Gets or sets the value of shopping cart name
+        /// Gets or sets the value of shopping cart name.
         /// </summary>
         public string Name { get; set; }
 
@@ -59,49 +59,49 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         public string Status { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of store id
+        /// Gets or sets the value of store id.
         /// </summary>
         public string StoreId { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of channel id
+        /// Gets or sets the value of channel id.
         /// </summary>
         public string ChannelId { get; set; }
 
         /// <summary>
-        /// Gets or sets the sign that shopping cart contains line items which require shipping
+        /// Gets or sets the sign that shopping cart contains line items which require shipping.
         /// </summary>
         public bool HasPhysicalProducts { get; set; }
 
         /// <summary>
-        /// Gets or sets the flag of shopping cart is anonymous
+        /// Gets or sets the flag of shopping cart is anonymous.
         /// </summary>
         public bool IsAnonymous { get; set; }
 
         public User Customer { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of shopping cart customer id
+        /// Gets or sets the value of shopping cart customer id.
         /// </summary>
         public string CustomerId { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of shopping cart customer name
+        /// Gets or sets the value of shopping cart customer name.
         /// </summary>
         public string CustomerName { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of shopping cart organization id
+        /// Gets or sets the value of shopping cart organization id.
         /// </summary>
         public string OrganizationId { get; set; }
 
         /// <summary>
-        /// Gets or sets the flag of shopping cart is recurring
+        /// Gets or sets the flag of shopping cart is recurring.
         /// </summary>
         public bool IsRecuring { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of shopping cart text comment
+        /// Gets or sets the value of shopping cart text comment.
         /// </summary>
         public string Comment { get; set; }
 
@@ -109,102 +109,102 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         public string Note => Comment;
 
         /// <summary>
-        /// Gets or sets the value of volumetric weight
+        /// Gets or sets the value of volumetric weight.
         /// </summary>
         public decimal VolumetricWeight { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of weight unit
+        /// Gets or sets the value of weight unit.
         /// </summary>
         public string WeightUnit { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of shopping cart weight
+        /// Gets or sets the value of shopping cart weight.
         /// </summary>
         public decimal Weight { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of measurement unit
+        /// Gets or sets the value of measurement unit.
         /// </summary>
         public string MeasureUnit { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of height
+        /// Gets or sets the value of height.
         /// </summary>
         public decimal Height { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of length
+        /// Gets or sets the value of length.
         /// </summary>
         public decimal Length { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of width
+        /// Gets or sets the value of width.
         /// </summary>
         public decimal Width { get; set; }
 
         /// <summary>
         /// Gets the value of shopping cart total cost
-        /// SubTotal + ShippingSubTotal + TaxTotal + PaymentSubTotal + FeeTotal - DiscountTotal;
+        /// SubTotal + ShippingSubTotal + TaxTotal + PaymentSubTotal + FeeTotal - DiscountTotal;.
         /// </summary>
         public Money Total { get; set; }
 
         /// <summary>
         /// Gets the value of shopping cart subtotal
-        /// Items.Sum(x => x.ListPrice * x.Quantity);
+        /// Items.Sum(x => x.ListPrice * x.Quantity);.
         /// </summary>
         public Money SubTotal { get; set; }
 
         /// <summary>
         /// Gets the value of shopping cart subtotal with taxes
-        /// Items.Sum(x => x.ListPriceWithTax * x.Quantity);
+        /// Items.Sum(x => x.ListPriceWithTax * x.Quantity);.
         /// </summary>
         public Money SubTotalWithTax { get; set; }
 
         /// <summary>
         /// Gets the value of sum shipping cost without discount
-        /// Shipments.Sum(x => x.Price);
+        /// Shipments.Sum(x => x.Price);.
         /// </summary>
         public Money ShippingPrice { get; set; }
 
         /// <summary>
-        /// Shipments.Sum(x => x.PriceWithTax);
+        /// Shipments.Sum(x => x.PriceWithTax);.
         /// </summary>
         public Money ShippingPriceWithTax { get; set; }
 
         /// <summary>
         /// Gets the value of shipping total cost
-        /// Shipments.Sum(x => x.Total)
+        /// Shipments.Sum(x => x.Total).
         /// </summary>
         public Money ShippingTotal { get; set; }
 
         /// <summary>
-        /// Shipments.Sum(x => x.TotalWithTax)
+        /// Shipments.Sum(x => x.TotalWithTax).
         /// </summary>
         public Money ShippingTotalWithTax { get; set; }
 
         /// <summary>
-        /// Payments.Sum(x => x.Price)
+        /// Payments.Sum(x => x.Price).
         /// </summary>
         public Money PaymentPrice { get; set; }
 
         /// <summary>
-        /// Payments.Sum(x => x.PriceWithTax)
+        /// Payments.Sum(x => x.PriceWithTax).
         /// </summary>
         public Money PaymentPriceWithTax { get; set; }
 
         /// <summary>
-        /// Payments.Sum(x => x.Total)
+        /// Payments.Sum(x => x.Total).
         /// </summary>
         public virtual Money PaymentTotal { get; set; }
 
         /// <summary>
-        /// Payments.Sum(x => x.TotalWithTax)
+        /// Payments.Sum(x => x.TotalWithTax).
         /// </summary>
         public virtual Money PaymentTotalWithTax { get; set; }
 
         /// <summary>
-        /// Gets the value of shopping cart items total extended price (product price includes all kinds of discounts)
+        /// Gets the value of shopping cart items total extended price (product price includes all kinds of discounts).
         /// </summary>
         public Money ExtendedPriceTotal
         {
@@ -226,7 +226,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
 
         /// <summary>
-        /// Gets or sets the value of handling total cost
+        /// Gets or sets the value of handling total cost.
         /// </summary>
         public Money HandlingTotal { get; set; }
 
@@ -236,35 +236,35 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
         /// <summary>
         /// Gets the value of total discount amount
-        /// Items.Sum(x => x.DiscountTotal) + Shipments.Sum(x => x.DiscountAmount) + Payments.Sum(x => x.DiscountAmount) + DiscountAmount
+        /// Items.Sum(x => x.DiscountTotal) + Shipments.Sum(x => x.DiscountAmount) + Payments.Sum(x => x.DiscountAmount) + DiscountAmount.
         /// </summary>
         public Money DiscountTotal { get; set; }
 
         /// <summary>
-        /// Items.Sum(x => x.DiscountTotalWithTax) + Shipments.Sum(x => x.DiscountAmountWithTax) + Payments.Sum(x => x.DiscountAmountWithTax) + DiscountAmountWithTax
+        /// Items.Sum(x => x.DiscountTotalWithTax) + Shipments.Sum(x => x.DiscountAmountWithTax) + Payments.Sum(x => x.DiscountAmountWithTax) + DiscountAmountWithTax.
         /// </summary>
         public Money DiscountTotalWithTax { get; set; }
 
         // Skipped Addresses and DynamicProperties intentionally, as they are not needed now
 
         /// <summary>
-        /// Gets or sets the value of shopping cart line items
+        /// Gets or sets the value of shopping cart line items.
         /// </summary>
         /// <value>
-        /// Collection of LineItem objects
+        /// Collection of LineItem objects.
         /// </value>
         public IList<LineItem> Items { get; set; }
 
         public int ItemsCount => Items.Count;
 
         /// <summary>
-        /// Gets or sets shopping cart items quantity (sum of each line item quantity * items count)
+        /// Gets or sets shopping cart items quantity (sum of each line item quantity * items count).
         /// </summary>
         public int ItemsQuantity => Items.Sum(i => i.Quantity);
 
 
         /// <summary>
-        /// Left for backward compatibility with old themes
+        /// Left for backward compatibility with old themes.
         /// </summary>
         public Coupon Coupon
         {
@@ -275,26 +275,26 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         }
 
         /// <summary>
-        /// Gets or sets the collection of shopping cart coupons
+        /// Gets or sets the collection of shopping cart coupons.
         /// </summary>
         /// <value>
-        /// Collection of Coupon objects
+        /// Collection of Coupon objects.
         /// </value>
         public IList<Coupon> Coupons { get; set; }
 
         /// <summary>
-        /// Gets or sets the collection of shopping cart payments
+        /// Gets or sets the collection of shopping cart payments.
         /// </summary>
         /// <value>
-        /// Collection of Payment objects
+        /// Collection of Payment objects.
         /// </value>
         public IList<Payment> Payments { get; set; }
 
         /// <summary>
-        /// Gets or sets the collection of shopping cart shipments
+        /// Gets or sets the collection of shopping cart shipments.
         /// </summary>
         /// <value>
-        /// Collection of Shipment objects
+        /// Collection of Shipment objects.
         /// </value>
         public IList<Shipment> Shipments { get; set; }
 
@@ -367,27 +367,27 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
         #region ITaxable Members
         /// <summary>
-        /// Gets or sets the value of total shipping tax amount
+        /// Gets or sets the value of total shipping tax amount.
         /// </summary>
         public Money TaxTotal { get; set; }
 
         public decimal TaxPercentRate { get; private set; }
 
         /// <summary>
-        /// Gets or sets the value of shipping tax type
+        /// Gets or sets the value of shipping tax type.
         /// </summary>
         public string TaxType { get; set; }
 
         /// <summary>
-        /// Gets or sets the collection of line item tax details lines
+        /// Gets or sets the collection of line item tax details lines.
         /// </summary>
         /// <value>
-        /// Collection of TaxDetail objects
+        /// Collection of TaxDetail objects.
         /// </value>
         public IList<TaxDetail> TaxDetails { get; set; }
 
         /// <summary>
-        /// Gets or sets shopping cart type - Cart, Wishlist
+        /// Gets or sets shopping cart type - Cart, Wishlist.
         /// </summary>
         public string Type { get; set; }
 

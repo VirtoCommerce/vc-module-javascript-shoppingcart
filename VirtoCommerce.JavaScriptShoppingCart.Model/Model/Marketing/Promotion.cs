@@ -4,7 +4,7 @@ using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing
 {
     /// <summary>
-    /// Represents promotion object
+    /// Represents promotion object.
     /// </summary>
     public partial class Promotion : CloneableEntity
     {

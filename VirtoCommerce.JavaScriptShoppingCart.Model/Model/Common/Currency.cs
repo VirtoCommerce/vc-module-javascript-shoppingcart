@@ -62,7 +62,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         }
 
         /// <summary>
-        /// Currency code may be used ISO 4217
+        /// Currency code may be used ISO 4217.
         /// </summary>
         public string Code
         {
@@ -96,11 +96,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 
         public string EnglishName { get; set; }
         /// <summary>
-        /// Exchnage rate with primary currency
+        /// Exchnage rate with primary currency.
         /// </summary>
         public decimal ExchangeRate { get; set; }
         /// <summary>
-        /// https://msdn.microsoft.com/en-us/library/dwhawy9k%28v=vs.110%29.aspx?f=255&amp;MSPPError=-2147217396
+        /// https://msdn.microsoft.com/en-us/library/dwhawy9k%28v=vs.110%29.aspx?f=255&amp;MSPPError=-2147217396.
         /// </summary>
         public string CustomFormatting { get; set; }
 

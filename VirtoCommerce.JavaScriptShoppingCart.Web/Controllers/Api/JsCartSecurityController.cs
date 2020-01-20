@@ -64,7 +64,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
         }
 
         /// <summary>
-        /// Get current user details
+        /// Get current user details.
         /// </summary>
         [HttpGet]
         [Route("currentuser")]
