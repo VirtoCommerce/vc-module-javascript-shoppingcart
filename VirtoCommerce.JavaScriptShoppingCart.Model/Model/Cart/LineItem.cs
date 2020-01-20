@@ -200,23 +200,25 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         public Money SalePriceWithTax { get; set; }
 
         /// <summary>
-        /// Gets the value of line item actual price (include all types of discounts)
+        /// Gets or sets the value of line item actual price (include all types of discounts)
         /// ListPrice - DiscountAmount;.
         /// </summary>
         public Money PlacedPrice { get; set; }
 
         /// <summary>
+        /// Gets or sets the value of line item actual price (include tax)
         /// PlacedPrice * TaxPercentRate.
         /// </summary>
         public Money PlacedPriceWithTax { get; set; }
 
         /// <summary>
-        /// Gets the value of line item extended price
+        /// Gets or sets the value of line item extended price
         /// PlacedPrice * Quantity;.
         /// </summary>
         public Money ExtendedPrice { get; set; }
 
         /// <summary>
+        /// Gets or sets the value of line item extended price (include tax)
         /// ExtendedPrice * TaxPercentRate.
         /// </summary>
         public Money ExtendedPriceWithTax { get; set; }
@@ -224,17 +226,19 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         public Money DiscountAmount { get; set; }
 
         /// <summary>
+        /// Gets or sets the value of line item discount amount (include tax)
         /// DiscountAmount  * TaxPercentRate.
         /// </summary>
         public Money DiscountAmountWithTax { get; set; }
 
         /// <summary>
-        /// Gets the value of line item total discount amount
+        /// Gets or sets the value of line item total discount amount
         /// DiscountAmount * Math.Max(1, Quantity);.
         /// </summary>
         public Money DiscountTotal { get; set; }
 
         /// <summary>
+        /// Gets or sets the value of line item total discount amount (include tax)
         /// DiscountTotal * TaxPercentRate.
         /// </summary>
         public Money DiscountTotalWithTax { get; set; }
