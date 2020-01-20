@@ -55,7 +55,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// </summary>
         public string Name { get; set; }
 
-
         public string Status { get; set; }
 
         /// <summary>
@@ -363,7 +362,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
             }
         }
         #endregion
-
 
         #region ITaxable Members
         /// <summary>

@@ -56,12 +56,10 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// </value>
         public Address BillingAddress { get; set; }
 
-
         /// <summary>
         /// Gets or sets the value of payment service price.
         /// </summary>
         public Money Price { get; set; }
-
 
         /// <summary>
         /// Gets or sets the value of payment service price including tax

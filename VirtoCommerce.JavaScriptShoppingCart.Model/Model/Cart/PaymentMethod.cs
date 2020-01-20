@@ -20,7 +20,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
             Discounts = new List<Discount>();
         }
 
-
         /// <summary>
         /// Gets or sets the value of payment gateway code.
         /// </summary>
@@ -73,7 +72,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// Gets or sets the value of shipping price.
         /// </summary>
         public Money Price { get; set; }
-
 
         /// <summary>
         /// Gets or sets the value of shipping price including tax.

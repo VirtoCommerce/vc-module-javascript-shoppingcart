@@ -248,7 +248,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         public IList<ValidationError> ValidationErrors { get; set; }
         #endregion
 
-
         #region ITaxable Members
         /// <summary>
         /// Gets or sets the value of total shipping tax amount.
@@ -298,7 +297,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
             }
         }
         #endregion
-
 
         #region IDiscountable  Members
         public Currency Currency { get; private set; }

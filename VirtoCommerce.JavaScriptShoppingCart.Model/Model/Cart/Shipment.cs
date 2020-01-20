@@ -95,7 +95,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// </summary>
         public Money Price { get; set; }
 
-
         /// <summary>
         /// Gets or sets the value of shipping price including tax
         /// Price * TaxPercentRate.
@@ -230,7 +229,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
             result.Total = Total?.Clone() as Money;
             result.TotalWithTax = TotalWithTax?.Clone() as Money;
             result.TaxTotal = TaxTotal?.Clone() as Money;
-
 
             if (Discounts != null)
             {
