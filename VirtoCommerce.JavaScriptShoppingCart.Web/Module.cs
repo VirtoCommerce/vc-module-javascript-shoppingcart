@@ -1,10 +1,10 @@
-using AutoMapper;
-using Microsoft.Practices.Unity;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web.Hosting;
 using System.Web.Optimization;
+using AutoMapper;
+using Microsoft.Practices.Unity;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services;
 using VirtoCommerce.JavaScriptShoppingCart.Data.Services;
