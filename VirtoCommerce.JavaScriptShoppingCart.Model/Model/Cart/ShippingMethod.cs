@@ -190,20 +190,19 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         }
         #endregion
 
-
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return ShipmentMethodCode;
-            yield return OptionName;
-        }
-
-
         public override object Clone()
         {
             var result = base.Clone() as ShippingMethod;
             result.Price = Price?.Clone() as Money;
             result.DiscountAmount = DiscountAmount?.Clone() as Money;
             return result;
+        }
+
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return ShipmentMethodCode;
+            yield return OptionName;
         }
     }
 }

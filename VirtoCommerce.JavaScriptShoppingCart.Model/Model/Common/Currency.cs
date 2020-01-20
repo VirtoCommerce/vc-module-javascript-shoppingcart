@@ -32,10 +32,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
             }
         }
 
-        protected Currency()
-        {
-        }
-
         public Currency(Language language, string code, string name, string symbol, decimal exchangeRate)
             : this(language, code)
         {
@@ -60,6 +56,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
             ExchangeRate = 1;
             Initialize();
         }
+
+        protected Currency()
+        {
+        }
+
 
         /// <summary>
         /// Currency code may be used ISO 4217.
@@ -104,6 +105,29 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         /// </summary>
         public string CustomFormatting { get; set; }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            var result = base.Equals(obj);
+            if (!result && obj is string code)
+            {
+                result = code.EqualsInvariant(Code);
+            }
+
+            return result;
+        }
+
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Code;
+            yield return CultureName;
+        }
+
 
         private void Initialize()
         {
@@ -128,30 +152,5 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
                 }
             }
         }
-
-
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        public override bool Equals(object obj)
-        {
-            var result = base.Equals(obj);
-            if (!result && obj is string code)
-            {
-                result = code.EqualsInvariant(Code);
-            }
-
-            return result;
-        }
-
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Code;
-            yield return CultureName;
-        }
-
     }
 }

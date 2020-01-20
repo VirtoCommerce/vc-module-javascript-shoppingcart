@@ -8,11 +8,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
     /// </summary>
     public partial class Language : CloneableValueObject
     {
-        private Language()
-            : this(CultureInfo.InvariantCulture.Name)
-        {
-        }
-
         public Language(string cultureName)
         {
             CultureInfo culture = CultureInfo.InvariantCulture;
@@ -31,6 +26,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
                 TwoLetterRegionName = regionInfo.TwoLetterISORegionName;
                 ThreeLetterRegionName = regionInfo.ThreeLetterISORegionName;
             }
+        }
+
+        private Language()
+            : this(CultureInfo.InvariantCulture.Name)
+        {
         }
 
         public static Language InvariantLanguage
