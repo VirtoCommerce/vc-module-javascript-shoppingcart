@@ -7,7 +7,7 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 {
-    public partial class Shipment : CloneableEntity, IDiscountable, IValidatable, ITaxable
+    public class Shipment : CloneableEntity, IDiscountable, IValidatable, ITaxable
     {
         public Shipment()
         {

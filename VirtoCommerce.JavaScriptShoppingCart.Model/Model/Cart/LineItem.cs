@@ -9,7 +9,7 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 {
-    public partial class LineItem : CloneableEntity, IDiscountable, IValidatable, ITaxable, ICloneable
+    public class LineItem : CloneableEntity, IDiscountable, IValidatable, ITaxable, ICloneable
     {
         public LineItem(Currency currency, Language language)
         {

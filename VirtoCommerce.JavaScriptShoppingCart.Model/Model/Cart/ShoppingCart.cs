@@ -10,7 +10,7 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 {
-    public partial class ShoppingCart : CloneableEntity, IDiscountable, IValidatable, IHasLanguage, ITaxable, Platform.Core.Common.ICacheKey
+    public class ShoppingCart : CloneableEntity, IDiscountable, IValidatable, IHasLanguage, ITaxable, Platform.Core.Common.ICacheKey
     {
         public ShoppingCart()
             : this(new Currency(new Language("en-US"), "USD"), new Language("en-US"))

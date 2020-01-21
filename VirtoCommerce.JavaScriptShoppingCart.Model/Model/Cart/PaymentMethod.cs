@@ -7,7 +7,7 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 {
-    public partial class PaymentMethod : CloneableValueObject, ITaxable, IDiscountable
+    public class PaymentMethod : CloneableValueObject, ITaxable, IDiscountable
     {
         public PaymentMethod(Currency currency)
         {
