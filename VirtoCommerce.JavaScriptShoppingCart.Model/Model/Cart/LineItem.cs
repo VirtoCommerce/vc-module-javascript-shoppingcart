@@ -246,7 +246,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// <summary>
         /// Used for dynamic properties management, contains object type string.
         /// </summary>
-        /// <value>Used for dynamic properties management, contains object type string.</value>
+        /// <value>Contains object type string.</value>
         public string ObjectType { get; set; }
 
         public bool IsValid { get; set; }
