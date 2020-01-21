@@ -63,49 +63,5 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
         }
 
 
-        //public static Address ToWebModel(this Address address, Country[] countries)
-        //{
-        //    var result = new Address();
-        //    result.CopyFrom(address, countries);
-        //    return result;
-        //}
-
-
-        //public static Address CopyFrom(this Address result, Address address, Country[] countries)
-        //{
-        //    result.City = address.City;
-        //    result.CountryCode = address.CountryCode;
-        //    result.FirstName = address.FirstName;
-        //    result.LastName = address.LastName;
-        //    result.Name = address.Name;
-        //    result.Phone = address.Phone;
-        //    result.Zip = address.Zip;
-        //    result.Organization = address.Company;
-        //    result.CountryName = address.Country;
-        //    result.PostalCode = address.Zip;
-        //    result.Line1 = address.Address1;
-        //    result.Line2 = address.Address2;
-        //    result.RegionName = address.Province;
-
-        //    result.Name = result.ToString();
-
-        //    var country = countries.FirstOrDefault(c => string.Equals(c.Name, address.Country, StringComparison.OrdinalIgnoreCase));
-        //    if (country != null)
-        //    {
-        //        result.CountryCode = country.Code3;
-
-        //        if (address.Province != null && country.Regions != null)
-        //        {
-        //            var region = country.Regions.FirstOrDefault(r => string.Equals(r.Name, address.Province, StringComparison.OrdinalIgnoreCase));
-
-        //            if (region != null)
-        //            {
-        //                result.RegionId = region.Code;
-        //            }
-        //        }
-        //    }
-
-        //    return result;
-        //}
     }
 }

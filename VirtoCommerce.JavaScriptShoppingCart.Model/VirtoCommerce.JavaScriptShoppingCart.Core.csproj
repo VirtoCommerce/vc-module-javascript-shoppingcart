@@ -64,6 +64,8 @@
     <Compile Include="Model\Cart\ShoppingCart.cs" />
     <Compile Include="Model\Cart\UpdateCartCommentRequest.cs" />
     <Compile Include="Model\Cart\ValidationError.cs" />
+    <Compile Include="Model\Cart\ValidationErrors\PriceError.cs" />
+    <Compile Include="Model\Cart\ValidationErrors\UnavailableError.cs" />
     <Compile Include="Model\Common\Address.cs" />
     <Compile Include="Model\Common\AddressType.cs" />
     <Compile Include="Model\Common\CloneableEntity.cs" />
@@ -77,9 +79,7 @@
     <Compile Include="Model\Marketing\Coupon.cs" />
     <Compile Include="Model\Marketing\Discount.cs" />
     <Compile Include="Model\Marketing\IDiscountable.cs" />
-    <Compile Include="Model\Marketing\MarketingEvaluationContextBase.cs" />
     <Compile Include="Model\Marketing\Promotion.cs" />
-    <Compile Include="Model\Marketing\PromotionEvaluationContext.cs" />
     <Compile Include="Model\Marketing\PromotionReward.cs" />
     <Compile Include="Model\Marketing\PromotionRewardType.cs" />
     <Compile Include="Model\Security\Role.cs" />
@@ -90,12 +90,14 @@
     <Compile Include="Model\Tax\TaxLine.cs" />
     <Compile Include="Model\Tax\TaxRate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ICartBuilder.cs" />
+    <Compile Include="Services\ICartManager.cs" />
     <Compile Include="Services\IPromotionEvaluator.cs" />
+    <Compile Include="Services\ITaxEvaluator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

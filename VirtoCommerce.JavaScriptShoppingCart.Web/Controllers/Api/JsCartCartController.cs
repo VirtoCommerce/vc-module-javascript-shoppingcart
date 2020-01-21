@@ -15,9 +15,9 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
     [CLSCompliant(false)]
     public class JsCartCartController : ApiController
     {
-        private readonly ICartBuilder _cartBuilder;
+        private readonly ICartManager _cartBuilder;
 
-        public JsCartCartController(ICartBuilder cartBuilder)
+        public JsCartCartController(ICartManager cartBuilder)
         {
             _cartBuilder = cartBuilder;
         }

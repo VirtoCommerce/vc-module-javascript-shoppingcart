@@ -55,9 +55,11 @@
   <ItemGroup>
     <Compile Include="Converters\AddressConverter.cs" />
     <Compile Include="Converters\CartConverter.cs" />
+    <Compile Include="Converters\TaxConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\CartBuilder.cs" />
+    <Compile Include="Services\CartManager.cs" />
     <Compile Include="Services\PromotionEvaluator.cs" />
+    <Compile Include="Services\TaxEvaluator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VirtoCommerce.JavaScriptShoppingCart.Model\VirtoCommerce.JavaScriptShoppingCart.Core.csproj">

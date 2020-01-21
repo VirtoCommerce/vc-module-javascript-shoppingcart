@@ -6,7 +6,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services
     /// <summary>
     /// Represent abstraction for working with customer shopping cart
     /// </summary>
-    public interface ICartBuilder
+    public interface ICartManager
     {
         ShoppingCart Cart { get; }
 

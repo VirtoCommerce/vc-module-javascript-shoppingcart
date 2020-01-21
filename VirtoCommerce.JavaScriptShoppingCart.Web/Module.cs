@@ -31,7 +31,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
 		{
 			base.Initialize();
 
-			_container.RegisterType<ICartBuilder, CartBuilder>();
+			_container.RegisterType<ICartManager, CartManager>();
 
 			var configuration = new MapperConfiguration(x =>
 			{

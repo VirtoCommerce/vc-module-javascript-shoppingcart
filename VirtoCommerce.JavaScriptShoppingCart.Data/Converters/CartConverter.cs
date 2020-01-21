@@ -8,9 +8,11 @@ using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Model.Marketing;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Tax;
 using VirtoCommerce.Platform.Core.Common;
-using cartDto = VirtoCommerce.Domain.Cart.Model;
-using coreDto = VirtoCommerce.Domain.Commerce.Model;
-using marketingDto = VirtoCommerce.Domain.Marketing.Model;
+using domain_cart_model = VirtoCommerce.Domain.Cart.Model;
+using domain_core_model = VirtoCommerce.Domain.Commerce.Model;
+using domain_shipping_model = VirtoCommerce.Domain.Shipping.Model;
+using domain_tax_model = VirtoCommerce.Domain.Tax.Model;
+using marketing_domain_model = VirtoCommerce.Domain.Marketing.Model;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
 {
@@ -19,11 +21,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
     public static partial class CartConverter
     {
 
-        public static cartDto.ShoppingCart ToShopingCartDto(this ShoppingCart cart)
+        public static domain_cart_model.ShoppingCart ToShopingCartDto(this ShoppingCart cart)
         {
 
 
-            var result = new cartDto.ShoppingCart
+            var result = new domain_cart_model.ShoppingCart
             {
                 ChannelId = cart.ChannelId,
                 Comment = cart.Comment,
@@ -61,9 +63,9 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
             return result;
         }
 
-        public static coreDto.Discount ToCartDiscountDto(this Discount discount)
+        public static domain_core_model.Discount ToCartDiscountDto(this Discount discount)
         {
-            var result = new coreDto.Discount
+            var result = new domain_core_model.Discount
             {
                 PromotionId = discount.PromotionId,
                 Coupon = discount.Coupon,
@@ -75,9 +77,9 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
         }
 
 
-        public static cartDto.LineItem ToLineItemDto(this LineItem lineItem)
+        public static domain_cart_model.LineItem ToLineItemDto(this LineItem lineItem)
         {
-            var retVal = new cartDto.LineItem
+            var retVal = new domain_cart_model.LineItem
             {
                 Id = lineItem.Id,
                 IsReadOnly = lineItem.IsReadOnly,
@@ -115,9 +117,9 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
             return retVal;
         }
 
-        public static coreDto.TaxDetail ToCartTaxDetailDto(this TaxDetail taxDetail)
+        public static domain_core_model.TaxDetail ToCartTaxDetailDto(this TaxDetail taxDetail)
         {
-            var result = new coreDto.TaxDetail
+            var result = new domain_core_model.TaxDetail
             {
                 Name = taxDetail.Name,
                 Rate = taxDetail.Rate.Amount,
@@ -127,9 +129,9 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
         }
 
 
-        public static cartDto.Payment ToPaymentDto(this Payment payment)
+        public static domain_cart_model.Payment ToPaymentDto(this Payment payment)
         {
-            var result = new cartDto.Payment
+            var result = new domain_cart_model.Payment
             {
                 Id = payment.Id,
                 OuterId = payment.OuterId,
@@ -160,9 +162,9 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
             return result;
         }
 
-        public static cartDto.Shipment ToShipmentDto(this Shipment shipment)
+        public static domain_cart_model.Shipment ToShipmentDto(this Shipment shipment)
         {
-            var retVal = new cartDto.Shipment
+            var retVal = new domain_cart_model.Shipment
             {
                 Id = shipment.Id,
                 MeasureUnit = shipment.MeasureUnit,
@@ -204,9 +206,9 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
         }
 
 
-        public static cartDto.ShipmentItem ToShipmentItemDto(this CartShipmentItem shipmentItem)
+        public static domain_cart_model.ShipmentItem ToShipmentItemDto(this CartShipmentItem shipmentItem)
         {
-            var result = new cartDto.ShipmentItem
+            var result = new domain_cart_model.ShipmentItem
             {
                 Id = shipmentItem.Id,
                 Quantity = shipmentItem.Quantity,
@@ -217,12 +219,12 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
             return result;
         }
 
-        public static coreDto.Address ToAddressDto(this Address address)
+        public static domain_core_model.Address ToAddressDto(this Address address)
         {
             return address.ToCoreAddressDto();
         }
 
-        public static ShoppingCart ToShoppingCart(this cartDto.ShoppingCart cartDto, Currency currency, Language language)
+        public static ShoppingCart ToShoppingCart(this domain_cart_model.ShoppingCart cartDto, Currency currency, Language language)
         {
             var result = new ShoppingCart(currency, language)
             {
@@ -287,7 +289,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
             return result;
         }
 
-        public static Payment ToPayment(this cartDto.Payment paymentDto, ShoppingCart cart)
+        public static Payment ToPayment(this domain_cart_model.Payment paymentDto, ShoppingCart cart)
         {
             var result = new Payment(cart.Currency)
             {
@@ -324,7 +326,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
             return result;
         }
 
-        public static Shipment ToShipment(this cartDto.Shipment shipmentDto, ShoppingCart cart)
+        public static Shipment ToShipment(this domain_cart_model.Shipment shipmentDto, ShoppingCart cart)
         {
             var retVal = new Shipment(cart.Currency)
             {
@@ -370,7 +372,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
             return retVal;
         }
 
-        public static TaxDetail ToTaxDetail(this coreDto.TaxDetail taxDeatilDto, Currency currency)
+        public static TaxDetail ToTaxDetail(this domain_core_model.TaxDetail taxDeatilDto, Currency currency)
         {
             var result = new TaxDetail(currency)
             {
@@ -381,7 +383,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
             return result;
         }
 
-        public static Address ToAddress(this coreDto.Address addressDto)
+        public static Address ToAddress(this domain_core_model.Address addressDto)
         {
             var retVal = new Address
             {
@@ -407,7 +409,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
             return retVal;
         }
 
-        public static Discount ToDiscount(this coreDto.Discount discountDto, IEnumerable<Currency> availCurrencies, Language language)
+        public static Discount ToDiscount(this domain_core_model.Discount discountDto, IEnumerable<Currency> availCurrencies, Language language)
         {
             var currency = availCurrencies.FirstOrDefault(x => x.Equals(discountDto.Currency)) ?? new Currency(language, discountDto.Currency);
 
@@ -422,7 +424,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
             return result;
         }
 
-        public static CartShipmentItem ToShipmentItem(this cartDto.ShipmentItem shipmentItemDto, ShoppingCart cart)
+        public static CartShipmentItem ToShipmentItem(this domain_cart_model.ShipmentItem shipmentItemDto, ShoppingCart cart)
         {
             var result = new CartShipmentItem
             {
@@ -435,9 +437,9 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
         }
 
 
-        public static marketingDto.ProductPromoEntry ToProductPromoEntryDto(this LineItem lineItem)
+        public static marketing_domain_model.ProductPromoEntry ToProductPromoEntryDto(this LineItem lineItem)
         {
-            var result = new marketingDto.ProductPromoEntry
+            var result = new marketing_domain_model.ProductPromoEntry
             {
                 CatalogId = lineItem.CatalogId,
                 CategoryId = lineItem.CategoryId,
@@ -456,7 +458,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
         }
 
 
-        public static marketingDto.PromotionEvaluationContext ToPromotionEvaluationContext(this ShoppingCart cart)
+        public static marketing_domain_model.PromotionEvaluationContext ToPromotionEvaluationContext(this ShoppingCart cart)
         {
             //var result = new PromotionEvaluationContext()
             //{
@@ -467,7 +469,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
             //    StoreId = cart.StoreId
             //};
 
-            var result = new marketingDto.PromotionEvaluationContext();
+            var result = new marketing_domain_model.PromotionEvaluationContext();
 
             result.StoreId = cart.StoreId; //new
 
@@ -501,7 +503,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
             return result;
         }
 
-        public static PromotionReward ToPromotionReward(this marketingDto.PromotionReward rewardDto, Currency currency)
+        public static PromotionReward ToPromotionReward(this marketing_domain_model.PromotionReward rewardDto, Currency currency)
         {
             var result = new PromotionReward();
             result.InjectFrom(rewardDto);
@@ -564,6 +566,144 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
             }
 
             return retVal;
+        }
+
+        public static ShippingMethod ToShippingMethod(this domain_shipping_model.ShippingRate shippingRate, Currency currency, IEnumerable<Currency> availCurrencies)
+        {
+            var rateCurrency = availCurrencies.FirstOrDefault(x => x.Equals(shippingRate.Currency)) ?? new Currency(new Language(currency.CultureName), shippingRate.Currency);
+            var ratePrice = new Money(shippingRate.Rate, rateCurrency);
+            var rateDiscount = new Money(shippingRate.DiscountAmount, rateCurrency);
+
+            if (rateCurrency != currency)
+            {
+                ratePrice = ratePrice.ConvertTo(currency);
+                rateDiscount = rateDiscount.ConvertTo(currency);
+            }
+
+            var result = new ShippingMethod(currency);
+            result.OptionDescription = shippingRate.OptionDescription;
+            result.OptionName = shippingRate.OptionName;
+
+            result.Price = ratePrice;
+            result.DiscountAmount = rateDiscount;
+
+            if (shippingRate.ShippingMethod != null)
+            {
+                result.LogoUrl = shippingRate.ShippingMethod.LogoUrl;
+                result.Name = shippingRate.ShippingMethod.Name;
+                result.Priority = shippingRate.ShippingMethod.Priority;
+                result.TaxType = shippingRate.ShippingMethod.TaxType;
+
+                result.ShipmentMethodCode = shippingRate.ShippingMethod.Code;
+                //if (shippingRate.ShippingMethod.Settings != null)
+                //{
+                //    result.Settings = shippingRate.ShippingMethod.Settings.Where(x => !x.ValueType.EqualsInvariant("SecureString"))
+                //                                                          .Select(x => x.JsonConvert<platformDto.Setting>().ToSettingEntry()).ToList();
+                //}
+            }
+
+            return result;
+        }
+
+
+        public static domain_tax_model.TaxEvaluationContext ToTaxEvaluationContextDto(this ShoppingCart cart)
+        {
+            var result = new domain_tax_model.TaxEvaluationContext()
+            {
+                Id = cart.Id,
+                Code = cart.Name,
+                Currency = cart.Currency.Code,
+                Type = "Cart",
+                //Customer = cart.Customer?.Contact?.ToCoreContactDto(), //storefront logic
+                //StoreTaxCalculationEnabled = store.TaxCalculationEnabled,
+                //FixedTaxRate = store.FixedTaxRate
+            };
+
+            foreach (var lineItem in cart.Items)
+            {
+                result.Lines.Add(new domain_tax_model.TaxLine()
+                {
+                    Id = lineItem.Id,
+                    Code = lineItem.Sku,
+                    Name = lineItem.Name,
+                    TaxType = lineItem.TaxType,
+                    //Special case when product have 100% discount and need to calculate tax for old value
+                    Amount = lineItem.ExtendedPrice.Amount > 0 ? lineItem.ExtendedPrice.Amount : lineItem.SalePrice.Amount,
+                    Quantity = lineItem.Quantity,
+                    Price = lineItem.PlacedPrice.Amount,
+                    TypeName = "item"
+                });
+            }
+
+            foreach (var shipment in cart.Shipments)
+            {
+                var totalTaxLine = new domain_tax_model.TaxLine()
+                {
+                    Id = shipment.Id,
+                    Code = shipment.ShipmentMethodCode,
+                    Name = shipment.ShipmentMethodOption,
+                    TaxType = shipment.TaxType,
+                    //Special case when shipment have 100% discount and need to calculate tax for old value
+                    Amount = shipment.Total.Amount > 0 ? shipment.Total.Amount : shipment.Price.Amount,
+                    TypeName = "shipment"
+                };
+                result.Lines.Add(totalTaxLine);
+
+                if (shipment.DeliveryAddress != null)
+                {
+                    result.Address = shipment.DeliveryAddress.ToAddressDto();
+                }
+            }
+
+            foreach (var payment in cart.Payments)
+            {
+                var totalTaxLine = new domain_tax_model.TaxLine()
+                {
+                    Id = payment.Id,
+                    Code = payment.PaymentGatewayCode,
+                    Name = payment.PaymentGatewayCode,
+                    TaxType = payment.TaxType,
+                    //Special case when shipment have 100% discount and need to calculate tax for old value
+                    Amount = payment.Total.Amount > 0 ? payment.Total.Amount : payment.Price.Amount,
+                    TypeName = "payment"
+                };
+                result.Lines.Add(totalTaxLine);
+            }
+            return result;
+
+        }
+
+
+        public static domain_tax_model.TaxLine[] ToTaxLines(this ShippingMethod shipmentMethod)
+        {
+            var retVal = new List<domain_tax_model.TaxLine>
+            {
+                new domain_tax_model.TaxLine()
+                {
+                    Id = shipmentMethod.BuildTaxLineId(),
+                    Code = shipmentMethod.ShipmentMethodCode,
+                    TaxType = shipmentMethod.TaxType,
+                    //Special case when shipment method have 100% discount and need to calculate tax for old value
+                    Amount = shipmentMethod.Total.Amount > 0 ? shipmentMethod.Total.Amount : shipmentMethod.Price.Amount
+                }
+            };
+            return retVal.ToArray();
+        }
+
+        public static domain_tax_model.TaxLine[] ToTaxLines(this PaymentMethod paymentMethod)
+        {
+            var retVal = new List<domain_tax_model.TaxLine>
+            {
+                new domain_tax_model.TaxLine()
+                {
+                    Id = paymentMethod.Code,
+                    Code = paymentMethod.Code,
+                    TaxType = paymentMethod.TaxType,
+                     //Special case when payment method have 100% discount and need to calculate tax for old value
+                    Amount = paymentMethod.Total.Amount > 0 ? paymentMethod.Total.Amount : paymentMethod.Price.Amount
+                }
+            };
+            return retVal.ToArray();
         }
 
     }
