@@ -60,7 +60,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Crawling
         {
             if (!_crawlingConfiguration.Mapping.TryGetValue(type, out var attributeName))
             {
-                throw new MappingException($"Can't find the \"{type}\".");
+                var exception = new MappingException($"Can't find the \"{type}\".");
+
+                _crawlingResult = new CrawlingResult(exception);
+
+                throw exception;
             }
 
             return attributeName;
