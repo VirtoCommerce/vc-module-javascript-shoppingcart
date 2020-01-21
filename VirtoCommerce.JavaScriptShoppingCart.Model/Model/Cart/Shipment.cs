@@ -153,6 +153,14 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// </value>
         public IList<TaxDetail> TaxDetails { get; set; }
 
+        public bool IsValid { get; set; }
+
+        public IList<ValidationError> ValidationErrors { get; set; }
+
+        public IList<Discount> Discounts { get; private set; }
+
+        public Currency Currency { get; set; }
+
         public void ApplyTaxRates(IEnumerable<TaxRate> taxRates)
         {
             TaxPercentRate = 0m;
@@ -180,14 +188,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
                 TaxDetails = shipmentTaxRate.Line.TaxDetails;
             }
         }
-
-        public bool IsValid { get; set; }
-
-        public IList<ValidationError> ValidationErrors { get; set; }
-
-        public IList<Discount> Discounts { get; private set; }
-
-        public Currency Currency { get; set; }
 
         public void ApplyRewards(IEnumerable<PromotionReward> rewards)
         {

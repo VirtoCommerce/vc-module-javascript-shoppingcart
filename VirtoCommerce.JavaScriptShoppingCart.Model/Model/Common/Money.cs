@@ -126,31 +126,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
             get { return Currency.NumberFormat.CurrencyDecimalDigits; }
         }
 
-        public override int GetHashCode()
-        {
-            return Amount.GetHashCode() ^ Currency.Code.GetHashCode();
-        }
-
-        public override bool Equals(object obj)
-        {
-            return (obj is Money) && Equals((Money)obj);
-        }
-
-        public bool Equals(Money other)
-        {
-            if (other == null)
-            {
-                return false;
-            }
-
-            if (ReferenceEquals(this, other))
-            {
-                return true;
-            }
-
-            return Currency.Equals(other.Currency) && (InternalAmount == other.InternalAmount);
-        }
-
         public static bool operator ==(Money first, Money second)
         {
             if (ReferenceEquals(first, second))
@@ -193,36 +168,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         {
             return first.InternalAmount < second.ConvertTo(first.Currency).InternalAmount
               && second.InternalAmount > first.ConvertTo(second.Currency).InternalAmount;
-        }
-
-        public int CompareTo(object obj)
-        {
-            if (obj == null)
-            {
-                return 1;
-            }
-
-            if (!(obj is Money))
-            {
-                throw new ArgumentException("Argument must be Money");
-            }
-
-            return CompareTo((Money)obj);
-        }
-
-        public int CompareTo(Money other)
-        {
-            if (this < other)
-            {
-                return -1;
-            }
-
-            if (this > other)
-            {
-                return 1;
-            }
-
-            return 0;
         }
 
         public static Money operator +(Money first, Money second)
@@ -368,6 +313,61 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
             }
 
             return new Money(money.InternalAmount / value, money.Currency);
+        }
+
+        public override int GetHashCode()
+        {
+            return Amount.GetHashCode() ^ Currency.Code.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return (obj is Money) && Equals((Money)obj);
+        }
+
+        public bool Equals(Money other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            return Currency.Equals(other.Currency) && (InternalAmount == other.InternalAmount);
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj == null)
+            {
+                return 1;
+            }
+
+            if (!(obj is Money))
+            {
+                throw new ArgumentException("Argument must be Money");
+            }
+
+            return CompareTo((Money)obj);
+        }
+
+        public int CompareTo(Money other)
+        {
+            if (this < other)
+            {
+                return -1;
+            }
+
+            if (this > other)
+            {
+                return 1;
+            }
+
+            return 0;
         }
 
         public override string ToString()

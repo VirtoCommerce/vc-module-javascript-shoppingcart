@@ -317,6 +317,33 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
         public Currency Currency { get; }
 
+        /// <summary>
+        /// Gets or sets the value of total shipping tax amount.
+        /// </summary>
+        public Money TaxTotal { get; set; }
+
+        public decimal TaxPercentRate { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the value of shipping tax type.
+        /// </summary>
+        public string TaxType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection of line item tax details lines.
+        /// </summary>
+        /// <value>
+        /// Collection of TaxDetail objects.
+        /// </value>
+        public IList<TaxDetail> TaxDetails { get; set; }
+
+        /// <summary>
+        /// Gets or sets shopping cart type - Cart, Wishlist.
+        /// </summary>
+        public string Type { get; set; }
+
+        public Language Language { get; set; }
+
         public void ApplyRewards(IEnumerable<PromotionReward> rewards)
         {
             Discounts.Clear();
@@ -362,32 +389,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
             }
         }
 
-
-        /// <summary>
-        /// Gets or sets the value of total shipping tax amount.
-        /// </summary>
-        public Money TaxTotal { get; set; }
-
-        public decimal TaxPercentRate { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the value of shipping tax type.
-        /// </summary>
-        public string TaxType { get; set; }
-
-        /// <summary>
-        /// Gets or sets the collection of line item tax details lines.
-        /// </summary>
-        /// <value>
-        /// Collection of TaxDetail objects.
-        /// </value>
-        public IList<TaxDetail> TaxDetails { get; set; }
-
-        /// <summary>
-        /// Gets or sets shopping cart type - Cart, Wishlist.
-        /// </summary>
-        public string Type { get; set; }
-
         public void ApplyTaxRates(IEnumerable<TaxRate> taxRates)
         {
             TaxPercentRate = 0m;
@@ -412,8 +413,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
                 payment.ApplyTaxRates(taxRates);
             }
         }
-
-        public Language Language { get; set; }
 
         public override string GetCacheKey()
         {
