@@ -111,7 +111,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
 
             if (!crawlingResult.IsSuccess)
             {
-                return BadRequest("Something is wrong");
+                return BadRequest(crawlingResult.Exception?.Message);
             }
             else
             {
