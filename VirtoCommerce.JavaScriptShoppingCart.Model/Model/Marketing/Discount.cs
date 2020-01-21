@@ -34,7 +34,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing
         /// </summary>
         public string Description { get; set; }
 
-        #region IConvertible<Discount> Members
         public Discount ConvertTo(Currency currency)
         {
             var retVal = new Discount(currency)
@@ -46,7 +45,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing
             };
             return retVal;
         }
-        #endregion
 
         public override object Clone()
         {

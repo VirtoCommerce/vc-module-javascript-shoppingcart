@@ -118,7 +118,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
             }
         }
 
-        #region ITaxable Members
 
         /// <summary>
         /// Gets or sets the value of total shipping tax amount.
@@ -168,9 +167,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
                 TaxDetails = paymentTaxRate.Line.TaxDetails;
             }
         }
-        #endregion
 
-        #region IDiscountable Members
         public IList<Discount> Discounts { get; private set; }
 
         public void ApplyRewards(IEnumerable<PromotionReward> rewards)
@@ -192,7 +189,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
                 }
             }
         }
-        #endregion
 
         public override object Clone()
         {

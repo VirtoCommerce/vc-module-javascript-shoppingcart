@@ -309,13 +309,10 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
             }
         }
 
-        #region IValidatable Members
         public bool IsValid { get; set; }
 
         public IList<ValidationError> ValidationErrors { get; set; }
-        #endregion
 
-        #region IDiscountable Members
         public IList<Discount> Discounts { get; private set; }
 
         public Currency Currency { get; }
@@ -364,9 +361,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
                 coupon.AppliedSuccessfully = !string.IsNullOrEmpty(coupon.Code) && rewards.Any(x => x.IsValid && x.Coupon.EqualsInvariant(coupon.Code));
             }
         }
-        #endregion
 
-        #region ITaxable Members
 
         /// <summary>
         /// Gets or sets the value of total shipping tax amount.
@@ -417,18 +412,13 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
                 payment.ApplyTaxRates(taxRates);
             }
         }
-        #endregion
 
-        #region IHasLanguage Members
         public Language Language { get; set; }
-        #endregion
 
-        #region ICacheKey
         public override string GetCacheKey()
         {
             return string.Join(":", "Cart", Id, Name, CustomerId, StoreId, Currency?.Code, Type);
         }
-        #endregion
 
         public override string ToString()
         {

@@ -132,7 +132,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// </value>
         public IList<CartShipmentItem> Items { get; set; }
 
-        #region ITaxable Members
 
         /// <summary>
         /// Gets or sets the value of total shipping tax amount.
@@ -181,15 +180,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
                 TaxDetails = shipmentTaxRate.Line.TaxDetails;
             }
         }
-        #endregion
 
-        #region IValidatable Members
         public bool IsValid { get; set; }
 
         public IList<ValidationError> ValidationErrors { get; set; }
-        #endregion
 
-        #region IDiscountable Members
         public IList<Discount> Discounts { get; private set; }
 
         public Currency Currency { get; set; }
@@ -213,7 +208,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
                 }
             }
         }
-        #endregion
 
         public bool HasSameMethod(ShippingMethod method)
         {

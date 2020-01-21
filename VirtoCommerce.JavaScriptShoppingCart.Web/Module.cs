@@ -25,8 +25,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
             _container = container;
         }
 
-        #region IModule Members
-
         public override void Initialize()
         {
             base.Initialize();
@@ -91,7 +89,5 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
             role.Permissions = callApiPermission.Concat(permissions ?? Enumerable.Empty<Permission>()).ToArray();
             roleManagementService.AddOrUpdateRole(role);
         }
-
-        #endregion
     }
 }

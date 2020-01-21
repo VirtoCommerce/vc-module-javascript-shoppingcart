@@ -35,8 +35,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 {
     public sealed class Money : IComparable<Money>, IEquatable<Money>, IComparable, IConvertible<Money>, ICloneable
     {
-        #region Constructors
-
         public Money()
         {
         }
@@ -62,9 +60,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
             InternalAmount = amount;
         }
 
-        #endregion
 
-        #region Public Properties
 
         /// <summary>
         /// Accesses the internal representation of the value of the Money.
@@ -129,9 +125,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         {
             get { return Currency.NumberFormat.CurrencyDecimalDigits; }
         }
-        #endregion
-
-        #region Money Operators
 
         public override int GetHashCode()
         {
@@ -251,10 +244,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         {
             return new Money(first.InternalAmount / second.ConvertTo(first.Currency).InternalAmount, first.Currency);
         }
-
-        #endregion
-
-        #region Cast Operators
 
         public static bool operator ==(Money money, long value)
         {
@@ -381,10 +370,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
             return new Money(money.InternalAmount / value, money.Currency);
         }
 
-        #endregion
-
-        #region Functions
-
         public override string ToString()
         {
             return ToString(true, true);
@@ -448,10 +433,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
             return results;
         }
 
-        #endregion
-
-        #region IConvertible<Money> Members
-
         public Money ConvertTo(Currency currency)
         {
             if (Currency == currency)
@@ -461,15 +442,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 
             return new Money(InternalAmount * Currency.ExchangeRate / currency.ExchangeRate, currency);
         }
-        #endregion
 
-        #region ICloneable members
         public object Clone()
         {
             var result = MemberwiseClone() as Money;
             return result;
         }
-        #endregion
-
     }
 }

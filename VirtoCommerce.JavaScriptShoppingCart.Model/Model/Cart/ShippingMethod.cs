@@ -107,7 +107,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
             }
         }
 
-        #region ITaxable Members
 
         /// <summary>
         /// Gets the value of total shipping method tax.
@@ -165,9 +164,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
             return string.Join("&", ShipmentMethodCode, OptionName);
         }
 
-        #endregion
-
-        #region IDiscountable Members
         public IList<Discount> Discounts { get; private set; }
 
         public Currency Currency { get; set; }
@@ -190,7 +186,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
                 }
             }
         }
-        #endregion
 
         public override object Clone()
         {

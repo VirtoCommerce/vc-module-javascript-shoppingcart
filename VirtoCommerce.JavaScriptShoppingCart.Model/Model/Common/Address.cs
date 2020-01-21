@@ -42,7 +42,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         public string Email { get; set; }
 
         // TODO: Need to move out how to move from domain model
-        #region Shopify model compatible properties
         public string Id => Key;
 
         [JsonIgnore]
@@ -71,7 +70,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 
         [JsonIgnore]
         public string Province => RegionName;
-        #endregion
 
         public override string ToString()
         {

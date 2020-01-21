@@ -249,13 +249,10 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// <value>Used for dynamic properties management, contains object type string.</value>
         public string ObjectType { get; set; }
 
-        #region IValidatable Members
         public bool IsValid { get; set; }
 
         public IList<ValidationError> ValidationErrors { get; set; }
-        #endregion
 
-        #region ITaxable Members
 
         /// <summary>
         /// Gets or sets the value of total shipping tax amount.
@@ -304,9 +301,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
                 TaxDetails = lineItemTaxRate.Line.TaxDetails;
             }
         }
-        #endregion
 
-        #region IDiscountable  Members
         public Currency Currency { get; private set; }
 
         public IList<Discount> Discounts { get; private set; }
@@ -337,13 +332,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
                 }
             }
         }
-        #endregion
 
         public override string ToString()
         {
             return string.Format("cart lineItem #{0} {1} qty: {2}", Id ?? "undef", Name ?? "undef", Quantity);
         }
-        #region ICloneable members
 
         public override object Clone()
         {
@@ -380,6 +373,5 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
             return result;
         }
-        #endregion
     }
 }
