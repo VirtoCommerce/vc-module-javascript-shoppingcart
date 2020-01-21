@@ -7,7 +7,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Models.Requests
         [Required]
         public string CatalogId { get; set; }
 
-        [Required]
         public string CurrencySymbol { get; set; }
 
         public string ImageUrl { get; set; }
