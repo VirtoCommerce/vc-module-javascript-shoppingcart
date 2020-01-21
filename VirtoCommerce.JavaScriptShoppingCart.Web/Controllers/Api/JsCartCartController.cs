@@ -23,15 +23,15 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
     [CLSCompliant(false)]
     public class JsCartCartController : ApiController
     {
-        private readonly ICartManager _cartBuilder;
+        private readonly ICartManager _cartManager;
 
         private readonly ICrawler _crawler;
 
         private readonly ISettingsManager _settingManager;
 
-        public JsCartCartController(ICartBuilder cartBuilder, ICrawler crawler, ISettingsManager settingManager)
+        public JsCartCartController(ICartManager cartManager, ICrawler crawler, ISettingsManager settingManager)
         {
-            _cartBuilder = cartBuilder;
+            _cartManager = cartManager;
             _crawler = crawler;
             _settingManager = settingManager;
         }
@@ -43,8 +43,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
         {
             using (await AsyncLock.GetLockByKey(CacheKey.With(storeId, customerId, cartName, currency)).LockAsync())
             {
-                _cartBuilder.LoadOrCreateNewTransientCart(cartName, storeId, customerId, cultureName, currency);
-                return Ok(_cartBuilder.Cart);
+                _cartManager.LoadOrCreateNewTransientCart(cartName, storeId, customerId, cultureName, currency);
+                return Ok(_cartManager.Cart);
             }
         }
 
@@ -57,10 +57,10 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             using (await AsyncLock.GetLockByKey(CacheKey.With(typeof(ShoppingCart), cartId)).LockAsync())
             {
                 var comment = commentRequest?.Comment;
-                _cartBuilder.LoadCart(cartId, currency, cultureName);
+                _cartManager.LoadCart(cartId, currency, cultureName);
 
-                _cartBuilder.UpdateCartComment(comment);
-                _cartBuilder.Save();
+                _cartManager.UpdateCartComment(comment);
+                _cartManager.Save();
             }
 
             return Ok();
@@ -72,8 +72,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
         [ResponseType(typeof(int))]
         public int GetCartItemsCount([FromUri]string currency, [FromUri]string cultureName, [FromUri]string cartId)
         {
-            _cartBuilder.LoadCart(cartId, currency, cultureName);
-            return _cartBuilder.Cart.ItemsQuantity;
+            _cartManager.LoadCart(cartId, currency, cultureName);
+            return _cartManager.Cart.ItemsQuantity;
         }
 
 
@@ -84,9 +84,9 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
         {
             using (await AsyncLock.GetLockByKey(CacheKey.With(typeof(ShoppingCart), cartId)).LockAsync())
             {
-                _cartBuilder.LoadCart(cartId, currency, cultureName);
-                _cartBuilder.AddItem(cartItem.ProductId, cartItem.Quantity, cartItem.Price);
-                _cartBuilder.Save();
+                _cartManager.LoadCart(cartId, currency, cultureName);
+                _cartManager.AddItem(cartItem.ProductId, cartItem.Quantity, cartItem.Price);
+                _cartManager.Save();
                 return Ok();
             }
         }
@@ -100,9 +100,9 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
         {
             using (await AsyncLock.GetLockByKey(CacheKey.With(typeof(ShoppingCart), cartId)).LockAsync())
             {
-                _cartBuilder.LoadCart(cartId, currency, cultureName);
-                _cartBuilder.AddCoupon(couponCode);
-                _cartBuilder.Save();
+                _cartManager.LoadCart(cartId, currency, cultureName);
+                _cartManager.AddCoupon(couponCode);
+                _cartManager.Save();
 
                 return Ok();
             }
@@ -115,10 +115,10 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
         {
             using (await AsyncLock.GetLockByKey(CacheKey.With(typeof(ShoppingCart), cartId)).LockAsync())
             {
-                _cartBuilder.LoadCart(cartId, currency, cultureName);
-                _cartBuilder.TakeCart(_cartBuilder.Cart.Clone() as ShoppingCart);
-                _cartBuilder.Cart.Coupons = new[] { coupon };
-                _cartBuilder.EvaluatePromotions();
+                _cartManager.LoadCart(cartId, currency, cultureName);
+                _cartManager.TakeCart(_cartManager.Cart.Clone() as ShoppingCart);
+                _cartManager.Cart.Coupons = new[] { coupon };
+                _cartManager.EvaluatePromotions();
 
                 return Ok(coupon);
             }
@@ -132,9 +132,9 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
         {
             using (await AsyncLock.GetLockByKey(CacheKey.With(typeof(ShoppingCart), cartId)).LockAsync())
             {
-                _cartBuilder.LoadCart(cartId, currency, cultureName);
-                _cartBuilder.RemoveCoupon(couponCode);
-                _cartBuilder.Save();
+                _cartManager.LoadCart(cartId, currency, cultureName);
+                _cartManager.RemoveCoupon(couponCode);
+                _cartManager.Save();
             }
 
             return Ok();

@@ -33,11 +33,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
         public override void Initialize()
         {
             base.Initialize();
-			_container.RegisterType<ICartManager, CartManager>();
+            _container.RegisterType<ICartManager, CartManager>();
 
             _container.RegisterInstance<ICrawlingConfiguration>(new DefaultCrawlingConfiguration(PredefinedMappings.DefaultMapping));
             _container.RegisterType<ICrawler, DefaultCrawler>();
-            _container.RegisterType<ICartBuilder, CartBuilder>();
+            _container.RegisterType<ICartManager, CartManager>();
 
             var configuration = new MapperConfiguration(x =>
             {
