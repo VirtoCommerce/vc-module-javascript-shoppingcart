@@ -2,7 +2,7 @@ using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 {
-    public partial class CartShipmentItem : CloneableEntity
+    public class CartShipmentItem : CloneableEntity
     {
         public LineItem LineItem { get; set; }
 
