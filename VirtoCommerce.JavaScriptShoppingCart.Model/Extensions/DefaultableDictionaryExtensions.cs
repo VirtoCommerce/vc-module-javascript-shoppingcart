@@ -14,6 +14,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
     /// <summary>
     /// Represent dictionary  returning a default value if the key does not exist.
     /// </summary>
+    /// <typeparam name="TKey">Generic type parameter for key.</typeparam>
+    /// <typeparam name="TValue">Generic type parameter for value.</typeparam>
     public class DefaultableDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     {
         private readonly IDictionary<TKey, TValue> _dictionary;
