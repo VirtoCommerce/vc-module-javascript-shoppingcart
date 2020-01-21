@@ -45,7 +45,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Crawling
 
             if (_crawlingResult == null)
             {
-                throw new UnknownException();
+                return new CrawlingResult(crawlResult.ErrorException);
             }
 
             return _crawlingResult;
