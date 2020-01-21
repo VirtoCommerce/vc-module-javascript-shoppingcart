@@ -1,4 +1,4 @@
-﻿//Call this to register our module to main application
+//Call this to register our module to main application
 var cartModule = angular.module('virtoCommerce.cartModule');
 
 cartModule.component('vcCheckout', {
@@ -81,7 +81,8 @@ cartModule.component('vcCheckout', {
 				ctrl.checkout.shipment.shipmentMethodCode = undefined;
 				ctrl.checkout.shipment.shipmentMethodOption = undefined;
 			}
-			ctrl.cart.addOrUpdateShipment(ctrl.checkout.shipment);
+            ctrl.cart.addOrUpdateShipment(ctrl.checkout.shipment);
+            ctrl.validateCheckout(ctrl.checkout);
 		};
 
         ctrl.createOrder = function() {
