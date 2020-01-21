@@ -17,8 +17,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Crawling
 
         public int MinCrawlDelayPerDomainMilliSeconds { get; set; }
 
-        public string BuyButtonSelector { get; set; }
-
         public Dictionary<CrawlingAttributeType, string> Mapping { get; set; }
     }
 }
