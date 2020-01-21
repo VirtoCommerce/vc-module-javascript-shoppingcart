@@ -34,8 +34,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
         {
             base.Initialize();
 
-            var crawler = new DefaultCrawler(new DefaultCrawlingConfiguration(PredefinedMappings.DefaultMapping));
-            _container.RegisterInstance<ICrawler>(crawler);
+            _container.RegisterInstance<ICrawlingConfiguration>(new DefaultCrawlingConfiguration(PredefinedMappings.DefaultMapping));
+            _container.RegisterType<ICrawler, DefaultCrawler>();
             _container.RegisterType<ICartBuilder, CartBuilder>();
 
             var configuration = new MapperConfiguration(x =>
