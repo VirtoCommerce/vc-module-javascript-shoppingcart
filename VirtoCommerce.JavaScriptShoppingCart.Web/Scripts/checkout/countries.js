@@ -338,14 +338,14 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Andorra",
-			"code2": "",
-			"code3": "",
+			"code2": "AD",
+			"code3": "AND",
 			"regionType": "Region"
 		},
 		{
 			"name": "Angola",
-			"code2": "",
-			"code3": "",
+			"code2": "AO",
+			"code3": "AGO",
 			"regionType": "Region"
 		},
 		{
@@ -460,14 +460,14 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Aruba",
-			"code2": "",
-			"code3": "",
+			"code2": "AW",
+			"code3": "ABW",
 			"regionType": "Region"
 		},
 		{
 			"name": "Antigua And Barbuda",
-			"code2": "",
-			"code3": "",
+			"code2": "AG",
+			"code3": "ATG",
 			"regionType": "Region"
 		},
 		{
@@ -530,8 +530,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Bahamas",
-			"code2": "",
-			"code3": "",
+			"code2": "BS",
+			"code3": "BHS",
 			"regionType": "Region"
 		},
 		{
@@ -542,8 +542,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Barbados",
-			"code2": "",
-			"code3": "",
+			"code2": "BB",
+			"code3": "BRB",
 			"regionType": "Region"
 		},
 		{
@@ -566,14 +566,14 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Bermuda",
-			"code2": "",
-			"code3": "",
+			"code2": "BM",
+			"code3": "BMU",
 			"regionType": "Region"
 		},
 		{
 			"name": "Bhutan",
-			"code2": "",
-			"code3": "",
+			"code2": "BT",
+			"code3": "BTN",
 			"regionType": "Region"
 		},
 		{
@@ -712,8 +712,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Brunei",
-			"code2": "",
-			"code3": "",
+			"code2": "BN",
+			"code3": "BRN",
 			"regionType": "Region"
 		},
 		{
@@ -730,14 +730,14 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Republic of Cameroon",
-			"code2": "",
-			"code3": "",
+			"code2": "CM",
+			"code3": "CMR",
 			"regionType": "Region"
 		},
 		{
 			"name": "Cayman Islands",
-			"code2": "",
-			"code3": "",
+			"code2": "KY",
+			"code3": "CYM",
 			"regionType": "Region"
 		},
 		{
@@ -760,14 +760,14 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Comoros",
-			"code2": "",
-			"code3": "",
+			"code2": "KM",
+			"code3": "COM",
 			"regionType": "Region"
 		},
 		{
 			"name": "Congo",
-			"code2": "",
-			"code3": "",
+			"code2": "CG",
+			"code3": "COG",
 			"regionType": "Region"
 		},
 		{
@@ -778,8 +778,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Côte d'Ivoire",
-			"code2": "",
-			"code3": "",
+			"code2": "CI",
+			"code3": "CIV",
 			"regionType": "Region"
 		},
 		{
@@ -790,14 +790,14 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Curaçao",
-			"code2": "",
-			"code3": "",
+			"code2": "CW",
+			"code3": "CUW",
 			"regionType": "Region"
 		},
 		{
 			"name": "Cyprus",
-			"code2": "",
-			"code3": "",
+			"code2": "CY",
+			"code3": "CYP",
 			"regionType": "Region"
 		},
 		{
@@ -814,8 +814,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Dominica",
-			"code2": "",
-			"code3": "",
+			"code2": "DM",
+			"code3": "DMA",
 			"regionType": "Region"
 		},
 		{
@@ -980,8 +980,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Fiji",
-			"code2": "",
-			"code3": "",
+			"code2": "FJ",
+			"code3": "FJI",
 			"regionType": "Region"
 		},
 		{
@@ -998,14 +998,14 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "French Polynesia",
-			"code2": "",
-			"code3": "",
+			"code2": "PF",
+			"code3": "PYF",
 			"regionType": "Region"
 		},
 		{
 			"name": "Gambia",
-			"code2": "",
-			"code3": "",
+			"code2": "GM",
+			"code3": "GMB",
 			"regionType": "Region"
 		},
 		{
@@ -1022,14 +1022,14 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Ghana",
-			"code2": "",
-			"code3": "",
+			"code2": "GH",
+			"code3": "GHA",
 			"regionType": "Region"
 		},
 		{
 			"name": "Gibraltar",
-			"code2": "",
-			"code3": "",
+			"code2": "GI",
+			"code3": "GIB",
 			"regionType": "Region"
 		},
 		{
@@ -1046,14 +1046,14 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Grenada",
-			"code2": "",
-			"code3": "",
+			"code2": "GD",
+			"code3": "GRD",
 			"regionType": "Region"
 		},
 		{
 			"name": "Guadeloupe",
-			"code2": "",
-			"code3": "",
+			"code2": "GP",
+			"code3": "GLP",
 			"regionType": "Region"
 		},
 		{
@@ -1154,14 +1154,14 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Guernsey",
-			"code2": "",
-			"code3": "",
+			"code2": "GG",
+			"code3": "GGY",
 			"regionType": "Region"
 		},
 		{
 			"name": "Guyana",
-			"code2": "",
-			"code3": "",
+			"code2": "GY",
+			"code3": "GUY",
 			"regionType": "Region"
 		},
 		{
@@ -1498,8 +1498,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Isle Of Man",
-			"code2": "",
-			"code3": "",
+			"code2": "IM",
+			"code3": "IMN",
 			"regionType": "Region"
 		},
 		{
@@ -2160,8 +2160,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Jersey",
-			"code2": "",
-			"code3": "",
+			"code2": "JE",
+			"code3": "JEY",
 			"regionType": "Region"
 		},
 		{
@@ -2184,8 +2184,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Kosovo",
-			"code2": "",
-			"code3": "",
+			"code2": "XK",
+			"code3": "XKX",
 			"regionType": "Region"
 		},
 		{
@@ -2214,8 +2214,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Liberia",
-			"code2": "",
-			"code3": "",
+			"code2": "LR",
+			"code3": "LBR",
 			"regionType": "Region"
 		},
 		{
@@ -2238,20 +2238,20 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Macao",
-			"code2": "",
-			"code3": "",
+			"code2": "MO",
+			"code3": "MAC",
 			"regionType": "Region"
 		},
 		{
 			"name": "Macedonia, Republic Of",
-			"code2": "",
-			"code3": "",
+			"code2": "MK",
+			"code3": "MKD",
 			"regionType": "Region"
 		},
 		{
 			"name": "Madagascar",
-			"code2": "",
-			"code3": "",
+			"code2": "MG",
+			"code3": "MDG",
 			"regionType": "Region"
 		},
 		{
@@ -2340,8 +2340,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Mauritius",
-			"code2": "",
-			"code3": "",
+			"code2": "MU",
+			"code3": "MUS",
 			"regionType": "Region"
 		},
 		{
@@ -2482,21 +2482,21 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Moldova, Republic of",
-			"code2": "",
-			"code3": "",
-			"regionType": ""
+			"code2": "MD",
+			"code3": "MDA",
+			"regionType": "Region"
 		},
 		{
 			"name": "Monaco",
-			"code2": "",
-			"code3": "",
+			"code2": "MC",
+			"code3": "MCO",
 			"regionType": "Region"
 		},
 		{
 			"name": "Mongolia",
 			"code2": "MN",
 			"code3": "MNG",
-			"regionType": ""
+			"regionType": "Region"
 		},
 		{
 			"name": "Montenegro",
@@ -2512,8 +2512,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Mozambique",
-			"code2": "",
-			"code3": "",
+			"code2": "MZ",
+			"code3": "MOZ",
 			"regionType": "Region"
 		},
 		{
@@ -2524,8 +2524,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Namibia",
-			"code2": "",
-			"code3": "",
+			"code2": "NA",
+			"code3": "NAM",
 			"regionType": "Region"
 		},
 		{
@@ -2536,8 +2536,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Netherlands Antilles",
-			"code2": "",
-			"code3": "",
+			"code2": "AN",
+			"code3": "ANT",
 			"regionType": "Region"
 		},
 		{
@@ -2626,8 +2626,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Niger",
-			"code2": "",
-			"code3": "",
+			"code2": "NE",
+			"code3": "NER",
 			"regionType": "Region"
 		},
 		{
@@ -2656,8 +2656,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Palestinian Territory, Occupied",
-			"code2": "",
-			"code3": "",
+			"code2": "PS",
+			"code3": "PSE",
 			"regionType": "Region"
 		},
 		{
@@ -2668,15 +2668,15 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Papua New Guinea",
-			"code2": "",
-			"code3": "",
+			"code2": "PG",
+			"code3": "PNG",
 			"regionType": "Region"
 		},
 		{
 			"name": "Paraguay",
 			"code2": "PY",
 			"code3": "PRY",
-			"regionType": ""
+			"regionType": "Region"
 		},
 		{
 			"name": "Peru",
@@ -2792,8 +2792,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Reunion",
-			"code2": "",
-			"code3": "",
+			"code2": "RE",
+			"code3": "REU",
 			"regionType": "Region"
 		},
 		{
@@ -3142,32 +3142,32 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Saint Kitts And Nevis",
-			"code2": "",
-			"code3": "",
+			"code2": "KN",
+			"code3": "KNA",
 			"regionType": "Region"
 		},
 		{
 			"name": "Saint Lucia",
-			"code2": "",
-			"code3": "",
-			"regionType": ""
+			"code2": "LC",
+			"code3": "LCA",
+			"regionType": "Region"
 		},
 		{
 			"name": "Saint Martin",
-			"code2": "",
-			"code3": "",
+			"code2": "MF",
+			"code3": "MAF",
 			"regionType": "Region"
 		},
 		{
 			"name": "Sao Tome And Principe",
-			"code2": "",
-			"code3": "",
+			"code2": "ST",
+			"code3": "STP",
 			"regionType": "Region"
 		},
 		{
 			"name": "Samoa",
-			"code2": "",
-			"code3": "",
+			"code2": "WS",
+			"code3": "WSM",
 			"regionType": "Region"
 		},
 		{
@@ -3190,8 +3190,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Seychelles",
-			"code2": "",
-			"code3": "",
+			"code2": "SC",
+			"code3": "SYC",
 			"regionType": "Region"
 		},
 		{
@@ -3202,8 +3202,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Sint Maarten",
-			"code2": "",
-			"code3": "",
+			"code2": "SX",
+			"code3": "SXM",
 			"regionType": "Region"
 		},
 		{
@@ -3264,8 +3264,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "South Korea",
-			"code2": "",
-			"code3": "",
+			"code2": "KR",
+			"code3": "KOR",
 			"regionType": "Region"
 		},
 		{
@@ -3492,14 +3492,14 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "St. Vincent",
-			"code2": "",
-			"code3": "",
+			"code2": "VC",
+			"code3": "VCT",
 			"regionType": "Region"
 		},
 		{
 			"name": "Suriname",
-			"code2": "",
-			"code3": "",
+			"code2": "SR",
+			"code3": "SUR",
 			"regionType": "Region"
 		},
 		{
@@ -3534,8 +3534,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Tanzania, United Republic Of",
-			"code2": "",
-			"code3": "",
+			"code2": "TZ",
+			"code3": "TZA",
 			"regionType": "Region"
 		},
 		{
@@ -3564,14 +3564,14 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Turks and Caicos Islands",
-			"code2": "",
-			"code3": "",
+			"code2": "TC",
+			"code3": "TCA",
 			"regionType": "Region"
 		},
 		{
 			"name": "Uganda",
-			"code2": "",
-			"code3": "",
+			"code2": "UG",
+			"code3": "UGA",
 			"regionType": "Region"
 		},
 		{
@@ -3582,8 +3582,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "United Arab Emirates",
-			"code2": "",
-			"code3": "",
+			"code2": "AE",
+			"code3": "ARE",
 			"regions": [
 				{
 					"name": "Abu Dhabi",
@@ -3630,14 +3630,14 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Vanuatu",
-			"code2": "",
-			"code3": "",
+			"code2": "VU",
+			"code3": "VUT",
 			"regionType": "Region"
 		},
 		{
 			"name": "Venezuela",
-			"code2": "",
-			"code3": "",
+			"code2": "VE",
+			"code3": "VEN",
 			"regionType": "Region"
 		},
 		{
@@ -3648,8 +3648,8 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Virgin Islands, British",
-			"code2": "",
-			"code3": "",
+			"code2": "VG",
+			"code3": "VGB",
 			"regionType": "Region"
 		},
 		{
@@ -3660,9 +3660,9 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Zambia",
-			"code2": "",
-			"code3": "",
-			"regionType": ""
+			"code2": "ZM",
+			"code3": "ZMB",
+			"regionType": "Region"
 		},
 		{
 			"name": "Zimbabwe",
@@ -3678,104 +3678,104 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Aland Islands",
-			"code2": "",
-			"code3": "",
+			"code2": "ALA",
+			"code3": "AX",
 			"regionType": "Region"
 		},
 		{
 			"name": "Anguilla",
-			"code2": "",
-			"code3": "",
+			"code2": "AI",
+			"code3": "AIA",
 			"regionType": "Region"
 		},
 		{
 			"name": "Benin",
-			"code2": "",
-			"code3": "",
+			"code2": "BJ",
+			"code3": "BEN",
 			"regionType": "Region"
 		},
 		{
 			"name": "Bouvet Island",
-			"code2": "",
-			"code3": "",
+			"code2": "BV",
+			"code3": "BVT",
 			"regionType": "Region"
 		},
 		{
 			"name": "British Indian Ocean Territory",
-			"code2": "",
-			"code3": "",
+			"code2": "IO",
+			"code3": "IOT",
 			"regionType": "Region"
 		},
 		{
 			"name": "Burkina Faso",
-			"code2": "",
-			"code3": "",
+			"code2": "BF",
+			"code3": "BFA",
 			"regionType": "Region"
 		},
 		{
 			"name": "Burundi",
-			"code2": "",
-			"code3": "",
+			"code2": "BI",
+			"code3": "BDI",
 			"regionType": "Region"
 		},
 		{
 			"name": "Cape Verde",
-			"code2": "",
-			"code3": "",
+			"code2": "CV",
+			"code3": "CPV",
 			"regionType": "Region"
 		},
 		{
 			"name": "Central African Republic",
-			"code2": "",
-			"code3": "",
+			"code2": "CF",
+			"code3": "CAF",
 			"regionType": "Region"
 		},
 		{
 			"name": "Chad",
-			"code2": "",
-			"code3": "",
+			"code2": "TD",
+			"code3": "TCD",
 			"regionType": "Region"
 		},
 		{
 			"name": "Christmas Island",
-			"code2": "",
-			"code3": "",
+			"code2": "CX",
+			"code3": "CXR",
 			"regionType": "Region"
 		},
 		{
 			"name": "Cocos (Keeling) Islands",
-			"code2": "",
-			"code3": "",
+			"code2": "CC",
+			"code3": "CCK",
 			"regionType": "Region"
 		},
 		{
 			"name": "Congo, The Democratic Republic Of The",
-			"code2": "",
-			"code3": "",
+			"code2": "CD",
+			"code3": "COD",
 			"regionType": "Region"
 		},
 		{
 			"name": "Cook Islands",
-			"code2": "",
-			"code3": "",
+			"code2": "CK",
+			"code3": "COK",
 			"regionType": "Region"
 		},
 		{
 			"name": "Cuba",
-			"code2": "",
-			"code3": "",
+			"code2": "CU",
+			"code3": "CUB",
 			"regionType": "Region"
 		},
 		{
 			"name": "Djibouti",
-			"code2": "",
-			"code3": "",
+			"code2": "DJ",
+			"code3": "DJI",
 			"regionType": "Region"
 		},
 		{
 			"name": "Equatorial Guinea",
-			"code2": "",
-			"code3": "",
+			"code2": "GQ",
+			"code3": "GNQ",
 			"regionType": "Region"
 		},
 		{
@@ -3786,56 +3786,56 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Falkland Islands (Malvinas)",
-			"code2": "",
-			"code3": "",
+			"code2": "FK",
+			"code3": "FLK",
 			"regionType": "Region"
 		},
 		{
 			"name": "French Guiana",
-			"code2": "",
-			"code3": "",
+			"code2": "GF",
+			"code3": "GUF",
 			"regionType": "Region"
 		},
 		{
 			"name": "French Southern Territories",
-			"code2": "",
-			"code3": "",
+			"code2": "TF",
+			"code3": "ATF",
 			"regionType": "Region"
 		},
 		{
 			"name": "Gabon",
-			"code2": "",
-			"code3": "",
+			"code2": "GA",
+			"code3": "GAB",
 			"regionType": "Region"
 		},
 		{
 			"name": "Guinea",
-			"code2": "",
-			"code3": "",
+			"code2": "GN",
+			"code3": "GIN",
 			"regionType": "Region"
 		},
 		{
 			"name": "Guinea Bissau",
-			"code2": "",
-			"code3": "",
+			"code2": "GW",
+			"code3": "GNB",
 			"regionType": "Region"
 		},
 		{
 			"name": "Heard Island And Mcdonald Islands",
-			"code2": "",
-			"code3": "",
+			"code2": "HM",
+			"code3": "HMD",
 			"regionType": "Region"
 		},
 		{
 			"name": "Holy See (Vatican City State)",
-			"code2": "",
-			"code3": "",
+			"code2": "VA",
+			"code3": "VAT",
 			"regionType": "Region"
 		},
 		{
 			"name": "Iran, Islamic Republic Of",
-			"code2": "",
-			"code3": "",
+			"code2": "IR",
+			"code3": "IRN",
 			"regionType": "Region"
 		},
 		{
@@ -3846,38 +3846,38 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Kiribati",
-			"code2": "",
-			"code3": "",
+			"code2": "KI",
+			"code3": "KIR",
 			"regionType": "Region"
 		},
 		{
 			"name": "Korea, Democratic People's Republic Of",
-			"code2": "",
-			"code3": "",
+			"code2": "KP",
+			"code3": "PRK",
 			"regionType": "Region"
 		},
 		{
 			"name": "Lao People's Democratic Republic",
-			"code2": "",
-			"code3": "",
+			"code2": "LA",
+			"code3": "LAO",
 			"regionType": "Region"
 		},
 		{
 			"name": "Lesotho",
-			"code2": "",
-			"code3": "",
+			"code2": "LS",
+			"code3": "LSO",
 			"regionType": "Region"
 		},
 		{
 			"name": "Libyan Arab Jamahiriya",
-			"code2": "",
-			"code3": "",
+			"code2": "LY",
+			"code3": "LBY",
 			"regionType": "Region"
 		},
 		{
 			"name": "Malawi",
-			"code2": "",
-			"code3": "",
+			"code2": "MW",
+			"code3": "MWI",
 			"regionType": "Region"
 		},
 		{
@@ -3888,92 +3888,92 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Martinique",
-			"code2": "",
-			"code3": "",
+			"code2": "MQ",
+			"code3": "MTQ",
 			"regionType": "Region"
 		},
 		{
 			"name": "Mauritania",
-			"code2": "",
-			"code3": "",
+			"code2": "MR",
+			"code3": "MRT",
 			"regionType": "Region"
 		},
 		{
 			"name": "Mayotte",
-			"code2": "",
-			"code3": "",
+			"code2": "YT",
+			"code3": "MYT",
 			"regionType": "Region"
 		},
 		{
 			"name": "Montserrat",
-			"code2": "",
-			"code3": "",
+			"code2": "MS",
+			"code3": "MSR",
 			"regionType": "Region"
 		},
 		{
 			"name": "Nauru",
-			"code2": "",
-			"code3": "",
+			"code2": "NR",
+			"code3": "NRU",
 			"regionType": "Region"
 		},
 		{
 			"name": "New Caledonia",
-			"code2": "",
-			"code3": "",
+			"code2": "NC",
+			"code3": "NCL",
 			"regionType": "Region"
 		},
 		{
 			"name": "Niue",
-			"code2": "",
-			"code3": "",
+			"code2": "NU",
+			"code3": "NIU",
 			"regionType": "Region"
 		},
 		{
 			"name": "Norfolk Island",
-			"code2": "",
-			"code3": "",
+			"code2": "NF",
+			"code3": "NFK",
 			"regionType": "Region"
 		},
 		{
 			"name": "Pitcairn",
-			"code2": "",
-			"code3": "",
+			"code2": "PN",
+			"code3": "PCN",
 			"regionType": "Region"
 		},
 		{
 			"name": "Saint Barthélemy",
-			"code2": "",
-			"code3": "",
+			"code2": "BL",
+			"code3": "BLM",
 			"regionType": "Region"
 		},
 		{
 			"name": "Saint Helena",
-			"code2": "",
-			"code3": "",
+			"code2": "SH",
+			"code3": "SHN",
 			"regionType": "Region"
 		},
 		{
 			"name": "Saint Pierre And Miquelon",
-			"code2": "",
-			"code3": "",
+			"code2": "PM",
+			"code3": "SPM",
 			"regionType": "Region"
 		},
 		{
 			"name": "San Marino",
-			"code2": "",
-			"code3": "",
+			"code2": "SM",
+			"code3": "SMR",
 			"regionType": "Region"
 		},
 		{
 			"name": "Sierra Leone",
-			"code2": "",
-			"code3": "",
+			"code2": "SL",
+			"code3": "SLE",
 			"regionType": "Region"
 		},
 		{
 			"name": "Solomon Islands",
-			"code2": "",
-			"code3": "",
+			"code2": "SB",
+			"code3": "SLB",
 			"regionType": "Region"
 		},
 		{
@@ -3984,26 +3984,26 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "South Georgia And The South Sandwich Islands",
-			"code2": "",
-			"code3": "",
+			"code2": "GS",
+			"code3": "SGS",
 			"regionType": "Region"
 		},
 		{
 			"name": "Sudan",
-			"code2": "",
-			"code3": "",
+			"code2": "SD",
+			"code3": "SDN",
 			"regionType": "Region"
 		},
 		{
 			"name": "Svalbard And Jan Mayen",
-			"code2": "",
-			"code3": "",
+			"code2": "SJ",
+			"code3": "SJM",
 			"regionType": "Region"
 		},
 		{
 			"name": "Swaziland",
-			"code2": "",
-			"code3": "",
+			"code2": "SZ",
+			"code3": "SWZ",
 			"regionType": "Region"
 		},
 		{
@@ -4014,50 +4014,50 @@ cartModule.service('virtoCommerce.cartModule.countriesService', function () {
 		},
 		{
 			"name": "Timor Leste",
-			"code2": "",
-			"code3": "",
+			"code2": "TL",
+			"code3": "TLS",
 			"regionType": "Region"
 		},
 		{
 			"name": "Togo",
-			"code2": "",
-			"code3": "",
+			"code2": "TG",
+			"code3": "TGO",
 			"regionType": "Region"
 		},
 		{
 			"name": "Tokelau",
-			"code2": "",
-			"code3": "",
+			"code2": "TK",
+			"code3": "TKL",
 			"regionType": "Region"
 		},
 		{
 			"name": "Tonga",
-			"code2": "",
-			"code3": "",
+			"code2": "TO",
+			"code3": "TON",
 			"regionType": "Region"
 		},
 		{
 			"name": "Tuvalu",
-			"code2": "",
-			"code3": "",
+			"code2": "TV",
+			"code3": "TUV",
 			"regionType": "Region"
 		},
 		{
 			"name": "United States Minor Outlying Islands",
-			"code2": "",
-			"code3": "",
+			"code2": "UM",
+			"code3": "UMI",
 			"regionType": "State"
 		},
 		{
 			"name": "Wallis And Futuna",
-			"code2": "",
-			"code3": "",
+			"code2": "WF",
+			"code3": "WLF",
 			"regionType": "Region"
 		},
 		{
 			"name": "Western Sahara",
-			"code2": "",
-			"code3": "",
+			"code2": "EH",
+			"code3": "ESH",
 			"regionType": "Region"
 		}
 	];
