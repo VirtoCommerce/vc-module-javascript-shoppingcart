@@ -1,7 +1,7 @@
-﻿namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
+namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 {
-	public interface IConvertible<T>
-	{
-		T ConvertTo(Currency currency);
-	}
+    public interface IConvertible<T>
+    {
+        T ConvertTo(Currency currency);
+    }
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using PlatformSecurity = VirtoCommerce.Platform.Core.Security;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security
@@ -9,7 +9,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security
         {
             Id = "js-shopping-cart-user",
             Name = "JS Shopping cart user",
-            Description = "This role allow to work with carts and create orders"
+            Description = "This role allow to work with carts and create orders",
         };
 
         public static class Permissions

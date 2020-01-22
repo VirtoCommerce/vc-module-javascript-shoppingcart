@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -42,7 +42,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             {
                 Name = user.UserName,
                 Emails = new List<string>() { user.Email },
-                FullName = user.UserName
+                FullName = user.UserName,
             };
 
             _memberService.SaveChanges(new Member[] { contact });
@@ -64,14 +64,13 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
         }
 
         /// <summary>
-        /// Get current user details
+        /// Get current user details.
         /// </summary>
         [HttpGet]
         [Route("currentuser")]
         [ResponseType(typeof(ApplicationUserExtended))]
         public async Task<IHttpActionResult> GetCurrentUser()
         {
-
             var user = await _securityService.FindByNameAsync(User.Identity.Name, UserDetails.Full);
             return Ok(user);
         }

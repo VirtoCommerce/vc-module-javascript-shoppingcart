@@ -7,6 +7,8 @@ using AutoMapper;
 using Microsoft.Practices.Unity;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services;
+using VirtoCommerce.JavaScriptShoppingCart.Crawling;
+using VirtoCommerce.JavaScriptShoppingCart.Crawling.Mapping;
 using VirtoCommerce.JavaScriptShoppingCart.Data.Services;
 using VirtoCommerce.JavaScriptShoppingCart.Web.Bundles;
 using VirtoCommerce.JavaScriptShoppingCart.Web.Mappings;
@@ -16,9 +18,6 @@ using Role = VirtoCommerce.Platform.Core.Security.Role;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Web
 {
-    using VirtoCommerce.JavaScriptShoppingCart.Crawling;
-    using VirtoCommerce.JavaScriptShoppingCart.Crawling.Mapping;
-
     public class Module : ModuleBase
     {
         private readonly IUnityContainer _container;
@@ -27,8 +26,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
         {
             _container = container;
         }
-
-        #region IModule Members
 
         public override void Initialize()
         {
@@ -44,7 +41,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
             });
 
 #pragma warning disable S125 // Could be uncommented when debugging mappings
-            //configuration.AssertConfigurationIsValid();
+
+            // configuration.AssertConfigurationIsValid();
 #pragma warning restore S125
 
             var mapper = configuration.CreateMapper();
@@ -86,7 +84,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
             var allPermissions = securityService.GetAllPermissions().Where(x => SecurityConstants.Permissions.AllPermissions.Contains(x.Id));
 
             InitializeRole(roleManagementService, SecurityConstants.JsShoppingCartUser, allPermissions);
-
         }
 
         private void InitializeRole(IRoleManagementService roleManagementService, Role jsShoppingCartRole, IEnumerable<Permission> permissions)
@@ -96,7 +93,5 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
             role.Permissions = callApiPermission.Concat(permissions ?? Enumerable.Empty<Permission>()).ToArray();
             roleManagementService.AddOrUpdateRole(role);
         }
-
-        #endregion
     }
 }

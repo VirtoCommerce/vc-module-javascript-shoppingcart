@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing
 {
-	public interface IDiscountable
-	{
-		Currency Currency { get; }
+    public interface IDiscountable
+    {
+        Currency Currency { get; }
 
-		IList<Discount> Discounts { get; }
+        IList<Discount> Discounts { get; }
 
-		void ApplyRewards(IEnumerable<PromotionReward> rewards);
-	}
+        void ApplyRewards(IEnumerable<PromotionReward> rewards);
+    }
 }
