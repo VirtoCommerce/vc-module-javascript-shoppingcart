@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using VirtoCommerce.Domain.Marketing.Services;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing;
@@ -7,9 +7,10 @@ using marketing = VirtoCommerce.Domain.Marketing.Model;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
 {
-    class PromotionEvaluator
+    public class PromotionEvaluator
     {
         private readonly IMarketingPromoEvaluator _marketingPromoEvaluator;
+
         public PromotionEvaluator(IMarketingPromoEvaluator marketingPromoEvaluator)
         {
             _marketingPromoEvaluator = marketingPromoEvaluator;
@@ -17,8 +18,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
 
         public virtual void EvaluateDiscounts(marketing.PromotionEvaluationContext context, IEnumerable<IDiscountable> owners)
         {
-
-
             var rewards = _marketingPromoEvaluator.EvaluatePromotion(context).Rewards.ToList();
             ApplyRewards(rewards, owners);
         }
@@ -36,6 +35,5 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
                 }
             }
         }
-
     }
 }

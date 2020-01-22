@@ -29,7 +29,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
         private readonly IPromotionEvaluator _promotionEvaluator;
         private readonly ITaxEvaluator _taxEvaluator;
 
-        public CartManager(IShoppingCartService shoppingCartService,
+        public CartManager(
+            IShoppingCartService shoppingCartService,
             IShoppingCartSearchService shoppingCartSearchService,
             IStoreService storeService,
             IMemberService memberService,
@@ -49,7 +50,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
         public void LoadOrCreateNewTransientCart(string cartName, string storeId, string userId, string languageCode, string currencyCode)
         {
             // TechDebt: Need to add caching
-
             var criteria = CreateCartSearchCriteria(cartName, storeId, userId, currencyCode);
 
             var cartSearchResult = _shoppingCartSearchService.Search(criteria);
@@ -129,8 +129,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
 
             if (payment.BillingAddress != null)
             {
-                //Reset address key because it can equal a customer address from profile and if not do that it may cause
-                //address primary key duplication error for multiple carts with the same address 
+                // Reset address key because it can equal a customer address from profile and if not do that it may cause
+                // address primary key duplication error for multiple carts with the same address
                 payment.BillingAddress.Key = null;
             }
 
@@ -154,10 +154,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             shipment.Currency = Cart.Currency;
             if (shipment.DeliveryAddress != null)
             {
-                //Reset address key because it can equal a customer address from profile and if not do that it may cause
-                //address primary key duplication error for multiple carts with the same address 
+                // Reset address key because it can equal a customer address from profile and if not do that it may cause
+                // address primary key duplication error for multiple carts with the same address
                 shipment.DeliveryAddress.Key = null;
             }
+
             Cart.Shipments.Add(shipment);
 
             if (!string.IsNullOrEmpty(shipment.ShipmentMethodCode) && !Cart.IsTransient())
@@ -168,6 +169,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
                 {
                     throw new PlatformException(string.Format(CultureInfo.InvariantCulture, "Unknown shipment method: {0} with option: {1}", shipment.ShipmentMethodCode, shipment.ShipmentMethodOption));
                 }
+
                 shipment.Price = shippingMethod.Price;
                 shipment.DiscountAmount = shippingMethod.DiscountAmount;
                 shipment.TaxType = shippingMethod.TaxType;
@@ -223,17 +225,15 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             var isReadOnlyLineItems = Cart.Items.Any(i => i.IsReadOnly);
             if (!isReadOnlyLineItems)
             {
-                //Get product inventory to fill InStockQuantity parameter of LineItem
-                //required for some promotions evaluation
+                // Get product inventory to fill InStockQuantity parameter of LineItem
+                // required for some promotions evaluation
 
-                //foreach (var lineItem in Cart.Items.Where(x => x.Product != null).ToList())
-                //{
+                // foreach (var lineItem in Cart.Items.Where(x => x.Product != null).ToList())
+                // {
                 //    lineItem.InStockQuantity = (int)lineItem.Product.AvailableQuantity;
-                //}
-
+                // }
                 var evalContext = Cart.ToPromotionEvaluationContext();
                 _promotionEvaluator.EvaluateDiscounts(evalContext, new[] { Cart });
-
             }
         }
 
@@ -252,11 +252,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
 
             if (!paymentMethods.IsNullOrEmpty())
             {
-                //Evaluate promotions cart and apply rewards for available shipping methods
+                // Evaluate promotions cart and apply rewards for available shipping methods
                 var promoEvalContext = Cart.ToPromotionEvaluationContext();
                 _promotionEvaluator.EvaluateDiscounts(promoEvalContext, paymentMethods);
 
-                //Evaluate taxes for available payments                 
+                // Evaluate taxes for available payments
                 var taxEvalContext = Cart.ToTaxEvaluationContextDto();
                 taxEvalContext.Lines.Clear();
                 taxEvalContext.Lines.AddRange(paymentMethods.SelectMany(x => x.ToTaxLines()));
@@ -270,7 +270,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
         {
             EnsureCartExists();
 
-            //Request available shipping rates 
+            // Request available shipping rates
             var store = _storeService.GetById(Cart.StoreId);
 
             var result = Enumerable.Empty<ShippingMethod>();
@@ -282,11 +282,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
 
             if (!result.IsNullOrEmpty())
             {
-                //Evaluate promotions cart and apply rewards for available shipping methods
+                // Evaluate promotions cart and apply rewards for available shipping methods
                 var promoEvalContext = Cart.ToPromotionEvaluationContext();
                 _promotionEvaluator.EvaluateDiscounts(promoEvalContext, result);
 
-                //Evaluate taxes for available shipping rates
+                // Evaluate taxes for available shipping rates
                 var taxEvalContext = Cart.ToTaxEvaluationContextDto();
                 taxEvalContext.Lines.Clear();
                 taxEvalContext.Lines.AddRange(result.SelectMany(x => x.ToTaxLines()));
@@ -364,6 +364,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             foreach (var lineItem in Cart.Items.ToList())
             {
                 lineItem.ValidationErrors.Clear();
+
                 // Code validation here if it needed
                 lineItem.IsValid = !lineItem.ValidationErrors.Any();
             }
@@ -496,6 +497,5 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
 
             return availableShippingRates;
         }
-
     }
 }

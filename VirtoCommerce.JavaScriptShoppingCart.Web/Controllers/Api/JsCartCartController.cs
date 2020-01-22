@@ -51,7 +51,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> UpdateCartComment([FromUri]string currency, [FromUri]string cultureName, [FromUri]string cartId, [FromBody] UpdateCartCommentRequest commentRequest)
         {
-
             using (await AsyncLock.GetLockByKey(CacheKey.With(typeof(ShoppingCart), cartId)).LockAsync())
             {
                 var comment = commentRequest?.Comment;
@@ -119,7 +118,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             return Ok();
         }
 
-        [HttpPost()]
+        [HttpPost]
         [Route("items")]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> AddItemToCart([FromUri]string currency, [FromUri]string cultureName, [FromUri]string cartId, [FromUri] AddCartLineItemRequest lineItemRequest)

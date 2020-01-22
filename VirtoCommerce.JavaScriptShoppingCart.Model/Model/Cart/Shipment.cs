@@ -7,7 +7,7 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 {
-    public partial class Shipment : CloneableEntity, IDiscountable, IValidatable, ITaxable
+    public class Shipment : CloneableEntity, IDiscountable, IValidatable, ITaxable
     {
         public Shipment()
         {
@@ -33,65 +33,65 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         }
 
         /// <summary>
-        /// Gets or sets the value of shipping method code
+        /// Gets or sets the value of shipping method code.
         /// </summary>
         public string ShipmentMethodCode { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of shipping method option
+        /// Gets or sets the value of shipping method option.
         /// </summary>
         public string ShipmentMethodOption { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of fulfillment center id
+        /// Gets or sets the value of fulfillment center id.
         /// </summary>
         public string FulfillmentCenterId { get; set; }
 
         /// <summary>
-        /// Gets or sets the delivery address
+        /// Gets or sets the delivery address.
         /// </summary>
         /// <value>
-        /// Address object
+        /// Address object.
         /// </value>
         public Address DeliveryAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of volumetric weight
+        /// Gets or sets the value of volumetric weight.
         /// </summary>
         public decimal? VolumetricWeight { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of weight unit
+        /// Gets or sets the value of weight unit.
         /// </summary>
         public string WeightUnit { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of weight
+        /// Gets or sets the value of weight.
         /// </summary>
         public decimal? Weight { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of measurement units
+        /// Gets or sets the value of measurement units.
         /// </summary>
         public string MeasureUnit { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of height
+        /// Gets or sets the value of height.
         /// </summary>
         public decimal? Height { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of length
+        /// Gets or sets the value of length.
         /// </summary>
         public decimal? Length { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of width
+        /// Gets or sets the value of width.
         /// </summary>
         public decimal? Width { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of shipping price
+        /// Gets or sets the value of shipping price.
         /// </summary>
         public Money Price { get; set; }
 
@@ -103,62 +103,71 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
         /// <summary>
         /// Gets the value of total shipping price without taxes
-        /// Price + Fee - DiscountAmount;
+        /// Price + Fee - DiscountAmount;.
         /// </summary>
         public Money Total { get; set; }
 
         /// <summary>
         /// Gets the value of total shipping price including taxes
-        /// Total * TaxPercentRate
+        /// Total * TaxPercentRate.
         /// </summary>
         public Money TotalWithTax { get; set; }
 
         /// <summary>
-        /// Gets the value of total shipping discount amount
+        /// Gets the value of total shipping discount amount.
         /// </summary>
         public Money DiscountAmount { get; set; }
+
         /// <summary>
-        /// DiscountAmount * TaxPercentRate
+        /// DiscountAmount * TaxPercentRate.
         /// </summary>
         public Money DiscountAmountWithTax { get; set; }
 
         /// <summary>
-        /// Gets or sets the collection of shipping items
+        /// Gets or sets the collection of shipping items.
         /// </summary>
         /// <value>
-        /// Collection of CartShipmentItem objects
+        /// Collection of CartShipmentItem objects.
         /// </value>
         public IList<CartShipmentItem> Items { get; set; }
 
-        #region ITaxable Members
         /// <summary>
-        /// Gets or sets the value of total shipping tax amount
+        /// Gets or sets the value of total shipping tax amount.
         /// </summary>
         public Money TaxTotal { get; set; }
 
         public decimal TaxPercentRate { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of shipping tax type
+        /// Gets or sets the value of shipping tax type.
         /// </summary>
         public string TaxType { get; set; }
 
         /// <summary>
-        /// Gets or sets the collection of line item tax details lines
+        /// Gets or sets the collection of line item tax details lines.
         /// </summary>
         /// <value>
-        /// Collection of TaxDetail objects
+        /// Collection of TaxDetail objects.
         /// </value>
         public IList<TaxDetail> TaxDetails { get; set; }
+
+        public bool IsValid { get; set; }
+
+        public IList<ValidationError> ValidationErrors { get; set; }
+
+        public IList<Discount> Discounts { get; private set; }
+
+        public Currency Currency { get; set; }
 
         public void ApplyTaxRates(IEnumerable<TaxRate> taxRates)
         {
             TaxPercentRate = 0m;
-            var shipmentTaxRate = taxRates.FirstOrDefault(x => x.Line.Id != null && x.Line.Id.EqualsInvariant(Id ?? ""));
+            var shipmentTaxRate = taxRates.FirstOrDefault(x => x.Line.Id != null && x.Line.Id.EqualsInvariant(Id ?? string.Empty));
             if (shipmentTaxRate == null)
             {
                 shipmentTaxRate = taxRates.FirstOrDefault(x => x.Line.Code.EqualsInvariant(ShipmentMethodCode) && x.Line.Name.EqualsInvariant(ShipmentMethodOption));
             }
+
             if (shipmentTaxRate != null && shipmentTaxRate.Rate.Amount > 0)
             {
                 if (shipmentTaxRate.PercentRate > 0)
@@ -177,17 +186,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
                 TaxDetails = shipmentTaxRate.Line.TaxDetails;
             }
         }
-        #endregion
-
-        #region IValidatable Members
-        public bool IsValid { get; set; }
-        public IList<ValidationError> ValidationErrors { get; set; }
-        #endregion
-
-        #region IDiscountable Members
-        public IList<Discount> Discounts { get; private set; }
-
-        public Currency Currency { get; set; }
 
         public void ApplyRewards(IEnumerable<PromotionReward> rewards)
         {
@@ -208,12 +206,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
                 }
             }
         }
-        #endregion
 
         public bool HasSameMethod(ShippingMethod method)
         {
             // Return true if the fields match:
-            return (ShipmentMethodCode.EqualsInvariant(method.ShipmentMethodCode)) && (ShipmentMethodOption.EqualsInvariant(method.OptionName));
+            return ShipmentMethodCode.EqualsInvariant(method.ShipmentMethodCode) && ShipmentMethodOption.EqualsInvariant(method.OptionName);
         }
 
         public override object Clone()
@@ -232,14 +229,17 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
             {
                 result.Discounts = new List<Discount>(Discounts.Select(x => x.Clone() as Discount));
             }
+
             if (TaxDetails != null)
             {
                 result.TaxDetails = new List<TaxDetail>(TaxDetails.Select(x => x.Clone() as TaxDetail));
             }
+
             if (Items != null)
             {
                 result.Items = new List<CartShipmentItem>(Items.Select(x => x.Clone() as CartShipmentItem));
             }
+
             if (ValidationErrors != null)
             {
                 result.ValidationErrors = new List<ValidationError>(ValidationErrors.Select(x => x.Clone() as ValidationError));

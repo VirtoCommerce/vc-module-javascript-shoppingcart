@@ -5,7 +5,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Models.Requests
 {
     public class AddCartLineItemRequest
     {
-
         [Required]
         public string CatalogId { get; set; }
 
@@ -25,6 +24,5 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Models.Requests
 
         [Required]
         public string Sku { get; set; }
-
     }
 }
