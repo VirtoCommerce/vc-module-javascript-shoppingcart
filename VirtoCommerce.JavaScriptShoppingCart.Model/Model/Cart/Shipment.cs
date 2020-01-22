@@ -102,12 +102,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         public Money PriceWithTax { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of shipping price including tax
-        /// Price * TaxPercentRate
-        /// </summary>
-        public Money PriceWithTax { get; set; }
-
-        /// <summary>
         /// Gets the value of total shipping price without taxes
         /// Price + Fee - DiscountAmount;
         /// </summary>
@@ -233,12 +227,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
             result.Total = Total?.Clone() as Money;
             result.TotalWithTax = TotalWithTax?.Clone() as Money;
             result.TaxTotal = TaxTotal?.Clone() as Money;
-
-        public bool HasSameMethod(ShippingMethod method)
-        {
-            // Return true if the fields match:
-            return ShipmentMethodCode.EqualsInvariant(method.ShipmentMethodCode) && ShipmentMethodOption.EqualsInvariant(method.OptionName);
-        }
 
             if (Discounts != null)
             {
