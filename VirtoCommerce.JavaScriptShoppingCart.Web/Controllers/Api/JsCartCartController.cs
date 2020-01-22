@@ -17,9 +17,15 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
     {
         private readonly ICartBuilder _cartBuilder;
 
-        public JsCartCartController(ICartBuilder cartBuilder)
+        private readonly ICrawler _crawler;
+
+        private readonly ISettingsManager _settingManager;
+
+        public JsCartCartController(ICartBuilder cartBuilder, ICrawler crawler, ISettingsManager settingManager)
         {
             _cartBuilder = cartBuilder;
+            _crawler = crawler;
+            _settingManager = settingManager;
         }
 
         [HttpGet]
@@ -79,6 +85,87 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             }
 
             return Ok();
+        }
+
+        [HttpPost]
+        [ResponseType(typeof(CustomerOrder))]
+        [Route("{cartId}/item/")]
+        public async Task<IHttpActionResult> AddItemToCart(string cartId, string apiKey, [FromBody]LineItemRequest lineItem)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var crawlingUri = BuildCrawlingUri();
+
+            var crawlingResult = await _crawler.CrawlAsync(crawlingUri);
+
+            if (!crawlingResult.IsSuccess)
+            {
+                return BadRequest(crawlingResult.Exception?.Message);
+            }
+            else
+            {
+                var singleProduct = crawlingResult.CrawlingItems.Single(item => item.ProductId == lineItem.ProductId);
+
+                ValidateField(lineItem.ListPrice, singleProduct.Price);
+                ValidateField(lineItem.Quantity.ToString(), singleProduct.Quantity);
+                ValidateField(lineItem.Sku, singleProduct.Sku);
+            }
+
+            using (var client = new HttpClient())
+            using (var stream = await Request.Content.ReadAsStreamAsync())
+            {
+                // this version is not working: await client.PostAsync(urlWithKey, this.Request.Content)
+                // says: https://www.google.com/search?q=Cannot+close+stream+until+all+bytes+are+written.&oq=Cannot+close+stream+until+all+bytes+are+written.&aqs=chrome..69i57j0l7.635j0j7&sourceid=chrome&ie=UTF-8
+                // so we are using this:
+                stream.Position = 0;
+                var content = new StreamContent(stream);
+                content.Headers.ContentType = Request.Content.Headers.ContentType;
+
+                var forwardingUri = BuildForwardingUri(cartId, apiKey);
+
+                var result = await client.PostAsync(forwardingUri, content);
+
+                return StatusCode(result.StatusCode);
+            }
+        }
+
+        private static void ValidateField(string requested, string crawled)
+        {
+            if (requested != crawled)
+            {
+                throw new Exception("The request has been hacked");
+            }
+        }
+
+        private Uri BuildCrawlingUri()
+        {
+            const string ParameterName = "JavaScriptShoppingCart.CrawlingTargetUrl";
+            var value = _settingManager.GetValue(ParameterName, string.Empty);
+
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException(ParameterName);
+            }
+
+            return new Uri(value);
+        }
+
+        private Uri BuildForwardingUri(string cartId, string apiKey)
+        {
+            var requestUri = Request.RequestUri;
+            var hardCodedPath = $"/api/carts/{cartId}/items";
+            var uriBuilder = new UriBuilder(
+                                 requestUri.Scheme,
+                                 requestUri.Host,
+                                 requestUri.Port,
+                                 hardCodedPath)
+            {
+                Query = $"api_key={apiKey}"
+            };
+            return uriBuilder.Uri;
         }
     }
 }

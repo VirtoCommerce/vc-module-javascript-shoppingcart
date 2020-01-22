@@ -16,6 +16,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtoCommerce.JavaScriptShoppingCart.Crawling", "VirtoCommerce.JavaScriptShoppingCart.Crawling\VirtoCommerce.JavaScriptShoppingCart.Crawling.csproj", "{2DE4E44E-61DC-4AF8-83A2-68D92EAD77AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtoCommerce.JavaScriptShoppingCart.TesingTool", "VirtoCommerce.JavaScriptShoppingCart.TesingTool\VirtoCommerce.JavaScriptShoppingCart.TesingTool.csproj", "{3AAE9597-0EE6-4998-82B8-3DFA5A89A4AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +42,14 @@ Global
 		{A27D3D81-A31A-4C39-BE9B-3BFAE32BD7EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A27D3D81-A31A-4C39-BE9B-3BFAE32BD7EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A27D3D81-A31A-4C39-BE9B-3BFAE32BD7EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DE4E44E-61DC-4AF8-83A2-68D92EAD77AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DE4E44E-61DC-4AF8-83A2-68D92EAD77AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DE4E44E-61DC-4AF8-83A2-68D92EAD77AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DE4E44E-61DC-4AF8-83A2-68D92EAD77AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AAE9597-0EE6-4998-82B8-3DFA5A89A4AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AAE9597-0EE6-4998-82B8-3DFA5A89A4AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AAE9597-0EE6-4998-82B8-3DFA5A89A4AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AAE9597-0EE6-4998-82B8-3DFA5A89A4AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
