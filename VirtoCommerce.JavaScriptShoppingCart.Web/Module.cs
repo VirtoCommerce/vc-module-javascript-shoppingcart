@@ -7,6 +7,8 @@ using AutoMapper;
 using Microsoft.Practices.Unity;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services;
+using VirtoCommerce.JavaScriptShoppingCart.Crawling;
+using VirtoCommerce.JavaScriptShoppingCart.Crawling.Mapping;
 using VirtoCommerce.JavaScriptShoppingCart.Data.Services;
 using VirtoCommerce.JavaScriptShoppingCart.Web.Bundles;
 using VirtoCommerce.JavaScriptShoppingCart.Web.Mappings;
