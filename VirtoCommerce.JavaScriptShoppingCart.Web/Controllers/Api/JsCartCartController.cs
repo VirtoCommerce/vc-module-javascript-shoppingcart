@@ -128,22 +128,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            var crawlingUri = BuildCrawlingUri();
-            var crawlingResult = await _crawler.CrawlAsync(crawlingUri);
-
-            if (!crawlingResult.IsSuccess)
-            {
-                return BadRequest(crawlingResult.Exception?.Message);
-            }
-            else
-            {
-                var singleProduct = crawlingResult.CrawlingItems.Single(item => item.ProductId == lineItemRequest.ProductId);
-
-                ValidateField(lineItemRequest.ListPrice.ToString(), singleProduct.Price);
-                ValidateField(lineItemRequest.Quantity.ToString(), singleProduct.Quantity);
-                ValidateField(lineItemRequest.Sku, singleProduct.Sku);
-            }
-
             using (await AsyncLock.GetLockByKey(CacheKey.With(typeof(ShoppingCart), cartId)).LockAsync())
             {
                 _cartManager.LoadCart(cartId, currency, cultureName);
@@ -151,27 +135,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
                 _cartManager.Save();
                 return Ok();
             }
-        }
-
-        private static void ValidateField(string requested, string crawled)
-        {
-            if (requested != crawled)
-            {
-                throw new Exception("The request has been hacked");
-            }
-        }
-
-        private Uri BuildCrawlingUri()
-        {
-            const string settingName = "JavaScriptShoppingCart.CrawlingTargetUrl";
-            var value = _settingManager.GetValue(settingName, string.Empty);
-
-            if (string.IsNullOrEmpty(value))
-            {
-                throw new PlatformException($"Setting {settingName} is not setted.");
-            }
-
-            return new Uri(value);
         }
     }
 }
