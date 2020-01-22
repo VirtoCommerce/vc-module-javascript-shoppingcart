@@ -4,14 +4,15 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
     using System.Collections.Generic;
 
     /// <summary>
-    /// Represent dictionary returning a default value if the key does not exist.
+    /// Represents a dictionary returning a default value if the key does not exist.
     /// </summary>
     /// <typeparam name="TKey">Generic type parameter for key.</typeparam>
     /// <typeparam name="TValue">Generic type parameter for value.</typeparam>
     public class DefaultableDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     {
-        private readonly IDictionary<TKey, TValue> _dictionary;
         private readonly TValue _defaultValue;
+
+        private readonly IDictionary<TKey, TValue> _dictionary;
 
         public DefaultableDictionary(IDictionary<TKey, TValue> dictionary, TValue defaultValue)
         {
@@ -38,7 +39,10 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
         {
             get
             {
-                var values = new List<TValue>(_dictionary.Values) { _defaultValue };
+                var values = new List<TValue>(_dictionary.Values)
+                             {
+                                 _defaultValue,
+                             };
                 return values;
             }
         }
@@ -61,19 +65,14 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
             }
         }
 
-        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
-        {
-            return _dictionary.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
         public void Add(KeyValuePair<TKey, TValue> item)
         {
             _dictionary.Add(item);
+        }
+
+        public void Add(TKey key, TValue value)
+        {
+            _dictionary.Add(key, value);
         }
 
         public void Clear()
@@ -86,24 +85,24 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
             return _dictionary.Contains(item);
         }
 
-        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
-        {
-            _dictionary.CopyTo(array, arrayIndex);
-        }
-
-        public bool Remove(KeyValuePair<TKey, TValue> item)
-        {
-            return _dictionary.Remove(item);
-        }
-
         public bool ContainsKey(TKey key)
         {
             return _dictionary.ContainsKey(key);
         }
 
-        public void Add(TKey key, TValue value)
+        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
         {
-            _dictionary.Add(key, value);
+            _dictionary.CopyTo(array, arrayIndex);
+        }
+
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+        {
+            return _dictionary.GetEnumerator();
+        }
+
+        public bool Remove(KeyValuePair<TKey, TValue> item)
+        {
+            return _dictionary.Remove(item);
         }
 
         public bool Remove(TKey key)
@@ -119,6 +118,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
             }
 
             return true;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }
