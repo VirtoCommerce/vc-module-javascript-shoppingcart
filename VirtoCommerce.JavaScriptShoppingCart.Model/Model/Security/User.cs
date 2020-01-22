@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security

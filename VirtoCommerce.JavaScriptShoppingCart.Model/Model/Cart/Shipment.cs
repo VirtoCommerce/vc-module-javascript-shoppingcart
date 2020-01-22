@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing;
@@ -95,6 +95,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// </summary>
         public Money Price { get; set; }
 
+        /// <summary>
+        /// Gets or sets the value of shipping price including tax
+        /// Price * TaxPercentRate.
+        /// </summary>
+        public Money PriceWithTax { get; set; }
 
         /// <summary>
         /// Gets or sets the value of shipping price including tax
@@ -229,6 +234,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
             result.TotalWithTax = TotalWithTax?.Clone() as Money;
             result.TaxTotal = TaxTotal?.Clone() as Money;
 
+        public bool HasSameMethod(ShippingMethod method)
+        {
+            // Return true if the fields match:
+            return ShipmentMethodCode.EqualsInvariant(method.ShipmentMethodCode) && ShipmentMethodOption.EqualsInvariant(method.OptionName);
+        }
 
             if (Discounts != null)
             {

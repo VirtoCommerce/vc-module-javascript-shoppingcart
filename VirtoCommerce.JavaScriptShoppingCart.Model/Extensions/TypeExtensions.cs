@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,66 +6,65 @@ using System.Reflection;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
 {
-	public static class TypeExtensions
-	{
-		public static Type[] GetTypeInheritanceChainTo(this Type type, Type toBaseType)
-		{
-			var retVal = new List<Type> { type };
+    public static class TypeExtensions
+    {
+        private static readonly ConcurrentDictionary<Type, string> PrettyPrintCache = new ConcurrentDictionary<Type, string>();
+        private static readonly ConcurrentDictionary<Type, string> TypeCacheKeys = new ConcurrentDictionary<Type, string>();
 
-			var baseType = type.BaseType;
+        public static Type[] GetTypeInheritanceChainTo(this Type type, Type toBaseType)
+        {
+            var retVal = new List<Type> { type };
 
-			while (baseType != toBaseType && baseType != typeof(object))
-			{
-				retVal.Add(baseType);
-				baseType = baseType.BaseType;
-			}
+            var baseType = type.BaseType;
 
-			return retVal.ToArray();
-		}
+            while (baseType != toBaseType && baseType != typeof(object))
+            {
+                retVal.Add(baseType);
+                baseType = baseType.BaseType;
+            }
 
-		private static readonly ConcurrentDictionary<Type, string> PrettyPrintCache = new ConcurrentDictionary<Type, string>();
+            return retVal.ToArray();
+        }
 
-		public static string PrettyPrint(this Type type)
-		{
-			return PrettyPrintCache.GetOrAdd(
-				type,
-				t =>
-				{
-					try
-					{
-						return PrettyPrintRecursive(t, 0);
-					}
-					catch (Exception)
-					{
-						return t.Name;
-					}
-				});
-		}
+        public static string PrettyPrint(this Type type)
+        {
+            return PrettyPrintCache.GetOrAdd(
+                type,
+                t =>
+                {
+                    try
+                    {
+                        return PrettyPrintRecursive(t, 0);
+                    }
+                    catch (Exception)
+                    {
+                        return t.Name;
+                    }
+                });
+        }
 
-		private static readonly ConcurrentDictionary<Type, string> TypeCacheKeys = new ConcurrentDictionary<Type, string>();
-		public static string GetCacheKey(this Type type)
-		{
-			return TypeCacheKeys.GetOrAdd(type, t => $"{t.PrettyPrint()}");
-		}
+        public static string GetCacheKey(this Type type)
+        {
+            return TypeCacheKeys.GetOrAdd(type, t => $"{t.PrettyPrint()}");
+        }
 
-		private static string PrettyPrintRecursive(Type type, int depth)
-		{
-			if (depth > 3)
-			{
-				return type.Name;
-			}
+        private static string PrettyPrintRecursive(Type type, int depth)
+        {
+            if (depth > 3)
+            {
+                return type.Name;
+            }
 
-			var nameParts = type.Name.Split('`');
-			if (nameParts.Length == 1)
-			{
-				return nameParts[0];
-			}
+            var nameParts = type.Name.Split('`');
+            if (nameParts.Length == 1)
+            {
+                return nameParts[0];
+            }
 
-			var genericArguments = type.GetTypeInfo().GetGenericArguments();
-			return !type.IsConstructedGenericType
-				? $"{nameParts[0]}<{new string(',', genericArguments.Length - 1)}>"
-				: $"{nameParts[0]}<{string.Join(",", genericArguments.Select(t => PrettyPrintRecursive(t, depth + 1)))}>";
-		}
-
-	}
+            var genericArguments = type.GetTypeInfo().GetGenericArguments();
+            return !type.IsConstructedGenericType
+                ? $"{nameParts[0]}<{new string(',', genericArguments.Length - 1)}>"
+                : $"{nameParts[0]}<{string.Join(",", genericArguments.Select(t => PrettyPrintRecursive(t, depth + 1)))}>";
+        }
+    }
 }
