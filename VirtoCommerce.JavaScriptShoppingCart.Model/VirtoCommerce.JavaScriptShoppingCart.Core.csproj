@@ -53,7 +53,6 @@
     <Compile Include="Extensions\CacheKey.cs" />
     <Compile Include="Extensions\DefaultableDictionary.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
-    <Compile Include="Model\Cart\AddCartItemRequest.cs" />
     <Compile Include="Model\Cart\CartShipmentItem.cs" />
     <Compile Include="Model\Cart\IValidatable.cs" />
     <Compile Include="Model\Cart\LineItem.cs" />
@@ -62,7 +61,6 @@
     <Compile Include="Model\Cart\Shipment.cs" />
     <Compile Include="Model\Cart\ShippingMethod.cs" />
     <Compile Include="Model\Cart\ShoppingCart.cs" />
-    <Compile Include="Model\Cart\UpdateCartCommentRequest.cs" />
     <Compile Include="Model\Cart\ValidationError.cs" />
     <Compile Include="Model\Cart\ValidationErrors\PriceError.cs" />
     <Compile Include="Model\Cart\ValidationErrors\UnavailableError.cs" />

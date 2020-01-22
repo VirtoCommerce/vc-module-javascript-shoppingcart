@@ -11,11 +11,9 @@ using VirtoCommerce.Platform.Core.Common;
 namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
 {
     using System.Linq;
-    using System.Net.Http;
-
-    using VirtoCommerce.Domain.Order.Model;
     using VirtoCommerce.JavaScriptShoppingCart.Crawling;
     using VirtoCommerce.JavaScriptShoppingCart.Web.Models.Requests;
+    using VirtoCommerce.Platform.Core.Exceptions;
     using VirtoCommerce.Platform.Core.Settings;
 
     [AllowAnonymous]
@@ -44,6 +42,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             using (await AsyncLock.GetLockByKey(CacheKey.With(storeId, customerId, cartName, currency)).LockAsync())
             {
                 _cartManager.LoadOrCreateNewTransientCart(cartName, storeId, customerId, cultureName, currency);
+                _cartManager.Validate();
                 return Ok(_cartManager.Cart);
             }
         }
@@ -66,7 +65,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             return Ok();
         }
 
-
         [HttpGet]
         [Route("{cartId}/itemscount")]
         [ResponseType(typeof(int))]
@@ -75,23 +73,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             _cartManager.LoadCart(cartId, currency, cultureName);
             return _cartManager.Cart.ItemsQuantity;
         }
-
-
-        [HttpPost()]
-        [Route("items")]
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> AddItemToCart([FromUri]string currency, [FromUri]string cultureName, [FromUri]string cartId, [FromUri] AddCartItemRequest cartItem)
-        {
-            using (await AsyncLock.GetLockByKey(CacheKey.With(typeof(ShoppingCart), cartId)).LockAsync())
-            {
-                _cartManager.LoadCart(cartId, currency, cultureName);
-                _cartManager.AddItem(cartItem.ProductId, cartItem.Quantity, cartItem.Price);
-                _cartManager.Save();
-                return Ok();
-            }
-        }
-
-
 
         [HttpPost]
         [Route("{cartId}/coupons/{couponCode}")]
@@ -124,7 +105,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             }
         }
 
-
         [HttpDelete]
         [Route("{cartId}/coupons/{couponCode?}")]
         [ResponseType(typeof(void))]
@@ -140,10 +120,10 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             return Ok();
         }
 
-        [HttpPost]
-        [ResponseType(typeof(CustomerOrder))]
-        [Route("{cartId}/item/")]
-        public async Task<IHttpActionResult> AddItemToCart(string cartId, string apiKey, [FromBody]LineItemRequest lineItem)
+        [HttpPost()]
+        [Route("items")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> AddItemToCart([FromUri]string currency, [FromUri]string cultureName, [FromUri]string cartId, [FromUri] AddCartLineItemRequest lineItemRequest)
         {
             if (!ModelState.IsValid)
             {
@@ -151,7 +131,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             }
 
             var crawlingUri = BuildCrawlingUri();
-
             var crawlingResult = await _crawler.CrawlAsync(crawlingUri);
 
             if (!crawlingResult.IsSuccess)
@@ -160,28 +139,19 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             }
             else
             {
-                var singleProduct = crawlingResult.CrawlingItems.Single(item => item.ProductId == lineItem.ProductId);
+                var singleProduct = crawlingResult.CrawlingItems.Single(item => item.ProductId == lineItemRequest.ProductId);
 
-                ValidateField(lineItem.ListPrice, singleProduct.Price);
-                ValidateField(lineItem.Quantity.ToString(), singleProduct.Quantity);
-                ValidateField(lineItem.Sku, singleProduct.Sku);
+                ValidateField(lineItemRequest.ListPrice.ToString(), singleProduct.Price);
+                ValidateField(lineItemRequest.Quantity.ToString(), singleProduct.Quantity);
+                ValidateField(lineItemRequest.Sku, singleProduct.Sku);
             }
 
-            using (var client = new HttpClient())
-            using (var stream = await Request.Content.ReadAsStreamAsync())
+            using (await AsyncLock.GetLockByKey(CacheKey.With(typeof(ShoppingCart), cartId)).LockAsync())
             {
-                // this version is not working: await client.PostAsync(urlWithKey, this.Request.Content)
-                // says: https://www.google.com/search?q=Cannot+close+stream+until+all+bytes+are+written.&oq=Cannot+close+stream+until+all+bytes+are+written.&aqs=chrome..69i57j0l7.635j0j7&sourceid=chrome&ie=UTF-8
-                // so we are using this:
-                stream.Position = 0;
-                var content = new StreamContent(stream);
-                content.Headers.ContentType = Request.Content.Headers.ContentType;
-
-                var forwardingUri = BuildForwardingUri(cartId, apiKey);
-
-                var result = await client.PostAsync(forwardingUri, content);
-
-                return StatusCode(result.StatusCode);
+                _cartManager.LoadCart(cartId, currency, cultureName);
+                _cartManager.AddItem(lineItemRequest.ProductId, lineItemRequest.Quantity, lineItemRequest.ListPrice, lineItemRequest.CatalogId, lineItemRequest.Sku, lineItemRequest.Name, lineItemRequest.ImageUrl);
+                _cartManager.Save();
+                return Ok();
             }
         }
 
@@ -195,30 +165,15 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
 
         private Uri BuildCrawlingUri()
         {
-            const string ParameterName = "JavaScriptShoppingCart.CrawlingTargetUrl";
-            var value = _settingManager.GetValue(ParameterName, string.Empty);
+            const string settingName = "JavaScriptShoppingCart.CrawlingTargetUrl";
+            var value = _settingManager.GetValue(settingName, string.Empty);
 
             if (string.IsNullOrEmpty(value))
             {
-                throw new ArgumentNullException(ParameterName);
+                throw new PlatformException($"Setting {settingName} is not setted.");
             }
 
             return new Uri(value);
-        }
-
-        private Uri BuildForwardingUri(string cartId, string apiKey)
-        {
-            var requestUri = Request.RequestUri;
-            var hardCodedPath = $"/api/carts/{cartId}/items";
-            var uriBuilder = new UriBuilder(
-                                 requestUri.Scheme,
-                                 requestUri.Host,
-                                 requestUri.Port,
-                                 hardCodedPath)
-            {
-                Query = $"api_key={apiKey}"
-            };
-            return uriBuilder.Uri;
         }
     }
 }

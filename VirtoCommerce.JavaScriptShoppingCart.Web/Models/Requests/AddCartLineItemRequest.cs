@@ -1,18 +1,18 @@
+using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
+
 namespace VirtoCommerce.JavaScriptShoppingCart.Web.Models.Requests
 {
-    using System.ComponentModel.DataAnnotations;
-
-    public class LineItemRequest
+    public class AddCartLineItemRequest
     {
+
         [Required]
         public string CatalogId { get; set; }
-
-        public string CurrencySymbol { get; set; }
 
         public string ImageUrl { get; set; }
 
         [Required]
-        public string ListPrice { get; set; }
+        public decimal ListPrice { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -25,5 +25,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Models.Requests
 
         [Required]
         public string Sku { get; set; }
+
     }
 }

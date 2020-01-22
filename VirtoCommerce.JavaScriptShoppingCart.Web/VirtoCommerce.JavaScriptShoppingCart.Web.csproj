@@ -237,7 +237,8 @@
     <Compile Include="Controllers\Api\JsCartCartController.cs" />
     <Compile Include="Mappings\MappingProfile.cs" />
     <Compile Include="Controllers\Api\JsCartSecurityController.cs" />
-    <Compile Include="Models\Requests\LineItemRequest.cs" />
+    <Compile Include="Models\Requests\AddCartLineItemRequest.cs" />
+    <Compile Include="Models\Requests\UpdateCartCommentRequest.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

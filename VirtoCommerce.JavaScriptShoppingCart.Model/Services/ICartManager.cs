@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services
@@ -39,18 +39,22 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services
         /// <param name="cartName"></param>
         /// <param name="storeId"></param>
         /// <param name="userId"></param>
-        /// <param name="language"></param>
-        /// <param name="currency"></param>
+        /// <param name="languageCode"></param>
+        /// <param name="currencyCode"></param>
         /// <returns></returns>
         void LoadOrCreateNewTransientCart(string cartName, string storeId, string userId, string languageCode, string currencyCode);
 
         /// <summary>
-        /// Add new product to cart
+        /// Add product to cart
         /// </summary>
         /// <param name="productId"></param>
         /// <param name="quantity"></param>
-        /// <returns></returns>
-        void AddItem(string productId, int quantity, decimal price);
+        /// <param name="listPrice"></param>
+        /// <param name="catalogId"></param>
+        /// <param name="sku"></param>
+        /// <param name="name"></param>
+        /// <param name="imageUrl"></param>
+        void AddItem(string productId, int quantity, decimal listPrice, string catalogId, string sku, string name, string imageUrl);
 
         /// <summary>
         /// Change cart item qty by product index
@@ -155,8 +159,14 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services
         /// <returns></returns>
         void EvaluateTaxes();
 
+        /// <summary>
+        /// Validate cart.
+        /// </summary>
         void Validate();
 
+        /// <summary>
+        /// Save cart.
+        /// </summary>
         void Save();
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -75,6 +75,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
         public void AddCoupon(string couponCode)
         {
             EnsureCartExists();
+
             if (!Cart.Coupons.Any(c => c.Code.EqualsInvariant(couponCode)))
             {
                 Cart.Coupons.Add(new Coupon { Code = couponCode });
@@ -94,11 +95,20 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             }
         }
 
-        public void AddItem(string productId, int quantity, decimal price)
+        public void AddItem(string productId, int quantity, decimal listPrice, string catalogId = null, string sku = null, string name = null, string imageUrl = null)
         {
             EnsureCartExists();
 
-            var lineItem = new LineItem(Cart.Currency, Cart.Language) { ProductId = productId, Quantity = quantity, ListPrice = new Money(price, Cart.Currency) };
+            var lineItem = new LineItem(Cart.Currency, Cart.Language)
+            {
+                ProductId = productId,
+                Quantity = quantity,
+                ListPrice = new Money(listPrice, Cart.Currency),
+                CatalogId = catalogId,
+                Sku = sku,
+                Name = name,
+                ImageUrl = imageUrl,
+            };
 
             var existingLineItem = Cart.Items.FirstOrDefault(li => li.ProductId == lineItem.ProductId);
             if (existingLineItem != null)
@@ -116,12 +126,14 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
         {
             EnsureCartExists();
             RemoveExistingPayment(payment);
+
             if (payment.BillingAddress != null)
             {
                 //Reset address key because it can equal a customer address from profile and if not do that it may cause
                 //address primary key duplication error for multiple carts with the same address 
                 payment.BillingAddress.Key = null;
             }
+
             Cart.Payments.Add(payment);
 
             if (!string.IsNullOrEmpty(payment.PaymentGatewayCode) && !Cart.IsTransient())
@@ -138,9 +150,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
         public void AddOrUpdateShipment(Shipment shipment)
         {
             EnsureCartExists();
-
             RemoveExistingShipmentAsync(shipment);
-
             shipment.Currency = Cart.Currency;
             if (shipment.DeliveryAddress != null)
             {
@@ -149,7 +159,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
                 shipment.DeliveryAddress.Key = null;
             }
             Cart.Shipments.Add(shipment);
-
 
             if (!string.IsNullOrEmpty(shipment.ShipmentMethodCode) && !Cart.IsTransient())
             {
@@ -240,6 +249,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
 
             var store = _storeService.GetById(Cart.StoreId);
             var paymentMethods = store.PaymentMethods.Select(x => x.ToCartPaymentMethod(Cart));
+
             if (!paymentMethods.IsNullOrEmpty())
             {
                 //Evaluate promotions cart and apply rewards for available shipping methods
@@ -252,6 +262,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
                 taxEvalContext.Lines.AddRange(paymentMethods.SelectMany(x => x.ToTaxLines()));
                 _taxEvaluator.EvaluateTaxes(taxEvalContext, paymentMethods);
             }
+
             return paymentMethods;
         }
 
@@ -281,6 +292,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
                 taxEvalContext.Lines.AddRange(result.SelectMany(x => x.ToTaxLines()));
                 _taxEvaluator.EvaluateTaxes(taxEvalContext, result);
             }
+
             return result;
         }
 
@@ -295,7 +307,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             _shoppingCartService.Delete(new[] { Cart.Id });
             Cart = null;
         }
-
 
         public void RemoveItem(string lineItemId)
         {
@@ -321,16 +332,12 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
 
         public void Save()
         {
-
             EnsureCartExists();
             EvaluatePromotions();
-            // await EvaluateTaxesAsync();
+            EvaluateTaxes();
             var cartDto = Cart.ToShopingCartDto();
             _shoppingCartService.SaveChanges(new[] { cartDto });
-            //Evict cart from cache
-            //CartCacheRegion.ExpireCart(Cart); // storefront
             LoadCart(Cart.Id, Cart.Currency.Code, Cart.Language.CultureName);
-            // TakeCart(cart); //storefront
         }
 
         public void TakeCart(ShoppingCart cart)
@@ -381,7 +388,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             }
         }
 
-
         protected virtual domain_cart_model.ShoppingCartSearchCriteria CreateCartSearchCriteria(string cartName, string storeId, string userId, string currency)
         {
             var result = AbstractTypeFactory<domain_cart_model.ShoppingCartSearchCriteria>.TryCreateInstance();
@@ -414,7 +420,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             return result;
         }
 
-
         protected virtual void EnsureCartExists()
         {
             if (Cart == null)
@@ -422,7 +427,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
                 throw new PlatformException("Cart not loaded.");
             }
         }
-
 
         protected virtual void AddLineItem(LineItem lineItem)
         {
@@ -437,7 +441,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
                 Cart.Items.Add(lineItem);
             }
         }
-
 
         protected virtual void ChangeItemQuantity(LineItem lineItem, int quantity)
         {
@@ -454,7 +457,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             }
         }
 
-
         protected virtual void RemoveExistingPayment(Payment payment)
         {
             if (payment != null)
@@ -467,7 +469,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             }
         }
 
-
         protected virtual void RemoveExistingShipmentAsync(Shipment shipment)
         {
             if (shipment != null)
@@ -479,7 +480,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
                 }
             }
         }
-
 
         protected virtual ICollection<domain_shipping_model.ShippingRate> GetAvailableShippingRates()
         {
