@@ -62,7 +62,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         {
         }
 
-
         /// <summary>
         /// Currency code may be used ISO 4217.
         /// </summary>
