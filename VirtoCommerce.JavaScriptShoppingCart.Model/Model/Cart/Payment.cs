@@ -116,10 +116,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         public void ApplyTaxRates(IEnumerable<TaxRate> taxRates)
         {
             TaxPercentRate = 0m;
-            var paymentTaxRate = taxRates.FirstOrDefault(x => x.Line.Id != null && x.Line.Id.EqualsInvariant(Id ?? string.Empty));
+            var taxRatesList = taxRates.ToList();
+            var paymentTaxRate = taxRatesList.FirstOrDefault(x => x.Line.Id != null && x.Line.Id.EqualsInvariant(Id ?? string.Empty));
             if (paymentTaxRate == null)
             {
-                paymentTaxRate = taxRates.FirstOrDefault(x => x.Line.Code.EqualsInvariant(PaymentGatewayCode));
+                paymentTaxRate = taxRatesList.FirstOrDefault(x => x.Line.Code.EqualsInvariant(PaymentGatewayCode));
             }
 
             if (paymentTaxRate != null)

@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Extensions;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing;
-using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Model.Marketing;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Tax;
 using VirtoCommerce.Platform.Core.Common;
@@ -349,8 +348,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         {
             Discounts.Clear();
             DiscountAmount = new Money(Currency);
-
-            var cartRewards = rewards.Where(x => x.RewardType == PromotionRewardType.CartSubtotalReward);
+            var rewardsList = rewards.ToList();
+            var cartRewards = rewardsList.Where(x => x.RewardType == PromotionRewardType.CartSubtotalReward);
             foreach (var reward in cartRewards)
             {
                 // When a discount is applied to the cart subtotal, the tax calculation has already been applied, and is reflected in the tax subtotal.
@@ -366,19 +365,19 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
                 }
             }
 
-            var lineItemRewards = rewards.Where(x => x.RewardType == PromotionRewardType.CatalogItemAmountReward);
+            var lineItemRewards = rewardsList.Where(x => x.RewardType == PromotionRewardType.CatalogItemAmountReward).ToList();
             foreach (var lineItem in Items)
             {
                 lineItem.ApplyRewards(lineItemRewards);
             }
 
-            var shipmentRewards = rewards.Where(x => x.RewardType == PromotionRewardType.ShipmentReward);
+            var shipmentRewards = rewardsList.Where(x => x.RewardType == PromotionRewardType.ShipmentReward).ToList();
             foreach (var shipment in Shipments)
             {
                 shipment.ApplyRewards(shipmentRewards);
             }
 
-            var paymentRewards = rewards.Where(x => x.RewardType == PromotionRewardType.PaymentReward);
+            var paymentRewards = rewardsList.Where(x => x.RewardType == PromotionRewardType.PaymentReward).ToList();
             foreach (var payment in Payments)
             {
                 payment.ApplyRewards(paymentRewards);
@@ -386,13 +385,14 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
             foreach (var coupon in Coupons)
             {
-                coupon.AppliedSuccessfully = !string.IsNullOrEmpty(coupon.Code) && rewards.Any(x => x.IsValid && x.Coupon.EqualsInvariant(coupon.Code));
+                coupon.AppliedSuccessfully = !string.IsNullOrEmpty(coupon.Code) && rewardsList.Any(x => x.IsValid && x.Coupon.EqualsInvariant(coupon.Code));
             }
         }
 
         public void ApplyTaxRates(IEnumerable<TaxRate> taxRates)
         {
             TaxPercentRate = 0m;
+            var taxRatesList = taxRates.ToList();
             foreach (var lineItem in Items)
             {
                 // Get percent rate from line item
@@ -401,17 +401,17 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
                     TaxPercentRate = lineItem.TaxPercentRate;
                 }
 
-                lineItem.ApplyTaxRates(taxRates);
+                lineItem.ApplyTaxRates(taxRatesList);
             }
 
             foreach (var shipment in Shipments)
             {
-                shipment.ApplyTaxRates(taxRates);
+                shipment.ApplyTaxRates(taxRatesList);
             }
 
             foreach (var payment in Payments)
             {
-                payment.ApplyTaxRates(taxRates);
+                payment.ApplyTaxRates(taxRatesList);
             }
         }
 

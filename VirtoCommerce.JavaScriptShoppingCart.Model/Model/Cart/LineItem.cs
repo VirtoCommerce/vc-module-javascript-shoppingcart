@@ -282,29 +282,33 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         public void ApplyTaxRates(IEnumerable<TaxRate> taxRates)
         {
             TaxPercentRate = 0m;
-            var lineItemTaxRate = taxRates.FirstOrDefault(x => x.Line.Id != null && x.Line.Id.EqualsInvariant(Id ?? string.Empty));
-            if (lineItemTaxRate == null)
+            var taxRatesList = taxRates.ToList();
+            var taxRate = taxRatesList.FirstOrDefault(x => x.Line.Id != null && x.Line.Id.EqualsInvariant(Id ?? string.Empty));
+            if (taxRate == null)
             {
-                lineItemTaxRate = taxRates.FirstOrDefault(x => x.Line.Code != null && x.Line.Code.EqualsInvariant(Sku ?? string.Empty));
+                taxRate = taxRatesList.FirstOrDefault(x => x.Line.Code != null && x.Line.Code.EqualsInvariant(Sku ?? string.Empty));
             }
 
-            if (lineItemTaxRate != null)
+            if (taxRate == null)
             {
-                if (lineItemTaxRate.PercentRate > 0)
-                {
-                    TaxPercentRate = lineItemTaxRate.PercentRate;
-                }
-                else
-                {
-                    var amount = ExtendedPrice.Amount > 0 ? ExtendedPrice.Amount : SalePrice.Amount;
-                    if (amount > 0)
-                    {
-                        TaxPercentRate = TaxRate.TaxPercentRound(lineItemTaxRate.Rate.Amount / amount);
-                    }
-                }
-
-                TaxDetails = lineItemTaxRate.Line.TaxDetails;
+                return;
             }
+
+            if (taxRate.PercentRate > 0)
+            {
+                TaxPercentRate = taxRate.PercentRate;
+            }
+            else
+            {
+                var amount = ExtendedPrice.Amount > 0 ? ExtendedPrice.Amount : SalePrice.Amount;
+                if (amount > 0)
+                {
+                    TaxPercentRate = TaxRate.TaxPercentRound(taxRate.Rate.Amount / amount);
+                }
+            }
+
+            TaxDetails = taxRate.Line.TaxDetails;
+        }
         }
 
         public void ApplyRewards(IEnumerable<PromotionReward> rewards)
