@@ -139,25 +139,27 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 
         private void Initialize()
         {
-            if (_language != null)
+            if (_language == null)
             {
-                if (!_language.IsInvariant)
-                {
-                    var cultureInfo = CultureInfo.GetCultureInfo(_language.CultureName);
-                    NumberFormat = (NumberFormatInfo)cultureInfo.NumberFormat.Clone();
-                    var region = new RegionInfo(cultureInfo.LCID);
-                    EnglishName = region.CurrencyEnglishName;
+                return;
+            }
 
-                    if (_code != null)
-                    {
-                        Symbol = _isoCurrencySymbolDict[_code] ?? "N/A";
-                        NumberFormat.CurrencySymbol = Symbol;
-                    }
-                }
-                else
+            if (!_language.IsInvariant)
+            {
+                var cultureInfo = CultureInfo.GetCultureInfo(_language.CultureName);
+                NumberFormat = (NumberFormatInfo)cultureInfo.NumberFormat.Clone();
+                var region = new RegionInfo(cultureInfo.LCID);
+                EnglishName = region.CurrencyEnglishName;
+
+                if (_code != null)
                 {
-                    NumberFormat = CultureInfo.InvariantCulture.NumberFormat.Clone() as NumberFormatInfo;
+                    Symbol = _isoCurrencySymbolDict[_code] ?? "N/A";
+                    NumberFormat.CurrencySymbol = Symbol;
                 }
+            }
+            else
+            {
+                NumberFormat = CultureInfo.InvariantCulture.NumberFormat.Clone() as NumberFormatInfo;
             }
         }
     }
