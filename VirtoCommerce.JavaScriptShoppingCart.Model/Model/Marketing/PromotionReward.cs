@@ -148,10 +148,10 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing
         // Similar to vc-module-core/AmountBasedReward.GetRewardAmount
         private Money GetDiscountPerItem(Money price, int quantity)
         {
-            var decimalPrice = price.Amount;
-            if (decimalPrice < 0)
+            var amount = price.Amount;
+            if (amount < 0)
             {
-                throw new ArgumentNullException($"The {nameof(decimalPrice)} cannot be negative");
+                throw new ArgumentNullException($"The {nameof(amount)} cannot be negative");
             }
 
             if (quantity < 0)
@@ -173,10 +173,10 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing
             var result = Amount * workQuantity;
             if (AmountType == AmountType.Relative)
             {
-                result = decimalPrice * Amount * 0.01m * workQuantity;
+                result = amount * Amount * 0.01m * workQuantity;
             }
 
-            var totalCost = decimalPrice * quantity;
+            var totalCost = amount * quantity;
 
             // use total cost as MaxLimit if it explicitly not set
             var workMaxLimit = MaxLimit > 0 ? MaxLimit : totalCost;

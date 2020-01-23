@@ -406,10 +406,10 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 
         /// <summary>
         /// Evenly distributes the amount over n parts, resolving remainders that occur due to rounding
-        /// errors, thereby garuanteeing the postcondition: result->sum(r|r.amount) = this.amount and
+        /// errors, thereby guaranteeing the post-condition: result->sum(r|r.amount) = this.amount and
         /// x elements in result are greater than at least one of the other elements, where x = amount mod n.
         /// </summary>
-        /// <param name="n">Number of parts over which the amount is to be distibuted.</param>
+        /// <param name="n">Number of parts over which the amount is to be distributed.</param>
         /// <returns>Array with distributed Money amounts.</returns>
         public Money[] Allocate(int n)
         {

@@ -8,7 +8,8 @@ using VirtoCommerce.Platform.Core.Common;
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 {
     /// <summary>
-    /// Represent currency information in storefront. Contains some extra informations as exchnage rate, symbol, formating.
+    /// Represents currency information in storefront.
+    /// Contains some extra information as exchange rate, symbol, formatting.
     /// </summary>
     public class Currency : CloneableValueObject
     {
@@ -18,12 +19,12 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 
         static Currency()
         {
-            foreach (var ci in CultureInfo.GetCultures(CultureTypes.SpecificCultures))
+            foreach (var cultureInfo in CultureInfo.GetCultures(CultureTypes.SpecificCultures))
             {
                 try
                 {
-                    var ri = new RegionInfo(ci.LCID);
-                    _isoCurrencySymbolDict[ri.ISOCurrencySymbol] = ri.CurrencySymbol;
+                    var regionInfo = new RegionInfo(cultureInfo.LCID);
+                    _isoCurrencySymbolDict[regionInfo.ISOCurrencySymbol] = regionInfo.CurrencySymbol;
                 }
                 catch (Exception)
                 {
@@ -101,7 +102,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         public string EnglishName { get; set; }
 
         /// <summary>
-        /// Exchnage rate with primary currency.
+        /// Exchange rate with primary currency.
         /// </summary>
         public decimal ExchangeRate { get; set; }
 

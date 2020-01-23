@@ -4,7 +4,6 @@ using System.Linq;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing;
-using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Model.Marketing;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Tax;
 using VirtoCommerce.Platform.Core.Common;
 using cartDto = VirtoCommerce.Domain.Cart.Model;
@@ -12,7 +11,7 @@ using coreDto = VirtoCommerce.Domain.Commerce.Model;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
 {
-    // TechDebt: Need to use Automapper here where possible. Current problem - pass constrcutor parameters to the child object.
+    // TechDebt: Need to use Automapper here where possible. Current problem - pass constructor parameters to the child object.
     // Link to mitigate the problem using resolution context: http://codebuckets.com/2016/09/24/passing-parameters-with-automapper/
     public static partial class CartConverter
     {
@@ -81,151 +80,151 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
             return result;
         }
 
-        public static Payment ToPayment(this cartDto.Payment paymentDto, ShoppingCart cart)
+        public static Payment ToPayment(this cartDto.Payment payment, ShoppingCart cart)
         {
             var result = new Payment(cart.Currency)
             {
-                Id = paymentDto.Id,
-                OuterId = paymentDto.OuterId,
-                PaymentGatewayCode = paymentDto.PaymentGatewayCode,
-                TaxType = paymentDto.TaxType,
+                Id = payment.Id,
+                OuterId = payment.OuterId,
+                PaymentGatewayCode = payment.PaymentGatewayCode,
+                TaxType = payment.TaxType,
 
-                Amount = new Money(paymentDto.Amount, cart.Currency),
+                Amount = new Money(payment.Amount, cart.Currency),
             };
 
-            if (paymentDto.BillingAddress != null)
+            if (payment.BillingAddress != null)
             {
-                result.BillingAddress = ToAddress(paymentDto.BillingAddress);
+                result.BillingAddress = ToAddress(payment.BillingAddress);
             }
 
-            result.Price = new Money(paymentDto.Price, cart.Currency);
-            result.DiscountAmount = new Money(paymentDto.DiscountAmount, cart.Currency);
-            result.PriceWithTax = new Money(paymentDto.PriceWithTax, cart.Currency);
-            result.DiscountAmountWithTax = new Money(paymentDto.DiscountAmountWithTax, cart.Currency);
-            result.Total = new Money(paymentDto.Total, cart.Currency);
-            result.TotalWithTax = new Money(paymentDto.TotalWithTax, cart.Currency);
-            result.TaxTotal = new Money(paymentDto.TaxTotal, cart.Currency);
-            result.TaxPercentRate = (decimal?)paymentDto.TaxPercentRate ?? 0m;
+            result.Price = new Money(payment.Price, cart.Currency);
+            result.DiscountAmount = new Money(payment.DiscountAmount, cart.Currency);
+            result.PriceWithTax = new Money(payment.PriceWithTax, cart.Currency);
+            result.DiscountAmountWithTax = new Money(payment.DiscountAmountWithTax, cart.Currency);
+            result.Total = new Money(payment.Total, cart.Currency);
+            result.TotalWithTax = new Money(payment.TotalWithTax, cart.Currency);
+            result.TaxTotal = new Money(payment.TaxTotal, cart.Currency);
+            result.TaxPercentRate = (decimal?)payment.TaxPercentRate ?? 0m;
 
-            if (paymentDto.TaxDetails != null)
+            if (payment.TaxDetails != null)
             {
-                result.TaxDetails = paymentDto.TaxDetails.Select(td => ToTaxDetail(td, cart.Currency)).ToList();
+                result.TaxDetails = payment.TaxDetails.Select(td => ToTaxDetail(td, cart.Currency)).ToList();
             }
 
-            if (!paymentDto.Discounts.IsNullOrEmpty())
+            if (!payment.Discounts.IsNullOrEmpty())
             {
-                result.Discounts.AddRange(paymentDto.Discounts.Select(x => ToDiscount(x, new[] { cart.Currency }, cart.Language)));
+                result.Discounts.AddRange(payment.Discounts.Select(x => ToDiscount(x, new[] { cart.Currency }, cart.Language)));
             }
 
             return result;
         }
 
-        public static Shipment ToShipment(this cartDto.Shipment shipmentDto, ShoppingCart cart)
+        public static Shipment ToShipment(this cartDto.Shipment shipment, ShoppingCart cart)
         {
             var retVal = new Shipment(cart.Currency)
             {
-                Id = shipmentDto.Id,
-                MeasureUnit = shipmentDto.MeasureUnit,
-                ShipmentMethodCode = shipmentDto.ShipmentMethodCode,
-                ShipmentMethodOption = shipmentDto.ShipmentMethodOption,
-                WeightUnit = shipmentDto.WeightUnit,
-                Height = (double?)shipmentDto.Height,
-                Weight = (double?)shipmentDto.Weight,
-                Width = (double?)shipmentDto.Width,
-                Length = (double?)shipmentDto.Length,
+                Id = shipment.Id,
+                MeasureUnit = shipment.MeasureUnit,
+                ShipmentMethodCode = shipment.ShipmentMethodCode,
+                ShipmentMethodOption = shipment.ShipmentMethodOption,
+                WeightUnit = shipment.WeightUnit,
+                Height = (double?)shipment.Height,
+                Weight = (double?)shipment.Weight,
+                Width = (double?)shipment.Width,
+                Length = (double?)shipment.Length,
                 Currency = cart.Currency,
-                Price = new Money(shipmentDto.Price, cart.Currency),
-                PriceWithTax = new Money(shipmentDto.PriceWithTax, cart.Currency),
-                DiscountAmount = new Money(shipmentDto.DiscountAmount, cart.Currency),
-                Total = new Money(shipmentDto.Total, cart.Currency),
-                TotalWithTax = new Money(shipmentDto.TotalWithTax, cart.Currency),
-                DiscountAmountWithTax = new Money(shipmentDto.DiscountAmountWithTax, cart.Currency),
-                TaxTotal = new Money(shipmentDto.TaxTotal, cart.Currency),
-                TaxPercentRate = (decimal?)shipmentDto.TaxPercentRate ?? 0m,
+                Price = new Money(shipment.Price, cart.Currency),
+                PriceWithTax = new Money(shipment.PriceWithTax, cart.Currency),
+                DiscountAmount = new Money(shipment.DiscountAmount, cart.Currency),
+                Total = new Money(shipment.Total, cart.Currency),
+                TotalWithTax = new Money(shipment.TotalWithTax, cart.Currency),
+                DiscountAmountWithTax = new Money(shipment.DiscountAmountWithTax, cart.Currency),
+                TaxTotal = new Money(shipment.TaxTotal, cart.Currency),
+                TaxPercentRate = (decimal?)shipment.TaxPercentRate ?? 0m,
             };
 
-            if (shipmentDto.DeliveryAddress != null)
+            if (shipment.DeliveryAddress != null)
             {
-                retVal.DeliveryAddress = ToAddress(shipmentDto.DeliveryAddress);
+                retVal.DeliveryAddress = ToAddress(shipment.DeliveryAddress);
             }
 
-            if (shipmentDto.Items != null)
+            if (shipment.Items != null)
             {
-                retVal.Items = shipmentDto.Items.Select(i => ToShipmentItem(i, cart)).ToList();
+                retVal.Items = shipment.Items.Select(i => ToShipmentItem(i, cart)).ToList();
             }
 
-            if (shipmentDto.TaxDetails != null)
+            if (shipment.TaxDetails != null)
             {
-                retVal.TaxDetails = shipmentDto.TaxDetails.Select(td => ToTaxDetail(td, cart.Currency)).ToList();
+                retVal.TaxDetails = shipment.TaxDetails.Select(td => ToTaxDetail(td, cart.Currency)).ToList();
             }
 
-            if (!shipmentDto.Discounts.IsNullOrEmpty())
+            if (!shipment.Discounts.IsNullOrEmpty())
             {
-                retVal.Discounts.AddRange(shipmentDto.Discounts.Select(x => ToDiscount(x, new[] { cart.Currency }, cart.Language)));
+                retVal.Discounts.AddRange(shipment.Discounts.Select(x => ToDiscount(x, new[] { cart.Currency }, cart.Language)));
             }
 
             return retVal;
         }
 
-        public static TaxDetail ToTaxDetail(this coreDto.TaxDetail taxDeatilDto, Currency currency)
+        public static TaxDetail ToTaxDetail(this coreDto.TaxDetail taxDetail, Currency currency)
         {
             var result = new TaxDetail(currency)
             {
-                Name = taxDeatilDto.Name,
-                Rate = new Money(taxDeatilDto.Rate, currency),
-                Amount = new Money(taxDeatilDto.Amount, currency),
+                Name = taxDetail.Name,
+                Rate = new Money(taxDetail.Rate, currency),
+                Amount = new Money(taxDetail.Amount, currency),
             };
             return result;
         }
 
-        public static Address ToAddress(this coreDto.Address addressDto)
+        public static Address ToAddress(this coreDto.Address address)
         {
             var retVal = new Address
             {
-                Key = addressDto.Key,
-                City = addressDto.City,
-                CountryCode = addressDto.CountryCode,
-                CountryName = addressDto.CountryName,
-                Email = addressDto.Email,
-                FirstName = addressDto.FirstName,
-                LastName = addressDto.LastName,
-                Line1 = addressDto.Line1,
-                Line2 = addressDto.Line2,
-                MiddleName = addressDto.MiddleName,
-                Name = addressDto.Name,
-                Organization = addressDto.Organization,
-                Phone = addressDto.Phone,
-                PostalCode = addressDto.PostalCode,
-                RegionId = addressDto.RegionId,
-                RegionName = addressDto.RegionName,
-                Zip = addressDto.Zip,
-                Type = (AddressType)Enum.Parse(typeof(AddressType), addressDto.AddressType.ToString(), true),
+                Key = address.Key,
+                City = address.City,
+                CountryCode = address.CountryCode,
+                CountryName = address.CountryName,
+                Email = address.Email,
+                FirstName = address.FirstName,
+                LastName = address.LastName,
+                Line1 = address.Line1,
+                Line2 = address.Line2,
+                MiddleName = address.MiddleName,
+                Name = address.Name,
+                Organization = address.Organization,
+                Phone = address.Phone,
+                PostalCode = address.PostalCode,
+                RegionId = address.RegionId,
+                RegionName = address.RegionName,
+                Zip = address.Zip,
+                Type = (AddressType)Enum.Parse(typeof(AddressType), address.AddressType.ToString(), true),
             };
             return retVal;
         }
 
-        public static Discount ToDiscount(this coreDto.Discount discountDto, IEnumerable<Currency> availCurrencies, Language language)
+        public static Discount ToDiscount(this coreDto.Discount discount, IEnumerable<Currency> availCurrencies, Language language)
         {
-            var currency = availCurrencies.FirstOrDefault(x => x.Equals(discountDto.Currency)) ?? new Currency(language, discountDto.Currency);
+            var currency = availCurrencies.FirstOrDefault(x => x.Equals(discount.Currency)) ?? new Currency(language, discount.Currency);
 
             var result = new Discount(currency)
             {
-                Coupon = discountDto.Coupon,
-                Description = discountDto.Description,
-                PromotionId = discountDto.PromotionId,
-                Amount = new Money(discountDto.DiscountAmount, currency),
+                Coupon = discount.Coupon,
+                Description = discount.Description,
+                PromotionId = discount.PromotionId,
+                Amount = new Money(discount.DiscountAmount, currency),
             };
 
             return result;
         }
 
-        public static CartShipmentItem ToShipmentItem(this cartDto.ShipmentItem shipmentItemDto, ShoppingCart cart)
+        public static CartShipmentItem ToShipmentItem(this cartDto.ShipmentItem shipmentItem, ShoppingCart cart)
         {
             var result = new CartShipmentItem
             {
-                Id = shipmentItemDto.Id,
-                Quantity = shipmentItemDto.Quantity,
-                LineItem = cart.Items.FirstOrDefault(x => x.Id == shipmentItemDto.LineItemId),
+                Id = shipmentItem.Id,
+                Quantity = shipmentItem.Quantity,
+                LineItem = cart.Items.FirstOrDefault(x => x.Id == shipmentItem.LineItemId),
             };
 
             return result;
