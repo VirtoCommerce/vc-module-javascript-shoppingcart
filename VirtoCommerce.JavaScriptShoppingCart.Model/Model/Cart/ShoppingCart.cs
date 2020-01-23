@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using VirtoCommerce.JavaScriptShoppingCart.Core.Extensions;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Model.Marketing;
@@ -431,25 +432,25 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         {
             var result = base.Clone() as ShoppingCart;
 
-            result.HandlingTotal = HandlingTotal?.Clone() as Money;
-            result.HandlingTotalWithTax = HandlingTotalWithTax?.Clone() as Money;
-            result.DiscountAmount = DiscountAmount?.Clone() as Money;
-            result.Total = Total?.Clone() as Money;
-            result.SubTotal = SubTotal?.Clone() as Money;
-            result.SubTotalWithTax = SubTotalWithTax?.Clone() as Money;
-            result.ShippingPrice = ShippingPrice?.Clone() as Money;
-            result.ShippingPriceWithTax = ShippingPriceWithTax?.Clone() as Money;
-            result.ShippingTotal = ShippingTotal?.Clone() as Money;
-            result.ShippingTotalWithTax = ShippingTotalWithTax?.Clone() as Money;
-            result.PaymentPrice = PaymentPrice?.Clone() as Money;
-            result.PaymentPriceWithTax = PaymentPriceWithTax?.Clone() as Money;
-            result.PaymentTotal = PaymentTotal?.Clone() as Money;
-            result.PaymentTotalWithTax = PaymentTotalWithTax?.Clone() as Money;
-            result.HandlingTotal = HandlingTotal?.Clone() as Money;
-            result.HandlingTotalWithTax = HandlingTotalWithTax?.Clone() as Money;
-            result.DiscountTotal = DiscountTotal?.Clone() as Money;
-            result.DiscountTotalWithTax = DiscountTotalWithTax?.Clone() as Money;
-            result.TaxTotal = TaxTotal?.Clone() as Money;
+            result.HandlingTotal = HandlingTotal.CloneAsMoney();
+            result.HandlingTotalWithTax = HandlingTotalWithTax.CloneAsMoney();
+            result.DiscountAmount = DiscountAmount.CloneAsMoney();
+            result.Total = Total.CloneAsMoney();
+            result.SubTotal = SubTotal.CloneAsMoney();
+            result.SubTotalWithTax = SubTotalWithTax.CloneAsMoney();
+            result.ShippingPrice = ShippingPrice.CloneAsMoney();
+            result.ShippingPriceWithTax = ShippingPriceWithTax.CloneAsMoney();
+            result.ShippingTotal = ShippingTotal.CloneAsMoney();
+            result.ShippingTotalWithTax = ShippingTotalWithTax.CloneAsMoney();
+            result.PaymentPrice = PaymentPrice.CloneAsMoney();
+            result.PaymentPriceWithTax = PaymentPriceWithTax.CloneAsMoney();
+            result.PaymentTotal = PaymentTotal.CloneAsMoney();
+            result.PaymentTotalWithTax = PaymentTotalWithTax.CloneAsMoney();
+            result.HandlingTotal = HandlingTotal.CloneAsMoney();
+            result.HandlingTotalWithTax = HandlingTotalWithTax.CloneAsMoney();
+            result.DiscountTotal = DiscountTotal.CloneAsMoney();
+            result.DiscountTotalWithTax = DiscountTotalWithTax.CloneAsMoney();
+            result.TaxTotal = TaxTotal.CloneAsMoney();
 
             if (Discounts != null)
             {

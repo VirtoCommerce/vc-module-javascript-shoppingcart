@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using VirtoCommerce.JavaScriptShoppingCart.Core.Extensions;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Tax;
@@ -342,19 +343,19 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         {
             var result = base.Clone() as LineItem;
 
-            result.ListPrice = ListPrice?.Clone() as Money;
-            result.SalePrice = SalePrice?.Clone() as Money;
-            result.DiscountAmount = DiscountAmount?.Clone() as Money;
-            result.DiscountAmountWithTax = DiscountAmountWithTax?.Clone() as Money;
-            result.DiscountTotal = DiscountTotal?.Clone() as Money;
-            result.DiscountTotalWithTax = DiscountTotalWithTax?.Clone() as Money;
-            result.ListPriceWithTax = ListPriceWithTax?.Clone() as Money;
-            result.SalePriceWithTax = SalePriceWithTax?.Clone() as Money;
-            result.PlacedPrice = PlacedPrice?.Clone() as Money;
-            result.PlacedPriceWithTax = PlacedPriceWithTax?.Clone() as Money;
-            result.ExtendedPrice = ExtendedPrice?.Clone() as Money;
-            result.ExtendedPriceWithTax = ExtendedPriceWithTax?.Clone() as Money;
-            result.TaxTotal = TaxTotal?.Clone() as Money;
+            result.ListPrice = ListPrice.CloneAsMoney();
+            result.SalePrice = SalePrice.CloneAsMoney();
+            result.DiscountAmount = DiscountAmount.CloneAsMoney();
+            result.DiscountAmountWithTax = DiscountAmountWithTax.CloneAsMoney();
+            result.DiscountTotal = DiscountTotal.CloneAsMoney();
+            result.DiscountTotalWithTax = DiscountTotalWithTax.CloneAsMoney();
+            result.ListPriceWithTax = ListPriceWithTax.CloneAsMoney();
+            result.SalePriceWithTax = SalePriceWithTax.CloneAsMoney();
+            result.PlacedPrice = PlacedPrice.CloneAsMoney();
+            result.PlacedPriceWithTax = PlacedPriceWithTax.CloneAsMoney();
+            result.ExtendedPrice = ExtendedPrice.CloneAsMoney();
+            result.ExtendedPriceWithTax = ExtendedPriceWithTax.CloneAsMoney();
+            result.TaxTotal = TaxTotal.CloneAsMoney();
 
             if (Discounts != null)
             {

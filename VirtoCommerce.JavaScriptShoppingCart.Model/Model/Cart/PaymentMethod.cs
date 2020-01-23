@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using VirtoCommerce.JavaScriptShoppingCart.Core.Extensions;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Tax;
@@ -193,8 +194,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         public override object Clone()
         {
             var result = base.Clone() as PaymentMethod;
-            result.Price = Price?.Clone() as Money;
-            result.DiscountAmount = DiscountAmount?.Clone() as Money;
+            result.Price = Price.CloneAsMoney();
+            result.DiscountAmount = DiscountAmount.CloneAsMoney();
             if (Discounts != null)
             {
                 result.Discounts = new List<Discount>(Discounts.Select(x => x.Clone() as Discount));

@@ -1,3 +1,4 @@
+using VirtoCommerce.JavaScriptShoppingCart.Core.Extensions;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Tax
@@ -29,8 +30,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Tax
         public override object Clone()
         {
             var result = base.Clone() as TaxDetail;
-            result.Rate = Rate?.Clone() as Money;
-            result.Amount = Amount?.Clone() as Money;
+            result.Rate = Rate.CloneAsMoney();
+            result.Amount = Amount.CloneAsMoney();
             return result;
         }
     }
