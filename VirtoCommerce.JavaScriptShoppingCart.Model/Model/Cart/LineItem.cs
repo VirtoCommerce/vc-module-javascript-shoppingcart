@@ -303,7 +303,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
             TaxDetails = taxRate.Line.TaxDetails;
         }
-        }
 
         public void ApplyRewards(IEnumerable<PromotionReward> rewards)
         {
