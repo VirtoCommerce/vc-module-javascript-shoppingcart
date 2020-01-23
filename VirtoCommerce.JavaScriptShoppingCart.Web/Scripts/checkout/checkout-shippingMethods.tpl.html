@@ -1,4 +1,4 @@
-﻿<form accept-charset="UTF8" class="step" name="$ctrl.form" novalidate="novalidate">
+<form accept-charset="UTF8" class="step" name="$ctrl.form" novalidate="novalidate">
     <div ng-if="$ctrl.shipment.validationWarnings.length">
         <div class="alert alert-error" ng-if="$ctrl.shipment.validationWarnings[0].errorCode == 'ShippingUnavailableError'">
             {{ 'checkout.shipping_method.no_shipping_method' | translate }}
@@ -12,9 +12,9 @@
                     <input class="input-radio" id="{{ method.shippingMethod.id }}" name="ShipmentMethodCode" type="radio" required="required" ng-value="method" ng-model="$ctrl.selectedMethod" ng-change="$ctrl.selectMethod(method)" />
                 </div>
                 <label class="radio__label" for="{{ method.shippingMethod.id }}" ng-bind="method.optionName ? method.optionName : method.shippingMethod.name"></label>
-                <span class="order-summary__emphasis" ng-bind="method.rate | currency : $ctrl.currencySymbol"></span>
+                <span class="order-summary__emphasis" ng-bind="method.rate.formattedAmount"></span>
                 <span ng-if="option.discountTotalWithTax.amount > 0">
-                    <span class="order-summary__small-text strikethrough" ng-bind="method.priceWithTax.formatedAmount | currency : $ctrl.currencySymbol"></span>
+                    <span class="order-summary__small-text strikethrough" ng-bind="method.priceWithTax.formatedAmount.formattedAmount"></span>
                 </span>
             </div>
         </div>
