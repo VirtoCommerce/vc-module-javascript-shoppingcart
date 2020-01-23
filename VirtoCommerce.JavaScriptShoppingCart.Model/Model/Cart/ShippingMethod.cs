@@ -199,8 +199,10 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            yield return ShipmentMethodCode;
-            yield return OptionName;
+            return new List<object>
+                   {
+                       ShipmentMethodCode, OptionName
+                   };
         }
     }
 }

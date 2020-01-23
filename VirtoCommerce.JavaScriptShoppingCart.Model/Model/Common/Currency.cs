@@ -130,8 +130,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            yield return Code;
-            yield return CultureName;
+            return new List<object>
+                   {
+                       Code,
+                       CultureName,
+                   };
         }
 
 
