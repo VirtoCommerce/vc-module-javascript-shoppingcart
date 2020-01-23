@@ -40,11 +40,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// </summary>
         public DateTime CreatedDate { get; set; }
 
-        ///// <summary>
-        ///// Gets or sets the product corresponding to line item
-        ///// </summary>
-        // public Product Product { get; set; }
-
         /// <summary>
         /// Gets or sets the value of product id.
         /// </summary>
