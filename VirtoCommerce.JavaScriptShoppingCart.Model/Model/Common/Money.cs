@@ -322,7 +322,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 
         public override bool Equals(object obj)
         {
-            return (obj is Money) && Equals((Money)obj);
+            return obj is Money && Equals((Money)obj);
         }
 
         public bool Equals(Money other)
