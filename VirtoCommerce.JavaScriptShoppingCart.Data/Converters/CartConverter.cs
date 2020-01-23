@@ -121,7 +121,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
 
         public static Shipment ToShipment(this cartDto.Shipment shipment, ShoppingCart cart)
         {
-            var retVal = new Shipment(cart.Currency)
+            var result = new Shipment(cart.Currency)
             {
                 Id = shipment.Id,
                 MeasureUnit = shipment.MeasureUnit,
@@ -145,25 +145,25 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
 
             if (shipment.DeliveryAddress != null)
             {
-                retVal.DeliveryAddress = ToAddress(shipment.DeliveryAddress);
+                result.DeliveryAddress = ToAddress(shipment.DeliveryAddress);
             }
 
             if (shipment.Items != null)
             {
-                retVal.Items = shipment.Items.Select(i => ToShipmentItem(i, cart)).ToList();
+                result.Items = shipment.Items.Select(i => ToShipmentItem(i, cart)).ToList();
             }
 
             if (shipment.TaxDetails != null)
             {
-                retVal.TaxDetails = shipment.TaxDetails.Select(td => ToTaxDetail(td, cart.Currency)).ToList();
+                result.TaxDetails = shipment.TaxDetails.Select(td => ToTaxDetail(td, cart.Currency)).ToList();
             }
 
             if (!shipment.Discounts.IsNullOrEmpty())
             {
-                retVal.Discounts.AddRange(shipment.Discounts.Select(x => ToDiscount(x, new[] { cart.Currency }, cart.Language)));
+                result.Discounts.AddRange(shipment.Discounts.Select(x => ToDiscount(x, new[] { cart.Currency }, cart.Language)));
             }
 
-            return retVal;
+            return result;
         }
 
         public static TaxDetail ToTaxDetail(this coreDto.TaxDetail taxDetail, Currency currency)
@@ -179,7 +179,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
 
         public static Address ToAddress(this coreDto.Address address)
         {
-            var retVal = new Address
+            var result = new Address
             {
                 Key = address.Key,
                 City = address.City,
@@ -200,7 +200,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
                 Zip = address.Zip,
                 Type = (AddressType)Enum.Parse(typeof(AddressType), address.AddressType.ToString(), true),
             };
-            return retVal;
+            return result;
         }
 
         public static Discount ToDiscount(this coreDto.Discount discount, IEnumerable<Currency> availCurrencies, Language language)

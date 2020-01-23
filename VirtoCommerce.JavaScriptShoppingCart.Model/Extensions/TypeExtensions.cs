@@ -23,7 +23,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
 
         public static Type[] GetTypeInheritanceChainTo(this Type type, Type toBaseType)
         {
-            var retVal = new List<Type>
+            var result = new List<Type>
                          {
                              type,
                          };
@@ -32,11 +32,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
 
             while (baseType != toBaseType && baseType != typeof(object))
             {
-                retVal.Add(baseType);
+                result.Add(baseType);
                 baseType = baseType.BaseType;
             }
 
-            return retVal.ToArray();
+            return result.ToArray();
         }
 
         public static string PrettyPrint(this Type type)

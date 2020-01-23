@@ -72,10 +72,9 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 
         public override string ToString()
         {
-            var retVal = string.Join(" ", FirstName, LastName, Organization, Line1, City, RegionName, PostalCode, CountryName);
-            return retVal;
+            var result = string.Join(" ", FirstName, LastName, Organization, Line1, City, RegionName, PostalCode, CountryName);
+            return result;
         }
-
 
         protected override IEnumerable<object> GetEqualityComponents()
         {

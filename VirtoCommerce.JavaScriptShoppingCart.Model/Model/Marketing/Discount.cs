@@ -37,14 +37,14 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing
 
         public Discount ConvertTo(Currency currency)
         {
-            var retVal = new Discount(currency)
+            var result = new Discount(currency)
             {
                 PromotionId = PromotionId,
                 Description = Description,
                 Coupon = Coupon,
                 Amount = Amount.ConvertTo(currency),
             };
-            return retVal;
+            return result;
         }
 
         public override object Clone()
