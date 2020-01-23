@@ -7,6 +7,7 @@ using AutoMapper;
 using Microsoft.Practices.Unity;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services;
+using VirtoCommerce.JavaScriptShoppingCart.Core.Services;
 using VirtoCommerce.JavaScriptShoppingCart.Crawling;
 using VirtoCommerce.JavaScriptShoppingCart.Crawling.Mapping;
 using VirtoCommerce.JavaScriptShoppingCart.Data.Services;
@@ -30,6 +31,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
         public override void Initialize()
         {
             base.Initialize();
+            _container.RegisterType<IPromotionEvaluator, PromotionEvaluator>();
+            _container.RegisterType<ITaxEvaluator, TaxEvaluator>();
             _container.RegisterType<ICartManager, CartManager>();
             _container.RegisterInstance<ICrawlingConfiguration>(new DefaultCrawlingConfiguration(PredefinedMappings.DefaultMapping));
             _container.RegisterType<ICrawler, DefaultCrawler>();

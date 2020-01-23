@@ -220,6 +220,7 @@
     <Compile Include="Mappings\MappingProfile.cs" />
     <Compile Include="Controllers\Api\JsCartSecurityController.cs" />
     <Compile Include="Models\Requests\AddCartLineItemRequest.cs" />
+    <Compile Include="Models\Requests\ChangeCartLineItemQtyRequest.cs" />
     <Compile Include="Models\Requests\UpdateCartCommentRequest.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

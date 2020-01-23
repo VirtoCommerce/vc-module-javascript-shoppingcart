@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using VirtoCommerce.Domain.Marketing.Services;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing;
+using VirtoCommerce.JavaScriptShoppingCart.Core.Services;
 using VirtoCommerce.JavaScriptShoppingCart.Data.Converters;
 using marketing = VirtoCommerce.Domain.Marketing.Model;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
 {
-    class PromotionEvaluator
+    public class PromotionEvaluator : IPromotionEvaluator
     {
         private readonly IMarketingPromoEvaluator _marketingPromoEvaluator;
         public PromotionEvaluator(IMarketingPromoEvaluator marketingPromoEvaluator)

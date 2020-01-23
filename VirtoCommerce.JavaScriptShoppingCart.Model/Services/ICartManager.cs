@@ -54,7 +54,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services
         /// <param name="sku"></param>
         /// <param name="name"></param>
         /// <param name="imageUrl"></param>
-        void AddItem(string productId, int quantity, decimal listPrice, string catalogId, string sku, string name, string imageUrl);
+        void AddItem(string productId, int quantity, decimal listPrice, string catalogId = null, string sku = null, string name = null, string imageUrl = null);
 
         /// <summary>
         /// Change cart item qty by product index

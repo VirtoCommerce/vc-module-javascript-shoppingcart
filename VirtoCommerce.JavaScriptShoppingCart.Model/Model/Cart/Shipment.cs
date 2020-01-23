@@ -117,6 +117,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// Gets the value of total shipping discount amount
         /// </summary>
         public Money DiscountAmount { get; set; }
+
         /// <summary>
         /// DiscountAmount * TaxPercentRate
         /// </summary>
@@ -213,7 +214,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         public bool HasSameMethod(ShippingMethod method)
         {
             // Return true if the fields match:
-            return (ShipmentMethodCode.EqualsInvariant(method.ShipmentMethodCode)) && (ShipmentMethodOption.EqualsInvariant(method.OptionName));
+            return ShipmentMethodCode.EqualsInvariant(method.ShipmentMethodCode) && ShipmentMethodOption.EqualsInvariant(method.OptionName);
         }
 
         public override object Clone()
@@ -232,14 +233,17 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
             {
                 result.Discounts = new List<Discount>(Discounts.Select(x => x.Clone() as Discount));
             }
+
             if (TaxDetails != null)
             {
                 result.TaxDetails = new List<TaxDetail>(TaxDetails.Select(x => x.Clone() as TaxDetail));
             }
+
             if (Items != null)
             {
                 result.Items = new List<CartShipmentItem>(Items.Select(x => x.Clone() as CartShipmentItem));
             }
+
             if (ValidationErrors != null)
             {
                 result.ValidationErrors = new List<ValidationError>(ValidationErrors.Select(x => x.Clone() as ValidationError));

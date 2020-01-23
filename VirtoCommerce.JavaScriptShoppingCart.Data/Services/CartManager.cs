@@ -29,7 +29,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
         private readonly IPromotionEvaluator _promotionEvaluator;
         private readonly ITaxEvaluator _taxEvaluator;
 
-        public CartManager(IShoppingCartService shoppingCartService,
+        public CartManager(
+            IShoppingCartService shoppingCartService,
             IShoppingCartSearchService shoppingCartSearchService,
             IStoreService storeService,
             IMemberService memberService,
@@ -65,6 +66,16 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
 
         public void LoadCart(string cartId, string currencyCode, string languageCode)
         {
+            if (string.IsNullOrEmpty(cartId))
+            {
+                throw new ArgumentNullException(nameof(cartId));
+            }
+
+            if (string.IsNullOrEmpty(currencyCode))
+            {
+                throw new ArgumentNullException(nameof(currencyCode));
+            }
+
             var language = string.IsNullOrEmpty(languageCode) ? Language.InvariantLanguage : new Language(languageCode);
             var currency = new Currency(language, currencyCode);
 
@@ -152,22 +163,26 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             EnsureCartExists();
             RemoveExistingShipmentAsync(shipment);
             shipment.Currency = Cart.Currency;
+
             if (shipment.DeliveryAddress != null)
             {
                 //Reset address key because it can equal a customer address from profile and if not do that it may cause
                 //address primary key duplication error for multiple carts with the same address 
                 shipment.DeliveryAddress.Key = null;
             }
+
             Cart.Shipments.Add(shipment);
 
             if (!string.IsNullOrEmpty(shipment.ShipmentMethodCode) && !Cart.IsTransient())
             {
                 var availableShippingMethods = GetAvailableShippingMethods();
                 var shippingMethod = availableShippingMethods.FirstOrDefault(sm => shipment.ShipmentMethodCode.EqualsInvariant(sm.ShipmentMethodCode) && shipment.ShipmentMethodOption.EqualsInvariant(sm.OptionName));
+
                 if (shippingMethod == null)
                 {
                     throw new PlatformException(string.Format(CultureInfo.InvariantCulture, "Unknown shipment method: {0} with option: {1}", shipment.ShipmentMethodCode, shipment.ShipmentMethodOption));
                 }
+
                 shipment.Price = shippingMethod.Price;
                 shipment.DiscountAmount = shippingMethod.DiscountAmount;
                 shipment.TaxType = shippingMethod.TaxType;
@@ -240,7 +255,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
         public void EvaluateTaxes()
         {
             EnsureCartExists();
-            _taxEvaluator.EvaluateTaxes(Cart.ToTaxEvaluationContextDto(), new[] { Cart });
+            var store = _storeService.GetById(Cart.StoreId);
+            _taxEvaluator.EvaluateTaxes(Cart.ToTaxEvaluationContextDto(store), new[] { Cart });
         }
 
         public IEnumerable<PaymentMethod> GetAvailablePaymentMethods()
@@ -256,8 +272,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
                 var promoEvalContext = Cart.ToPromotionEvaluationContext();
                 _promotionEvaluator.EvaluateDiscounts(promoEvalContext, paymentMethods);
 
-                //Evaluate taxes for available payments                 
-                var taxEvalContext = Cart.ToTaxEvaluationContextDto();
+                //Evaluate taxes for available payments
+                var taxEvalContext = Cart.ToTaxEvaluationContextDto(store);
                 taxEvalContext.Lines.Clear();
                 taxEvalContext.Lines.AddRange(paymentMethods.SelectMany(x => x.ToTaxLines()));
                 _taxEvaluator.EvaluateTaxes(taxEvalContext, paymentMethods);
@@ -287,7 +303,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
                 _promotionEvaluator.EvaluateDiscounts(promoEvalContext, result);
 
                 //Evaluate taxes for available shipping rates
-                var taxEvalContext = Cart.ToTaxEvaluationContextDto();
+                var taxEvalContext = Cart.ToTaxEvaluationContextDto(store);
                 taxEvalContext.Lines.Clear();
                 taxEvalContext.Lines.AddRange(result.SelectMany(x => x.ToTaxLines()));
                 _taxEvaluator.EvaluateTaxes(taxEvalContext, result);
@@ -396,7 +412,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             result.StoreId = storeId;
             result.Name = cartName;
             result.Currency = currency;
-
+            //result.ResponseGroup = 
             return result;
         }
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using VirtoCommerce.Domain.Commerce.Services;
@@ -27,10 +27,12 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             {
                 throw new ArgumentNullException(nameof(context));
             }
+
             if (owners == null)
             {
                 throw new ArgumentNullException(nameof(owners));
             }
+
             IList<domain_tax_model.TaxRate> taxRates = new List<domain_tax_model.TaxRate>();
 
             var taxCalculationEnabled = context.Store.Settings.GetSettingValue("Stores.TaxCalculationEnabled", true);

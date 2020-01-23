@@ -10,7 +10,6 @@ using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services;
 using VirtoCommerce.JavaScriptShoppingCart.Crawling;
 using VirtoCommerce.JavaScriptShoppingCart.Web.Models.Requests;
 using VirtoCommerce.Platform.Core.Common;
-using VirtoCommerce.Platform.Core.Exceptions;
 using VirtoCommerce.Platform.Core.Settings;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
@@ -119,30 +118,14 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             return Ok();
         }
 
-        [HttpPost()]
-        [Route("items")]
+        [HttpPost]
+        [Route("{cartId}/items")]
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> AddItemToCart([FromUri]string currency, [FromUri]string cultureName, [FromUri]string cartId, [FromUri] AddCartLineItemRequest lineItemRequest)
+        public async Task<IHttpActionResult> AddItemToCart([FromUri]string currency, [FromUri]string cultureName, [FromUri]string cartId, [FromBody] AddCartLineItemRequest lineItemRequest)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
-            var crawlingUri = BuildCrawlingUri();
-            var crawlingResult = await _crawler.CrawlAsync(crawlingUri);
-
-            if (!crawlingResult.IsSuccess)
-            {
-                return BadRequest(crawlingResult.Exception?.Message);
-            }
-            else
-            {
-                var singleProduct = crawlingResult.CrawlingItems.Single(item => item.ProductId == lineItemRequest.ProductId);
-
-                ValidateField(lineItemRequest.ListPrice.ToString(), singleProduct.Price);
-                ValidateField(lineItemRequest.Quantity.ToString(), singleProduct.Quantity);
-                ValidateField(lineItemRequest.Sku, singleProduct.Sku);
             }
 
             using (await AsyncLock.GetLockByKey(CacheKey.With(typeof(ShoppingCart), cartId)).LockAsync())
@@ -154,25 +137,122 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             }
         }
 
-        private static void ValidateField(string requested, string crawled)
+        [HttpPut]
+        [Route("{cartId}/items")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> ChangeCartItem([FromUri]string currency, [FromUri]string cultureName, [FromUri]string cartId, [FromBody] ChangeCartLineItemQtyRequest changeQty)
         {
-            if (requested != crawled)
+            if (!ModelState.IsValid)
             {
-                throw new Exception("The request has been hacked");
+                return BadRequest(ModelState);
+            }
+
+            using (await AsyncLock.GetLockByKey(CacheKey.With(typeof(ShoppingCart), cartId)).LockAsync())
+            {
+                _cartManager.LoadCart(cartId, currency, cultureName);
+
+                var lineItem = _cartManager.Cart.Items.FirstOrDefault(i => i.Id == changeQty.LineItemId);
+                if (lineItem != null)
+                {
+                    _cartManager.ChangeItemQuantity(changeQty.LineItemId, changeQty.Quantity);
+                    _cartManager.Save();
+                }
+            }
+
+            return Ok();
+        }
+
+
+        [HttpDelete]
+        [Route("{cartId}/items/{lineItemId?}")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> RemoveCartItem([FromUri]string currency, [FromUri]string cultureName, [FromUri]string cartId, [FromUri]string lineItemId = null)
+        {
+            using (await AsyncLock.GetLockByKey(CacheKey.With(typeof(ShoppingCart), cartId)).LockAsync())
+            {
+                _cartManager.LoadCart(cartId, currency, cultureName);
+                if (lineItemId.IsNullOrEmpty())
+                {
+                    _cartManager.Clear();
+                }
+                else
+                {
+                    _cartManager.RemoveItem(lineItemId);
+                }
+
+                _cartManager.Save();
+                return Ok();
             }
         }
 
-        private Uri BuildCrawlingUri()
+        [HttpGet]
+        [Route("{cartId}/shippingmethods")]
+        [ResponseType(typeof(ShippingMethod[]))]
+        public ShippingMethod[] GetCartShipmentAvailShippingMethods([FromUri]string currency, [FromUri]string cultureName, [FromUri]string cartId, string shipmentId)
         {
-            const string settingName = "JavaScriptShoppingCart.CrawlingTargetUrl";
-            var value = _settingManager.GetValue(settingName, string.Empty);
+            _cartManager.LoadCart(cartId, currency, cultureName);
 
-            if (string.IsNullOrEmpty(value))
+            var shippingMethods = _cartManager.GetAvailableShippingMethods();
+            return shippingMethods.ToArray();
+        }
+
+        [HttpGet]
+        [Route("{cartId}/paymentmethods")]
+        [ResponseType(typeof(PaymentMethod[]))]
+        public PaymentMethod[] GetCartAvailPaymentMethods([FromUri]string currency, [FromUri]string cultureName, [FromUri]string cartId)
+        {
+            _cartManager.LoadCart(cartId, currency, cultureName);
+
+            var paymentMethods = _cartManager.GetAvailablePaymentMethods();
+            return paymentMethods.ToArray();
+        }
+
+        [HttpPost]
+        [Route("{cartId}/shipments")]
+        public async Task<IHttpActionResult> AddOrUpdateCartShipment([FromUri]string currency, [FromUri]string cultureName, [FromUri]string cartId, [FromBody] Shipment shipment)
+        {
+            // Need lock to prevent concurrent access to same cart
+            using (await AsyncLock.GetLockByKey(CacheKey.With(typeof(ShoppingCart), cartId)).LockAsync())
             {
-                throw new PlatformException($"Setting {settingName} is not setted.");
+                _cartManager.LoadCart(cartId, currency, cultureName);
+                _cartManager.AddOrUpdateShipment(shipment);
+                _cartManager.Save();
             }
 
-            return new Uri(value);
+            return Ok();
         }
+
+
+        [HttpPost]
+        [Route("{cartId}/payments")]
+        public async Task<IHttpActionResult> AddOrUpdateCartPayment([FromUri]string currency, [FromUri]string cultureName, [FromUri]string cartId, [FromBody] Payment payment)
+        {
+            // Need lock to prevent concurrent access to same cart
+            using (await AsyncLock.GetLockByKey(CacheKey.With(typeof(ShoppingCart), cartId)).LockAsync())
+            {
+                _cartManager.LoadCart(cartId, currency, cultureName);
+                _cartManager.AddOrUpdatePayment(payment);
+                _cartManager.Save();
+            }
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("{cartId}")]
+        public async Task<IHttpActionResult> RemoveCart([FromUri]string currency, [FromUri]string cultureName, [FromUri]string cartId)
+        {
+            // Need lock to prevent concurrent access to same cart
+            using (await AsyncLock.GetLockByKey(CacheKey.With(typeof(ShoppingCart), cartId)).LockAsync())
+            {
+                _cartManager.LoadCart(cartId, currency, cultureName);
+                _cartManager.RemoveCart();
+                _cartManager.Save();
+            }
+
+            return Ok();
+        }
+
+
     }
 }
