@@ -1,4 +1,4 @@
-﻿using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
+using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart.ValidationErrors
 {
@@ -13,8 +13,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart.ValidationErrors
         }
 
         public Money OldPrice { get; private set; }
+
         public Money OldPriceWithTax { get; private set; }
+
         public Money NewPrice { get; private set; }
+
         public Money NewPriceWithTax { get; private set; }
     }
 }

@@ -11,6 +11,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
     public class PromotionEvaluator : IPromotionEvaluator
     {
         private readonly IMarketingPromoEvaluator _marketingPromoEvaluator;
+
         public PromotionEvaluator(IMarketingPromoEvaluator marketingPromoEvaluator)
         {
             _marketingPromoEvaluator = marketingPromoEvaluator;
@@ -18,8 +19,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
 
         public virtual void EvaluateDiscounts(marketing.PromotionEvaluationContext context, IEnumerable<IDiscountable> owners)
         {
-
-
             var rewards = _marketingPromoEvaluator.EvaluatePromotion(context).Rewards.ToList();
             ApplyRewards(rewards, owners);
         }
@@ -37,6 +36,5 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
                 }
             }
         }
-
     }
 }

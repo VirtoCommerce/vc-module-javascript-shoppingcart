@@ -14,12 +14,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
     public class TaxEvaluator : ITaxEvaluator
     {
         private readonly ICommerceService _commerceService;
+
         public TaxEvaluator(ICommerceService commerceApi)
         {
             _commerceService = commerceApi;
         }
-
-        #region ITaxEvaluator Members
 
         public virtual void EvaluateTaxes(domain_tax_model.TaxEvaluationContext context, IEnumerable<ITaxable> owners)
         {
@@ -39,7 +38,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             if (taxCalculationEnabled)
             {
                 var fixedTaxRate = GetFixedTaxRate(context.Store.TaxProviders.ToList());
-                //Do not execute platform API for tax evaluation if fixed tax rate is used
+
+                // Do not execute platform API for tax evaluation if fixed tax rate is used
                 if (fixedTaxRate != 0)
                 {
                     foreach (var line in context.Lines ?? Enumerable.Empty<domain_tax_model.TaxLine>())
@@ -48,14 +48,13 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
                         {
                             Rate = line.Amount * fixedTaxRate * 0.01m,
                             Currency = context.Currency,
-                            Line = line
+                            Line = line,
                         };
                         taxRates.Add(rate);
                     }
                 }
                 else
                 {
-
                     // taxRates = _commerceService. (context.StoreId, context.ToTaxEvaluationContextDto());
                     var activeTaxProvider = context.Store.TaxProviders.FirstOrDefault(x => x.IsActive);
                     if (activeTaxProvider != null)
@@ -64,10 +63,9 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
                     }
                 }
             }
+
             ApplyTaxRates(taxRates, owners);
         }
-
-        #endregion
 
         protected virtual decimal GetFixedTaxRate(IList<domain_tax_model.TaxProvider> taxProviders)
         {
@@ -76,7 +74,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             if (fixedTaxProvider != null && !fixedTaxProvider.Settings.IsNullOrEmpty())
             {
                 result = fixedTaxProvider.Settings
-                    //.Select(x => x.JsonConvert<Setting>().ToSettingEntry())
+
+                    // .Select(x => x.JsonConvert<Setting>().ToSettingEntry())
                     .GetSettingValue("VirtoCommerce.Core.FixedTaxRateProvider.Rate", 0.00m);
             }
 
@@ -89,6 +88,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             {
                 return;
             }
+
             var taxRatesMap = owners.Select(x => x.Currency).Distinct().ToDictionary(x => x, x => taxRates.Select(r => r.ToTaxRate(x)).ToArray());
 
             foreach (var owner in owners)

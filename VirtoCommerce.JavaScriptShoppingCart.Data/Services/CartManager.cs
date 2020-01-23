@@ -12,9 +12,11 @@ using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Model.Marketing;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Services;
+using VirtoCommerce.JavaScriptShoppingCart.Crawling;
 using VirtoCommerce.JavaScriptShoppingCart.Data.Converters;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Exceptions;
+using VirtoCommerce.Platform.Core.Settings;
 using domain_cart_model = VirtoCommerce.Domain.Cart.Model;
 using domain_shipping_model = VirtoCommerce.Domain.Shipping.Model;
 
@@ -28,6 +30,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
         private readonly IMemberService _memberService;
         private readonly IPromotionEvaluator _promotionEvaluator;
         private readonly ITaxEvaluator _taxEvaluator;
+        private readonly ICrawler _crawler;
+        private readonly ISettingsManager _settingManager;
 
         public CartManager(
             IShoppingCartService shoppingCartService,
@@ -35,7 +39,9 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             IStoreService storeService,
             IMemberService memberService,
             IPromotionEvaluator promotoinEvaluator,
-            ITaxEvaluator taxEvaluator)
+            ITaxEvaluator taxEvaluator,
+            ICrawler crawler,
+            ISettingsManager settingManager)
         {
             _shoppingCartService = shoppingCartService;
             _shoppingCartSearchService = shoppingCartSearchService;
@@ -43,6 +49,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             _memberService = memberService;
             _promotionEvaluator = promotoinEvaluator;
             _taxEvaluator = taxEvaluator;
+            _crawler = crawler;
+            _settingManager = settingManager;
         }
 
         public virtual ShoppingCart Cart { get; protected set; }
@@ -50,7 +58,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
         public void LoadOrCreateNewTransientCart(string cartName, string storeId, string userId, string languageCode, string currencyCode)
         {
             // TechDebt: Need to add caching
-
             var criteria = CreateCartSearchCriteria(cartName, storeId, userId, currencyCode);
 
             var cartSearchResult = _shoppingCartSearchService.Search(criteria);
@@ -140,8 +147,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
 
             if (payment.BillingAddress != null)
             {
-                //Reset address key because it can equal a customer address from profile and if not do that it may cause
-                //address primary key duplication error for multiple carts with the same address 
+                // Reset address key because it can equal a customer address from profile and if not do that it may cause
+                // address primary key duplication error for multiple carts with the same address
                 payment.BillingAddress.Key = null;
             }
 
@@ -166,8 +173,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
 
             if (shipment.DeliveryAddress != null)
             {
-                //Reset address key because it can equal a customer address from profile and if not do that it may cause
-                //address primary key duplication error for multiple carts with the same address 
+                // Reset address key because it can equal a customer address from profile and if not do that it may cause
+                // address primary key duplication error for multiple carts with the same address
                 shipment.DeliveryAddress.Key = null;
             }
 
@@ -238,17 +245,15 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             var isReadOnlyLineItems = Cart.Items.Any(i => i.IsReadOnly);
             if (!isReadOnlyLineItems)
             {
-                //Get product inventory to fill InStockQuantity parameter of LineItem
-                //required for some promotions evaluation
+                // Get product inventory to fill InStockQuantity parameter of LineItem
+                // required for some promotions evaluation
 
-                //foreach (var lineItem in Cart.Items.Where(x => x.Product != null).ToList())
-                //{
+                // foreach (var lineItem in Cart.Items.Where(x => x.Product != null).ToList())
+                // {
                 //    lineItem.InStockQuantity = (int)lineItem.Product.AvailableQuantity;
-                //}
-
+                // }
                 var evalContext = Cart.ToPromotionEvaluationContext();
                 _promotionEvaluator.EvaluateDiscounts(evalContext, new[] { Cart });
-
             }
         }
 
@@ -268,11 +273,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
 
             if (!paymentMethods.IsNullOrEmpty())
             {
-                //Evaluate promotions cart and apply rewards for available shipping methods
+                // Evaluate promotions cart and apply rewards for available shipping methods
                 var promoEvalContext = Cart.ToPromotionEvaluationContext();
                 _promotionEvaluator.EvaluateDiscounts(promoEvalContext, paymentMethods);
 
-                //Evaluate taxes for available payments
+                // Evaluate taxes for available payments
                 var taxEvalContext = Cart.ToTaxEvaluationContextDto(store);
                 taxEvalContext.Lines.Clear();
                 taxEvalContext.Lines.AddRange(paymentMethods.SelectMany(x => x.ToTaxLines()));
@@ -286,7 +291,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
         {
             EnsureCartExists();
 
-            //Request available shipping rates 
+            // Request available shipping rates
             var store = _storeService.GetById(Cart.StoreId);
 
             var result = Enumerable.Empty<ShippingMethod>();
@@ -298,11 +303,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
 
             if (!result.IsNullOrEmpty())
             {
-                //Evaluate promotions cart and apply rewards for available shipping methods
+                // Evaluate promotions cart and apply rewards for available shipping methods
                 var promoEvalContext = Cart.ToPromotionEvaluationContext();
                 _promotionEvaluator.EvaluateDiscounts(promoEvalContext, result);
 
-                //Evaluate taxes for available shipping rates
+                // Evaluate taxes for available shipping rates
                 var taxEvalContext = Cart.ToTaxEvaluationContextDto(store);
                 taxEvalContext.Lines.Clear();
                 taxEvalContext.Lines.AddRange(result.SelectMany(x => x.ToTaxLines()));
@@ -380,7 +385,22 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             foreach (var lineItem in Cart.Items.ToList())
             {
                 lineItem.ValidationErrors.Clear();
+
                 // Code validation here if it needed
+                var crawlingUri = BuildCrawlingUri();
+                var crawlingResult = _crawler.CrawlAsync(crawlingUri).GetAwaiter().GetResult();
+
+                if (!crawlingResult.IsSuccess)
+                {
+                    lineItem.ValidationErrors.Add(new UnavailableError());
+                }
+                else
+                {
+                    var crawlingItem = crawlingResult.CrawlingItems.Single(item => item.ProductId == lineItem.ProductId);
+
+                    ValidateFields(lineItem, crawlingItem);
+                }
+
                 lineItem.IsValid = !lineItem.ValidationErrors.Any();
             }
         }
@@ -513,5 +533,25 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             return availableShippingRates;
         }
 
+        private static void ValidateFields(LineItem requested, CrawlingItem crawled)
+        {
+            if (requested.ListPrice.ToString() != crawled.Price || requested.Quantity.ToString() != crawled.Quantity || requested.Sku != crawled.Sku)
+            {
+                requested.ValidationErrors.Add(new CrawlingValidationError(requested.ListPrice.ToString(), crawled.Price, requested.Quantity.ToString(), crawled.Quantity, requested.Sku, crawled.Sku));
+            }
+        }
+
+        private Uri BuildCrawlingUri()
+        {
+            const string settingName = "JavaScriptShoppingCart.CrawlingTargetUrl";
+            var value = _settingManager.GetValue(settingName, string.Empty);
+
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new PlatformException($"Setting {settingName} is not setted.");
+            }
+
+            return new Uri(value);
+        }
     }
 }

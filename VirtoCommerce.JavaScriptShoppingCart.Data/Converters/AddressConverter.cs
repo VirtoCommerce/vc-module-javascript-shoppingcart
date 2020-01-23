@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 
 using coreDto = VirtoCommerce.Domain.Commerce.Model;
@@ -29,7 +29,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
                 RegionName = addressDto.RegionName,
                 Zip = addressDto.Zip,
 
-                Type = (AddressType)Enum.Parse(typeof(AddressType), addressDto.AddressType.ToString(), true)
+                Type = (AddressType)Enum.Parse(typeof(AddressType), addressDto.AddressType.ToString(), true),
             };
             return retVal;
         }
@@ -56,12 +56,10 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
                 RegionName = address.RegionName,
                 Zip = address.Zip,
 
-                AddressType = (coreDto.AddressType)(int)address.Type
+                AddressType = (coreDto.AddressType)(int)address.Type,
             };
 
             return retVal;
         }
-
-
     }
 }

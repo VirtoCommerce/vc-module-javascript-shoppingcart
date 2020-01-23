@@ -64,6 +64,10 @@
     <Compile Include="Services\TaxEvaluator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VirtoCommerce.JavaScriptShoppingCart.Crawling\VirtoCommerce.JavaScriptShoppingCart.Crawling.csproj">
+      <Project>{2DE4E44E-61DC-4AF8-83A2-68D92EAD77AD}</Project>
+      <Name>VirtoCommerce.JavaScriptShoppingCart.Crawling</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VirtoCommerce.JavaScriptShoppingCart.Model\VirtoCommerce.JavaScriptShoppingCart.Core.csproj">
       <Project>{E4A2D0D0-E453-466E-80EF-24C7967C8044}</Project>
       <Name>VirtoCommerce.JavaScriptShoppingCart.Core</Name>
