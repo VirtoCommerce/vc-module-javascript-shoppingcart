@@ -213,17 +213,17 @@ angular.module('virtoCommerce.cartModule')
             },
 
             //----
-            addCouponNew: function (cart, couponCode) {
+            addCoupon: function (cart, couponCode) {
                 var url = getJsCartApiFullUrlWithCartSegment(cart) + '/coupons/' + couponCode;
                 return $http.post(url);
             },
 
-            removeCouponNew: function (cart, couponCode) {
+            removeCoupon: function (cart, couponCode) {
                 var url = getJsCartApiFullUrlWithCartSegment(cart) + '/coupons' + (angular.isDefined(couponCode) ? separator + couponCode : '');
                 return $http.delete(url);
             },
 
-            validateCouponNew: function (cart, coupon) {
+            validateCoupon: function (cart, coupon) {
                 var url = getJsCartApiFullUrlWithCartSegment(cart) + '/coupons/validate';
                 return $http.delete(url, coupon);
             },

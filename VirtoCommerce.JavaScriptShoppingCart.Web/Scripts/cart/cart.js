@@ -139,14 +139,14 @@ cartModule.component('vcCart', {
             };
 
             this.applyCoupon = function (coupon) {
-                return cartApi.addCouponNew(ctrl, coupon.code).then(function (response) {
+                return cartApi.addCoupon(ctrl, coupon.code).then(function (response) {
                     ctrl.reloadCart();
                     return response.data;
                 });
             };
 
             this.removeCoupon = function (coupon) {
-                return cartApi.removeCouponNew(ctrl, coupon ? coupon.code : undefined).then(function () {
+                return cartApi.removeCoupon(ctrl, coupon ? coupon.code : undefined).then(function () {
                     return ctrl.reloadCart();
                 });
             };
@@ -154,7 +154,7 @@ cartModule.component('vcCart', {
 
             this.validateCoupon = function (coupon) {
                 coupon.processing = true;
-                return cartApi.validateCouponNew(ctrl, coupon).then(function (result) {
+                return cartApi.validateCoupon(ctrl, coupon).then(function (result) {
                     coupon.processing = false;
                     return angular.extend(coupon, result.data);
                 }, function () {
