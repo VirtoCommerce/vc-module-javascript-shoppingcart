@@ -13,7 +13,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
     /// </summary>
     public class Currency : CloneableValueObject
     {
-        private static IDictionary<string, string> _isoCurrencySymbolDict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase).WithDefaultValue(null);
+        private static readonly IDictionary<string, string> _isoCurrencySymbolDict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase).WithDefaultValue(null);
         private Language _language;
         private string _code;
 
