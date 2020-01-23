@@ -590,11 +590,31 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
             return result;
         }
 
+        public static Promotion ToPromotion(this marketing_domain_model.Promotion promotionDto)
+        {
+            var result = new Promotion
+            {
+                Id = promotionDto.Id,
+                Name = promotionDto.Name,
+                Description = promotionDto.Description,
+            };
+
+            return result;
+        }
+
         public static PromotionReward ToPromotionReward(this marketing_domain_model.PromotionReward rewardDto, Currency currency)
         {
             var result = new PromotionReward();
             result.InjectFrom(rewardDto);
             result.RewardType = EnumUtility.SafeParse(rewardDto.GetType().Name, PromotionRewardType.CatalogItemAmountReward);
+
+            //result.AmountType = EnumUtility.SafeParse(rewardDto.AmountType, AmountType.Absolute),
+            result.CouponAmount = new Money(rewardDto.CouponAmount, currency);
+            result.CouponMinOrderAmount = new Money(rewardDto.CouponMinOrderAmount ?? 0, currency);
+
+            result.PromotionId = rewardDto.Promotion?.Id;
+            result.Promotion = rewardDto.Promotion?.ToPromotion();
+
             return result;
             //{
             //    // CategoryId = rewardDto.CategoryId,

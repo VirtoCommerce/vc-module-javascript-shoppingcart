@@ -1,4 +1,4 @@
-﻿<div class="floating-labels vc-form">
+<div class="floating-labels vc-form">
     <div class="wrap" ng-if="!$ctrl.checkout.isFinished">
         <div class="checkout-sidebar">
             <div class="checkout-sidebar__content">
@@ -123,9 +123,9 @@
         </div>
     </div>
     <div class="order-created" ng-if="$ctrl.checkout.isFinished">
-		<h2>"{{ 'checkout.order_created' | translate }}</h2>
-		<div class="order-number">
+        <h2>"{{ 'checkout.order_created' | translate }}</h2>
+        <div class="order-number">
             {{ 'checkout.order_number' | translate }} <span id="orderNumber">{{$ctrl.checkout.order.number}}</span>
-		</div>
-	</div>
+        </div>
+    </div>
 </div>

@@ -311,8 +311,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
             var lineItemRewards = rewards.Where(x => x.RewardType == PromotionRewardType.CatalogItemAmountReward && (x.ProductId.IsNullOrEmpty() || x.ProductId.EqualsInvariant(ProductId)));
 
             Discounts.Clear();
-
-            DiscountAmount = new Money(Math.Max(0, (ListPrice - SalePrice).Amount), Currency);
+            var realSalePrice = SalePrice.Amount > 0 ? SalePrice : ListPrice;
+            DiscountAmount = new Money(Math.Max(0, (ListPrice - realSalePrice).Amount), Currency);
 
             if (Quantity == 0)
             {

@@ -139,7 +139,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing
                 Amount = discountPerItem,
                 Description = Promotion.Description,
                 Coupon = Coupon,
-                PromotionId = Promotion.Id
+                PromotionId = Promotion.Id,
             };
 
             return discount;
@@ -153,6 +153,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing
             {
                 throw new ArgumentNullException($"The {nameof(decimalPrice)} cannot be negative");
             }
+
             if (quantity < 0)
             {
                 throw new ArgumentNullException($"The {nameof(quantity)} cannot be negative");
@@ -163,15 +164,18 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing
             {
                 workQuantity = workQuantity / (InEveryNthQuantity ?? 1) * (ForNthQuantity ?? 1);
             }
+
             if (Quantity > 0)
             {
                 workQuantity = Math.Min(Quantity, workQuantity);
             }
+
             var result = Amount * workQuantity;
             if (AmountType == AmountType.Relative)
             {
                 result = decimalPrice * Amount * 0.01m * workQuantity;
             }
+
             var totalCost = decimalPrice * quantity;
             //use total cost as MaxLimit if it explicitly not set
             var workMaxLimit = MaxLimit > 0 ? MaxLimit : totalCost;
