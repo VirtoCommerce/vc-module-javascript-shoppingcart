@@ -249,7 +249,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
         public IList<ValidationError> ValidationErrors { get; set; }
 
-
         /// <summary>
         /// Gets or sets the value of total shipping tax amount.
         /// </summary>
