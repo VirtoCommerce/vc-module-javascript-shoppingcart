@@ -12,7 +12,6 @@ using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Model.Marketing;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Services;
-using VirtoCommerce.JavaScriptShoppingCart.Crawling;
 using VirtoCommerce.JavaScriptShoppingCart.Data.Converters;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Exceptions;
@@ -30,8 +29,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
         private readonly IMemberService _memberService;
         private readonly IPromotionEvaluator _promotionEvaluator;
         private readonly ITaxEvaluator _taxEvaluator;
-        private readonly ICrawler _crawler;
-        private readonly ISettingsManager _settingManager;
 
         public CartManager(
             IShoppingCartService shoppingCartService,
@@ -39,9 +36,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             IStoreService storeService,
             IMemberService memberService,
             IPromotionEvaluator promotoinEvaluator,
-            ITaxEvaluator taxEvaluator,
-            ICrawler crawler,
-            ISettingsManager settingManager)
+            ITaxEvaluator taxEvaluator)
         {
             _shoppingCartService = shoppingCartService;
             _shoppingCartSearchService = shoppingCartSearchService;
@@ -49,8 +44,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             _memberService = memberService;
             _promotionEvaluator = promotoinEvaluator;
             _taxEvaluator = taxEvaluator;
-            _crawler = crawler;
-            _settingManager = settingManager;
         }
 
         public virtual ShoppingCart Cart { get; protected set; }
@@ -387,20 +380,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
                 lineItem.ValidationErrors.Clear();
 
                 // Code validation here if it needed
-                var crawlingUri = BuildCrawlingUri();
-                var crawlingResult = _crawler.CrawlAsync(crawlingUri).GetAwaiter().GetResult();
-
-                if (!crawlingResult.IsSuccess)
-                {
-                    lineItem.ValidationErrors.Add(new UnavailableError());
-                }
-                else
-                {
-                    var crawlingItem = crawlingResult.CrawlingItems.Single(item => item.ProductId == lineItem.ProductId);
-
-                    ValidateFields(lineItem, crawlingItem);
-                }
-
                 lineItem.IsValid = !lineItem.ValidationErrors.Any();
             }
         }
@@ -432,7 +411,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             result.StoreId = storeId;
             result.Name = cartName;
             result.Currency = currency;
-            //result.ResponseGroup = 
+
+            // result.ResponseGroup =
             return result;
         }
 
@@ -531,27 +511,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
                 .ToArray();
 
             return availableShippingRates;
-        }
-
-        private static void ValidateFields(LineItem requested, CrawlingItem crawled)
-        {
-            if (requested.ListPrice.ToString() != crawled.Price || requested.Quantity.ToString() != crawled.Quantity || requested.Sku != crawled.Sku)
-            {
-                requested.ValidationErrors.Add(new CrawlingValidationError(requested.ListPrice.ToString(), crawled.Price, requested.Quantity.ToString(), crawled.Quantity, requested.Sku, crawled.Sku));
-            }
-        }
-
-        private Uri BuildCrawlingUri()
-        {
-            const string settingName = "JavaScriptShoppingCart.CrawlingTargetUrl";
-            var value = _settingManager.GetValue(settingName, string.Empty);
-
-            if (string.IsNullOrEmpty(value))
-            {
-                throw new PlatformException($"Setting {settingName} is not setted.");
-            }
-
-            return new Uri(value);
         }
     }
 }

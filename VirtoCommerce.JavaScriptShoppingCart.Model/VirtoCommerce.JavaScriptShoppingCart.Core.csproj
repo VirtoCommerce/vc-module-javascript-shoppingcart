@@ -64,7 +64,6 @@
     <Compile Include="Model\Cart\ShippingMethod.cs" />
     <Compile Include="Model\Cart\ShoppingCart.cs" />
     <Compile Include="Model\Cart\ValidationError.cs" />
-    <Compile Include="Model\Cart\ValidationErrors\CrawlingValidationError.cs" />
     <Compile Include="Model\Cart\ValidationErrors\PriceError.cs" />
     <Compile Include="Model\Cart\ValidationErrors\UnavailableError.cs" />
     <Compile Include="Model\Common\Address.cs" />

@@ -127,6 +127,32 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
                 return BadRequest(ModelState);
             }
 
+            if (Request.Headers.Referrer == null)
+            {
+                return BadRequest("Required header hasn't been provided");
+            }
+
+            if (!IsValidHost(Request.Headers.Referrer))
+            {
+                return BadRequest("Crawling URL is invalid");
+            }
+
+            var crawlingResult = await _crawler.CrawlAsync(Request.Headers.Referrer);
+
+            if (!crawlingResult.IsSuccess)
+            {
+                return BadRequest(crawlingResult.Exception?.Message);
+            }
+            else
+            {
+                var crawlingItem = crawlingResult.CrawlingItems.Single(item => item.ProductId == lineItemRequest.ProductId);
+
+                if (!ValidateFields(lineItemRequest, crawlingItem))
+                {
+                    return BadRequest("The request has been hacked");
+                }
+            }
+
             using (await AsyncLock.GetLockByKey(CacheKey.With(typeof(ShoppingCart), cartId)).LockAsync())
             {
                 _cartManager.LoadCart(cartId, currency, cultureName);
@@ -252,6 +278,23 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             return Ok();
         }
 
+        private static bool ValidateFields(AddCartLineItemRequest requested, CrawlingItem crawled)
+        {
+            return requested.ListPrice.ToString() != crawled.Price || requested.Quantity.ToString() != crawled.Quantity || requested.Sku != crawled.Sku;
+        }
 
+        private bool IsValidHost(Uri referrerUri)
+        {
+            const string ParameterName = "JavaScriptShoppingCart.CrawlingHostWhitelist";
+            var flatCrawlingHostWhitelist = _settingManager.GetValue(ParameterName, string.Empty);
+
+            if (string.IsNullOrEmpty(flatCrawlingHostWhitelist))
+            {
+                throw new ArgumentNullException(ParameterName);
+            }
+
+            var hosts = flatCrawlingHostWhitelist.Split(';', ',').Select(host => host.Trim());
+            return hosts.Contains(referrerUri.Host);
+        }
     }
 }
