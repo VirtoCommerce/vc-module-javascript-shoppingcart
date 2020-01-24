@@ -6,81 +6,82 @@ using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Tax;
 using VirtoCommerce.Platform.Core.Common;
-using cartDto = VirtoCommerce.Domain.Cart.Model;
-using coreDto = VirtoCommerce.Domain.Commerce.Model;
+using DomainCartModels = VirtoCommerce.Domain.Cart.Model;
+using DomainCommerceModels = VirtoCommerce.Domain.Commerce.Model;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
 {
-    // TechDebt: Need to use Automapper here where possible. Current problem - pass constructor parameters to the child object.
+    // TechDebt: Need to use Automapper here where possible.
+    // Current problem - pass constructor parameters to the child object.
     // Link to mitigate the problem using resolution context: http://codebuckets.com/2016/09/24/passing-parameters-with-automapper/
-    public static partial class CartConverter
+    public static class CartConverter
     {
-        public static ShoppingCart ToShoppingCart(this cartDto.ShoppingCart cartDto, Currency currency, Language language)
+        public static ShoppingCart ToShoppingCart(this DomainCartModels.ShoppingCart cart, Currency currency, Language language)
         {
             var result = new ShoppingCart(currency, language)
             {
-                ChannelId = cartDto.ChannelId,
-                Comment = cartDto.Comment,
-                CustomerId = cartDto.CustomerId,
-                CustomerName = cartDto.CustomerName,
-                Id = cartDto.Id,
-                Name = cartDto.Name,
-                OrganizationId = cartDto.OrganizationId,
-                Status = cartDto.Status,
-                StoreId = cartDto.StoreId,
-                Type = cartDto.Type,
+                ChannelId = cart.ChannelId,
+                Comment = cart.Comment,
+                CustomerId = cart.CustomerId,
+                CustomerName = cart.CustomerName,
+                Id = cart.Id,
+                Name = cart.Name,
+                OrganizationId = cart.OrganizationId,
+                Status = cart.Status,
+                StoreId = cart.StoreId,
+                Type = cart.Type,
                 HasPhysicalProducts = true,
             };
 
-            if (cartDto.Coupons != null)
+            if (cart.Coupons != null)
             {
-                result.Coupons = cartDto.Coupons.Select(c => new Coupon { Code = c, AppliedSuccessfully = !string.IsNullOrEmpty(c) }).ToList();
+                result.Coupons = cart.Coupons.Select(coupon => new Coupon { Code = coupon, AppliedSuccessfully = !string.IsNullOrEmpty(coupon) }).ToList();
             }
 
-            if (cartDto.Payments != null)
+            if (cart.Payments != null)
             {
-                result.Payments = cartDto.Payments.Select(p => ToPayment(p, result)).ToList();
+                result.Payments = cart.Payments.Select(payment => ToPayment(payment, result)).ToList();
             }
 
-            if (cartDto.Shipments != null)
+            if (cart.Shipments != null)
             {
-                result.Shipments = cartDto.Shipments.Select(s => ToShipment(s, result)).ToList();
+                result.Shipments = cart.Shipments.Select(shipment => ToShipment(shipment, result)).ToList();
             }
 
-            if (cartDto.TaxDetails != null)
+            if (cart.TaxDetails != null)
             {
-                result.TaxDetails = cartDto.TaxDetails.Select(td => ToTaxDetail(td, currency)).ToList();
+                result.TaxDetails = cart.TaxDetails.Select(taxDetail => ToTaxDetail(taxDetail, currency)).ToList();
             }
 
-            result.DiscountAmount = new Money(cartDto.DiscountAmount, currency);
-            result.HandlingTotal = new Money(cartDto.HandlingTotal, currency);
-            result.HandlingTotalWithTax = new Money(cartDto.HandlingTotalWithTax, currency);
+            result.DiscountAmount = new Money(cart.DiscountAmount, currency);
+            result.HandlingTotal = new Money(cart.HandlingTotal, currency);
+            result.HandlingTotalWithTax = new Money(cart.HandlingTotalWithTax, currency);
 
-            result.Total = new Money(cartDto.Total, currency);
-            result.SubTotal = new Money(cartDto.SubTotal, currency);
-            result.SubTotalWithTax = new Money(cartDto.SubTotalWithTax, currency);
-            result.ShippingPrice = new Money(cartDto.ShippingSubTotal, currency);
-            result.ShippingPriceWithTax = new Money(cartDto.ShippingSubTotalWithTax, currency);
-            result.ShippingTotal = new Money(cartDto.ShippingTotal, currency);
-            result.ShippingTotalWithTax = new Money(cartDto.ShippingTotalWithTax, currency);
-            result.PaymentPrice = new Money(cartDto.PaymentSubTotal, currency);
-            result.PaymentPriceWithTax = new Money(cartDto.PaymentSubTotalWithTax, currency);
-            result.PaymentTotal = new Money(cartDto.PaymentTotal, currency);
-            result.PaymentTotalWithTax = new Money(cartDto.PaymentTotalWithTax, currency);
+            result.Total = new Money(cart.Total, currency);
+            result.SubTotal = new Money(cart.SubTotal, currency);
+            result.SubTotalWithTax = new Money(cart.SubTotalWithTax, currency);
+            result.ShippingPrice = new Money(cart.ShippingSubTotal, currency);
+            result.ShippingPriceWithTax = new Money(cart.ShippingSubTotalWithTax, currency);
+            result.ShippingTotal = new Money(cart.ShippingTotal, currency);
+            result.ShippingTotalWithTax = new Money(cart.ShippingTotalWithTax, currency);
+            result.PaymentPrice = new Money(cart.PaymentSubTotal, currency);
+            result.PaymentPriceWithTax = new Money(cart.PaymentSubTotalWithTax, currency);
+            result.PaymentTotal = new Money(cart.PaymentTotal, currency);
+            result.PaymentTotalWithTax = new Money(cart.PaymentTotalWithTax, currency);
 
-            result.DiscountTotal = new Money(cartDto.DiscountTotal, currency);
-            result.DiscountTotalWithTax = new Money(cartDto.DiscountTotalWithTax, currency);
-            result.TaxTotal = new Money(cartDto.TaxTotal, currency);
+            result.DiscountTotal = new Money(cart.DiscountTotal, currency);
+            result.DiscountTotalWithTax = new Money(cart.DiscountTotalWithTax, currency);
+            result.TaxTotal = new Money(cart.TaxTotal, currency);
 
-            result.IsAnonymous = cartDto.IsAnonymous;
-            result.IsRecuring = cartDto.IsRecuring == true;
-            result.VolumetricWeight = cartDto.VolumetricWeight ?? 0;
-            result.Weight = cartDto.Weight ?? 0;
+            result.IsAnonymous = cart.IsAnonymous;
+            result.IsRecuring = cart.IsRecuring == true;
+            result.VolumetricWeight = cart.VolumetricWeight ?? 0;
+            result.Weight = cart.Weight ?? 0;
 
             return result;
         }
 
-        public static Payment ToPayment(this cartDto.Payment payment, ShoppingCart cart)
+        public static Payment ToPayment(this DomainCartModels.Payment payment, ShoppingCart cart)
         {
             var result = new Payment(cart.Currency)
             {
@@ -108,18 +109,18 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
 
             if (payment.TaxDetails != null)
             {
-                result.TaxDetails = payment.TaxDetails.Select(td => ToTaxDetail(td, cart.Currency)).ToList();
+                result.TaxDetails = payment.TaxDetails.Select(taxDetail => ToTaxDetail(taxDetail, cart.Currency)).ToList();
             }
 
             if (!payment.Discounts.IsNullOrEmpty())
             {
-                result.Discounts.AddRange(payment.Discounts.Select(x => ToDiscount(x, new[] { cart.Currency }, cart.Language)));
+                result.Discounts.AddRange(payment.Discounts.Select(discount => ToDiscount(discount, new[] { cart.Currency }, cart.Language)));
             }
 
             return result;
         }
 
-        public static Shipment ToShipment(this cartDto.Shipment shipment, ShoppingCart cart)
+        public static Shipment ToShipment(this DomainCartModels.Shipment shipment, ShoppingCart cart)
         {
             var result = new Shipment(cart.Currency)
             {
@@ -150,23 +151,23 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
 
             if (shipment.Items != null)
             {
-                result.Items = shipment.Items.Select(i => ToShipmentItem(i, cart)).ToList();
+                result.Items = shipment.Items.Select(shipmentItem => ToShipmentItem(shipmentItem, cart)).ToList();
             }
 
             if (shipment.TaxDetails != null)
             {
-                result.TaxDetails = shipment.TaxDetails.Select(td => ToTaxDetail(td, cart.Currency)).ToList();
+                result.TaxDetails = shipment.TaxDetails.Select(taxDetail => ToTaxDetail(taxDetail, cart.Currency)).ToList();
             }
 
             if (!shipment.Discounts.IsNullOrEmpty())
             {
-                result.Discounts.AddRange(shipment.Discounts.Select(x => ToDiscount(x, new[] { cart.Currency }, cart.Language)));
+                result.Discounts.AddRange(shipment.Discounts.Select(discount => ToDiscount(discount, new[] { cart.Currency }, cart.Language)));
             }
 
             return result;
         }
 
-        public static TaxDetail ToTaxDetail(this coreDto.TaxDetail taxDetail, Currency currency)
+        public static TaxDetail ToTaxDetail(this DomainCommerceModels.TaxDetail taxDetail, Currency currency)
         {
             var result = new TaxDetail(currency)
             {
@@ -177,7 +178,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
             return result;
         }
 
-        public static Address ToAddress(this coreDto.Address address)
+        public static Address ToAddress(this DomainCommerceModels.Address address)
         {
             var result = new Address
             {
@@ -203,28 +204,28 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
             return result;
         }
 
-        public static Discount ToDiscount(this coreDto.Discount discount, IEnumerable<Currency> availCurrencies, Language language)
+        public static Discount ToDiscount(this DomainCommerceModels.Discount discount, IEnumerable<Currency> currencies, Language language)
         {
-            var currency = availCurrencies.FirstOrDefault(x => x.Equals(discount.Currency)) ?? new Currency(language, discount.Currency);
+            var defaultCurrency = currencies.FirstOrDefault(currency => currency.Equals(discount.Currency)) ?? new Currency(language, discount.Currency);
 
-            var result = new Discount(currency)
+            var result = new Discount(defaultCurrency)
             {
                 Coupon = discount.Coupon,
                 Description = discount.Description,
                 PromotionId = discount.PromotionId,
-                Amount = new Money(discount.DiscountAmount, currency),
+                Amount = new Money(discount.DiscountAmount, defaultCurrency),
             };
 
             return result;
         }
 
-        public static CartShipmentItem ToShipmentItem(this cartDto.ShipmentItem shipmentItem, ShoppingCart cart)
+        public static CartShipmentItem ToShipmentItem(this DomainCartModels.ShipmentItem shipmentItem, ShoppingCart cart)
         {
             var result = new CartShipmentItem
             {
                 Id = shipmentItem.Id,
                 Quantity = shipmentItem.Quantity,
-                LineItem = cart.Items.FirstOrDefault(x => x.Id == shipmentItem.LineItemId),
+                LineItem = cart.Items.FirstOrDefault(lineItem => lineItem.Id == shipmentItem.LineItemId),
             };
 
             return result;
