@@ -103,9 +103,17 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            var crawlingUri = BuildCrawlingUri();
+            if (Request.Headers.Referrer == null)
+            {
+                return BadRequest("Required header hasn't been provided");
+            }
 
-            var crawlingResult = await _crawler.CrawlAsync(crawlingUri);
+            if (!IsValidHost(Request.Headers.Referrer))
+            {
+                return BadRequest("Crawling URL is invalid");
+            }
+
+            var crawlingResult = await _crawler.CrawlAsync(Request.Headers.Referrer);
 
             if (!crawlingResult.IsSuccess)
             {
@@ -115,9 +123,12 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             {
                 var singleProduct = crawlingResult.CrawlingItems.Single(item => item.ProductId == lineItem.ProductId);
 
-                ValidateField(lineItem.ListPrice, singleProduct.Price);
-                ValidateField(lineItem.Quantity.ToString(), singleProduct.Quantity);
-                ValidateField(lineItem.Sku, singleProduct.Sku);
+                if (AreDifferent(lineItem.ListPrice, singleProduct.Price)
+                    || AreDifferent(lineItem.Quantity.ToString(), singleProduct.Quantity)
+                    || AreDifferent(lineItem.Sku, singleProduct.Sku))
+                {
+                    return BadRequest("The request has been hacked");
+                }
             }
 
             using (var client = new HttpClient())
@@ -138,25 +149,23 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             }
         }
 
-        private static void ValidateField(string requested, string crawled)
+        private static bool AreDifferent(string requested, string crawled)
         {
-            if (requested != crawled)
-            {
-                throw new Exception("The request has been hacked");
-            }
+            return requested != crawled;
         }
 
-        private Uri BuildCrawlingUri()
+        private bool IsValidHost(Uri referrerUri)
         {
-            const string ParameterName = "JavaScriptShoppingCart.CrawlingTargetUrl";
-            var value = _settingManager.GetValue(ParameterName, string.Empty);
+            const string ParameterName = "JavaScriptShoppingCart.CrawlingHostWhitelist";
+            var flatCrawlingHostWhitelist = _settingManager.GetValue(ParameterName, string.Empty);
 
-            if (string.IsNullOrEmpty(value))
+            if (string.IsNullOrEmpty(flatCrawlingHostWhitelist))
             {
                 throw new ArgumentNullException(ParameterName);
             }
 
-            return new Uri(value);
+            var hosts = flatCrawlingHostWhitelist.Split(';', ',').Select(host => host.Trim());
+            return hosts.Contains(referrerUri.Host);
         }
 
         private Uri BuildForwardingUri(string cartId, string apiKey)
