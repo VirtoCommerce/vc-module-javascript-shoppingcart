@@ -98,5 +98,9 @@ csharp_preserve_single_line_statements = false
 csharp_preserve_single_line_blocks = true
 
 #HTML code style settings
+
+# IDE0065: Misplaced using directive
+csharp_using_directive_placement = inside_namespace:silent
+
 [*.html]
 insert_final_newline = false
