@@ -723,6 +723,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
                 Code = cart.Name,
                 Currency = cart.Currency.Code,
                 Type = "Cart",
+                Store = store,
 
                 // Customer = cart.Customer?.Contact?.ToCoreContactDto(), //storefront logic
                 // StoreTaxCalculationEnabled = store.TaxCalculationEnabled,
