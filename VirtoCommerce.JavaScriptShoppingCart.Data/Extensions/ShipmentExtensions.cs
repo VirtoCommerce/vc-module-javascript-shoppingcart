@@ -1,10 +1,11 @@
 using System.Linq;
-using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 using VirtoCommerce.Platform.Core.Common;
 using DomainCartModels = VirtoCommerce.Domain.Cart.Model;
+using Shipment = VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart.Shipment;
+using ShoppingCart = VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart.ShoppingCart;
 
-namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
+namespace VirtoCommerce.JavaScriptShoppingCart.Data.Extensions
 {
     public static class ShipmentExtensions
     {

@@ -1,8 +1,9 @@
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
-using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Tax;
+using Currency = VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common.Currency;
 using DomainCommerceModels = VirtoCommerce.Domain.Commerce.Model;
+using TaxDetail = VirtoCommerce.JavaScriptShoppingCart.Core.Model.Tax.TaxDetail;
 
-namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
+namespace VirtoCommerce.JavaScriptShoppingCart.Data.Extensions
 {
     public static class TaxDetailExtensions
     {

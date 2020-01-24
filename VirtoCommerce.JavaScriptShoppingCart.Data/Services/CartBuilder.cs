@@ -8,12 +8,13 @@ using VirtoCommerce.Domain.Store.Services;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services;
-using VirtoCommerce.JavaScriptShoppingCart.Data.Converters;
 using VirtoCommerce.Platform.Core.Common;
 using domain = VirtoCommerce.Domain.Cart.Model;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
 {
+    using VirtoCommerce.JavaScriptShoppingCart.Data.Extensions;
+
     public class CartBuilder : ICartBuilder
     {
         private readonly IShoppingCartService _shoppingCartService;

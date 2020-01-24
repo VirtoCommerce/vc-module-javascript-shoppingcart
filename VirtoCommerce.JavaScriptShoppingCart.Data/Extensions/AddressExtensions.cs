@@ -1,8 +1,9 @@
 using System;
-using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
+using Address = VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common.Address;
+using AddressType = VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common.AddressType;
 using DomainCommerceModels = VirtoCommerce.Domain.Commerce.Model;
 
-namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
+namespace VirtoCommerce.JavaScriptShoppingCart.Data.Extensions
 {
     public static class AddressExtensions
     {

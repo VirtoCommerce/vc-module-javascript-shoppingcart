@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
-using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing;
+using Currency = VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common.Currency;
+using Discount = VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing.Discount;
 using DomainCommerceModels = VirtoCommerce.Domain.Commerce.Model;
 
-namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
+namespace VirtoCommerce.JavaScriptShoppingCart.Data.Extensions
 {
     public static class DiscountExtensions
     {

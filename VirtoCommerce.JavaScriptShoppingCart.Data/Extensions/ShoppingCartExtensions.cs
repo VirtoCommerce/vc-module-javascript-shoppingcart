@@ -1,15 +1,15 @@
 using System.Linq;
-using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing;
 using DomainCartModels = VirtoCommerce.Domain.Cart.Model;
+using ShoppingCart = VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart.ShoppingCart;
 
-namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
+namespace VirtoCommerce.JavaScriptShoppingCart.Data.Extensions
 {
     // TechDebt: Need to use Automapper here where possible.
     // Current problem - pass constructor parameters to the child object.
     // Link to mitigate the problem using resolution context: http://codebuckets.com/2016/09/24/passing-parameters-with-automapper/
-    public static class CartConverter
+    public static class ShoppingCartExtensions
     {
         public static ShoppingCart ToShoppingCart(this DomainCartModels.ShoppingCart cart, Currency currency, Language language)
         {
