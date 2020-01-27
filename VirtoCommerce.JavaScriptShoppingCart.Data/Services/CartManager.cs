@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 using VirtoCommerce.Domain.Cart.Services;
 using VirtoCommerce.Domain.Customer.Model;
 using VirtoCommerce.Domain.Customer.Services;
@@ -16,7 +15,6 @@ using VirtoCommerce.JavaScriptShoppingCart.Core.Services;
 using VirtoCommerce.JavaScriptShoppingCart.Data.Converters;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Exceptions;
-using VirtoCommerce.Platform.Core.Settings;
 using domain_cart_model = VirtoCommerce.Domain.Cart.Model;
 using domain_shipping_model = VirtoCommerce.Domain.Shipping.Model;
 
@@ -381,7 +379,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
                 lineItem.ValidationErrors.Clear();
 
                 // Code validation here if it needed
-                var crawlingResult = Task.Run(async () => await _crawler.CrawlAsync(crawlingUri)).Result;
                 lineItem.IsValid = !lineItem.ValidationErrors.Any();
             }
         }
