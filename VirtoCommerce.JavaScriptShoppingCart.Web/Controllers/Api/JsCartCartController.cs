@@ -147,7 +147,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             {
                 var crawlingItem = crawlingResult.CrawlingItems.Single(item => item.ProductId == lineItemRequest.ProductId);
 
-                if (!ValidateFields(lineItemRequest, crawlingItem))
+                if (!lineItemRequest.Equals(crawlingItem))
                 {
                     return BadRequest("The request has been hacked");
                 }
@@ -276,11 +276,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             }
 
             return Ok();
-        }
-
-        private static bool ValidateFields(AddCartLineItemRequest requested, CrawlingItem crawled)
-        {
-            return requested.ListPrice.ToString() != crawled.Price || requested.Quantity.ToString() != crawled.Quantity || requested.Sku != crawled.Sku;
         }
 
         private bool IsValidHost(Uri referrerUri)
