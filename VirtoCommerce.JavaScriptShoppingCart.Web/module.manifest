@@ -36,11 +36,11 @@
     <settings>
         <group name="JavaScriptShoppingCart|General">
             <setting>
-                <name>JavaScriptShoppingCart.CrawlingTargetUrl</name>
+                <name>JavaScriptShoppingCart.CrawlingHostWhitelist</name>
                 <valueType>string</valueType>
-                <defaultValue>http://localhost:44311/Home/Index</defaultValue>
-                <title>Crawling target URL</title>
-                <description>Crawling target URL</description>
+                <defaultValue>localhost</defaultValue>
+                <title>Hosts Whitelist</title>
+                <description>Whitelist of hosts that can be crawled. Supported separators: ";," Example: "localhost; virtocommerce.com"</description>
             </setting>
         </group>
     </settings>

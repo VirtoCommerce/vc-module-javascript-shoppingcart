@@ -127,6 +127,32 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
                 return BadRequest(ModelState);
             }
 
+            if (Request.Headers.Referrer == null)
+            {
+                return BadRequest("Required header hasn't been provided");
+            }
+
+            if (!IsValidHost(Request.Headers.Referrer))
+            {
+                return BadRequest("Crawling URL is invalid");
+            }
+
+            var crawlingResult = await _crawler.CrawlAsync(Request.Headers.Referrer);
+
+            if (!crawlingResult.IsSuccess)
+            {
+                return BadRequest(crawlingResult.Exception?.Message);
+            }
+            else
+            {
+                var crawlingItem = crawlingResult.CrawlingItems.Single(item => item.ProductId == lineItemRequest.ProductId);
+
+                if (!lineItemRequest.Equals(crawlingItem))
+                {
+                    return BadRequest("The request has been hacked");
+                }
+            }
+
             using (await AsyncLock.GetLockByKey(CacheKey.With(typeof(ShoppingCart), cartId)).LockAsync())
             {
                 _cartManager.LoadCart(cartId, currency, cultureName);
@@ -252,6 +278,18 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             return Ok();
         }
 
+        private bool IsValidHost(Uri referrerUri)
+        {
+            const string ParameterName = "JavaScriptShoppingCart.CrawlingHostWhitelist";
+            var flatCrawlingHostWhitelist = _settingManager.GetValue(ParameterName, string.Empty);
 
+            if (string.IsNullOrEmpty(flatCrawlingHostWhitelist))
+            {
+                throw new ArgumentNullException(ParameterName);
+            }
+
+            var hosts = flatCrawlingHostWhitelist.Split(';', ',').Select(host => host.Trim());
+            return hosts.Contains(referrerUri.Host);
+        }
     }
 }
