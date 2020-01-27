@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using VirtoCommerce.Domain.Cart.Services;
 using VirtoCommerce.Domain.Customer.Model;
 using VirtoCommerce.Domain.Customer.Services;
@@ -388,7 +389,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
 
                 // Code validation here if it needed
                 var crawlingUri = BuildCrawlingUri();
-                var crawlingResult = _crawler.CrawlAsync(crawlingUri).GetAwaiter().GetResult();
+                var crawlingResult = Task.Run(async () => await _crawler.CrawlAsync(crawlingUri)).Result;
 
                 if (!crawlingResult.IsSuccess)
                 {
