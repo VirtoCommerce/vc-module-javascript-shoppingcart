@@ -73,14 +73,15 @@ cartModule.component('vcCheckout', {
 			ctrl.validateCheckout(ctrl.checkout);
 		};
 
-		this.selectShippingMethod = function (shippingMethod) {
-			if (shippingMethod) {
-				ctrl.checkout.shipment.shipmentMethodCode = shippingMethod.shippingMethod.code;
-				ctrl.checkout.shipment.shipmentMethodOption = shippingMethod.optionName;
-			} else {
-				ctrl.checkout.shipment.shipmentMethodCode = undefined;
-				ctrl.checkout.shipment.shipmentMethodOption = undefined;
-			}
+        this.selectShippingMethod = function (shippingMethod) {
+            angular.merge(ctrl.checkout.shipment, shippingMethod);
+			//if (shippingMethod) {
+			//	ctrl.checkout.shipment.shipmentMethodCode = shippingMethod.shippingMethod.code;
+			//	ctrl.checkout.shipment.shipmentMethodOption = shippingMethod.optionName;
+			//} else {
+			//	ctrl.checkout.shipment.shipmentMethodCode = undefined;
+			//	ctrl.checkout.shipment.shipmentMethodOption = undefined;
+			//}
             ctrl.cart.addOrUpdateShipment(ctrl.checkout.shipment);
             ctrl.validateCheckout(ctrl.checkout);
 		};

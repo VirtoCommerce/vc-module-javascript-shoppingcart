@@ -78,7 +78,7 @@ angular.module('virtoCommerce.cartModule')
 
             validateCoupon: function (cart, coupon) {
                 var url = getJsCartApiFullUrlWithCartSegment(cart) + '/coupons/validate';
-                return $http.delete(url, coupon);
+                return $http.post(url, coupon);
             },
 
             //---- shiping and pays methods

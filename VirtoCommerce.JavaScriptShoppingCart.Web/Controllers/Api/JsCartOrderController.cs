@@ -24,10 +24,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
         private readonly IShoppingCartService _cartService;
         private readonly ICustomerOrderBuilder _customerOrderBuilder;
 
-        public JsCartOrderController(ICustomerOrderService customerOrderService, ICustomerOrderSearchService searchService, IShoppingCartService cartService, ICustomerOrderBuilder customerOrderBuilder)
+        public JsCartOrderController(ICustomerOrderService customerOrderService, ICustomerOrderSearchService searchService, IStoreService storeService, IShoppingCartService cartService, ICustomerOrderBuilder customerOrderBuilder)
         {
             _customerOrderService = customerOrderService;
             _searchService = searchService;
+            _storeService = storeService;
             _cartService = cartService;
             _customerOrderBuilder = customerOrderBuilder;
         }

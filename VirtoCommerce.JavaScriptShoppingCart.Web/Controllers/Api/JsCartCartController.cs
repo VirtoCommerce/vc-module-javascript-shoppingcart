@@ -213,7 +213,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
         [HttpGet]
         [Route("{cartId}/shippingmethods")]
         [ResponseType(typeof(ShippingMethod[]))]
-        public ShippingMethod[] GetCartShipmentAvailShippingMethods([FromUri]string currency, [FromUri]string cultureName, [FromUri]string cartId, string shipmentId)
+        public ShippingMethod[] GetCartShipmentAvailShippingMethods([FromUri]string currency, [FromUri]string cultureName, [FromUri]string cartId)
         {
             _cartManager.LoadCart(cartId, currency, cultureName);
 
