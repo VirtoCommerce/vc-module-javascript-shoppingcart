@@ -237,13 +237,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             var isReadOnlyLineItems = Cart.Items.Any(i => i.IsReadOnly);
             if (!isReadOnlyLineItems)
             {
-                // Get product inventory to fill InStockQuantity parameter of LineItem
-                // required for some promotions evaluation
-
-                // foreach (var lineItem in Cart.Items.Where(x => x.Product != null).ToList())
-                // {
-                //    lineItem.InStockQuantity = (int)lineItem.Product.AvailableQuantity;
-                // }
                 var evalContext = Cart.ToPromotionEvaluationContext();
                 _promotionEvaluator.EvaluateDiscounts(evalContext, new[] { Cart });
             }

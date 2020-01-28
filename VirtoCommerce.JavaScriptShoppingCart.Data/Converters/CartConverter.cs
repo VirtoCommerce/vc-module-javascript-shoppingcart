@@ -547,14 +547,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
 
         public static marketing_domain_model.PromotionEvaluationContext ToPromotionEvaluationContext(this ShoppingCart cart)
         {
-            // var result = new PromotionEvaluationContext()
-            // {
-            //    Cart = cart,
-            //    User = cart.Customer,
-            //    Currency = cart.Currency,
-            //    Language = cart.Language,
-            //    StoreId = cart.StoreId
-            // };
             var result = new marketing_domain_model.PromotionEvaluationContext();
 
             result.StoreId = cart.StoreId; // new
@@ -618,29 +610,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
             result.Promotion = rewardDto.Promotion?.ToPromotion();
 
             return result;
-
-            // {
-            //    // CategoryId = rewardDto.CategoryId,
-            //    Coupon = rewardDto.Coupon,
-            //    Description = rewardDto.Description,
-            //    IsValid = rewardDto.IsValid,
-            //    // LineItemId = rewardDto.LineItemId,
-            //    // MeasureUnit = rewardDto.MeasureUnit,
-            //    // ProductId = rewardDto.ProductId,
-            //    // PromotionId = rewardDto.PromotionId,
-            //    // Quantity = rewardDto.Quantity ?? 0,
-            //    MaxLimit = rewardDto.MaxLimit,
-            //    Amount = (decimal)(rewardDto.Amount ?? 0),
-            //    AmountType = EnumUtility.SafeParse(rewardDto.AmountType, AmountType.Absolute),
-            //    CouponAmount = new Money(rewardDto.CouponAmount ?? 0, currency),
-            //    CouponMinOrderAmount = new Money(rewardDto.CouponMinOrderAmount ?? 0, currency),
-            //    Promotion = rewardDto.Promotion.ToPromotion(),
-            //    RewardType = EnumUtility.SafeParse(rewardDto.RewardType, PromotionRewardType.CatalogItemAmountReward),
-            //    ShippingMethodCode = rewardDto.ShippingMethod,
-            //    ConditionalProductId = rewardDto.ConditionalProductId,
-            //    ForNthQuantity = rewardDto.ForNthQuantity,
-            //    InEveryNthQuantity = rewardDto.InEveryNthQuantity,
-            // };
         }
 
 
@@ -658,10 +627,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
                 Priority = paymentMethodDto.Priority,
             };
 
-            // if (paymentMethodDto.Settings != null)
-            // {
-            //    retVal.Settings = paymentMethodDto.Settings.Where(x => !x.ValueType.EqualsInvariant("SecureString")).Select(x => x.JsonConvert<platformDto.Setting>().ToSettingEntry()).ToList();
-            // }
             retVal.Currency = cart.Currency;
             retVal.Price = new Money(paymentMethodDto.Price, cart.Currency);
             retVal.DiscountAmount = new Money(paymentMethodDto.DiscountAmount, cart.Currency);
@@ -700,14 +665,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
                 result.Name = shippingRate.ShippingMethod.Name;
                 result.Priority = shippingRate.ShippingMethod.Priority;
                 result.TaxType = shippingRate.ShippingMethod.TaxType;
-
                 result.ShipmentMethodCode = shippingRate.ShippingMethod.Code;
-
-                // if (shippingRate.ShippingMethod.Settings != null)
-                // {
-                //    result.Settings = shippingRate.ShippingMethod.Settings.Where(x => !x.ValueType.EqualsInvariant("SecureString"))
-                //                                                          .Select(x => x.JsonConvert<platformDto.Setting>().ToSettingEntry()).ToList();
-                // }
             }
 
             return result;

@@ -55,7 +55,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
                 }
                 else
                 {
-                    // taxRates = _commerceService. (context.StoreId, context.ToTaxEvaluationContextDto());
                     var activeTaxProvider = context.Store.TaxProviders.FirstOrDefault(x => x.IsActive);
                     if (activeTaxProvider != null)
                     {
@@ -73,10 +72,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             var fixedTaxProvider = taxProviders.FirstOrDefault(x => x.IsActive && x.Code == "FixedRate");
             if (fixedTaxProvider != null && !fixedTaxProvider.Settings.IsNullOrEmpty())
             {
-                result = fixedTaxProvider.Settings
-
-                    // .Select(x => x.JsonConvert<Setting>().ToSettingEntry())
-                    .GetSettingValue("VirtoCommerce.Core.FixedTaxRateProvider.Rate", 0.00m);
+                result = fixedTaxProvider.Settings.GetSettingValue("VirtoCommerce.Core.FixedTaxRateProvider.Rate", 0.00m);
             }
 
             return result;
