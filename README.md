@@ -21,6 +21,8 @@ You have designed an awesome blog with Wordpress or other platform, and now you 
   ![whitelistplatform](/docs/media/whitelistplatform.png "Setting whitelist in platform")
 
   Then in [Web.Config](https://github.com/VirtoCommerce/vc-platform/blob/master/VirtoCommerce.Platform.Web/Web.config#L60) set the same values as in whitelist in platform.
+  
+  We are using [referer header analysis](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer) in our backend to determine from which page the request has been made. You need to make sure that protocol security level is same for platform and your site.
 
 3. Including JS/CSS files
 
