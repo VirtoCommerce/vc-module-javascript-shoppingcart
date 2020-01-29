@@ -10,7 +10,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
     {
         public Language(string cultureName)
         {
-            CultureInfo culture = CultureInfo.InvariantCulture;
+            var culture = CultureInfo.InvariantCulture;
             if (!string.IsNullOrEmpty(cultureName))
             {
                 culture = CultureInfo.GetCultureInfo(cultureName);
@@ -20,12 +20,15 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
             ThreeLeterLanguageName = culture.ThreeLetterISOLanguageName;
             TwoLetterLanguageName = culture.TwoLetterISOLanguageName;
             NativeName = culture.NativeName;
-            if (culture != CultureInfo.InvariantCulture)
+
+            if (culture == CultureInfo.InvariantCulture)
             {
-                var regionInfo = new RegionInfo(culture.LCID);
-                TwoLetterRegionName = regionInfo.TwoLetterISORegionName;
-                ThreeLetterRegionName = regionInfo.ThreeLetterISORegionName;
+                return;
             }
+
+            var regionInfo = new RegionInfo(culture.LCID);
+            TwoLetterRegionName = regionInfo.TwoLetterISORegionName;
+            ThreeLetterRegionName = regionInfo.ThreeLetterISORegionName;
         }
 
         private Language()
@@ -78,7 +81,10 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            yield return CultureName;
+            return new List<object>
+                   {
+                       CultureName,
+                   };
         }
     }
 }

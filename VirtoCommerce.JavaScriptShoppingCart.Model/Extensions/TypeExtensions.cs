@@ -6,24 +6,37 @@ using System.Reflection;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
 {
+    using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
+
     public static class TypeExtensions
     {
-        private static readonly ConcurrentDictionary<Type, string> PrettyPrintCache = new ConcurrentDictionary<Type, string>();
-        private static readonly ConcurrentDictionary<Type, string> TypeCacheKeys = new ConcurrentDictionary<Type, string>();
+        private static readonly ConcurrentDictionary<Type, string> PrettyPrintCache =
+            new ConcurrentDictionary<Type, string>();
+
+        private static readonly ConcurrentDictionary<Type, string> TypeCacheKeys =
+            new ConcurrentDictionary<Type, string>();
+
+        public static string GetCacheKey(this Type type)
+        {
+            return TypeCacheKeys.GetOrAdd(type, t => $"{t.PrettyPrint()}");
+        }
 
         public static Type[] GetTypeInheritanceChainTo(this Type type, Type toBaseType)
         {
-            var retVal = new List<Type> { type };
+            var result = new List<Type>
+                         {
+                             type,
+                         };
 
             var baseType = type.BaseType;
 
             while (baseType != toBaseType && baseType != typeof(object))
             {
-                retVal.Add(baseType);
+                result.Add(baseType);
                 baseType = baseType.BaseType;
             }
 
-            return retVal.ToArray();
+            return result.ToArray();
         }
 
         public static string PrettyPrint(this Type type)
@@ -43,9 +56,14 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
                 });
         }
 
-        public static string GetCacheKey(this Type type)
+        public static Money CloneAsMoney(this ICloneable value)
         {
-            return TypeCacheKeys.GetOrAdd(type, t => $"{t.PrettyPrint()}");
+            return value?.Clone() as Money;
+        }
+
+        public static Currency CloneAsCurrency(this ICloneable value)
+        {
+            return value?.Clone() as Currency;
         }
 
         private static string PrettyPrintRecursive(Type type, int depth)
@@ -56,6 +74,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
             }
 
             var nameParts = type.Name.Split('`');
+
             if (nameParts.Length == 1)
             {
                 return nameParts[0];
@@ -63,8 +82,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Extensions
 
             var genericArguments = type.GetTypeInfo().GetGenericArguments();
             return !type.IsConstructedGenericType
-                ? $"{nameParts[0]}<{new string(',', genericArguments.Length - 1)}>"
-                : $"{nameParts[0]}<{string.Join(",", genericArguments.Select(t => PrettyPrintRecursive(t, depth + 1)))}>";
+                       ? $"{nameParts[0]}<{new string(',', genericArguments.Length - 1)}>"
+                       : $"{nameParts[0]}<{string.Join(",", genericArguments.Select(t => PrettyPrintRecursive(t, depth + 1)))}>";
         }
     }
 }

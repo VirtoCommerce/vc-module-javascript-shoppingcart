@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using VirtoCommerce.JavaScriptShoppingCart.Core.Extensions;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Tax;
@@ -190,16 +191,18 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         public override object Clone()
         {
             var result = base.Clone() as ShippingMethod;
-            result.Price = Price?.Clone() as Money;
-            result.DiscountAmount = DiscountAmount?.Clone() as Money;
+            result.Price = Price.CloneAsMoney();
+            result.DiscountAmount = DiscountAmount.CloneAsMoney();
             return result;
         }
 
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            yield return ShipmentMethodCode;
-            yield return OptionName;
+            return new List<object>
+                   {
+                       ShipmentMethodCode, OptionName
+                   };
         }
     }
 }

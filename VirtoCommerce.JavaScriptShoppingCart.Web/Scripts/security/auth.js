@@ -1,15 +1,15 @@
-﻿cartModule.service('virtoCommerce.cartModule.authService', ['$http', '$rootScope', '$cookieStore', '$interpolate', '$q', 'virtoCommerce.cartModule.authDataStorage', function ($http, $rootScope, $cookieStore, $interpolate, $q, authDataStorage) {
-    var platformEndPoint;
-    var platrofmApiKey;
-    var serviceBase = 'api/platform/security/';
-    var authContext = {
-        userId: null,
-        memberId: null,
-        userLogin: null,
-        fullName: null,
-        permissions: null,
-        isAuthenticated: false
-    };
+cartModule.service('virtoCommerce.cartModule.authService', ['$http', '$rootScope', '$cookieStore', '$interpolate', '$q', 'virtoCommerce.cartModule.authDataStorage', function ($http, $rootScope, $cookieStore, $interpolate, $q, authDataStorage) {
+	var platformEndPoint;
+	var platformApiKey;
+	var serviceBase = 'api/platform/security/';
+	var context = {
+		userId: null,
+		memberId: null,
+		userLogin: null,
+		fullName: null,
+		permissions: null,
+		isAuthenticated: false
+	};
 
 	function getPlatformEndpoint() {
 		if (!platformEndPoint) {
@@ -19,184 +19,215 @@
 	}
 
 	function getPlatformApiKey() {
-		if (!platrofmApiKey) {
-			platrofmApiKey = authDataStorage.getPlatformKey();
+		if (!platformApiKey) {
+			platformApiKey = authDataStorage.getPlatformKey();
 		}
-		return platrofmApiKey;
+		return platformApiKey;
 	}
 
-    function guid() {
-        function s4() {
-            return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-        }
+	function guid() {
+		function s4() {
+			return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+		}
 
-        return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-    }
+		return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+	}
 
-    authContext.fillAuthData = function() {
-        return $http.get(`${getPlatformEndpoint()}jscart/api/security/currentuser`).then(
-            function (results) {
-                changeAuth(results.data);
-            });
-    };
+	context.fillAuthData = function() {
+        var url = `${getPlatformEndpoint()}jscart/api/security/currentuser`;
+        return $http.get(url).then(
+			function (results) {
+				changeAuth(results.data);
+			});
+	};
 
-    authContext.login = function (email, password, remember) {
-        var requestData = 'grant_type=password&username=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password);
+	context.login = function (email, password) {
+		var encodedEmail = encodeURIComponent(email);
+		var encodedURI = encodeURIComponent(password);
+		var requestData = 'grant_type=password&username=' + encodedEmail + '&password=' + encodedURI;
+		var url = getPlatformEndpoint() + 'token';
+		var headers = { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } };
 
-        return $http.post(getPlatformEndpoint() + 'token', requestData, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(
-            function (response) {
-                var authData = {
-                    token: response.data.access_token,
-                    userName: email,
-                    expiresAt: getCurrentDateWithOffset(response.data.expires_in),
-                    refreshToken: response.data.refresh_token
-                };
-                authDataStorage.storeAuthData(authData);
+		return $http.post(url, requestData, headers).then(
+			function (response) {
+				var authData = {
+					token: response.data.access_token,
+					userName: email,
+					expiresAt: getCurrentDateWithOffset(response.data.expires_in),
+					refreshToken: response.data.refresh_token
+				};
+				authDataStorage.storeAuthData(authData);
 
-                return authContext.fillAuthData().then(function () {
-                    return response.data;
-                });
-            }, function (error) {
-                authContext.logout();
-                return $q.reject(error);
-            });
-    };
+				return context.fillAuthData().then(function () {
+					return response.data;
+				});
+			}, function (error) {
+				context.logout();
+				return $q.reject(error);
+			});
+	};
 
-    authContext.refreshToken = function () {
-        var authData = authDataStorage.getStoredData();
-        if (authData) {
-            var data = 'grant_type=refresh_token&refresh_token=' + encodeURIComponent(authData.refreshToken);
+	context.refreshToken = function () {
+		var authData = authDataStorage.getStoredData();
+		if (authData) {
+			var data = 'grant_type=refresh_token&refresh_token=' + encodeURIComponent(authData.refreshToken);
 
-            // NOTE: this method is called by the HTTP interceptor if the access token in the local storage expired.
-            //       So we clean the storage before sending the HTTP request - otherwise the HTTP interceptor will
-            //       detect expired token and will call this method again, causing the infinite loop.
-            authDataStorage.clearStoredData();
+			// This method is called by the HTTP interceptor if the access token in the local storage expired.
+			// So we clean the storage before sending the HTTP request - otherwise, the HTTP interceptor will
+			// detect expired token and call this method again, causing the infinite loop.
+			authDataStorage.clearStoredData();
 
-            return $http.post(getPlatformEndpoint() +'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(
-                function (response) {
-                    var newAuthData = {
-                        token: response.data.access_token,
-                        userName: response.data.userName,
-                        expiresAt: getCurrentDateWithOffset(response.data.expires_in),
-                        refreshToken: response.data.refresh_token
-                    };
-                    authDataStorage.storeAuthData(newAuthData);
-                    return newAuthData;
-                }, function (err) {
-                    authContext.logout();
-                    return $q.reject(err);
-                });
-        } else {
-            return $q.reject();
-        }
-    };
+            var url = getPlatformEndpoint() + 'token';
+            var headers = { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } };
+			return $http.post(url, data, headers).then(
+				function (response) {
+					var newAuthData = {
+						token: response.data.access_token,
+						userName: response.data.userName,
+						expiresAt: getCurrentDateWithOffset(response.data.expires_in),
+						refreshToken: response.data.refresh_token
+					};
+					authDataStorage.storeAuthData(newAuthData);
+					return newAuthData;
+				}, function (err) {
+					context.logout();
+					return $q.reject(err);
+				});
+		} else {
+			return $q.reject();
+		}
+	};
 
-    function getCurrentDateWithOffset(offsetInSeconds) {
-        return Date.now() + offsetInSeconds * 1000;
-    }
+	function getCurrentDateWithOffset(offsetInSeconds) {
+		return Date.now() + offsetInSeconds * 1000;
+	}
 
-    authContext.requestpasswordreset = function (data) {
-        return $http.post(getPlatformEndpoint() + serviceBase + 'users/' + data.userName + '/requestpasswordreset/').then(
-            function (results) {
-                return results.data;
-            });
-    };
+    context.requestpasswordreset = function (data) {
+        var url = getPlatformEndpoint() + serviceBase + 'users/' + data.userName + '/requestpasswordreset/';
+		return $http.post(url).then(
+			function (results) {
+				return results.data;
+			});
+	};
 
-    authContext.signUp = function(data) {
-        return $http.post(getPlatformEndpoint() + 'jscart/api/security/registerUser', data, { headers: { 'Content-Type': 'application/json' } }).then(
-            function (response) {
-                return response;
-            }, function (err) {
-                return $q.reject(err);
-            });
+    context.signUp = function (data) {
+        var url = getPlatformEndpoint() + 'jscart/api/security/registerUser';
+        var headers = { headers: { 'Content-Type': 'application/json' } };
+		return $http.post(url, data, headers).then(
+			function (response) {
+				return response;
+			}, function (error) {
+				return $q.reject(error);
+			});
 
-    };
+	};
 
-    authContext.validatePassword = function(data) {
-        return $http.post(getPlatformEndpoint() + 'jscart/api/security/validatepassword', data, { headers: { 'Content-Type': 'application/json' } }).then(
-            function (response) {
-                return response;
-            }, function (err) {
-                return $q.reject(err);
-            });
+	context.validatePassword = function(data) {
+        var url = getPlatformEndpoint() + 'jscart/api/security/validatepassword';
+        var headers = { headers: { 'Content-Type': 'application/json' } };
+        return $http.post(url, data, headers).then(
+			function (response) {
+				return response;
+			}, function (error) {
+				return $q.reject(error);
+			});
 
-    };
+	};
 
-    authContext.validatepasswordresettoken = function (data) {
-        return $http.post(getPlatformEndpoint() + serviceBase + 'users/' + data.userId + '/validatepasswordresettoken?api_key=' + getPlatformApiKey(), { token: data.code }).then(
-            function (results) {
-                return results.data;
-            });
-    };
+    context.validatepasswordresettoken = function (data) {
+        var url = getPlatformEndpoint() +
+            serviceBase +
+            'users/' +
+            data.userId +
+            '/validatepasswordresettoken?api_key=' +
+            getPlatformApiKey();
 
-    authContext.resetpassword = function (data) {
-        return $http.post(getPlatformEndpoint() + serviceBase + 'users/' + data.userId + '/resetpasswordconfirm?api_key=' + getPlatformApiKey(), { token: data.code, newPassword: data.newPassword }).then(
-            function (results) {
-                return results.data;
-            });
-    };
+        return $http.post(url, { token: data.code }).then(
+			function (results) {
+				return results.data;
+			});
+	};
 
-    authContext.logout = function () {
-        authDataStorage.clearStoredData();
-        $http.post(getPlatformEndpoint() + serviceBase + 'logout?api_key=' + getPlatformApiKey());
-        changeAuth({});
-        $rootScope.$broadcast('userLoggedOut');
-    };
+	context.resetpassword = function (data) {
+        var url = getPlatformEndpoint() +
+            serviceBase +
+            'users/' +
+            data.userId +
+            '/resetpasswordconfirm?api_key=' +
+            getPlatformApiKey();
 
-    authContext.checkPermission = function (permission, securityScopes) {
-        //first check admin permission
-        // var hasPermission = $.inArray('admin', authContext.permissions) > -1;
-        var hasPermission = authContext.isAdministrator;
-        if (!hasPermission && permission) {
-            permission = permission.trim();
-            //first check global permissions
-            hasPermission = $.inArray(permission, authContext.permissions) > -1;
-            if (!hasPermission && securityScopes) {
-                if (typeof securityScopes === 'string' || angular.isArray(securityScopes)) {
-                    securityScopes = angular.isArray(securityScopes) ? securityScopes : securityScopes.split(',');
-                    //Check permissions in scope
-                    hasPermission = _.some(securityScopes, function (x) {
-                        var permissionWithScope = permission + ":" + x;
-                        var retVal = $.inArray(permissionWithScope, authContext.permissions) > -1;
-                        //console.log(permissionWithScope + "=" + retVal);
-                        return retVal;
-                    });
-                }
-            }
-        }
-        return hasPermission;
-    };
+        return $http.post(url, { token: data.code, newPassword: data.newPassword }).then(
+			function (results) {
+				return results.data;
+			});
+	};
 
-    function changeAuth(user) {
-        if (user) {
-            angular.extend(authContext, user);
-            authContext.userLogin = user.userName;
-            authContext.fullName = user.userLogin;
-            authContext.isAuthenticated = user.userName != null;
-            authContext.userId = user.id;
-            authContext.memberId = user.memberId;
-        } else {
-            authContext.userLogin = undefined;
-            authContext.memberId = undefined;
-            authContext.isAuthenticated = false;
-            if (!authContext.userId) {
-                const existentUserId = authDataStorage.getUserId();
-                if (existentUserId) {
-                    authContext.userId = existentUserId;
-                } else {
-                    authContext.userId = guid();
-                    authDataStorage.storeUserId(authContext.userId);
-                }
-            }
-        }
-        //Interpolate permissions to replace some template to real value
-        if (authContext.permissions) {
-            authContext.permissions = _.map(authContext.permissions, function (x) {
-                return $interpolate(x)(authContext);
-            });
-        }
+	context.logout = function () {
+		authDataStorage.clearStoredData();
+        var url = getPlatformEndpoint() + serviceBase + 'logout?api_key=' + getPlatformApiKey();
+        $http.post(url);
+		changeAuth({});
+		$rootScope.$broadcast('userLoggedOut');
+	};
 
-            $rootScope.$broadcast('loginStatusChanged', authContext);
-    }
-    return authContext;
+	context.checkPermission = function (permission, securityScopes) {
+		// at first check admin permission
+		var isAdministrator = context.isAdministrator;
+
+		if (!isAdministrator && permission) {
+			permission = permission.trim();
+
+			// at second check global permissions
+			isAdministrator = $.inArray(permission, context.permissions) > -1;
+			if (!isAdministrator && securityScopes) {
+				if (typeof securityScopes === 'string' || angular.isArray(securityScopes)) {
+					securityScopes = angular.isArray(securityScopes) ? securityScopes : securityScopes.split(',');
+
+					// check permissions in scope
+					isAdministrator = _.some(securityScopes, function (x) {
+						var permissionWithScope = permission + ":" + x;
+						var result = $.inArray(permissionWithScope, context.permissions) > -1;
+						
+						return result;
+					});
+				}
+			}
+		}
+		return isAdministrator;
+	};
+
+	function changeAuth(user) {
+		if (user) {
+			angular.extend(context, user);
+			context.userLogin = user.userName;
+			context.fullName = user.userLogin;
+			context.isAuthenticated = user.userName !== null;
+			context.userId = user.id;
+			context.memberId = user.memberId;
+		} else {
+			context.userLogin = undefined;
+			context.memberId = undefined;
+			context.isAuthenticated = false;
+
+			if (!context.userId) {
+				var existentUserId = authDataStorage.getUserId();
+				if (existentUserId) {
+					context.userId = existentUserId;
+				} else {
+					context.userId = guid();
+					authDataStorage.storeUserId(context.userId);
+				}
+			}
+		}
+
+		// Interpolate permissions to replace some template to real value
+		if (context.permissions) {
+			context.permissions = _.map(context.permissions, function (x) {
+				return $interpolate(x)(context);
+			});
+		}
+
+			$rootScope.$broadcast('loginStatusChanged', context);
+	}
+	return context;
 }]);

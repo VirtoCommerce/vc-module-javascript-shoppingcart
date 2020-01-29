@@ -41,7 +41,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 
         public string Email { get; set; }
 
-        // TODO: Need to move out how to move from domain model
         public string Id => Key;
 
         [JsonIgnore]
@@ -73,29 +72,31 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 
         public override string ToString()
         {
-            var retVal = string.Join(" ", FirstName, LastName, Organization, Line1, City, RegionName, PostalCode, CountryName);
-            return retVal;
+            var result = string.Join(" ", FirstName, LastName, Organization, Line1, City, RegionName, PostalCode, CountryName);
+            return result;
         }
-
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
             // Key and Name properties don't participate in equality
-            yield return Type;
-            yield return Organization;
-            yield return CountryCode;
-            yield return CountryName;
-            yield return PostalCode;
-            yield return Zip;
-            yield return Line1;
-            yield return Line2;
-            yield return RegionId;
-            yield return RegionName;
-            yield return FirstName;
-            yield return MiddleName;
-            yield return LastName;
-            yield return Phone;
-            yield return Email;
+            return new List<object>
+                   {
+                       Type,
+                       Organization,
+                       CountryCode,
+                       CountryName,
+                       PostalCode,
+                       Zip,
+                       Line1,
+                       Line2,
+                       RegionId,
+                       RegionName,
+                       FirstName,
+                       MiddleName,
+                       LastName,
+                       Phone,
+                       Email
+                   };
         }
     }
 }

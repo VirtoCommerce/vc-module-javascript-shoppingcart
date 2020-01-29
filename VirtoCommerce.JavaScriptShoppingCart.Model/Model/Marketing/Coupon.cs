@@ -1,6 +1,6 @@
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 
-namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Model.Marketing
+namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing
 {
     public partial class Coupon : CloneableValueObject
     {

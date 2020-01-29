@@ -1,3 +1,4 @@
+using VirtoCommerce.JavaScriptShoppingCart.Core.Extensions;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing
@@ -36,20 +37,20 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing
 
         public Discount ConvertTo(Currency currency)
         {
-            var retVal = new Discount(currency)
+            var result = new Discount(currency)
             {
                 PromotionId = PromotionId,
                 Description = Description,
                 Coupon = Coupon,
                 Amount = Amount.ConvertTo(currency),
             };
-            return retVal;
+            return result;
         }
 
         public override object Clone()
         {
             var result = base.Clone() as Discount;
-            result.Amount = Amount?.Clone() as Money;
+            result.Amount = Amount.CloneAsMoney();
             return result;
         }
     }

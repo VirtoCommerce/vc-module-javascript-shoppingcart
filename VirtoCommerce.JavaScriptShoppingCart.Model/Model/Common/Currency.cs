@@ -8,22 +8,23 @@ using VirtoCommerce.Platform.Core.Common;
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 {
     /// <summary>
-    /// Represent currency information in storefront. Contains some extra informations as exchnage rate, symbol, formating.
+    /// Represents currency information in storefront.
+    /// Contains some extra information as exchange rate, symbol, formatting.
     /// </summary>
     public class Currency : CloneableValueObject
     {
-        private static IDictionary<string, string> _isoCurrencySymbolDict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase).WithDefaultValue(null);
+        private static readonly IDictionary<string, string> _isoCurrencySymbolDict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase).WithDefaultValue(null);
         private Language _language;
         private string _code;
 
         static Currency()
         {
-            foreach (var ci in CultureInfo.GetCultures(CultureTypes.SpecificCultures))
+            foreach (var cultureInfo in CultureInfo.GetCultures(CultureTypes.SpecificCultures))
             {
                 try
                 {
-                    var ri = new RegionInfo(ci.LCID);
-                    _isoCurrencySymbolDict[ri.ISOCurrencySymbol] = ri.CurrencySymbol;
+                    var regionInfo = new RegionInfo(cultureInfo.LCID);
+                    _isoCurrencySymbolDict[regionInfo.ISOCurrencySymbol] = regionInfo.CurrencySymbol;
                 }
                 catch (Exception)
                 {
@@ -60,7 +61,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         protected Currency()
         {
         }
-
 
         /// <summary>
         /// Currency code may be used ISO 4217.
@@ -101,7 +101,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
         public string EnglishName { get; set; }
 
         /// <summary>
-        /// Exchnage rate with primary currency.
+        /// Exchange rate with primary currency.
         /// </summary>
         public decimal ExchangeRate { get; set; }
 
@@ -129,32 +129,37 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            yield return Code;
-            yield return CultureName;
+            return new List<object>
+                   {
+                       Code,
+                       CultureName,
+                   };
         }
 
 
         private void Initialize()
         {
-            if (_language != null)
+            if (_language == null)
             {
-                if (!_language.IsInvariant)
-                {
-                    var cultureInfo = CultureInfo.GetCultureInfo(_language.CultureName);
-                    NumberFormat = (NumberFormatInfo)cultureInfo.NumberFormat.Clone();
-                    var region = new RegionInfo(cultureInfo.LCID);
-                    EnglishName = region.CurrencyEnglishName;
+                return;
+            }
 
-                    if (_code != null)
-                    {
-                        Symbol = _isoCurrencySymbolDict[_code] ?? "N/A";
-                        NumberFormat.CurrencySymbol = Symbol;
-                    }
-                }
-                else
+            if (!_language.IsInvariant)
+            {
+                var cultureInfo = CultureInfo.GetCultureInfo(_language.CultureName);
+                NumberFormat = (NumberFormatInfo)cultureInfo.NumberFormat.Clone();
+                var region = new RegionInfo(cultureInfo.LCID);
+                EnglishName = region.CurrencyEnglishName;
+
+                if (_code != null)
                 {
-                    NumberFormat = CultureInfo.InvariantCulture.NumberFormat.Clone() as NumberFormatInfo;
+                    Symbol = _isoCurrencySymbolDict[_code] ?? "N/A";
+                    NumberFormat.CurrencySymbol = Symbol;
                 }
+            }
+            else
+            {
+                NumberFormat = CultureInfo.InvariantCulture.NumberFormat.Clone() as NumberFormatInfo;
             }
         }
     }

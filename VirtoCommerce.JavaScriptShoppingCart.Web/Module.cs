@@ -35,9 +35,9 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
             _container.RegisterType<ICrawler, DefaultCrawler>();
             _container.RegisterType<ICartBuilder, CartBuilder>();
 
-            var configuration = new MapperConfiguration(x =>
+            var configuration = new MapperConfiguration(configurationExpression =>
             {
-                x.AddProfile(new MappingProfile());
+                configurationExpression.AddProfile(new MappingProfile());
             });
 
 #pragma warning disable S125 // Could be uncommented when debugging mappings
@@ -52,11 +52,16 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
 
         public override void PostInitialize()
         {
+            const string moduleName = "VirtoCommerce.JavaScriptShoppingCart";
+
             var moduleCatalog = _container.Resolve<IModuleCatalog>();
-            var javaScriptShoppingCartModule = moduleCatalog.Modules.OfType<ManifestModuleInfo>().FirstOrDefault(x => x.ModuleName == "VirtoCommerce.JavaScriptShoppingCart");
-            if (javaScriptShoppingCartModule != null)
+            var moduleInfos = moduleCatalog.Modules.OfType<ManifestModuleInfo>();
+            var module = moduleInfos.FirstOrDefault(moduleInfo => moduleInfo.ModuleName == moduleName);
+            if (module != null)
             {
-                var moduleRelativePath = "~/Modules" + javaScriptShoppingCartModule.FullPhysicalPath.Replace(HostingEnvironment.MapPath("~/Modules"), string.Empty).Replace("\\", "/");
+                var mappedPath = HostingEnvironment.MapPath("~/Modules");
+                var moduleRelativePath = "~/Modules" + module.FullPhysicalPath.Replace(mappedPath, string.Empty).Replace("\\", "/");
+
                 var cssBundle = new Bundle("~/styles/vc-shopping-cart", new CssMinify())
                     .IncludeDirectory(Path.Combine(moduleRelativePath, "Content"), "*.css", true);
                 BundleTable.Bundles.Add(cssBundle);
@@ -70,10 +75,34 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
                     .IncludeDirectory(Path.Combine(moduleRelativePath, "Scripts/checkout-modal"), "*.tpl.html", true)
                     .IncludeDirectory(Path.Combine(moduleRelativePath, "Scripts/cart"), "*.tpl.html", true)
                     .IncludeDirectory(Path.Combine(moduleRelativePath, "Scripts/services"), "*.js", true);
+
                 BundleTable.Bundles.Add(partialBundle);
+            }
+            else
+            {
+                // idle
             }
 
             InitializeSecurity();
+        }
+
+        private static void InitializeRole(IRoleManagementService roleManagementService, Role role, IEnumerable<Permission> permissions)
+        {
+            var searchRoleResponse = roleManagementService.SearchRoles(
+                new RoleSearchRequest
+                {
+                    Keyword = role.Name,
+                });
+
+            var predefinedPermissions = PredefinedPermissions.Permissions;
+            var securityCallApi = PredefinedPermissions.SecurityCallApi;
+            var permissionsQuery = predefinedPermissions.Where(permission => permission.Id == securityCallApi);
+
+            var defaultRole = searchRoleResponse.Roles.FirstOrDefault() ?? role;
+            var defaultPermissions = permissions ?? Enumerable.Empty<Permission>();
+
+            defaultRole.Permissions = permissionsQuery.AsEnumerable().Concat(defaultPermissions).ToArray();
+            roleManagementService.AddOrUpdateRole(defaultRole);
         }
 
         private void InitializeSecurity()
@@ -81,17 +110,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web
             var roleManagementService = _container.Resolve<IRoleManagementService>();
             var securityService = _container.Resolve<ISecurityService>();
 
-            var allPermissions = securityService.GetAllPermissions().Where(x => SecurityConstants.Permissions.AllPermissions.Contains(x.Id));
+            var permissions = securityService.GetAllPermissions();
+            var allPermissions = SecurityConstants.Permissions.AllPermissions;
+            var filteredPermissions = permissions.Where(permission => allPermissions.Contains(permission.Id));
 
-            InitializeRole(roleManagementService, SecurityConstants.JsShoppingCartUser, allPermissions);
-        }
-
-        private void InitializeRole(IRoleManagementService roleManagementService, Role jsShoppingCartRole, IEnumerable<Permission> permissions)
-        {
-            var role = roleManagementService.SearchRoles(new RoleSearchRequest { Keyword = jsShoppingCartRole.Name }).Roles.FirstOrDefault() ?? new Role { Id = jsShoppingCartRole.Id, Name = jsShoppingCartRole.Name, Description = jsShoppingCartRole.Description };
-            var callApiPermission = PredefinedPermissions.Permissions.Where(p => p.Id == PredefinedPermissions.SecurityCallApi).ToArray();
-            role.Permissions = callApiPermission.Concat(permissions ?? Enumerable.Empty<Permission>()).ToArray();
-            roleManagementService.AddOrUpdateRole(role);
+            InitializeRole(roleManagementService, SecurityConstants.JsShoppingCartUser, filteredPermissions);
         }
     }
 }

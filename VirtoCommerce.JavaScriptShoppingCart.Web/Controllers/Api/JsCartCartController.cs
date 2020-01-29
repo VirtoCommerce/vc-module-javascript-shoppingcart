@@ -7,7 +7,7 @@ using System.Web.Http.Description;
 using VirtoCommerce.Domain.Order.Model;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Extensions;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart;
-using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Model.Marketing;
+using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services;
 using VirtoCommerce.JavaScriptShoppingCart.Crawling;
 using VirtoCommerce.JavaScriptShoppingCart.Web.Models.Requests;

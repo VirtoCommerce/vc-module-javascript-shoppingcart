@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using VirtoCommerce.JavaScriptShoppingCart.Core.Extensions;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Tax;
@@ -9,7 +10,7 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 {
-    public class LineItem : CloneableEntity, IDiscountable, IValidatable, ITaxable, ICloneable
+    public class LineItem : CloneableEntity, IDiscountable, IValidatable, ITaxable
     {
         public LineItem(Currency currency, Language language)
         {
@@ -38,11 +39,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         /// Gets or sets line item created date.
         /// </summary>
         public DateTime CreatedDate { get; set; }
-
-        ///// <summary>
-        ///// Gets or sets the product corresponding to line item
-        ///// </summary>
-        // public Product Product { get; set; }
 
         /// <summary>
         /// Gets or sets the value of product id.
@@ -253,7 +249,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
         public IList<ValidationError> ValidationErrors { get; set; }
 
-
         /// <summary>
         /// Gets or sets the value of total shipping tax amount.
         /// </summary>
@@ -281,29 +276,32 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         public void ApplyTaxRates(IEnumerable<TaxRate> taxRates)
         {
             TaxPercentRate = 0m;
-            var lineItemTaxRate = taxRates.FirstOrDefault(x => x.Line.Id != null && x.Line.Id.EqualsInvariant(Id ?? string.Empty));
-            if (lineItemTaxRate == null)
+            var taxRatesList = taxRates.ToList();
+            var taxRate = taxRatesList.FirstOrDefault(x => x.Line.Id != null && x.Line.Id.EqualsInvariant(Id ?? string.Empty));
+            if (taxRate == null)
             {
-                lineItemTaxRate = taxRates.FirstOrDefault(x => x.Line.Code != null && x.Line.Code.EqualsInvariant(Sku ?? string.Empty));
+                taxRate = taxRatesList.FirstOrDefault(x => x.Line.Code != null && x.Line.Code.EqualsInvariant(Sku ?? string.Empty));
             }
 
-            if (lineItemTaxRate != null)
+            if (taxRate == null)
             {
-                if (lineItemTaxRate.PercentRate > 0)
-                {
-                    TaxPercentRate = lineItemTaxRate.PercentRate;
-                }
-                else
-                {
-                    var amount = ExtendedPrice.Amount > 0 ? ExtendedPrice.Amount : SalePrice.Amount;
-                    if (amount > 0)
-                    {
-                        TaxPercentRate = TaxRate.TaxPercentRound(lineItemTaxRate.Rate.Amount / amount);
-                    }
-                }
-
-                TaxDetails = lineItemTaxRate.Line.TaxDetails;
+                return;
             }
+
+            if (taxRate.PercentRate > 0)
+            {
+                TaxPercentRate = taxRate.PercentRate;
+            }
+            else
+            {
+                var amount = ExtendedPrice.Amount > 0 ? ExtendedPrice.Amount : SalePrice.Amount;
+                if (amount > 0)
+                {
+                    TaxPercentRate = TaxRate.TaxPercentRound(taxRate.Rate.Amount / amount);
+                }
+            }
+
+            TaxDetails = taxRate.Line.TaxDetails;
         }
 
         public void ApplyRewards(IEnumerable<PromotionReward> rewards)
@@ -335,26 +333,26 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
         public override string ToString()
         {
-            return string.Format("cart lineItem #{0} {1} qty: {2}", Id ?? "undef", Name ?? "undef", Quantity);
+            return $"cart lineItem #{Id ?? "undef"} {Name ?? "undef"} qty: {Quantity}";
         }
 
         public override object Clone()
         {
             var result = base.Clone() as LineItem;
 
-            result.ListPrice = ListPrice?.Clone() as Money;
-            result.SalePrice = SalePrice?.Clone() as Money;
-            result.DiscountAmount = DiscountAmount?.Clone() as Money;
-            result.DiscountAmountWithTax = DiscountAmountWithTax?.Clone() as Money;
-            result.DiscountTotal = DiscountTotal?.Clone() as Money;
-            result.DiscountTotalWithTax = DiscountTotalWithTax?.Clone() as Money;
-            result.ListPriceWithTax = ListPriceWithTax?.Clone() as Money;
-            result.SalePriceWithTax = SalePriceWithTax?.Clone() as Money;
-            result.PlacedPrice = PlacedPrice?.Clone() as Money;
-            result.PlacedPriceWithTax = PlacedPriceWithTax?.Clone() as Money;
-            result.ExtendedPrice = ExtendedPrice?.Clone() as Money;
-            result.ExtendedPriceWithTax = ExtendedPriceWithTax?.Clone() as Money;
-            result.TaxTotal = TaxTotal?.Clone() as Money;
+            result.ListPrice = ListPrice.CloneAsMoney();
+            result.SalePrice = SalePrice.CloneAsMoney();
+            result.DiscountAmount = DiscountAmount.CloneAsMoney();
+            result.DiscountAmountWithTax = DiscountAmountWithTax.CloneAsMoney();
+            result.DiscountTotal = DiscountTotal.CloneAsMoney();
+            result.DiscountTotalWithTax = DiscountTotalWithTax.CloneAsMoney();
+            result.ListPriceWithTax = ListPriceWithTax.CloneAsMoney();
+            result.SalePriceWithTax = SalePriceWithTax.CloneAsMoney();
+            result.PlacedPrice = PlacedPrice.CloneAsMoney();
+            result.PlacedPriceWithTax = PlacedPriceWithTax.CloneAsMoney();
+            result.ExtendedPrice = ExtendedPrice.CloneAsMoney();
+            result.ExtendedPriceWithTax = ExtendedPriceWithTax.CloneAsMoney();
+            result.TaxTotal = TaxTotal.CloneAsMoney();
 
             if (Discounts != null)
             {

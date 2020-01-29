@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using VirtoCommerce.JavaScriptShoppingCart.Core.Extensions;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Marketing;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Tax;
@@ -164,10 +165,11 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         public void ApplyTaxRates(IEnumerable<TaxRate> taxRates)
         {
             TaxPercentRate = 0m;
-            var shipmentTaxRate = taxRates.FirstOrDefault(x => x.Line.Id != null && x.Line.Id.EqualsInvariant(Id ?? string.Empty));
+            var taxRatesList = taxRates.ToList();
+            var shipmentTaxRate = taxRatesList.FirstOrDefault(x => x.Line.Id != null && x.Line.Id.EqualsInvariant(Id ?? string.Empty));
             if (shipmentTaxRate == null)
             {
-                shipmentTaxRate = taxRates.FirstOrDefault(x => x.Line.Code.EqualsInvariant(ShipmentMethodCode) && x.Line.Name.EqualsInvariant(ShipmentMethodOption));
+                shipmentTaxRate = taxRatesList.FirstOrDefault(x => x.Line.Code.EqualsInvariant(ShipmentMethodCode) && x.Line.Name.EqualsInvariant(ShipmentMethodOption));
             }
 
             if (shipmentTaxRate != null && shipmentTaxRate.Rate.Amount > 0)
@@ -219,13 +221,13 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         {
             var result = base.Clone() as Shipment;
 
-            result.Price = Price?.Clone() as Money;
-            result.PriceWithTax = PriceWithTax?.Clone() as Money;
-            result.DiscountAmount = DiscountAmount?.Clone() as Money;
-            result.DiscountAmountWithTax = DiscountAmountWithTax?.Clone() as Money;
-            result.Total = Total?.Clone() as Money;
-            result.TotalWithTax = TotalWithTax?.Clone() as Money;
-            result.TaxTotal = TaxTotal?.Clone() as Money;
+            result.Price = Price.CloneAsMoney();
+            result.PriceWithTax = PriceWithTax.CloneAsMoney();
+            result.DiscountAmount = DiscountAmount.CloneAsMoney();
+            result.DiscountAmountWithTax = DiscountAmountWithTax.CloneAsMoney();
+            result.Total = Total.CloneAsMoney();
+            result.TotalWithTax = TotalWithTax.CloneAsMoney();
+            result.TaxTotal = TaxTotal.CloneAsMoney();
 
             if (Discounts != null)
             {

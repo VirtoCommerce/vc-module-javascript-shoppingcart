@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\CacheKey.cs" />
+    <Compile Include="Extensions\DefaultableDictionary.cs" />
     <Compile Include="Extensions\DefaultableDictionaryExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Model\Cart\CartShipmentItem.cs" />

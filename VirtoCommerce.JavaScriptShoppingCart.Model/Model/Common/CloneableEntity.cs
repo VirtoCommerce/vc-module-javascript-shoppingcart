@@ -14,7 +14,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            yield return Id;
+            return new List<object> { Id };
         }
     }
 }
