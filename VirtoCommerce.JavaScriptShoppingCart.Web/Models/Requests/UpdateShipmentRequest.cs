@@ -5,7 +5,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Models.Requests
 {
     public class UpdateShipmentRequest
     {
-
         /// <summary>
         /// Gets or sets the value of shipping method code.
         /// </summary>

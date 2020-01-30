@@ -36,7 +36,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
         /// <summary>
         /// Create new customer order based on shopping cart.
         /// </summary>
-        /// <param name="id">shopping cart id</param>
+        /// <param name="cartId">shopping cart id.</param>
         [HttpPost]
         [ResponseType(typeof(CustomerOrder))]
         [Route("{cartId}")]
@@ -53,16 +53,18 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
         }
 
         /// <summary>
-        /// Register customer order payment in external payment system
+        /// Register customer order payment in external payment system.
         /// </summary>
-        /// <remarks>Used in storefront checkout or manual order payment registration</remarks>
-        /// <param name="orderId">customer order id</param>
-        /// <param name="paymentId">payment id</param>
-        /// <param name="bankCardInfo">banking card information</param>
+        /// <remarks>Used in storefront checkout or manual order payment registration.</remarks>
+        /// <param name="orderId">customer order id.</param>
+        /// <param name="paymentId">payment id.</param>
+        /// <param name="bankCardInfo">banking card information.</param>
         [HttpPost]
         [Route("{orderId}/processPayment/{paymentId}")]
         [ResponseType(typeof(ProcessPaymentResult))]
-        public IHttpActionResult ProcessOrderPayments([FromUri]string orderId, [FromUri]string paymentId,
+        public IHttpActionResult ProcessOrderPayments(
+            [FromUri]string orderId,
+            [FromUri]string paymentId,
             [SwaggerOptional] BankCardInfo bankCardInfo)
         {
             var order = _customerOrderService.GetByIds(new[] { orderId }, CustomerOrderResponseGroup.Full.ToString())

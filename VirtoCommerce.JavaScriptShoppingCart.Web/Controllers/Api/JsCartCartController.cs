@@ -296,7 +296,5 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             var hosts = flatCrawlingHostWhitelist.Split(';', ',').Select(host => host.Trim());
             return hosts.Contains(referrerUri.Host);
         }
-
-
     }
 }
