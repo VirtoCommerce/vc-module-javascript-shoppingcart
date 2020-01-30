@@ -147,7 +147,9 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             {
                 var crawlingItem = crawlingResult.CrawlingItems.Single(item => item.ProductId == lineItemRequest.ProductId);
 
-                if (!lineItemRequest.Equals(crawlingItem))
+                if (AreDifferent(lineItem.ListPrice, singleProduct.Price)
+                    || AreDifferent(lineItem.Quantity.ToString(), singleProduct.Quantity)
+                    || AreDifferent(lineItem.Sku, singleProduct.Sku))
                 {
                     return BadRequest("The request has been hacked");
                 }
@@ -192,9 +194,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
         [Route("{cartId}/items/{lineItemId?}")]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> RemoveCartItem([FromUri]string currency, [FromUri]string cultureName, [FromUri]string cartId, [FromUri]string lineItemId = null)
-        {
             using (await AsyncLock.GetLockByKey(CacheKey.With(typeof(ShoppingCart), cartId)).LockAsync())
-            {
+        {
                 _cartManager.LoadCart(cartId, currency, cultureName);
                 if (lineItemId.IsNullOrEmpty())
                 {
@@ -289,6 +290,41 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
 
             var hosts = flatCrawlingHostWhitelist.Split(';', ',').Select(host => host.Trim());
             return hosts.Contains(referrerUri.Host);
+        }
+        
+        
+        private static bool AreDifferent(string requested, string crawled)
+        {
+            return requested != crawled;
+        }
+
+        private bool IsValidHost(Uri referrerUri)
+        {
+            const string ParameterName = "JavaScriptShoppingCart.CrawlingHostWhitelist";
+            var flatCrawlingHostWhitelist = _settingManager.GetValue(ParameterName, string.Empty);
+
+            if (string.IsNullOrEmpty(flatCrawlingHostWhitelist))
+            {
+                throw new ArgumentNullException(ParameterName);
+            }
+
+            var hosts = flatCrawlingHostWhitelist.Split(';', ',').Select(host => host.Trim());
+            return hosts.Contains(referrerUri.Host);
+        }
+
+        private Uri BuildForwardingUri(string cartId, string apiKey)
+        {
+            var requestUri = Request.RequestUri;
+            var hardCodedPath = $"/api/carts/{cartId}/items";
+            var uriBuilder = new UriBuilder(
+                                 requestUri.Scheme,
+                                 requestUri.Host,
+                                 requestUri.Port,
+                                 hardCodedPath)
+            {
+                Query = $"api_key={apiKey}"
+            };
+            return uriBuilder.Uri;
         }
     }
 }
