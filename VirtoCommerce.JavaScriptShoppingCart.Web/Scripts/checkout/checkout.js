@@ -98,6 +98,7 @@ cartModule.component('vcCheckout', {
                     ctrl.checkout.order = order;
                     ctrl.cart.removeCart().then(function () {                        
                         ctrl.cart.reloadCart();
+                        ctrl.cart.shipments = [];
                         ctrl.checkout.isFinished = true;
                     });
                 }
