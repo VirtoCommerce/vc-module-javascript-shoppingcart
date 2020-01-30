@@ -83,6 +83,12 @@ cartModule.component('vcCart', {
             var ctrl = this;
             carts[ctrl.name] = this;
 
+            $scope.$on('loginStatusChanged', function (event, authContext) {
+                ctrl.isAuthenticated = authContext.isAuthenticated;
+                ctrl.userName = authContext.userLogin;
+                ctrl.userId = authContext.userId;
+            });
+
             ctrl.currency = ctrl.currencyCode;
             ctrl.availCountries = [];
 
@@ -214,12 +220,12 @@ cartModule.component('vcCart', {
                 return cartApi.addOrUpdatePayment(ctrl, payment);
             };
 
-            this.createOrder = function () {
+            this.createOrder = function (bankCardInfo) {
                 return cartApi.createOrder(ctrl).then(function (response) {
                     let order = response.data;
                     if (order && order.inPayments.length) {
                         let paymentId = order.inPayments[0].id;
-                        cartApi.processPayment(ctrl, order.id, paymentId);
+                        cartApi.processPayment(ctrl, order.id, paymentId, bankCardInfo);
                     }
                     return response;
                 });

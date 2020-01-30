@@ -136,7 +136,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
         public void AddOrUpdatePayment(Payment payment)
         {
             EnsureCartExists();
-            RemoveExistingPayment(payment);
+
+            Cart.Payments.Clear(); // instead of RemoveExistingPayment(payment)
 
             if (payment.BillingAddress != null)
             {
@@ -161,7 +162,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
         public void AddOrUpdateShipment(Shipment shipment)
         {
             EnsureCartExists();
-            RemoveExistingShipmentAsync(shipment);
+            Cart.Shipments.Clear(); // Instead of RemoveExistingShipment(shipment)
             shipment.Currency = Cart.Currency;
 
             if (shipment.DeliveryAddress != null)
@@ -183,11 +184,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
                 }
 
                 shipment.InjectFrom(shippingMethod);
-                //shipment.Price = shippingMethod.Price;
-                //shipment.DiscountAmount = shippingMethod.DiscountAmount;
-                //shipment.TaxType = shippingMethod.TaxType;
-
-
 
                 Cart.Shipments.Add(shipment);
             }
@@ -482,7 +478,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
             }
         }
 
-        protected virtual void RemoveExistingShipmentAsync(Shipment shipment)
+        protected virtual void RemoveExistingShipment(Shipment shipment)
         {
             if (shipment != null)
             {

@@ -272,7 +272,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             {
                 _cartManager.LoadCart(cartId, currency, cultureName);
                 _cartManager.RemoveCart();
-                _cartManager.Save();
             }
 
             return Ok();

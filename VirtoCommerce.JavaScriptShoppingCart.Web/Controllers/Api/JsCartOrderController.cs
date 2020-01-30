@@ -39,8 +39,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
         /// <param name="id">shopping cart id</param>
         [HttpPost]
         [ResponseType(typeof(CustomerOrder))]
-        [Route("{id}")]
-        public async Task<IHttpActionResult> CreateOrderFromCart(string cartId)
+        [Route("{cartId}")]
+        public async Task<IHttpActionResult> CreateOrderFromCart([FromUri]string cartId)
         {
             CustomerOrder result;
             using (await AsyncLock.GetLockByKey(cartId).LockAsync())
@@ -62,7 +62,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
         [HttpPost]
         [Route("{orderId}/processPayment/{paymentId}")]
         [ResponseType(typeof(ProcessPaymentResult))]
-        public IHttpActionResult ProcessOrderPayments(string orderId, string paymentId,
+        public IHttpActionResult ProcessOrderPayments([FromUri]string orderId, [FromUri]string paymentId,
             [SwaggerOptional] BankCardInfo bankCardInfo)
         {
             var order = _customerOrderService.GetByIds(new[] { orderId }, CustomerOrderResponseGroup.Full.ToString())

@@ -20,9 +20,9 @@ angular.module('virtoCommerce.cartModule')
                 return $http.post(url, cart);
             },
 
-            processPayment: function (cart , orderId, paymentId) {
+            processPayment: function (cart, orderId, paymentId, bankCardInfo) {
                 var url = cart.apiUrl + jsCartOrdersApiPath + orderId + '/processPayment/' + paymentId;                
-                return $http.post(url);                                
+                return $http.post(url, bankCardInfo);                                
             },
 
             // using jscart API
@@ -64,8 +64,7 @@ angular.module('virtoCommerce.cartModule')
             removeCart: function (cart) {
                 return $http.delete(getJsCartApiFullUrlWithCartSegment(cart));               
             },
-
-            //----
+            
             addCoupon: function (cart, couponCode) {
                 var url = getJsCartApiFullUrlWithCartSegment(cart) + '/coupons/' + couponCode;
                 return $http.post(url);
@@ -102,27 +101,7 @@ angular.module('virtoCommerce.cartModule')
                 var cartUrl = getJsCartApiFullUrlWithCartSegment(cart);
                 
                 return $http.get(cartUrl + '/paymentmethods');
-            }
-
-            // checkout process            
-
-            //createOrder: function (cart) {
-            //    var url = cart.apiUrl + customerOrdersPath + cart.id;
-            //    if (authService.isAuthenticated) {
-            //        return $http.post(url, cart);
-            //    }
-
-            //    return $http.post(url + '?api_key=' + cart.apiKey, cart);
-            //},
-
-            //processPayment: function (cart, orderId, paymentId) {
-            //    var url = cart.apiUrl + customerOrdersPath + orderId + '/processPayment/' + paymentId;
-            //    if (authService.isAuthenticated) {
-            //        return $http.post(url);
-            //    }
-
-            //    return $http.post(url + '?api_key=' + cart.apiKey);
-            //},
+            }           
 
         };
     }]);

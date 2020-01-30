@@ -14,6 +14,7 @@ cartModule.component('vcCheckout', {
         $scope.$on('loginStatusChanged', function (event, authContext) {
             ctrl.isAuthenticated = authContext.isAuthenticated;
             ctrl.userName = authContext.userLogin;
+            ctrl.userId = authContext.userId;
         });
 
         this.checkout = {
@@ -95,8 +96,7 @@ cartModule.component('vcCheckout', {
                 var order = response.data;
                 if (order) {
                     ctrl.checkout.order = order;
-                    ctrl.cart.removeCart().then(function () {
-                        ctrl.cart.items = [];
+                    ctrl.cart.removeCart().then(function () {                        
                         ctrl.cart.reloadCart();
                         ctrl.checkout.isFinished = true;
                     });
