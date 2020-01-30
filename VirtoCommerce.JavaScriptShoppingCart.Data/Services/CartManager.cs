@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Omu.ValueInjecter;
 using VirtoCommerce.Domain.Cart.Services;
 using VirtoCommerce.Domain.Customer.Model;
 using VirtoCommerce.Domain.Customer.Services;
@@ -144,8 +145,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
                 payment.BillingAddress.Key = null;
             }
 
-            Cart.Payments.Add(payment);
-
             if (!string.IsNullOrEmpty(payment.PaymentGatewayCode) && !Cart.IsTransient())
             {
                 var availablePaymentMethods = GetAvailablePaymentMethods();
@@ -154,6 +153,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
                 {
                     throw new PlatformException("Unknown payment method " + payment.PaymentGatewayCode);
                 }
+
+                Cart.Payments.Add(payment);
             }
         }
 
@@ -170,7 +171,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
                 shipment.DeliveryAddress.Key = null;
             }
 
-            Cart.Shipments.Add(shipment);
 
             if (!string.IsNullOrEmpty(shipment.ShipmentMethodCode) && !Cart.IsTransient())
             {
@@ -182,9 +182,14 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
                     throw new PlatformException(string.Format(CultureInfo.InvariantCulture, "Unknown shipment method: {0} with option: {1}", shipment.ShipmentMethodCode, shipment.ShipmentMethodOption));
                 }
 
-                shipment.Price = shippingMethod.Price;
-                shipment.DiscountAmount = shippingMethod.DiscountAmount;
-                shipment.TaxType = shippingMethod.TaxType;
+                shipment.InjectFrom(shippingMethod);
+                //shipment.Price = shippingMethod.Price;
+                //shipment.DiscountAmount = shippingMethod.DiscountAmount;
+                //shipment.TaxType = shippingMethod.TaxType;
+
+
+
+                Cart.Shipments.Add(shipment);
             }
         }
 

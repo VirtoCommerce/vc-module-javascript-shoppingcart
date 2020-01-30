@@ -571,14 +571,14 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Converters
                 var shipment = cart.Shipments.First();
                 result.ShipmentMethodCode = shipment.ShipmentMethodCode;
                 result.ShipmentMethodOption = shipment.ShipmentMethodOption;
-                result.ShipmentMethodPrice = shipment.Price.Amount;
+                //result.ShipmentMethodPrice = shipment.Price.Amount;
             }
 
             if (!cart.Payments.IsNullOrEmpty())
             {
                 var payment = cart.Payments.First();
                 result.PaymentMethodCode = payment.PaymentGatewayCode;
-                result.PaymentMethodPrice = payment.Price.Amount;
+                //result.PaymentMethodPrice = payment.Price.Amount;
             }
 
             return result;

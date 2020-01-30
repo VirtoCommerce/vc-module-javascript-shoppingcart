@@ -246,6 +246,7 @@
     <Compile Include="Models\Requests\AddCartLineItemRequest.cs" />
     <Compile Include="Models\Requests\ChangeCartLineItemQtyRequest.cs" />
     <Compile Include="Models\Requests\UpdateCartCommentRequest.cs" />
+    <Compile Include="Models\Requests\UpdateShipmentRequest.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

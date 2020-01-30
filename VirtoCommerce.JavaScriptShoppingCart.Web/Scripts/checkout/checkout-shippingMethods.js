@@ -23,7 +23,7 @@ cartModule.component('vcCheckoutShippingMethods', {
                 _.each(ctrl.availShippingMethods, function (x) {
                     x.id = getMethodId(x);
                 });
-                ctrl.selectedMethod = _.find(ctrl.availShippingMethods, function (x) { return ctrl.shipment.shipmentMethodCode === x.shippingMethod.code && ctrl.shipment.shipmentMethodOption === x.optionName; });
+                ctrl.selectedMethod = _.find(ctrl.availShippingMethods, function (x) { return ctrl.shipment.shipmentMethodCode === x.shipmentMethodCode && ctrl.shipment.shipmentMethodOption === x.optionName; });
             });
         };
 
