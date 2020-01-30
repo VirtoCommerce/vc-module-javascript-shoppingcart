@@ -148,9 +148,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             {
                 var crawlingItem = crawlingResult.CrawlingItems.Single(item => item.ProductId == lineItemRequest.ProductId);
 
-                if (AreDifferent(lineItemRequest.ListPrice.ToString(), crawlingItem.Price)
-                    || AreDifferent(lineItemRequest.Quantity.ToString(), crawlingItem.Quantity)
-                    || AreDifferent(lineItemRequest.Sku, crawlingItem.Sku))
+                if (!ValidateFields(lineItemRequest, crawlingItem))
                 {
                     return BadRequest("The request has been hacked");
                 }
@@ -280,9 +278,9 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             return Ok();
         }
 
-        private static bool AreDifferent(string requested, string crawled)
+        private static bool ValidateFields(AddCartLineItemRequest requested, CrawlingItem crawled)
         {
-            return requested != crawled;
+            return requested.ListPrice.ToString() != crawled.Price || requested.Quantity.ToString() != crawled.Quantity || requested.Sku != crawled.Sku;
         }
 
         private bool IsValidHost(Uri referrerUri)
@@ -292,26 +290,13 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
 
             if (string.IsNullOrEmpty(flatCrawlingHostWhitelist))
             {
-                throw new PlatformException(ParameterName);
+                throw new ArgumentNullException(ParameterName);
             }
 
             var hosts = flatCrawlingHostWhitelist.Split(';', ',').Select(host => host.Trim());
             return hosts.Contains(referrerUri.Host);
         }
 
-        private Uri BuildForwardingUri(string cartId, string apiKey)
-        {
-            var requestUri = Request.RequestUri;
-            var hardCodedPath = $"/api/carts/{cartId}/items";
-            var uriBuilder = new UriBuilder(
-                                 requestUri.Scheme,
-                                 requestUri.Host,
-                                 requestUri.Port,
-                                 hardCodedPath)
-            {
-                Query = $"api_key={apiKey}"
-            };
-            return uriBuilder.Uri;
-        }
+
     }
 }
