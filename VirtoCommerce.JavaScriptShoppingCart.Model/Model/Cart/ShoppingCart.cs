@@ -317,6 +317,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
 
         public Currency Currency { get; }
 
+        public string CurrencyCode => Currency?.Code;
+
         /// <summary>
         /// Gets or sets the value of total shipping tax amount.
         /// </summary>
@@ -343,6 +345,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Cart
         public string Type { get; set; }
 
         public Language Language { get; set; }
+
+        public string CultureName => Language.CultureName;
 
         public void ApplyRewards(IEnumerable<PromotionReward> rewards)
         {

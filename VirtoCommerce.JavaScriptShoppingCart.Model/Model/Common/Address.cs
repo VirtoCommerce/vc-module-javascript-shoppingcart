@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
 {
-    public partial class Address : CloneableValueObject
+    public class Address : CloneableValueObject
     {
         public AddressType Type { get; set; }
 

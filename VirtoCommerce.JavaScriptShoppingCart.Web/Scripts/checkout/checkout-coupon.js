@@ -1,27 +1,30 @@
-﻿var cartModule = angular.module('virtoCommerce.cartModule');
+var cartModule = angular.module('virtoCommerce.cartModule');
 cartModule.component('vcCheckoutCoupon', {
-	templateUrl: "checkout-coupon.tpl.html",
-	bindings: {
-		coupon: '=',
-		onApplyCoupon: '&',
-		onRemoveCoupon: '&',
-		onValidateCoupon: '&'
-	},
-	controller: ['$scope', function ($scope) {
-		var ctrl = this;
-		ctrl.coupon = { appliedSuccessfully: true };
-		$scope.$watch("$ctrl.coupon", function () {
-			if (!ctrl.coupon.code) {
-				ctrl.coupon.appliedSuccessfully = true;
-			}
-		}, true);
-		ctrl.applyCoupon = function (coupon) {
-			ctrl.onValidateCoupon({ coupon: coupon }).then(function (result) {
-				if (result.appliedSuccessfully) {
-					ctrl.onApplyCoupon({ coupon: coupon });
-					ctrl.coupon = {};
-				}
-			});
-		};
-	}]
+    templateUrl: 'checkout-coupon.tpl.html',
+    bindings: {
+        coupons: '=',
+        onApplyCoupon: '&',
+        onRemoveCoupon: '&',
+        onValidateCoupon: '&'
+    },
+    controller: ['$scope', function ($scope) {
+        var ctrl = this;
+
+        ctrl.$onInit = function () {
+            ctrl.coupon = { code: '', isValid: true };
+        };
+               
+        ctrl.applyCoupon = function (coupon) {
+            ctrl.onValidateCoupon(coupon).then(function (result) {				                
+                if (result.appliedSuccessfully) {
+                    ctrl.onApplyCoupon({ coupon: ctrl.coupon });
+                    ctrl.coupon = {
+                            code: '', isValid: true
+                        };
+                    } else {
+                        ctrl.coupon.isValid = false;
+                    }                                    
+            });
+        };
+    }]
 });

@@ -1,4 +1,4 @@
-﻿<div class="floating-labels vc-form">
+<div class="floating-labels vc-form">
     <div class="wrap" ng-if="!$ctrl.checkout.isFinished">
         <div class="checkout-sidebar">
             <div class="checkout-sidebar__content">
@@ -7,7 +7,7 @@
                         <vc-checkout-line-items items="$ctrl.cart.items" show-prices-with-taxes="$ctrl.showPricesWithTaxes" currencySymbol="$ctrl.cart.currencySymbol"></vc-checkout-line-items>
                     </div>
                     <div class="order-summary__section order-summary__section--discount">
-                        <vc-checkout-coupon coupon="$ctrl.cart.coupon" on-apply-coupon="$ctrl.cart.applyCoupon(coupon)" on-remove-coupon="$ctrl.cart.removeCoupon(coupon)" on-validate-coupon="$ctrl.cart.validateCoupon(coupon)"></vc-checkout-coupon>
+                        <vc-checkout-coupon coupons="$ctrl.cart.coupons" on-apply-coupon="$ctrl.cart.applyCoupon(coupon)" on-remove-coupon="$ctrl.cart.removeCoupon(coupon)" on-validate-coupon="$ctrl.cart.validateCoupon(coupon)"></vc-checkout-coupon>
                     </div>
                      <div class="order-summary__section order-summary__section--total-lines">
                         <vc-checkout-totals cart="$ctrl.cart" show-prices-with-taxes="$ctrl.showPricesWithTaxes" currencySymbol="$ctrl.cart.currencySymbol"></vc-checkout-totals>
@@ -29,7 +29,7 @@
             </div>
             <div class="main__content">
                 <vc-checkout-wizard wizard="$ctrl.checkout.wizard" on-initialized="$ctrl.initialize()" on-finish="$ctrl.createOrder()" loading="$ctrl.checkout.loading">
-                    <vc-checkout-wizard-step name="shipping-address" on-next-step="$ctrl.cart.addOrUpdateShipment($ctrl.checkout.shipment)" title="{{ 'checkout.customer_information.title' | translate }}">
+                    <vc-checkout-wizard-step name="shipping-address" title="{{ 'checkout.customer_information.title' | translate }}">
                         <div class="edit_checkout animate-floating-labels">
                             <div class="step__sections">
                                 <div class="section section--contact-information">
@@ -60,7 +60,7 @@
                             </div>
                         </div>
                     </vc-checkout-wizard-step>
-                    <vc-checkout-wizard-step name="shipping-method" title="{{ 'checkout.shipping_method.title' | translate }}" on-next-step="$ctrl.updateShipment($ctrl.checkout.shipment)">
+                    <vc-checkout-wizard-step name="shipping-method" title="{{ 'checkout.shipping_method.title' | translate }}" on-next-step="$ctrl.cart.addOrUpdateShipment($ctrl.checkout.shipment)">
                         <div class="edit_checkout animate-floating-labels">
                             <div class="section section--shipping-address-recap">
                                 <div class="section__header">
@@ -123,9 +123,9 @@
         </div>
     </div>
     <div class="order-created" ng-if="$ctrl.checkout.isFinished">
-		<h2>"{{ 'checkout.order_created' | translate }}</h2>
-		<div class="order-number">
+        <h2>"{{ 'checkout.order_created' | translate }}</h2>
+        <div class="order-number">
             {{ 'checkout.order_number' | translate }} <span id="orderNumber">{{$ctrl.checkout.order.number}}</span>
-		</div>
-	</div>
+        </div>
+    </div>
 </div>

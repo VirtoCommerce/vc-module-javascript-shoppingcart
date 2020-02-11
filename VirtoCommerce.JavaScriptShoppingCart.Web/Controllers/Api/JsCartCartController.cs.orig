@@ -10,7 +10,6 @@ using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Services;
 using VirtoCommerce.JavaScriptShoppingCart.Crawling;
 using VirtoCommerce.JavaScriptShoppingCart.Web.Models.Requests;
 using VirtoCommerce.Platform.Core.Common;
-using VirtoCommerce.Platform.Core.Exceptions;
 using VirtoCommerce.Platform.Core.Settings;
 
 namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
@@ -148,7 +147,13 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             {
                 var crawlingItem = crawlingResult.CrawlingItems.Single(item => item.ProductId == lineItemRequest.ProductId);
 
-                if (!ValidateFields(lineItemRequest, crawlingItem))
+<<<<<<< HEAD
+                if (!lineItemRequest.Equals(crawlingItem))
+=======
+                if (AreDifferent(lineItem.ListPrice, singleProduct.Price)
+                    || AreDifferent(lineItem.Quantity.ToString(), singleProduct.Quantity)
+                    || AreDifferent(lineItem.Sku, singleProduct.Sku))
+>>>>>>> dev
                 {
                     return BadRequest("The request has been hacked");
                 }
@@ -188,6 +193,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             return Ok();
         }
 
+<<<<<<< HEAD
 
         [HttpDelete]
         [Route("{cartId}/items/{lineItemId?}")]
@@ -239,6 +245,19 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
         {
             // Need lock to prevent concurrent access to same cart
             using (await AsyncLock.GetLockByKey(CacheKey.With(typeof(ShoppingCart), cartId)).LockAsync())
+=======
+        private static bool AreDifferent(string requested, string crawled)
+        {
+            return requested != crawled;
+        }
+
+        private bool IsValidHost(Uri referrerUri)
+        {
+            const string ParameterName = "JavaScriptShoppingCart.CrawlingHostWhitelist";
+            var flatCrawlingHostWhitelist = _settingManager.GetValue(ParameterName, string.Empty);
+
+            if (string.IsNullOrEmpty(flatCrawlingHostWhitelist))
+>>>>>>> dev
             {
                 _cartManager.LoadCart(cartId, currency, cultureName);
                 _cartManager.AddOrUpdateShipment(shipment);
@@ -261,7 +280,12 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
                 _cartManager.Save();
             }
 
+<<<<<<< HEAD
             return Ok();
+=======
+            var hosts = flatCrawlingHostWhitelist.Split(';', ',').Select(host => host.Trim());
+            return hosts.Contains(referrerUri.Host);
+>>>>>>> dev
         }
 
         [HttpDelete]
@@ -276,11 +300,6 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Web.Controllers.Api
             }
 
             return Ok();
-        }
-
-        private static bool ValidateFields(AddCartLineItemRequest requested, CrawlingItem crawled)
-        {
-            return requested.ListPrice.ToString() != crawled.Price || requested.Quantity.ToString() != crawled.Quantity || requested.Sku != crawled.Sku;
         }
 
         private bool IsValidHost(Uri referrerUri)

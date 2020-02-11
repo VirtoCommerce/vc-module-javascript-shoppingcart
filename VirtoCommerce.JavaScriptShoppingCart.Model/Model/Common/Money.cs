@@ -115,7 +115,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Common
             get { return ToString(false, false); }
         }
 
-        public Currency Currency { get; }
+        public Currency Currency { get; set; }
 
         /// <summary>
         /// Gets the number of decimal digits for the associated currency.

@@ -1,4 +1,4 @@
-﻿cartModule.service('virtoCommerce.cartModule.authService', ['$http', '$rootScope', '$cookieStore', '$interpolate', '$q', 'virtoCommerce.cartModule.authDataStorage', function ($http, $rootScope, $cookieStore, $interpolate, $q, authDataStorage) {
+cartModule.service('virtoCommerce.cartModule.authService', ['$http', '$rootScope', '$cookieStore', '$interpolate', '$q', 'virtoCommerce.cartModule.authDataStorage', function ($http, $rootScope, $cookieStore, $interpolate, $q, authDataStorage) {
     var platformEndPoint;
     var platrofmApiKey;
     var serviceBase = 'api/platform/security/';
@@ -11,19 +11,19 @@
         isAuthenticated: false
     };
 
-	function getPlatformEndpoint() {
-		if (!platformEndPoint) {
-			platformEndPoint = authDataStorage.getPlatformUrl();
-		}
-		return platformEndPoint;
-	}
+    function getPlatformEndpoint() {
+        if (!platformEndPoint) {
+            platformEndPoint = authDataStorage.getPlatformUrl();
+        }
+        return platformEndPoint;
+    }
 
-	function getPlatformApiKey() {
-		if (!platrofmApiKey) {
-			platrofmApiKey = authDataStorage.getPlatformKey();
-		}
-		return platrofmApiKey;
-	}
+    function getPlatformApiKey() {
+        if (!platrofmApiKey) {
+            platrofmApiKey = authDataStorage.getPlatformKey();
+        }
+        return platrofmApiKey;
+    }
 
     function guid() {
         function s4() {
@@ -172,7 +172,7 @@
             angular.extend(authContext, user);
             authContext.userLogin = user.userName;
             authContext.fullName = user.userLogin;
-            authContext.isAuthenticated = user.userName != null;
+            authContext.isAuthenticated = user.userName !== null;
             authContext.userId = user.id;
             authContext.memberId = user.memberId;
         } else {

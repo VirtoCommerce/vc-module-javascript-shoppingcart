@@ -1,4 +1,4 @@
-﻿var cartModule = angular.module('virtoCommerce.cartModule');
+var cartModule = angular.module('virtoCommerce.cartModule');
 cartModule.component('vcCheckoutWizard', {
 	transclude: true,
 	templateUrl: 'checkout-wizard.tpl.html',
@@ -60,7 +60,7 @@ cartModule.component('vcCheckoutWizard', {
 					nextStep = steps[i];
 				}
 			}		
-		};
+		}
 		
 		ctrl.wizard.addStep = function (step) {
 			ctrl.wizard.steps.push(step);

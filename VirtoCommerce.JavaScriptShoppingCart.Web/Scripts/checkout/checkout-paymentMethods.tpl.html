@@ -1,4 +1,4 @@
-﻿<div class="content-box" ng-repeat="paymentMethod in $ctrl.availPaymentMethods | orderBy: 'priority'">
+<div class="content-box" ng-repeat="paymentMethod in $ctrl.availPaymentMethods | orderBy: 'priority'">
     <div class="radio-wrapper content-box__row">
         <div class="radio__input">
             <input class="input-radio" id="{{ paymentMethod.code }}" name="PaymentMethodCode" type="radio" ng-model="$ctrl.paymentMethod" ng-required="true" ng-value="paymentMethod" ng-change="$ctrl.selectMethod(paymentMethod)" />
