@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using VirtoCommerce.Domain.Commerce.Services;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Model.Tax;
 using VirtoCommerce.JavaScriptShoppingCart.Core.Services;
 using VirtoCommerce.JavaScriptShoppingCart.Data.Converters;
@@ -13,11 +12,8 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Data.Services
 {
     public class TaxEvaluator : ITaxEvaluator
     {
-        private readonly ICommerceService _commerceService;
-
-        public TaxEvaluator(ICommerceService commerceApi)
+        public TaxEvaluator()
         {
-            _commerceService = commerceApi;
         }
 
         public virtual void EvaluateTaxes(domain_tax_model.TaxEvaluationContext context, IEnumerable<ITaxable> owners)

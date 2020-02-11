@@ -98,12 +98,7 @@ namespace VirtoCommerce.JavaScriptShoppingCart.Core.Model.Security
         public string ContactId { get; set; }
 
         /// <summary>
-        /// Member associated with user.
-        /// </summary>
-        // public Contact Contact { get; set; }
-
-        /// <summary>
-        /// All user permissions
+        /// All user permissions.
         /// </summary>
         public IEnumerable<string> Permissions { get; set; }
 
